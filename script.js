@@ -10,17 +10,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const startButton = document.getElementById("startButton");
     const retryButton = document.getElementById("retryButton");
     const continueButton = document.getElementById("continueButton");
+
     const deathMessage = document.getElementById("deathMessage");
     const successLabel = document.getElementById("successLabel");
     const successTitle = document.getElementById("successTitle");
     const successMessage = document.getElementById("successMessage");
+
     const introText = document.getElementById("introText");
     const curatorMessage = document.getElementById("curatorMessage");
     const levelHeader = document.querySelector(".level-header");
     const observationText = document.querySelector(".observation");
     const clueText = document.querySelector("blockquote");
     const questionTitle = document.querySelector(".room h2");
-    const questionText = document.querySelector(".room > p:not(.observation):not(.curator-message)");
+    const questionText = document.querySelector(
+        ".room > p:not(.observation):not(.curator-message)"
+    );
     const choicesContainer = document.querySelector(".choices");
 
     let currentLevelIndex = 0;
@@ -178,27 +182,28 @@ document.addEventListener("DOMContentLoaded", function () {
             button.disabled = true;
         });
 
-      if (choice.correct) {
-    curatorMessage.textContent = level.success;
+        if (choice.correct) {
+            curatorMessage.textContent = level.success;
 
-    successLabel.textContent =
-        "LEVEL " + level.number + " COMPLETE";
+            successLabel.textContent =
+                "LEVEL " + level.number + " COMPLETE";
 
-    successTitle.textContent =
-        "You chose correctly.";
+            successTitle.textContent =
+                "You chose correctly.";
 
-    successMessage.textContent =
-        level.success;
+            successMessage.textContent =
+                level.success;
 
-    await speakAsCurator(level.success);
-    await fadeToScreen(levelScreen, successScreen);
-} else {
-    curatorMessage.textContent = level.death;
-    deathMessage.textContent = level.death;
+            await speakAsCurator(level.success);
+            await fadeToScreen(levelScreen, successScreen);
+        } else {
+            curatorMessage.textContent = level.death;
+            deathMessage.textContent = level.death;
 
-    await speakAsCurator(level.death);
-    await fadeToScreen(levelScreen, deathScreen);
-}
+            await speakAsCurator(level.death);
+            await fadeToScreen(levelScreen, deathScreen);
+        }
+    }
 
     startButton.addEventListener("click", function () {
         playIntroduction();
