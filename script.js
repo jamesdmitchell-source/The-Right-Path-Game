@@ -13,7 +13,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const introText = document.getElementById("introText");
     const curatorMessage = document.getElementById("curatorMessage");
-    const choiceButtons = document.querySelectorAll(".choice");
+    const levelHeader = document.querySelector(".level-header");
+    const observationText = document.querySelector(".observation");
+    const clueText = document.querySelector("blockquote");
+    const questionTitle = document.querySelector(".room h2");
+    const questionText = document.querySelector(".room > p:not(.observation):not(.curator-message)");
+    const choicesContainer = document.querySelector(".choices");
+
+    let currentLevelIndex = 0;
 
     const introLines = [
         "Can you hear me?",
@@ -47,27 +54,27 @@ document.addEventListener("DOMContentLoaded", function () {
     function findCuratorVoice() {
         const voices = window.speechSynthesis.getVoices();
 
-        const preferredVoice = voices.find(function (voice) {
-            const name = voice.name.toLowerCase();
+        return (
+            voices.find(function (voice) {
+                const name = voice.name.toLowerCase();
 
-            return (
-                voice.lang.startsWith("en-GB") &&
-                (
-                    name.includes("male") ||
-                    name.includes("daniel") ||
-                    name.includes("arthur")
-                )
-            );
-        });
-
-        return preferredVoice ||
+                return (
+                    voice.lang.startsWith("en-GB") &&
+                    (
+                        name.includes("male") ||
+                        name.includes("daniel") ||
+                        name.includes("arthur")
+                    )
+                );
+            }) ||
             voices.find(function (voice) {
                 return voice.lang.startsWith("en-GB");
             }) ||
             voices.find(function (voice) {
                 return voice.lang.startsWith("en");
             }) ||
-            null;
+            null
+        );
     }
 
     function speakAsCurator(line) {
@@ -95,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
             speech.onerror = function () {
-                setTimeout(resolve, 1500);
+                setTimeout(resolve, 1200);
             };
 
             window.speechSynthesis.speak(speech);
@@ -125,53 +132,81 @@ document.addEventListener("DOMContentLoaded", function () {
         introText.classList.add("hidden");
         await wait(800);
 
+        loadLevel();
         await fadeToScreen(introScreen, levelScreen);
 
         startButton.disabled = false;
+    }
+
+    function loadLevel() {
+        const level = levels[currentLevelIndex];
+
+        levelHeader.innerHTML =
+            "<span>SUBJECT 47</span>" +
+            "<span>LEVEL " + level.number + " / 100</span>";
+
+        observationText.textContent = level.observation;
+        clueText.textContent = level.clue;
+        questionTitle.textContent = level.title;
+        questionText.textContent = level.question;
+        curatorMessage.textContent = "";
+
+        choicesContainer.innerHTML = "";
+
+        level.choices.forEach(function (choice) {
+            const button = document.createElement("button");
+
+            button.className = "choice";
+            button.textContent = choice.text;
+
+            button.addEventListener("click", function () {
+                handleChoice(choice);
+            });
+
+            choicesContainer.appendChild(button);
+        });
+    }
+
+    async function handleChoice(choice) {
+        const level = levels[currentLevelIndex];
+        const choiceButtons = document.querySelectorAll(".choice");
+
+        choiceButtons.forEach(function (button) {
+            button.disabled = true;
+        });
+
+        if (choice.correct) {
+            curatorMessage.textContent = level.success;
+            await speakAsCurator(level.success);
+            await fadeToScreen(levelScreen, successScreen);
+        } else {
+            curatorMessage.textContent = level.death;
+            await speakAsCurator(level.death);
+            await fadeToScreen(levelScreen, deathScreen);
+        }
     }
 
     startButton.addEventListener("click", function () {
         playIntroduction();
     });
 
-    choiceButtons.forEach(function (button) {
-        button.addEventListener("click", async function () {
-            const choice = button.dataset.choice;
-
-            choiceButtons.forEach(function (item) {
-                item.disabled = true;
-            });
-
-            if (choice === "white") {
-                const successLine =
-                    "Interesting. You observed before acting.";
-
-                curatorMessage.textContent = successLine;
-                await speakAsCurator(successLine);
-                await fadeToScreen(levelScreen, successScreen);
-            } else {
-                const deathLine =
-                    "You mistook confidence for understanding.";
-
-                curatorMessage.textContent = deathLine;
-                await speakAsCurator(deathLine);
-                await fadeToScreen(levelScreen, deathScreen);
-            }
-        });
-    });
-
     retryButton.addEventListener("click", function () {
         window.speechSynthesis.cancel();
-        curatorMessage.textContent = "";
-
-        choiceButtons.forEach(function (item) {
-            item.disabled = false;
-        });
-
+        loadLevel();
         showScreen(levelScreen);
     });
 
     continueButton.addEventListener("click", function () {
-        alert("Level 2 will be added in the next update.");
+        currentLevelIndex += 1;
+
+        if (currentLevelIndex >= levels.length) {
+            alert("You have completed the current prototype.");
+            currentLevelIndex = 0;
+            showScreen(titleScreen);
+            return;
+        }
+
+        loadLevel();
+        showScreen(levelScreen);
     });
 });
