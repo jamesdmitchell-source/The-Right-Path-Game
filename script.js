@@ -183,9 +183,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 speech.voice = voice;
             }
 
-            speech.rate = 0.72;
-            speech.pitch = 0.65;
-            speech.volume = 0.9;
+            speech.rate = 0.62;
+            speech.pitch = 0.35;
+            speech.volume = 1.0;
 
             speech.onend = function () {
                 setTimeout(resolve, 500);
