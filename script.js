@@ -581,12 +581,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    startButton.addEventListener(
-        "click",
-        function () {
-            playIntroduction();
-        }
-    );
+  startButton.addEventListener(
+    "click",
+    function () {
+        startAmbientSound();
+        playIntroduction();
+    }
+);
 
     retryButton.addEventListener(
         "click",
