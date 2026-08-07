@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let investigatedIds = new Set();
     let journalEntries = [];
 
+    /*
+        We choose Elias's voice once and keep using
+        that same voice throughout the game.
+    */
+    let curatorVoice = null;
+
     const introLines = [
         "Can you hear me?",
         "Good.",
@@ -49,18 +55,32 @@ document.addEventListener("DOMContentLoaded", function () {
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
             <span>INVESTIGATE</span>
-            <button id="journalButton" class="small-button" type="button">
+
+            <button
+                id="journalButton"
+                class="small-button"
+                type="button"
+            >
                 Journal
             </button>
         </div>
 
-        <div id="investigationGrid" class="investigation-grid"></div>
+        <div
+            id="investigationGrid"
+            class="investigation-grid"
+        ></div>
 
-        <div id="evidenceCard" class="evidence-card">
+        <div
+            id="evidenceCard"
+            class="evidence-card"
+        >
             Select an object to examine it.
         </div>
 
-        <p id="evidenceProgress" class="evidence-progress"></p>
+        <p
+            id="evidenceProgress"
+            class="evidence-progress"
+        ></p>
     `;
 
     choicesContainer.parentNode.insertBefore(
@@ -77,7 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="journal-card">
 
             <div class="journal-topbar">
-                <span>SUBJECT 47 — JOURNAL</span>
+                <span>
+                    SUBJECT 47 — JOURNAL
+                </span>
 
                 <button
                     id="closeJournalButton"
@@ -88,7 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 </button>
             </div>
 
-            <div id="journalContent" class="journal-content"></div>
+            <div
+                id="journalContent"
+                class="journal-content"
+            ></div>
 
         </div>
     `;
@@ -113,6 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const journalContent =
         document.getElementById("journalContent");
 
+
+    /*
+        GENERAL FUNCTIONS
+    */
+
     function wait(milliseconds) {
         return new Promise(function (resolve) {
             setTimeout(resolve, milliseconds);
@@ -121,13 +151,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showScreen(screen) {
         screens.forEach(function (item) {
-            item.classList.remove("active", "fade-out");
+            item.classList.remove(
+                "active",
+                "fade-out"
+            );
         });
 
         screen.classList.add("active");
     }
 
-    async function fadeToScreen(currentScreen, nextScreen) {
+    async function fadeToScreen(
+        currentScreen,
+        nextScreen
+    ) {
         currentScreen.classList.add("fade-out");
 
         await wait(900);
@@ -135,41 +171,102 @@ document.addEventListener("DOMContentLoaded", function () {
         showScreen(nextScreen);
     }
 
-    function findCuratorVoice() {
-        const voices = window.speechSynthesis.getVoices();
 
-        return (
+    /*
+        ELIAS VOICE
+    */
+
+    function chooseCuratorVoice() {
+        if (!("speechSynthesis" in window)) {
+            return;
+        }
+
+        const voices =
+            window.speechSynthesis.getVoices();
+
+        if (!voices.length) {
+            return;
+        }
+
+        /*
+            First preference:
+            known British male-sounding voices.
+        */
+
+        curatorVoice =
             voices.find(function (voice) {
-                const name = voice.name.toLowerCase();
+                const name =
+                    voice.name.toLowerCase();
 
                 return (
                     voice.lang.startsWith("en-GB") &&
                     (
-                        name.includes("male") ||
                         name.includes("daniel") ||
-                        name.includes("arthur")
+                        name.includes("arthur") ||
+                        name.includes("oliver") ||
+                        name.includes("george")
                     )
                 );
             }) ||
 
+            /*
+                Second preference:
+                another British English voice.
+            */
+
             voices.find(function (voice) {
-                return voice.lang.startsWith("en-GB");
+                return (
+                    voice.lang.startsWith("en-GB") &&
+                    !voice.name
+                        .toLowerCase()
+                        .includes("female")
+                );
             }) ||
+
+            /*
+                Last resort:
+                any English voice.
+            */
 
             voices.find(function (voice) {
                 return voice.lang.startsWith("en");
             }) ||
 
-            null
-        );
+            null;
+    }
+
+    chooseCuratorVoice();
+
+    if ("speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged =
+            function () {
+
+                /*
+                    Only choose again if we haven't
+                    already locked a voice.
+                */
+
+                if (!curatorVoice) {
+                    chooseCuratorVoice();
+                }
+            };
     }
 
     function speakAsCurator(line) {
         return new Promise(function (resolve) {
 
             if (!("speechSynthesis" in window)) {
-                setTimeout(resolve, 2200);
+                setTimeout(resolve, 2000);
                 return;
+            }
+
+            /*
+                If Safari hadn't loaded the voice list
+                earlier, try once more now.
+            */
+
+            if (!curatorVoice) {
+                chooseCuratorVoice();
             }
 
             window.speechSynthesis.cancel();
@@ -177,18 +274,21 @@ document.addEventListener("DOMContentLoaded", function () {
             const speech =
                 new SpeechSynthesisUtterance(line);
 
-            const voice = findCuratorVoice();
-
-            if (voice) {
-                speech.voice = voice;
+            if (curatorVoice) {
+                speech.voice = curatorVoice;
             }
 
-            speech.rate = 0.62;
+            /*
+                Elias:
+                slow, calm and low.
+            */
+
+            speech.rate = 0.63;
             speech.pitch = 0.35;
             speech.volume = 1.0;
 
             speech.onend = function () {
-                setTimeout(resolve, 500);
+                setTimeout(resolve, 550);
             };
 
             speech.onerror = function () {
@@ -198,6 +298,11 @@ document.addEventListener("DOMContentLoaded", function () {
             window.speechSynthesis.speak(speech);
         });
     }
+
+
+    /*
+        OPENING INTRODUCTION
+    */
 
     async function showDialogueLine(line) {
         introText.classList.add("hidden");
@@ -219,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
             introScreen
         );
 
-        await wait(1000);
+        await wait(1300);
 
         for (const line of introLines) {
             await showDialogueLine(line);
@@ -227,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         introText.classList.add("hidden");
 
-        await wait(800);
+        await wait(900);
 
         loadLevel();
 
@@ -239,16 +344,18 @@ document.addEventListener("DOMContentLoaded", function () {
         startButton.disabled = false;
     }
 
-    function resetInvestigationState() {
-        investigatedIds = new Set();
 
-        evidenceCard.textContent =
-            "Select an object to examine it.";
-    }
+    /*
+        JOURNAL
+    */
 
-    function addJournalEntry(level, investigation) {
+    function addJournalEntry(
+        level,
+        investigation
+    ) {
         const alreadyAdded =
             journalEntries.some(function (entry) {
+
                 return (
                     entry.level === level.number &&
                     entry.id === investigation.id
@@ -260,13 +367,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 level: level.number,
                 id: investigation.id,
                 name: investigation.name,
-                description: investigation.description
+                description:
+                    investigation.description
             });
         }
     }
 
     function renderJournal() {
         if (journalEntries.length === 0) {
+
             journalContent.innerHTML =
                 "<p>No evidence recorded yet.</p>";
 
@@ -276,6 +385,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const grouped = {};
 
         journalEntries.forEach(function (entry) {
+
             if (!grouped[entry.level]) {
                 grouped[entry.level] = [];
             }
@@ -292,10 +402,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     grouped[levelNumber]
 
                     .map(function (entry) {
+
                         return `
-                            <article class="journal-entry">
-                                <h4>${entry.name}</h4>
-                                <p>${entry.description}</p>
+                            <article
+                                class="journal-entry"
+                            >
+                                <h4>
+                                    ${entry.name}
+                                </h4>
+
+                                <p>
+                                    ${entry.description}
+                                </p>
                             </article>
                         `;
                     })
@@ -303,8 +421,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     .join("");
 
                 return `
-                    <section class="journal-level">
-                        <h3>Room ${levelNumber}</h3>
+                    <section
+                        class="journal-level"
+                    >
+                        <h3>
+                            Room ${levelNumber}
+                        </h3>
+
                         ${entries}
                     </section>
                 `;
@@ -323,6 +446,18 @@ document.addEventListener("DOMContentLoaded", function () {
         journalOverlay.classList.remove("open");
     }
 
+
+    /*
+        INVESTIGATION MODE
+    */
+
+    function resetInvestigationState() {
+        investigatedIds = new Set();
+
+        evidenceCard.textContent =
+            "Select an object to examine it.";
+    }
+
     function updateInvestigationProgress(level) {
         const required =
             level.requiredInvestigations || 0;
@@ -334,19 +469,26 @@ document.addEventListener("DOMContentLoaded", function () {
             found >= required;
 
         const choiceButtons =
-            choicesContainer.querySelectorAll(".choice");
+            choicesContainer.querySelectorAll(
+                ".choice"
+            );
 
         if (
             level.investigations &&
             level.investigations.length > 0
         ) {
-            evidenceProgress.textContent =
-                enoughEvidence
-                    ? "You have enough evidence to make your choice."
-                    : "Evidence examined: " +
-                      found +
-                      " / " +
-                      required;
+
+            if (enoughEvidence) {
+                evidenceProgress.textContent =
+                    "You have enough evidence. Make your choice.";
+            } else {
+                evidenceProgress.textContent =
+                    "Evidence examined: " +
+                    found +
+                    " / " +
+                    required;
+            }
+
         } else {
             evidenceProgress.textContent = "";
         }
@@ -367,9 +509,13 @@ document.addEventListener("DOMContentLoaded", function () {
         button
     ) {
         const firstVisit =
-            !investigatedIds.has(investigation.id);
+            !investigatedIds.has(
+                investigation.id
+            );
 
-        investigatedIds.add(investigation.id);
+        investigatedIds.add(
+            investigation.id
+        );
 
         addJournalEntry(
             level,
@@ -387,7 +533,9 @@ document.addEventListener("DOMContentLoaded", function () {
             </span>
         `;
 
-        button.classList.add("investigated");
+        button.classList.add(
+            "investigated"
+        );
 
         updateInvestigationProgress(level);
 
@@ -434,7 +582,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.type = "button";
 
                 button.innerHTML = `
-                    <span class="investigation-icon">
+                    <span
+                        class="investigation-icon"
+                    >
                         ${investigation.icon || "?"}
                     </span>
 
@@ -446,6 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.addEventListener(
                     "click",
                     function () {
+
                         investigate(
                             level,
                             investigation,
@@ -460,6 +611,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     }
+
+
+    /*
+        LEVEL SYSTEM
+    */
 
     function loadLevel() {
         const level =
@@ -489,22 +645,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         choicesContainer.innerHTML = "";
 
-        level.choices.forEach(function (choice) {
-            const button =
-                document.createElement("button");
+        level.choices.forEach(
+            function (choice) {
 
-            button.className = "choice";
-            button.textContent = choice.text;
+                const button =
+                    document.createElement("button");
 
-            button.addEventListener(
-                "click",
-                function () {
-                    handleChoice(choice);
-                }
-            );
+                button.className = "choice";
 
-            choicesContainer.appendChild(button);
-        });
+                button.textContent =
+                    choice.text;
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        handleChoice(choice);
+                    }
+                );
+
+                choicesContainer.appendChild(
+                    button
+                );
+            }
+        );
 
         renderInvestigations(level);
 
@@ -512,16 +676,23 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations &&
             level.investigations.length > 0
         ) {
-            updateInvestigationProgress(level);
-        } else {
-            const choiceButtons =
-                choicesContainer.querySelectorAll(
-                    ".choice"
-                );
 
-            choiceButtons.forEach(function (button) {
-                button.disabled = false;
-            });
+            updateInvestigationProgress(level);
+
+        } else {
+
+            const choiceButtons =
+                choicesContainer
+                    .querySelectorAll(
+                        ".choice"
+                    );
+
+            choiceButtons.forEach(
+                function (button) {
+
+                    button.disabled = false;
+                }
+            );
 
             choicesContainer.classList.remove(
                 "choices-locked"
@@ -534,13 +705,19 @@ document.addEventListener("DOMContentLoaded", function () {
             levels[currentLevelIndex];
 
         const choiceButtons =
-            document.querySelectorAll(".choice");
+            document.querySelectorAll(
+                ".choice"
+            );
 
-        choiceButtons.forEach(function (button) {
-            button.disabled = true;
-        });
+        choiceButtons.forEach(
+            function (button) {
+
+                button.disabled = true;
+            }
+        );
 
         if (choice.correct) {
+
             curatorMessage.textContent =
                 level.success;
 
@@ -563,7 +740,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 levelScreen,
                 successScreen
             );
+
         } else {
+
             curatorMessage.textContent =
                 level.death;
 
@@ -581,26 +760,47 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-  startButton.addEventListener(
-    "click",
-    function () {
 
-        try {
-            if  (typeof startAmbientSound === "function")  {
-                 startAmbientSound();
+    /*
+        BUTTONS
+    */
+
+    startButton.addEventListener(
+        "click",
+        function () {
+
+            /*
+                Audio must never stop the game
+                from starting.
+            */
+
+            try {
+
+                if (
+                    typeof startAmbientSound ===
+                    "function"
+                ) {
+                    startAmbientSound();
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Ambient audio unavailable."
+                );
             }
-        } catch (error) {
-            console.log("Ambient audio unavailable.");
+
+            playIntroduction();
         }
-        
-        playIntroduction();
-    }
-);
+    );
 
     retryButton.addEventListener(
         "click",
         function () {
-            window.speechSynthesis.cancel();
+
+            if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
+            }
 
             loadLevel();
 
@@ -611,11 +811,14 @@ document.addEventListener("DOMContentLoaded", function () {
     continueButton.addEventListener(
         "click",
         function () {
+
             currentLevelIndex += 1;
 
             if (
-                currentLevelIndex >= levels.length
+                currentLevelIndex >=
+                levels.length
             ) {
+
                 alert(
                     "You have completed the current prototype."
                 );
@@ -646,8 +849,10 @@ document.addEventListener("DOMContentLoaded", function () {
     journalOverlay.addEventListener(
         "click",
         function (event) {
+
             if (
-                event.target === journalOverlay
+                event.target ===
+                journalOverlay
             ) {
                 closeJournal();
             }
