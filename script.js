@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const screens = document.querySelectorAll(".screen");
+
     const titleScreen = document.getElementById("titleScreen");
     const introScreen = document.getElementById("introScreen");
     const levelScreen = document.getElementById("levelScreen");
@@ -8,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const startButton = document.getElementById("startButton");
     const retryButton = document.getElementById("retryButton");
     const continueButton = document.getElementById("continueButton");
+
     const introText = document.getElementById("introText");
     const curatorMessage = document.getElementById("curatorMessage");
     const choiceButtons = document.querySelectorAll(".choice");
@@ -21,31 +24,57 @@ document.addEventListener("DOMContentLoaded", function () {
         "Choose second."
     ];
 
-    function showScreen(screen) {
-        document.querySelectorAll(".screen").forEach(function (item) {
-            item.classList.remove("active");
-        });
-
-        screen.classList.add("active");
-    }
-
     function wait(milliseconds) {
         return new Promise(function (resolve) {
             setTimeout(resolve, milliseconds);
         });
     }
 
+    function showScreen(screen) {
+        screens.forEach(function (item) {
+            item.classList.remove("active", "fade-out");
+        });
+
+        screen.classList.add("active");
+    }
+
+    async function fadeToScreen(currentScreen, nextScreen) {
+        currentScreen.classList.add("fade-out");
+
+        await wait(900);
+
+        showScreen(nextScreen);
+    }
+
+    async function showDialogueLine(line) {
+        introText.classList.add("hidden");
+
+        await wait(450);
+
+        introText.textContent = line;
+        introText.classList.remove("hidden");
+
+        await wait(2200);
+    }
+
     async function playIntroduction() {
-        showScreen(introScreen);
+        startButton.disabled = true;
+
+        await fadeToScreen(titleScreen, introScreen);
+
+        await wait(1200);
 
         for (const line of introLines) {
-            introText.textContent = line;
-            await wait(2200);
+            await showDialogueLine(line);
         }
 
-        introText.textContent = "";
-        await wait(700);
-        showScreen(levelScreen);
+        introText.classList.add("hidden");
+
+        await wait(900);
+
+        await fadeToScreen(introScreen, levelScreen);
+
+        startButton.disabled = false;
     }
 
     startButton.addEventListener("click", function () {
@@ -65,13 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Interesting. You observed before acting.";
 
                 await wait(1800);
-                showScreen(successScreen);
+                await fadeToScreen(levelScreen, successScreen);
             } else {
                 curatorMessage.textContent =
                     "You mistook confidence for understanding.";
 
                 await wait(1800);
-                showScreen(deathScreen);
+                await fadeToScreen(levelScreen, deathScreen);
             }
         });
     });
