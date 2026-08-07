@@ -584,7 +584,15 @@ document.addEventListener("DOMContentLoaded", function () {
   startButton.addEventListener(
     "click",
     function () {
-        startAmbientSound();
+
+        try {
+            if  (typeof startAmbientSound === "function")  {
+                 startAmbientSound();
+            }
+        } catch (error) {
+            console.log("Ambient audio unavailable.");
+        }
+        
         playIntroduction();
     }
 );
