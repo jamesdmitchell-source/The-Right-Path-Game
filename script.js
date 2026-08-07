@@ -40,37 +40,90 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fadeToScreen(currentScreen, nextScreen) {
         currentScreen.classList.add("fade-out");
-
         await wait(900);
-
         showScreen(nextScreen);
+    }
+
+    function findCuratorVoice() {
+        const voices = window.speechSynthesis.getVoices();
+
+        const preferredVoice = voices.find(function (voice) {
+            const name = voice.name.toLowerCase();
+
+            return (
+                voice.lang.startsWith("en-GB") &&
+                (
+                    name.includes("male") ||
+                    name.includes("daniel") ||
+                    name.includes("arthur")
+                )
+            );
+        });
+
+        return preferredVoice ||
+            voices.find(function (voice) {
+                return voice.lang.startsWith("en-GB");
+            }) ||
+            voices.find(function (voice) {
+                return voice.lang.startsWith("en");
+            }) ||
+            null;
+    }
+
+    function speakAsCurator(line) {
+        return new Promise(function (resolve) {
+            if (!("speechSynthesis" in window)) {
+                setTimeout(resolve, 2200);
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            const speech = new SpeechSynthesisUtterance(line);
+            const voice = findCuratorVoice();
+
+            if (voice) {
+                speech.voice = voice;
+            }
+
+            speech.rate = 0.72;
+            speech.pitch = 0.65;
+            speech.volume = 0.9;
+
+            speech.onend = function () {
+                setTimeout(resolve, 500);
+            };
+
+            speech.onerror = function () {
+                setTimeout(resolve, 1500);
+            };
+
+            window.speechSynthesis.speak(speech);
+        });
     }
 
     async function showDialogueLine(line) {
         introText.classList.add("hidden");
-
         await wait(450);
 
         introText.textContent = line;
         introText.classList.remove("hidden");
 
-        await wait(2200);
+        await speakAsCurator(line);
     }
 
     async function playIntroduction() {
         startButton.disabled = true;
 
         await fadeToScreen(titleScreen, introScreen);
-
-        await wait(1200);
+        await wait(1000);
 
         for (const line of introLines) {
             await showDialogueLine(line);
         }
 
         introText.classList.add("hidden");
-
-        await wait(900);
+        await wait(800);
 
         await fadeToScreen(introScreen, levelScreen);
 
@@ -90,22 +143,25 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (choice === "white") {
-                curatorMessage.textContent =
+                const successLine =
                     "Interesting. You observed before acting.";
 
-                await wait(1800);
+                curatorMessage.textContent = successLine;
+                await speakAsCurator(successLine);
                 await fadeToScreen(levelScreen, successScreen);
             } else {
-                curatorMessage.textContent =
+                const deathLine =
                     "You mistook confidence for understanding.";
 
-                await wait(1800);
+                curatorMessage.textContent = deathLine;
+                await speakAsCurator(deathLine);
                 await fadeToScreen(levelScreen, deathScreen);
             }
         });
     });
 
     retryButton.addEventListener("click", function () {
+        window.speechSynthesis.cancel();
         curatorMessage.textContent = "";
 
         choiceButtons.forEach(function (item) {
