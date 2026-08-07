@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>The Right Path</title>
+
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <main id="game">
+
+        <section id="titleScreen" class="screen active">
+            <p class="facility-name">MERIDIAN FACILITY</p>
+
+            <h1>THE RIGHT PATH</h1>
+
+            <p class="tagline">There is only one way.</p>
+
+            <button id="startButton">
+                Begin Trial
+            </button>
+        </section>
+
+        <section id="introScreen" class="screen">
+            <div class="speaker-light"></div>
+
+            <p id="introText" class="dialogue"></p>
+        </section>
+
+        <section id="levelScreen" class="screen">
+            <header class="level-header">
+                <span>SUBJECT 47</span>
+                <span>LEVEL 1 / 100</span>
+            </header>
+
+            <div class="room">
+                <p class="observation">
+                    A stopped clock reads 03:17.
+                    A folded note lies on the concrete floor.
+                </p>
+
+                <blockquote>
+                    Observe first.<br>
+                    Choose second.
+                </blockquote>
+
+                <h2>Two doors stand before you.</h2>
+
+                <p>
+                    One has a black frame.<br>
+                    One has a white frame.
+                </p>
+
+                <div class="choices">
+                    <button class="choice" data-choice="black">
+                        Black Door
+                    </button>
+
+                    <button class="choice" data-choice="white">
+                        White Door
+                    </button>
+                </div>
+
+                <p id="curatorMessage" class="curator-message"></p>
+            </div>
+        </section>
+
+        <section id="deathScreen" class="screen">
+            <p class="small-label">THE CURATOR</p>
+
+            <h2>Your journey ends here.</h2>
+
+            <p>
+                You mistook confidence for understanding.
+            </p>
+
+            <button id="retryButton">
+                Try Again
+            </button>
+        </section>
+
+        <section id="successScreen" class="screen">
+            <p class="small-label">LEVEL 1 COMPLETE</p>
+
+            <h2>You observed before acting.</h2>
+
+            <p>
+                The white door unlocks.
+            </p>
+
+            <button id="continueButton">
+                Continue
+            </button>
+        </section>
+
+    </main>
+
+    <script src="script.js?v=3"></script>
+</body>
+</html>
