@@ -1,16 +1,60 @@
 const levels = [
     {
         number: 1,
-        title: "Two Doors",
+        title: "Observation",
 
         observation:
-            "A stopped clock reads 03:17. A folded note lies on the concrete floor.",
+            "A cold concrete room. Two doors stand ahead beneath a flickering fluorescent light.",
 
         clue:
             "Observe first. Choose second.",
 
         question:
-            "Two doors stand before you. One has a black frame. One has a white frame.",
+            "You have gathered enough evidence. Which door do you choose?",
+
+        investigations: [
+            {
+                id: "clock",
+                name: "Clock",
+                icon: "🕒",
+                description:
+                    "The clock has stopped at 03:17. Scratched into the metal beneath it are two words: TOO LATE.",
+                curator:
+                    "Time matters more when you know what was lost."
+            },
+            {
+                id: "note",
+                name: "Note",
+                icon: "📝",
+                description:
+                    "A handwritten note reads: OBSERVE FIRST. CHOOSE SECOND. At the bottom is a single letter: C.",
+                curator:
+                    "At least you read before you act."
+            },
+            {
+                id: "camera",
+                name: "CCTV Camera",
+                icon: "📹",
+                description:
+                    "The camera is aimed directly at the black door. Its red recording light is still glowing."
+            },
+            {
+                id: "blackDoor",
+                name: "Black Door",
+                icon: "🚪",
+                description:
+                    "There are deep scratches around the handle. A dried bloodstain runs down the frame."
+            },
+            {
+                id: "whiteDoor",
+                name: "White Door",
+                icon: "🚪",
+                description:
+                    "The handle is clean. Dust has been disturbed around the base, as though this door opened recently."
+            }
+        ],
+
+        requiredInvestigations: 3,
 
         choices: [
             {
@@ -27,7 +71,7 @@ const levels = [
             "Interesting. You observed before acting.",
 
         death:
-            "You mistook confidence for understanding."
+            "You saw the evidence. You simply chose to ignore it."
     },
 
     {
