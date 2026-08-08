@@ -49,21 +49,17 @@ function startAmbientSound() {
         context.destination
     );
 
-
     const droneOne =
         context.createOscillator();
 
     const droneTwo =
         context.createOscillator();
 
-
     droneOne.type = "sine";
     droneTwo.type = "sine";
 
-
     droneOne.frequency.value = 46;
     droneTwo.frequency.value = 51;
-
 
     droneOne.connect(
         ambientGain
@@ -73,91 +69,13 @@ function startAmbientSound() {
         ambientGain
     );
 
-
     droneOne.start();
     droneTwo.start();
 }
 
 
 /*
-    HELPER:
-    CREATE ONE SHARP STRING-LIKE STAB
-*/
-
-function createStringStab(
-    context,
-    frequency,
-    startTime,
-    volume
-) {
-    const oscillator =
-        context.createOscillator();
-
-    const gain =
-        context.createGain();
-
-    const filter =
-        context.createBiquadFilter();
-
-
-    oscillator.type =
-        "sawtooth";
-
-    oscillator.frequency.value =
-        frequency;
-
-
-    filter.type =
-        "bandpass";
-
-    filter.frequency.value =
-        frequency;
-
-    filter.Q.value =
-        4;
-
-
-    gain.gain.setValueAtTime(
-        0.0001,
-        startTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        volume,
-        startTime + 0.015
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        startTime + 0.28
-    );
-
-
-    oscillator.connect(
-        filter
-    );
-
-    filter.connect(
-        gain
-    );
-
-    gain.connect(
-        context.destination
-    );
-
-
-    oscillator.start(
-        startTime
-    );
-
-    oscillator.stop(
-        startTime + 0.3
-    );
-}
-
-
-/*
-    DOOR OPENING HORROR CUE
+    HEAVY METAL DOOR CREAK
 */
 
 function playDoorMusic() {
@@ -173,225 +91,173 @@ function playDoorMusic() {
 
 
     /*
-        DEEP INDUSTRIAL RUMBLE
+        LOW MECHANICAL GROAN
     */
 
-    const rumble =
+    const groan =
         context.createOscillator();
 
-    const rumbleGain =
+    const groanGain =
         context.createGain();
 
+    groan.type =
+        "sawtooth";
 
-    rumble.type =
-        "sine";
-
-    rumble.frequency.setValueAtTime(
-        48,
+    groan.frequency.setValueAtTime(
+        72,
         now
     );
 
-    rumble.frequency.exponentialRampToValueAtTime(
+    groan.frequency.exponentialRampToValueAtTime(
         28,
-        now + 5
+        now + 3.5
     );
 
-
-    rumbleGain.gain.setValueAtTime(
+    groanGain.gain.setValueAtTime(
         0.0001,
         now
     );
 
-    rumbleGain.gain.exponentialRampToValueAtTime(
-        0.11,
-        now + 0.25
+    groanGain.gain.exponentialRampToValueAtTime(
+        0.09,
+        now + 0.3
     );
 
-    rumbleGain.gain.exponentialRampToValueAtTime(
+    groanGain.gain.exponentialRampToValueAtTime(
         0.0001,
-        now + 5.5
+        now + 4
     );
 
-
-    rumble.connect(
-        rumbleGain
+    groan.connect(
+        groanGain
     );
 
-    rumbleGain.connect(
+    groanGain.connect(
         context.destination
     );
 
+    groan.start(now);
 
-    rumble.start(
-        now
-    );
-
-    rumble.stop(
-        now + 5.5
+    groan.stop(
+        now + 4
     );
 
 
     /*
-        FIRST SHOCK:
-        THREE SHARP DISSONANT STABS
+        METAL STRAIN / CREAK
     */
 
-    createStringStab(
-        context,
-        740,
-        now + 0.55,
-        0.16
-    );
-
-    createStringStab(
-        context,
-        830,
-        now + 0.78,
-        0.15
-    );
-
-    createStringStab(
-        context,
-        698,
-        now + 1.02,
-        0.16
-    );
-
-
-    /*
-        SHORT SILENCE...
-        THEN ANOTHER UNEASY HIT
-    */
-
-    createStringStab(
-        context,
-        932,
-        now + 1.9,
-        0.13
-    );
-
-    createStringStab(
-        context,
-        784,
-        now + 2.08,
-        0.12
-    );
-
-
-    /*
-        SUSTAINED HAUNTING HIGH NOTE
-    */
-
-    const highTone =
+    const creak =
         context.createOscillator();
 
-    const highGain =
+    const creakGain =
         context.createGain();
 
-    const highFilter =
+    const creakFilter =
         context.createBiquadFilter();
 
+    creak.type =
+        "square";
 
-    highTone.type =
-        "triangle";
+    creak.frequency.setValueAtTime(
+        310,
+        now + 0.4
+    );
 
-    highTone.frequency.value =
-        622.25;
+    creak.frequency.linearRampToValueAtTime(
+        175,
+        now + 2.6
+    );
 
+    creakFilter.type =
+        "bandpass";
 
-    highFilter.type =
-        "lowpass";
+    creakFilter.frequency.value =
+        500;
 
-    highFilter.frequency.value =
-        1600;
+    creakFilter.Q.value =
+        3;
 
-
-    highGain.gain.setValueAtTime(
+    creakGain.gain.setValueAtTime(
         0.0001,
-        now + 2.45
+        now + 0.4
     );
 
-    highGain.gain.exponentialRampToValueAtTime(
-        0.065,
-        now + 2.8
+    creakGain.gain.exponentialRampToValueAtTime(
+        0.055,
+        now + 0.55
     );
 
-    highGain.gain.exponentialRampToValueAtTime(
+    creakGain.gain.exponentialRampToValueAtTime(
         0.0001,
-        now + 5.2
+        now + 3
     );
 
-
-    highTone.connect(
-        highFilter
+    creak.connect(
+        creakFilter
     );
 
-    highFilter.connect(
-        highGain
+    creakFilter.connect(
+        creakGain
     );
 
-    highGain.connect(
+    creakGain.connect(
         context.destination
     );
 
-
-    highTone.start(
-        now + 2.45
+    creak.start(
+        now + 0.4
     );
 
-    highTone.stop(
-        now + 5.3
+    creak.stop(
+        now + 3.1
     );
 
 
     /*
-        LOW DISSONANT NOTE UNDERNEATH
+        FINAL HEAVY CLUNK
     */
 
-    const lowTone =
+    const clunk =
         context.createOscillator();
 
-    const lowGain =
+    const clunkGain =
         context.createGain();
 
+    clunk.type =
+        "sine";
 
-    lowTone.type =
-        "triangle";
+    clunk.frequency.value =
+        58;
 
-    lowTone.frequency.value =
-        73.42;
-
-
-    lowGain.gain.setValueAtTime(
+    clunkGain.gain.setValueAtTime(
         0.0001,
-        now + 2.4
+        now + 3.2
     );
 
-    lowGain.gain.exponentialRampToValueAtTime(
-        0.08,
-        now + 2.75
+    clunkGain.gain.exponentialRampToValueAtTime(
+        0.18,
+        now + 3.22
     );
 
-    lowGain.gain.exponentialRampToValueAtTime(
+    clunkGain.gain.exponentialRampToValueAtTime(
         0.0001,
-        now + 5.3
+        now + 3.7
     );
 
-
-    lowTone.connect(
-        lowGain
+    clunk.connect(
+        clunkGain
     );
 
-    lowGain.connect(
+    clunkGain.connect(
         context.destination
     );
 
-
-    lowTone.start(
-        now + 2.4
+    clunk.start(
+        now + 3.2
     );
 
-    lowTone.stop(
-        now + 5.4
+    clunk.stop(
+        now + 3.8
     );
 }
