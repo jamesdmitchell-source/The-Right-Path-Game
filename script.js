@@ -1460,7 +1460,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        playDoorSound();
+        if (typeof playDoorMusic === "function") {
+    playDoorMusic();
+}
 
 
         await wait(900);
