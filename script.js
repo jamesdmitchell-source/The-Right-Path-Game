@@ -32,7 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentLevelIndex = 0;
     let investigatedIds = new Set();
     let journalEntries = [];
+
     let curatorVoice = null;
+    let selectedVoiceName =
+        localStorage.getItem("rightPathCuratorVoice") || "";
 
     const introLines = [
         "Can you hear me?",
@@ -43,12 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
         "Choose second."
     ];
 
+
     /*
         INVESTIGATION PANEL
     */
 
-    const investigationPanel = document.createElement("section");
-    investigationPanel.className = "investigation-panel";
+    const investigationPanel =
+        document.createElement("section");
+
+    investigationPanel.className =
+        "investigation-panel";
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
@@ -86,11 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
         choicesContainer
     );
 
+
     /*
         JOURNAL
     */
 
-    const journalOverlay = document.createElement("div");
+    const journalOverlay =
+        document.createElement("div");
+
     journalOverlay.id = "journalOverlay";
     journalOverlay.className = "journal-overlay";
 
@@ -113,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 id="journalContent"
                 class="journal-content"
             ></div>
+
         </div>
     `;
 
@@ -138,6 +149,141 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
+        CURATOR VOICE SELECTOR
+    */
+
+    const voiceButton =
+        document.createElement("button");
+
+    voiceButton.type = "button";
+    voiceButton.textContent = "Choose Curator Voice";
+
+    voiceButton.style.marginTop = "18px";
+    voiceButton.style.minWidth = "220px";
+
+    titleScreen.appendChild(voiceButton);
+
+
+    const voiceOverlay =
+        document.createElement("div");
+
+    voiceOverlay.style.position = "fixed";
+    voiceOverlay.style.inset = "0";
+    voiceOverlay.style.zIndex = "2000";
+    voiceOverlay.style.display = "none";
+    voiceOverlay.style.alignItems = "center";
+    voiceOverlay.style.justifyContent = "center";
+    voiceOverlay.style.padding = "20px";
+    voiceOverlay.style.background =
+        "rgba(0, 0, 0, 0.96)";
+
+
+    const voiceCard =
+        document.createElement("div");
+
+    voiceCard.style.width = "min(700px, 100%)";
+    voiceCard.style.maxHeight = "85vh";
+    voiceCard.style.overflowY = "auto";
+    voiceCard.style.padding = "25px";
+    voiceCard.style.border = "1px solid #444";
+    voiceCard.style.background = "#080808";
+    voiceCard.style.color = "#eee";
+    voiceCard.style.textAlign = "left";
+
+
+    voiceCard.innerHTML = `
+        <h2 style="margin-top:0;">
+            Curator Voice Audition
+        </h2>
+
+        <p style="
+            color:#999;
+            line-height:1.6;
+        ">
+            Listen to the available English voices.
+            When you find the voice that suits Elias,
+            select it and press Save Voice.
+        </p>
+
+        <select
+            id="voiceSelect"
+            style="
+                width:100%;
+                padding:12px;
+                margin:15px 0;
+                background:#111;
+                color:#eee;
+                border:1px solid #555;
+                font-size:16px;
+            "
+        ></select>
+
+        <div style="
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+        ">
+            <button
+                id="testVoiceButton"
+                type="button"
+            >
+                Test Voice
+            </button>
+
+            <button
+                id="saveVoiceButton"
+                type="button"
+            >
+                Save Voice
+            </button>
+
+            <button
+                id="refreshVoicesButton"
+                type="button"
+            >
+                Refresh Voices
+            </button>
+
+            <button
+                id="closeVoiceButton"
+                type="button"
+            >
+                Close
+            </button>
+        </div>
+
+        <p
+            id="voiceStatus"
+            style="
+                margin-top:20px;
+                color:#aaa;
+            "
+        ></p>
+    `;
+
+    voiceOverlay.appendChild(voiceCard);
+    document.body.appendChild(voiceOverlay);
+
+    const voiceSelect =
+        document.getElementById("voiceSelect");
+
+    const testVoiceButton =
+        document.getElementById("testVoiceButton");
+
+    const saveVoiceButton =
+        document.getElementById("saveVoiceButton");
+
+    const refreshVoicesButton =
+        document.getElementById("refreshVoicesButton");
+
+    const closeVoiceButton =
+        document.getElementById("closeVoiceButton");
+
+    const voiceStatus =
+        document.getElementById("voiceStatus");
+
+
+    /*
         BASIC FUNCTIONS
     */
 
@@ -146,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(resolve, milliseconds);
         });
     }
+
 
     function showScreen(screen) {
         screens.forEach(function (item) {
@@ -157,6 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         screen.classList.add("active");
     }
+
 
     async function fadeToScreen(
         currentScreen,
@@ -171,20 +319,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        ELIAS VOICE
+        VOICE SYSTEM
     */
 
-    function chooseCuratorVoice() {
+    function getEnglishVoices() {
         if (!("speechSynthesis" in window)) {
-            return;
+            return [];
         }
 
-        const voices =
-            window.speechSynthesis.getVoices();
+        return window.speechSynthesis
+            .getVoices()
+            .filter(function (voice) {
+                return voice.lang
+                    .toLowerCase()
+                    .startsWith("en");
+            });
+    }
+
+
+    function chooseCuratorVoice() {
+        const voices = getEnglishVoices();
 
         if (!voices.length) {
+            curatorVoice = null;
             return;
         }
+
+        /*
+            If the player has selected a voice,
+            always try to use exactly that one.
+        */
+
+        if (selectedVoiceName) {
+            const savedVoice =
+                voices.find(function (voice) {
+                    return (
+                        voice.name === selectedVoiceName
+                    );
+                });
+
+            if (savedVoice) {
+                curatorVoice = savedVoice;
+                return;
+            }
+        }
+
+        /*
+            Otherwise try some commonly male
+            British voice names.
+        */
 
         const preferredNames = [
             "daniel",
@@ -199,7 +382,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     voice.name.toLowerCase();
 
                 return (
-                    voice.lang.startsWith("en-GB") &&
+                    voice.lang
+                        .toLowerCase()
+                        .startsWith("en-gb") &&
                     preferredNames.some(
                         function (preferred) {
                             return name.includes(preferred);
@@ -209,31 +394,156 @@ document.addEventListener("DOMContentLoaded", function () {
             }) ||
 
             voices.find(function (voice) {
-                return voice.lang.startsWith("en-GB");
+                return voice.lang
+                    .toLowerCase()
+                    .startsWith("en-gb");
             }) ||
 
-            voices.find(function (voice) {
-                return voice.lang.startsWith("en");
-            }) ||
-
-            null;
+            voices[0];
     }
 
+
+    function populateVoiceSelector() {
+        const voices = getEnglishVoices();
+
+        voiceSelect.innerHTML = "";
+
+        if (!voices.length) {
+            const option =
+                document.createElement("option");
+
+            option.textContent =
+                "No voices loaded yet";
+
+            option.value = "";
+
+            voiceSelect.appendChild(option);
+
+            voiceStatus.textContent =
+                "Press Refresh Voices in a few seconds.";
+
+            return;
+        }
+
+        voices.forEach(function (voice) {
+            const option =
+                document.createElement("option");
+
+            option.value = voice.name;
+
+            option.textContent =
+                voice.name +
+                " — " +
+                voice.lang;
+
+            if (
+                voice.name === selectedVoiceName
+            ) {
+                option.selected = true;
+            }
+
+            voiceSelect.appendChild(option);
+        });
+
+        voiceStatus.textContent =
+            voices.length +
+            " English voices available.";
+    }
+
+
     chooseCuratorVoice();
+
 
     if ("speechSynthesis" in window) {
         window.speechSynthesis.onvoiceschanged =
             function () {
-                if (!curatorVoice) {
-                    chooseCuratorVoice();
+
+                chooseCuratorVoice();
+
+                if (
+                    voiceOverlay.style.display ===
+                    "flex"
+                ) {
+                    populateVoiceSelector();
                 }
             };
     }
 
+
+    function testSelectedVoice() {
+        if (!("speechSynthesis" in window)) {
+            voiceStatus.textContent =
+                "Speech is not supported on this device.";
+
+            return;
+        }
+
+        const voices = getEnglishVoices();
+
+        const chosen =
+            voices.find(function (voice) {
+                return (
+                    voice.name ===
+                    voiceSelect.value
+                );
+            });
+
+        if (!chosen) {
+            voiceStatus.textContent =
+                "Please choose a voice.";
+
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const speech =
+            new SpeechSynthesisUtterance(
+                "Can you hear me? Good. We may begin."
+            );
+
+        speech.voice = chosen;
+
+        /*
+            We keep the pitch fairly low,
+            but not so low that it becomes distorted.
+        */
+
+        speech.rate = 0.64;
+        speech.pitch = 0.45;
+        speech.volume = 1;
+
+        window.speechSynthesis.speak(speech);
+    }
+
+
+    function saveSelectedVoice() {
+        const chosenName =
+            voiceSelect.value;
+
+        if (!chosenName) {
+            voiceStatus.textContent =
+                "Choose a voice first.";
+
+            return;
+        }
+
+        selectedVoiceName = chosenName;
+
+        localStorage.setItem(
+            "rightPathCuratorVoice",
+            selectedVoiceName
+        );
+
+        chooseCuratorVoice();
+
+        voiceStatus.textContent =
+            "Saved: " + selectedVoiceName;
+    }
+
+
     /*
-        IMPORTANT:
-        Speech is allowed a maximum of 5 seconds.
-        If Safari gets stuck, the game carries on.
+        NORMAL ELIAS SPEECH
     */
 
     function speakAsCurator(line) {
@@ -250,26 +560,35 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             /*
-                Emergency timeout.
-                Voice can NEVER freeze the game.
+                Safety timer:
+                voice can never freeze the game.
             */
 
             const safetyTimer =
                 setTimeout(function () {
+
                     try {
                         window.speechSynthesis.cancel();
                     } catch (error) {
-                        // Ignore speech errors.
+                        // Ignore.
                     }
 
                     finish();
+
                 }, 5000);
+
 
             if (!("speechSynthesis" in window)) {
                 clearTimeout(safetyTimer);
-                setTimeout(finish, 1800);
+
+                setTimeout(
+                    finish,
+                    1800
+                );
+
                 return;
             }
+
 
             try {
                 if (!curatorVoice) {
@@ -279,13 +598,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.speechSynthesis.cancel();
 
                 const speech =
-                    new SpeechSynthesisUtterance(line);
+                    new SpeechSynthesisUtterance(
+                        line
+                    );
 
                 if (curatorVoice) {
-                    speech.voice = curatorVoice;
+                    speech.voice =
+                        curatorVoice;
                 }
 
-                speech.rate = 0.66;
+                speech.rate = 0.64;
                 speech.pitch = 0.45;
                 speech.volume = 1;
 
@@ -294,7 +616,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(
                         finish,
-                        450
+                        400
                     );
                 };
 
@@ -307,14 +629,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
                 };
 
-                window.speechSynthesis.speak(speech);
+                window.speechSynthesis.speak(
+                    speech
+                );
 
             } catch (error) {
                 clearTimeout(safetyTimer);
 
                 setTimeout(
                     finish,
-                    1000
+                    900
                 );
             }
         });
@@ -334,15 +658,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         introText.classList.remove("hidden");
 
-        /*
-            Voice and text now have a guaranteed
-            maximum waiting time.
-        */
-
         await speakAsCurator(line);
 
         await wait(250);
     }
+
 
     async function playIntroduction() {
         startButton.disabled = true;
@@ -374,7 +694,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL FUNCTIONS
+        JOURNAL
     */
 
     function addJournalEntry(
@@ -382,12 +702,17 @@ document.addEventListener("DOMContentLoaded", function () {
         investigation
     ) {
         const alreadyAdded =
-            journalEntries.some(function (entry) {
-                return (
-                    entry.level === level.number &&
-                    entry.id === investigation.id
-                );
-            });
+            journalEntries.some(
+                function (entry) {
+
+                    return (
+                        entry.level ===
+                            level.number &&
+                        entry.id ===
+                            investigation.id
+                    );
+                }
+            );
 
         if (!alreadyAdded) {
             journalEntries.push({
@@ -400,6 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
     function renderJournal() {
         if (journalEntries.length === 0) {
             journalContent.innerHTML =
@@ -410,13 +736,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const grouped = {};
 
-        journalEntries.forEach(function (entry) {
-            if (!grouped[entry.level]) {
-                grouped[entry.level] = [];
-            }
+        journalEntries.forEach(
+            function (entry) {
 
-            grouped[entry.level].push(entry);
-        });
+                if (!grouped[entry.level]) {
+                    grouped[entry.level] = [];
+                }
+
+                grouped[entry.level].push(
+                    entry
+                );
+            }
+        );
 
         journalContent.innerHTML =
             Object.keys(grouped)
@@ -426,10 +757,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     grouped[levelNumber]
 
                     .map(function (entry) {
+
                         return `
                             <article class="journal-entry">
-                                <h4>${entry.name}</h4>
-                                <p>${entry.description}</p>
+                                <h4>
+                                    ${entry.name}
+                                </h4>
+
+                                <p>
+                                    ${entry.description}
+                                </p>
                             </article>
                         `;
                     })
@@ -438,7 +775,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return `
                     <section class="journal-level">
-                        <h3>Room ${levelNumber}</h3>
+                        <h3>
+                            Room ${levelNumber}
+                        </h3>
+
                         ${entries}
                     </section>
                 `;
@@ -447,11 +787,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .join("");
     }
 
+
     function openJournal() {
         renderJournal();
 
         journalOverlay.classList.add("open");
     }
+
 
     function closeJournal() {
         journalOverlay.classList.remove("open");
@@ -459,7 +801,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        INVESTIGATION MODE
+        INVESTIGATION
     */
 
     function resetInvestigationState() {
@@ -468,6 +810,7 @@ document.addEventListener("DOMContentLoaded", function () {
         evidenceCard.textContent =
             "Select an object to examine it.";
     }
+
 
     function updateInvestigationProgress(level) {
         const required =
@@ -499,15 +842,19 @@ document.addEventListener("DOMContentLoaded", function () {
             evidenceProgress.textContent = "";
         }
 
-        choiceButtons.forEach(function (button) {
-            button.disabled = !enoughEvidence;
-        });
+        choiceButtons.forEach(
+            function (button) {
+                button.disabled =
+                    !enoughEvidence;
+            }
+        );
 
         choicesContainer.classList.toggle(
             "choices-locked",
             !enoughEvidence
         );
     }
+
 
     async function investigate(
         level,
@@ -543,7 +890,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "investigated"
         );
 
-        updateInvestigationProgress(level);
+        updateInvestigationProgress(
+            level
+        );
 
         if (
             firstVisit &&
@@ -557,6 +906,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     }
+
 
     function renderInvestigations(level) {
         investigationGrid.innerHTML = "";
@@ -600,6 +950,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.addEventListener(
                     "click",
                     function () {
+
                         investigate(
                             level,
                             investigation,
@@ -648,26 +999,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         choicesContainer.innerHTML = "";
 
-        level.choices.forEach(function (choice) {
-            const button =
-                document.createElement("button");
+        level.choices.forEach(
+            function (choice) {
 
-            button.className = "choice";
+                const button =
+                    document.createElement("button");
 
-            button.textContent =
-                choice.text;
+                button.className = "choice";
 
-            button.addEventListener(
-                "click",
-                function () {
-                    handleChoice(choice);
-                }
-            );
+                button.textContent =
+                    choice.text;
 
-            choicesContainer.appendChild(
-                button
-            );
-        });
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        handleChoice(choice);
+                    }
+                );
+
+                choicesContainer.appendChild(
+                    button
+                );
+            }
+        );
 
         renderInvestigations(level);
 
@@ -675,7 +1030,9 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations &&
             level.investigations.length > 0
         ) {
-            updateInvestigationProgress(level);
+            updateInvestigationProgress(
+                level
+            );
 
         } else {
             const choiceButtons =
@@ -694,6 +1051,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     }
+
 
     async function handleChoice(choice) {
         const level =
@@ -761,11 +1119,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "click",
         function () {
 
-            /*
-                Ambient audio must never prevent
-                the game from starting.
-            */
-
             try {
                 if (
                     typeof startAmbientSound ===
@@ -783,6 +1136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
+
     retryButton.addEventListener(
         "click",
         function () {
@@ -796,6 +1150,7 @@ document.addEventListener("DOMContentLoaded", function () {
             showScreen(levelScreen);
         }
     );
+
 
     continueButton.addEventListener(
         "click",
@@ -824,15 +1179,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
+
     journalButton.addEventListener(
         "click",
         openJournal
     );
 
+
     closeJournalButton.addEventListener(
         "click",
         closeJournal
     );
+
 
     journalOverlay.addEventListener(
         "click",
@@ -844,6 +1202,57 @@ document.addEventListener("DOMContentLoaded", function () {
             ) {
                 closeJournal();
             }
+        }
+    );
+
+
+    /*
+        VOICE SELECTOR BUTTONS
+    */
+
+    voiceButton.addEventListener(
+        "click",
+        function () {
+
+            populateVoiceSelector();
+
+            voiceOverlay.style.display =
+                "flex";
+        }
+    );
+
+
+    closeVoiceButton.addEventListener(
+        "click",
+        function () {
+
+            if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
+            }
+
+            voiceOverlay.style.display =
+                "none";
+        }
+    );
+
+
+    testVoiceButton.addEventListener(
+        "click",
+        testSelectedVoice
+    );
+
+
+    saveVoiceButton.addEventListener(
+        "click",
+        saveSelectedVoice
+    );
+
+
+    refreshVoicesButton.addEventListener(
+        "click",
+        function () {
+
+            populateVoiceSelector();
         }
     );
 });
