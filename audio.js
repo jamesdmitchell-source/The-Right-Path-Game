@@ -23,6 +23,10 @@ function ensureAudioContext() {
 }
 
 
+/*
+    LOW BACKGROUND HUM
+*/
+
 function startAmbientSound() {
     const context =
         ensureAudioContext();
@@ -30,10 +34,6 @@ function startAmbientSound() {
     if (!context) {
         return;
     }
-
-    /*
-        Don't create the ambient drone twice.
-    */
 
     if (ambientGain) {
         return;
@@ -43,7 +43,7 @@ function startAmbientSound() {
         context.createGain();
 
     ambientGain.gain.value =
-        0.02;
+        0.018;
 
     ambientGain.connect(
         context.destination
@@ -61,8 +61,8 @@ function startAmbientSound() {
     droneTwo.type = "sine";
 
 
-    droneOne.frequency.value = 48;
-    droneTwo.frequency.value = 55;
+    droneOne.frequency.value = 46;
+    droneTwo.frequency.value = 51;
 
 
     droneOne.connect(
@@ -79,6 +79,87 @@ function startAmbientSound() {
 }
 
 
+/*
+    HELPER:
+    CREATE ONE SHARP STRING-LIKE STAB
+*/
+
+function createStringStab(
+    context,
+    frequency,
+    startTime,
+    volume
+) {
+    const oscillator =
+        context.createOscillator();
+
+    const gain =
+        context.createGain();
+
+    const filter =
+        context.createBiquadFilter();
+
+
+    oscillator.type =
+        "sawtooth";
+
+    oscillator.frequency.value =
+        frequency;
+
+
+    filter.type =
+        "bandpass";
+
+    filter.frequency.value =
+        frequency;
+
+    filter.Q.value =
+        4;
+
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        startTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        volume,
+        startTime + 0.015
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        startTime + 0.28
+    );
+
+
+    oscillator.connect(
+        filter
+    );
+
+    filter.connect(
+        gain
+    );
+
+    gain.connect(
+        context.destination
+    );
+
+
+    oscillator.start(
+        startTime
+    );
+
+    oscillator.stop(
+        startTime + 0.3
+    );
+}
+
+
+/*
+    DOOR OPENING HORROR CUE
+*/
+
 function playDoorMusic() {
     const context =
         ensureAudioContext();
@@ -87,27 +168,53 @@ function playDoorMusic() {
         return;
     }
 
+    const now =
+        context.currentTime;
+
 
     /*
-        Deep door-opening rumble
+        DEEP INDUSTRIAL RUMBLE
     */
+
+    const rumble =
+        context.createOscillator();
 
     const rumbleGain =
         context.createGain();
 
+
+    rumble.type =
+        "sine";
+
+    rumble.frequency.setValueAtTime(
+        48,
+        now
+    );
+
+    rumble.frequency.exponentialRampToValueAtTime(
+        28,
+        now + 5
+    );
+
+
     rumbleGain.gain.setValueAtTime(
         0.0001,
-        context.currentTime
+        now
     );
 
     rumbleGain.gain.exponentialRampToValueAtTime(
-        0.16,
-        context.currentTime + 0.15
+        0.11,
+        now + 0.25
     );
 
     rumbleGain.gain.exponentialRampToValueAtTime(
         0.0001,
-        context.currentTime + 5.5
+        now + 5.5
+    );
+
+
+    rumble.connect(
+        rumbleGain
     );
 
     rumbleGain.connect(
@@ -115,107 +222,176 @@ function playDoorMusic() {
     );
 
 
-    const rumble =
-        context.createOscillator();
-
-    rumble.type = "sine";
-
-    rumble.frequency.setValueAtTime(
-        52,
-        context.currentTime
+    rumble.start(
+        now
     );
-
-    rumble.frequency.exponentialRampToValueAtTime(
-        30,
-        context.currentTime + 5
-    );
-
-    rumble.connect(
-        rumbleGain
-    );
-
-    rumble.start();
 
     rumble.stop(
-        context.currentTime + 5.5
+        now + 5.5
     );
 
 
     /*
-        The Right Path three-note motif
+        FIRST SHOCK:
+        THREE SHARP DISSONANT STABS
     */
 
-    const notes = [
-        {
-            frequency: 146.83,
-            start: 0.45
-        },
-        {
-            frequency: 110,
-            start: 1.55
-        },
-        {
-            frequency: 87.31,
-            start: 2.7
-        }
-    ];
+    createStringStab(
+        context,
+        740,
+        now + 0.55,
+        0.16
+    );
+
+    createStringStab(
+        context,
+        830,
+        now + 0.78,
+        0.15
+    );
+
+    createStringStab(
+        context,
+        698,
+        now + 1.02,
+        0.16
+    );
 
 
-    notes.forEach(function (note) {
+    /*
+        SHORT SILENCE...
+        THEN ANOTHER UNEASY HIT
+    */
 
-        const oscillator =
-            context.createOscillator();
+    createStringStab(
+        context,
+        932,
+        now + 1.9,
+        0.13
+    );
 
-        const gain =
-            context.createGain();
-
-
-        oscillator.type =
-            "triangle";
-
-        oscillator.frequency.value =
-            note.frequency;
-
-
-        gain.gain.setValueAtTime(
-            0.0001,
-            context.currentTime +
-            note.start
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.12,
-            context.currentTime +
-            note.start +
-            0.08
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.0001,
-            context.currentTime +
-            note.start +
-            1.8
-        );
+    createStringStab(
+        context,
+        784,
+        now + 2.08,
+        0.12
+    );
 
 
-        oscillator.connect(
-            gain
-        );
+    /*
+        SUSTAINED HAUNTING HIGH NOTE
+    */
 
-        gain.connect(
-            context.destination
-        );
+    const highTone =
+        context.createOscillator();
+
+    const highGain =
+        context.createGain();
+
+    const highFilter =
+        context.createBiquadFilter();
 
 
-        oscillator.start(
-            context.currentTime +
-            note.start
-        );
+    highTone.type =
+        "triangle";
 
-        oscillator.stop(
-            context.currentTime +
-            note.start +
-            2
-        );
-    });
+    highTone.frequency.value =
+        622.25;
+
+
+    highFilter.type =
+        "lowpass";
+
+    highFilter.frequency.value =
+        1600;
+
+
+    highGain.gain.setValueAtTime(
+        0.0001,
+        now + 2.45
+    );
+
+    highGain.gain.exponentialRampToValueAtTime(
+        0.065,
+        now + 2.8
+    );
+
+    highGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 5.2
+    );
+
+
+    highTone.connect(
+        highFilter
+    );
+
+    highFilter.connect(
+        highGain
+    );
+
+    highGain.connect(
+        context.destination
+    );
+
+
+    highTone.start(
+        now + 2.45
+    );
+
+    highTone.stop(
+        now + 5.3
+    );
+
+
+    /*
+        LOW DISSONANT NOTE UNDERNEATH
+    */
+
+    const lowTone =
+        context.createOscillator();
+
+    const lowGain =
+        context.createGain();
+
+
+    lowTone.type =
+        "triangle";
+
+    lowTone.frequency.value =
+        73.42;
+
+
+    lowGain.gain.setValueAtTime(
+        0.0001,
+        now + 2.4
+    );
+
+    lowGain.gain.exponentialRampToValueAtTime(
+        0.08,
+        now + 2.75
+    );
+
+    lowGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 5.3
+    );
+
+
+    lowTone.connect(
+        lowGain
+    );
+
+    lowGain.connect(
+        context.destination
+    );
+
+
+    lowTone.start(
+        now + 2.4
+    );
+
+    lowTone.stop(
+        now + 5.4
+    );
 }
