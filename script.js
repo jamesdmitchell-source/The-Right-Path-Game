@@ -1,73 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /*
-        MAIN SCREEN ELEMENTS
+        MAIN ELEMENTS
     */
 
-    const screens =
-        document.querySelectorAll(".screen");
+    const screens = document.querySelectorAll(".screen");
 
-    const titleScreen =
-        document.getElementById("titleScreen");
+    const titleScreen = document.getElementById("titleScreen");
+    const introScreen = document.getElementById("introScreen");
+    const levelScreen = document.getElementById("levelScreen");
+    const deathScreen = document.getElementById("deathScreen");
+    const successScreen = document.getElementById("successScreen");
 
-    const introScreen =
-        document.getElementById("introScreen");
+    const startButton = document.getElementById("startButton");
+    const retryButton = document.getElementById("retryButton");
+    const continueButton = document.getElementById("continueButton");
 
-    const levelScreen =
-        document.getElementById("levelScreen");
+    const deathMessage = document.getElementById("deathMessage");
+    const successLabel = document.getElementById("successLabel");
+    const successTitle = document.getElementById("successTitle");
+    const successMessage = document.getElementById("successMessage");
 
-    const deathScreen =
-        document.getElementById("deathScreen");
+    const introText = document.getElementById("introText");
+    const curatorMessage = document.getElementById("curatorMessage");
 
-    const successScreen =
-        document.getElementById("successScreen");
+    const levelHeader = document.querySelector(".level-header");
+    const observationText = document.querySelector(".observation");
+    const clueText = document.querySelector("blockquote");
+    const questionTitle = document.querySelector(".room h2");
 
-    const startButton =
-        document.getElementById("startButton");
+    const questionText = document.querySelector(
+        ".room > p:not(.observation):not(.curator-message)"
+    );
 
-    const retryButton =
-        document.getElementById("retryButton");
-
-    const continueButton =
-        document.getElementById("continueButton");
-
-    const deathMessage =
-        document.getElementById("deathMessage");
-
-    const successLabel =
-        document.getElementById("successLabel");
-
-    const successTitle =
-        document.getElementById("successTitle");
-
-    const successMessage =
-        document.getElementById("successMessage");
-
-    const introText =
-        document.getElementById("introText");
-
-    const curatorMessage =
-        document.getElementById("curatorMessage");
-
-    const levelHeader =
-        document.querySelector(".level-header");
-
-    const observationText =
-        document.querySelector(".observation");
-
-    const clueText =
-        document.querySelector("blockquote");
-
-    const questionTitle =
-        document.querySelector(".room h2");
-
-    const questionText =
-        document.querySelector(
-            ".room > p:not(.observation):not(.curator-message)"
-        );
-
-    const choicesContainer =
-        document.querySelector(".choices");
+    const choicesContainer = document.querySelector(".choices");
 
 
     /*
@@ -75,28 +41,21 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     let currentLevelIndex = 0;
-
-    let investigatedIds =
-        new Set();
-
+    let investigatedIds = new Set();
     let journalEntries = [];
-
     let puzzleSolved = false;
-
     let keypadEntry = "";
+    let transitionRunning = false;
 
 
     /*
-        ELIAS VOICE
+        CURATOR VOICE
     */
 
     let curatorVoice = null;
 
-    let selectedVoiceName =
-        localStorage.getItem(
-            "rightPathCuratorVoice"
-        ) || "";
-
+    const selectedVoiceName =
+        localStorage.getItem("rightPathCuratorVoice") || "";
 
     const introLines = [
         "Can you hear me?",
@@ -112,15 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
         INVESTIGATION PANEL
     */
 
-    const investigationPanel =
-        document.createElement("section");
+    const investigationPanel = document.createElement("section");
 
-    investigationPanel.className =
-        "investigation-panel";
+    investigationPanel.className = "investigation-panel";
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
-
             <span>INVESTIGATE</span>
 
             <button
@@ -130,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
             >
                 Journal
             </button>
-
         </div>
 
         <div
@@ -158,14 +113,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        KEYPAD PUZZLE
+        KEYPAD PANEL
     */
 
-    const puzzlePanel =
-        document.createElement("section");
+    const puzzlePanel = document.createElement("section");
 
-    puzzlePanel.className =
-        "puzzle-panel hidden-panel";
+    puzzlePanel.className = "puzzle-panel hidden-panel";
 
     puzzlePanel.innerHTML = `
         <p class="puzzle-label">
@@ -187,59 +140,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <div class="keypad-grid">
 
-            <button
-                class="keypad-number"
-                data-number="1"
-            >1</button>
+            <button class="keypad-number" data-number="1">1</button>
+            <button class="keypad-number" data-number="2">2</button>
+            <button class="keypad-number" data-number="3">3</button>
 
-            <button
-                class="keypad-number"
-                data-number="2"
-            >2</button>
+            <button class="keypad-number" data-number="4">4</button>
+            <button class="keypad-number" data-number="5">5</button>
+            <button class="keypad-number" data-number="6">6</button>
 
-            <button
-                class="keypad-number"
-                data-number="3"
-            >3</button>
-
-            <button
-                class="keypad-number"
-                data-number="4"
-            >4</button>
-
-            <button
-                class="keypad-number"
-                data-number="5"
-            >5</button>
-
-            <button
-                class="keypad-number"
-                data-number="6"
-            >6</button>
-
-            <button
-                class="keypad-number"
-                data-number="7"
-            >7</button>
-
-            <button
-                class="keypad-number"
-                data-number="8"
-            >8</button>
-
-            <button
-                class="keypad-number"
-                data-number="9"
-            >9</button>
+            <button class="keypad-number" data-number="7">7</button>
+            <button class="keypad-number" data-number="8">8</button>
+            <button class="keypad-number" data-number="9">9</button>
 
             <button id="keypadClear">
                 CLEAR
             </button>
 
-            <button
-                class="keypad-number"
-                data-number="0"
-            >0</button>
+            <button class="keypad-number" data-number="0">
+                0
+            </button>
 
             <button id="keypadEnter">
                 ENTER
@@ -263,20 +182,15 @@ document.addEventListener("DOMContentLoaded", function () {
         JOURNAL
     */
 
-    const journalOverlay =
-        document.createElement("div");
+    const journalOverlay = document.createElement("div");
 
-    journalOverlay.className =
-        "journal-overlay";
+    journalOverlay.className = "journal-overlay";
 
     journalOverlay.innerHTML = `
         <div class="journal-card">
 
             <div class="journal-topbar">
-
-                <span>
-                    SUBJECT 47 — JOURNAL
-                </span>
+                <span>SUBJECT 47 — JOURNAL</span>
 
                 <button
                     id="closeJournalButton"
@@ -285,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 >
                     Close
                 </button>
-
             </div>
 
             <div id="journalContent"></div>
@@ -293,9 +206,41 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-    document.body.appendChild(
-        journalOverlay
-    );
+    document.body.appendChild(journalOverlay);
+
+
+    /*
+        DOOR CINEMATIC
+    */
+
+    const doorTransition = document.createElement("div");
+
+    doorTransition.className = "door-transition";
+
+    doorTransition.innerHTML = `
+        <div class="door-scene">
+
+            <p class="door-status">
+                ACCESS CONFIRMED
+            </p>
+
+            <div class="steel-door">
+
+                <div class="door-left"></div>
+                <div class="door-right"></div>
+
+                <div class="door-light"></div>
+
+            </div>
+
+            <p class="door-message">
+                PROCEED
+            </p>
+
+        </div>
+    `;
+
+    document.body.appendChild(doorTransition);
 
 
     /*
@@ -303,64 +248,40 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     const investigationGrid =
-        document.getElementById(
-            "investigationGrid"
-        );
+        document.getElementById("investigationGrid");
 
     const evidenceCard =
-        document.getElementById(
-            "evidenceCard"
-        );
+        document.getElementById("evidenceCard");
 
     const evidenceProgress =
-        document.getElementById(
-            "evidenceProgress"
-        );
+        document.getElementById("evidenceProgress");
 
     const journalButton =
-        document.getElementById(
-            "journalButton"
-        );
+        document.getElementById("journalButton");
 
     const closeJournalButton =
-        document.getElementById(
-            "closeJournalButton"
-        );
+        document.getElementById("closeJournalButton");
 
     const journalContent =
-        document.getElementById(
-            "journalContent"
-        );
+        document.getElementById("journalContent");
 
     const puzzleTitle =
-        document.getElementById(
-            "puzzleTitle"
-        );
+        document.getElementById("puzzleTitle");
 
     const puzzleInstruction =
-        document.getElementById(
-            "puzzleInstruction"
-        );
+        document.getElementById("puzzleInstruction");
 
     const keypadDisplay =
-        document.getElementById(
-            "keypadDisplay"
-        );
+        document.getElementById("keypadDisplay");
 
     const keypadClear =
-        document.getElementById(
-            "keypadClear"
-        );
+        document.getElementById("keypadClear");
 
     const keypadEnter =
-        document.getElementById(
-            "keypadEnter"
-        );
+        document.getElementById("keypadEnter");
 
     const puzzleStatus =
-        document.getElementById(
-            "puzzleStatus"
-        );
+        document.getElementById("puzzleStatus");
 
 
     /*
@@ -368,34 +289,23 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     function wait(milliseconds) {
-
-        return new Promise(
-            function (resolve) {
-
-                setTimeout(
-                    resolve,
-                    milliseconds
-                );
-            }
-        );
+        return new Promise(function (resolve) {
+            setTimeout(resolve, milliseconds);
+        });
     }
 
 
     function showScreen(screen) {
 
-        screens.forEach(
-            function (item) {
+        screens.forEach(function (item) {
 
-                item.classList.remove(
-                    "active",
-                    "fade-out"
-                );
-            }
-        );
+            item.classList.remove(
+                "active",
+                "fade-out"
+            );
+        });
 
-        screen.classList.add(
-            "active"
-        );
+        screen.classList.add("active");
     }
 
 
@@ -404,9 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nextScreen
     ) {
 
-        currentScreen.classList.add(
-            "fade-out"
-        );
+        currentScreen.classList.add("fade-out");
 
         await wait(900);
 
@@ -415,40 +323,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        VOICE SYSTEM
+        CURATOR VOICE
     */
 
     function getEnglishVoices() {
 
-        if (
-            !("speechSynthesis" in window)
-        ) {
+        if (!("speechSynthesis" in window)) {
             return [];
         }
 
-        return window
-            .speechSynthesis
+        return window.speechSynthesis
             .getVoices()
-            .filter(
-                function (voice) {
+            .filter(function (voice) {
 
-                    return voice.lang
-                        .toLowerCase()
-                        .startsWith("en");
-                }
-            );
+                return voice.lang
+                    .toLowerCase()
+                    .startsWith("en");
+            });
     }
 
 
     function chooseCuratorVoice() {
 
-        const voices =
-            getEnglishVoices();
+        const voices = getEnglishVoices();
 
         if (!voices.length) {
-
             curatorVoice = null;
-
             return;
         }
 
@@ -456,68 +356,61 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectedVoiceName) {
 
             const savedVoice =
-                voices.find(
-                    function (voice) {
+                voices.find(function (voice) {
 
-                        return (
-                            voice.name ===
-                            selectedVoiceName
-                        );
-                    }
-                );
+                    return voice.name ===
+                        selectedVoiceName;
+                });
 
             if (savedVoice) {
 
-                curatorVoice =
-                    savedVoice;
+                curatorVoice = savedVoice;
 
                 return;
             }
         }
 
 
+        const preferredNames = [
+            "daniel",
+            "arthur",
+            "george",
+            "oliver"
+        ];
+
+
         curatorVoice =
-            voices.find(
-                function (voice) {
+            voices.find(function (voice) {
 
-                    const name =
-                        voice.name
-                            .toLowerCase();
+                const name =
+                    voice.name.toLowerCase();
 
-                    return (
-                        voice.lang
-                            .toLowerCase()
-                            .startsWith(
-                                "en-gb"
-                            ) &&
-                        (
-                            name.includes(
-                                "daniel"
-                            ) ||
-                            name.includes(
-                                "arthur"
-                            ) ||
-                            name.includes(
-                                "george"
-                            ) ||
-                            name.includes(
-                                "oliver"
-                            )
-                        )
-                    );
-                }
-            ) ||
-
-            voices.find(
-                function (voice) {
-
-                    return voice.lang
+                return (
+                    voice.lang
                         .toLowerCase()
-                        .startsWith(
-                            "en-gb"
-                        );
-                }
-            ) ||
+                        .startsWith("en-gb") &&
+
+                    preferredNames.some(
+                        function (preferred) {
+
+                            return name.includes(
+                                preferred
+                            );
+                        }
+                    )
+                );
+            })
+
+            ||
+
+            voices.find(function (voice) {
+
+                return voice.lang
+                    .toLowerCase()
+                    .startsWith("en-gb");
+            })
+
+            ||
 
             voices[0];
     }
@@ -526,13 +419,9 @@ document.addEventListener("DOMContentLoaded", function () {
     chooseCuratorVoice();
 
 
-    if (
-        "speechSynthesis" in window
-    ) {
+    if ("speechSynthesis" in window) {
 
-        window
-            .speechSynthesis
-            .onvoiceschanged =
+        window.speechSynthesis.onvoiceschanged =
             function () {
 
                 chooseCuratorVoice();
@@ -540,86 +429,103 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*
-        ELIAS SPEECH
-
-        IMPORTANT CHANGE:
-        Longer sentences now receive a longer
-        safety timeout.
-
-        Safari can no longer cut a long sentence
-        off simply because five seconds passed.
-    */
-
     function speakAsCurator(line) {
 
-        return new Promise(
-            function (resolve) {
+        return new Promise(function (resolve) {
 
-                let finished = false;
+            let finished = false;
 
 
-                function finish() {
+            function finish() {
 
-                    if (finished) {
-                        return;
+                if (finished) {
+                    return;
+                }
+
+                finished = true;
+
+                resolve();
+            }
+
+
+            const calculatedTime =
+                line.length * 140;
+
+
+            const safetyTime =
+                Math.min(
+                    15000,
+                    Math.max(
+                        7000,
+                        calculatedTime
+                    )
+                );
+
+
+            const safetyTimer =
+                setTimeout(function () {
+
+                    try {
+
+                        window
+                            .speechSynthesis
+                            .cancel();
+
+                    } catch (error) {
+
+                        // Ignore.
                     }
 
-                    finished = true;
+                    finish();
 
-                    resolve();
+                }, safetyTime);
+
+
+            if (!("speechSynthesis" in window)) {
+
+                clearTimeout(safetyTimer);
+
+                setTimeout(
+                    finish,
+                    1500
+                );
+
+                return;
+            }
+
+
+            try {
+
+                if (!curatorVoice) {
+
+                    chooseCuratorVoice();
                 }
 
 
-                /*
-                    Work out how long the sentence
-                    should reasonably be allowed.
+                window
+                    .speechSynthesis
+                    .cancel();
 
-                    Minimum: 7 seconds
-                    Maximum: 15 seconds
-                */
 
-                const calculatedTime =
-                    line.length * 140;
-
-                const safetyTime =
-                    Math.min(
-                        15000,
-                        Math.max(
-                            7000,
-                            calculatedTime
-                        )
+                const speech =
+                    new SpeechSynthesisUtterance(
+                        line
                     );
 
 
-                const safetyTimer =
-                    setTimeout(
-                        function () {
+                if (curatorVoice) {
 
-                            try {
-
-                                window
-                                    .speechSynthesis
-                                    .cancel();
-
-                            } catch (error) {
-
-                                // Ignore.
-                            }
-
-                            finish();
-
-                        },
-                        safetyTime
-                    );
+                    speech.voice =
+                        curatorVoice;
+                }
 
 
-                if (
-                    !(
-                        "speechSynthesis"
-                        in window
-                    )
-                ) {
+                speech.rate = 0.64;
+                speech.pitch = 0.45;
+                speech.volume = 1;
+
+
+                speech.onend = function () {
 
                     clearTimeout(
                         safetyTimer
@@ -627,79 +533,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(
                         finish,
-                        1800
+                        400
                     );
-
-                    return;
-                }
+                };
 
 
-                try {
-
-                    if (!curatorVoice) {
-
-                        chooseCuratorVoice();
-                    }
-
-
-                    window
-                        .speechSynthesis
-                        .cancel();
-
-
-                    const speech =
-                        new SpeechSynthesisUtterance(
-                            line
-                        );
-
-
-                    if (curatorVoice) {
-
-                        speech.voice =
-                            curatorVoice;
-                    }
-
-
-                    speech.rate = 0.64;
-                    speech.pitch = 0.45;
-                    speech.volume = 1;
-
-
-                    speech.onend =
-                        function () {
-
-                            clearTimeout(
-                                safetyTimer
-                            );
-
-                            setTimeout(
-                                finish,
-                                400
-                            );
-                        };
-
-
-                    speech.onerror =
-                        function () {
-
-                            clearTimeout(
-                                safetyTimer
-                            );
-
-                            setTimeout(
-                                finish,
-                                700
-                            );
-                        };
-
-
-                    window
-                        .speechSynthesis
-                        .speak(
-                            speech
-                        );
-
-                } catch (error) {
+                speech.onerror = function () {
 
                     clearTimeout(
                         safetyTimer
@@ -709,36 +548,44 @@ document.addEventListener("DOMContentLoaded", function () {
                         finish,
                         700
                     );
-                }
+                };
+
+
+                window
+                    .speechSynthesis
+                    .speak(speech);
+
+
+            } catch (error) {
+
+                clearTimeout(
+                    safetyTimer
+                );
+
+                setTimeout(
+                    finish,
+                    700
+                );
             }
-        );
+        });
     }
 
 
     /*
-        INTRODUCTION
+        INTRO
     */
 
-    async function showDialogueLine(
-        line
-    ) {
+    async function showDialogueLine(line) {
 
-        introText.classList.add(
-            "hidden"
-        );
+        introText.classList.add("hidden");
 
         await wait(400);
 
-        introText.textContent =
-            line;
+        introText.textContent = line;
 
-        introText.classList.remove(
-            "hidden"
-        );
+        introText.classList.remove("hidden");
 
-        await speakAsCurator(
-            line
-        );
+        await speakAsCurator(line);
 
         await wait(250);
     }
@@ -756,20 +603,13 @@ document.addEventListener("DOMContentLoaded", function () {
         await wait(1200);
 
 
-        for (
-            const line
-            of introLines
-        ) {
+        for (const line of introLines) {
 
-            await showDialogueLine(
-                line
-            );
+            await showDialogueLine(line);
         }
 
 
-        introText.classList.add(
-            "hidden"
-        );
+        introText.classList.add("hidden");
 
         await wait(800);
 
@@ -798,10 +638,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 function (entry) {
 
                     return (
-                        entry.level ===
-                            level.number &&
-                        entry.id ===
-                            investigation.id
+                        entry.level === level.number &&
+                        entry.id === investigation.id
                     );
                 }
             );
@@ -811,14 +649,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             journalEntries.push({
 
-                level:
-                    level.number,
+                level: level.number,
 
-                id:
-                    investigation.id,
+                id: investigation.id,
 
-                name:
-                    investigation.name,
+                name: investigation.name,
 
                 description:
                     investigation.description
@@ -829,9 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderJournal() {
 
-        if (
-            journalEntries.length === 0
-        ) {
+        if (!journalEntries.length) {
 
             journalContent.innerHTML =
                 "<p>No evidence recorded yet.</p>";
@@ -846,77 +679,68 @@ document.addEventListener("DOMContentLoaded", function () {
         journalEntries.forEach(
             function (entry) {
 
-                if (
-                    !grouped[
-                        entry.level
-                    ]
-                ) {
+                if (!grouped[entry.level]) {
 
-                    grouped[
-                        entry.level
-                    ] = [];
+                    grouped[entry.level] = [];
                 }
 
-                grouped[
-                    entry.level
-                ].push(entry);
+                grouped[entry.level]
+                    .push(entry);
             }
         );
 
 
         journalContent.innerHTML =
             Object.keys(grouped)
-                .map(
-                    function (
-                        levelNumber
-                    ) {
 
-                        const entries =
-                            grouped[
-                                levelNumber
-                            ]
-                            .map(
-                                function (
-                                    entry
-                                ) {
+            .map(function (levelNumber) {
 
-                                    return `
-                                        <article class="journal-entry">
+                const entries =
+                    grouped[levelNumber]
 
-                                            <h4>
-                                                ${entry.name}
-                                            </h4>
-
-                                            <p>
-                                                ${entry.description}
-                                            </p>
-
-                                        </article>
-                                    `;
-                                }
-                            )
-                            .join("");
-
+                    .map(function (entry) {
 
                         return `
-                            <section class="journal-level">
+                            <article
+                                class="journal-entry"
+                            >
 
-                                <h3>
-                                    Room ${levelNumber}
-                                </h3>
+                                <h4>
+                                    ${entry.name}
+                                </h4>
 
-                                ${entries}
+                                <p>
+                                    ${entry.description}
+                                </p>
 
-                            </section>
+                            </article>
                         `;
-                    }
-                )
-                .join("");
+                    })
+
+                    .join("");
+
+
+                return `
+                    <section
+                        class="journal-level"
+                    >
+
+                        <h3>
+                            Room ${levelNumber}
+                        </h3>
+
+                        ${entries}
+
+                    </section>
+                `;
+            })
+
+            .join("");
     }
 
 
     /*
-        INVESTIGATION
+        LEVEL STATE
     */
 
     function resetLevelState() {
@@ -928,76 +752,81 @@ document.addEventListener("DOMContentLoaded", function () {
 
         keypadEntry = "";
 
+        transitionRunning = false;
+
+
         evidenceCard.textContent =
             "Select an object to examine it.";
+
 
         evidenceProgress.textContent =
             "";
 
+
         puzzleStatus.textContent =
             "";
+
 
         puzzleStatus.classList.remove(
             "correct",
             "wrong"
         );
 
+
         puzzlePanel.classList.remove(
             "puzzle-solved"
         );
+
+
+        doorTransition.classList.remove(
+            "active",
+            "opening"
+        );
+
 
         updateKeypadDisplay();
     }
 
 
+    /*
+        INVESTIGATION
+    */
+
     function updateKeypadDisplay() {
 
-        const characters =
+        keypadDisplay.textContent =
             keypadEntry
-                .padEnd(
-                    4,
-                    "_"
-                )
+                .padEnd(4, "_")
                 .split("")
                 .join(" ");
-
-        keypadDisplay.textContent =
-            characters;
     }
 
 
-    function updateLevelProgress(
-        level
-    ) {
+    function updateLevelProgress(level) {
 
         const required =
-            level
-                .requiredInvestigations
-                || 0;
+            level.requiredInvestigations || 0;
+
 
         const found =
             investigatedIds.size;
 
 
-        const hasInvestigation =
+        const hasInvestigations =
             level.investigations &&
-            level.investigations.length;
+            level.investigations.length > 0;
 
 
-        if (hasInvestigation) {
+        if (hasInvestigations) {
 
-            if (
-                found >= required
-            ) {
+            if (found >= required) {
 
-                evidenceProgress
-                    .textContent =
+                evidenceProgress.textContent =
                     "Enough evidence gathered.";
 
             } else {
 
-                evidenceProgress
-                    .textContent =
+                evidenceProgress.textContent =
                     "Evidence examined: " +
                     found +
                     " / " +
@@ -1005,11 +834,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-
-        /*
-            Reveal the puzzle once enough
-            evidence has been examined.
-        */
 
         if (
             level.puzzle &&
@@ -1023,11 +847,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /*
-            Door choices stay locked until
-            the keypad has been solved.
-        */
-
         const choiceButtons =
             choicesContainer
                 .querySelectorAll(
@@ -1035,30 +854,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-        const choicesUnlocked =
-            level.puzzle
-                ? puzzleSolved
-                : (
-                    !hasInvestigation ||
-                    found >= required
+        /*
+            IMPORTANT FIX:
+
+            After puzzleSolved becomes true,
+            ALL choice buttons are explicitly
+            enabled.
+        */
+
+        if (level.puzzle) {
+
+            choiceButtons.forEach(
+                function (button) {
+
+                    button.disabled =
+                        !puzzleSolved;
+                }
+            );
+
+
+            choicesContainer
+                .classList
+                .toggle(
+                    "choices-locked",
+                    !puzzleSolved
                 );
 
+        } else {
 
-        choiceButtons.forEach(
-            function (button) {
-
-                button.disabled =
-                    !choicesUnlocked;
-            }
-        );
+            const unlocked =
+                !hasInvestigations ||
+                found >= required;
 
 
-        choicesContainer
-            .classList
-            .toggle(
-                "choices-locked",
-                !choicesUnlocked
+            choiceButtons.forEach(
+                function (button) {
+
+                    button.disabled =
+                        !unlocked;
+                }
             );
+
+
+            choicesContainer
+                .classList
+                .toggle(
+                    "choices-locked",
+                    !unlocked
+                );
+        }
     }
 
 
@@ -1102,9 +946,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        updateLevelProgress(
-            level
-        );
+        updateLevelProgress(level);
 
 
         if (
@@ -1115,6 +957,7 @@ document.addEventListener("DOMContentLoaded", function () {
             curatorMessage.textContent =
                 investigation.curator;
 
+
             await speakAsCurator(
                 investigation.curator
             );
@@ -1122,12 +965,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function renderInvestigations(
-        level
-    ) {
+    function renderInvestigations(level) {
 
-        investigationGrid.innerHTML =
-            "";
+        investigationGrid.innerHTML = "";
 
 
         if (
@@ -1153,9 +993,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         level.investigations.forEach(
-            function (
-                investigation
-            ) {
+            function (investigation) {
 
                 const button =
                     document
@@ -1168,11 +1006,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     "investigation-button";
 
 
+                button.type = "button";
+
+
                 button.innerHTML = `
                     <span
                         class="investigation-icon"
                     >
-                        ${investigation.icon}
+                        ${investigation.icon || "?"}
                     </span>
 
                     <span>
@@ -1207,14 +1048,11 @@ document.addEventListener("DOMContentLoaded", function () {
         KEYPAD
     */
 
-    function setupPuzzle(
-        level
-    ) {
+    function setupPuzzle(level) {
 
         keypadEntry = "";
 
-        puzzleStatus.textContent =
-            "";
+        puzzleStatus.textContent = "";
 
         updateKeypadDisplay();
 
@@ -1238,8 +1076,7 @@ document.addEventListener("DOMContentLoaded", function () {
             level.puzzle.title;
 
 
-        puzzleInstruction
-            .textContent =
+        puzzleInstruction.textContent =
             level.puzzle.instruction;
     }
 
@@ -1247,9 +1084,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function submitKeypad() {
 
         const level =
-            levels[
-                currentLevelIndex
-            ];
+            levels[currentLevelIndex];
 
 
         if (!level.puzzle) {
@@ -1280,19 +1115,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             /*
-                Unlock the doors immediately.
+                THIS NOW EXPLICITLY
+                UNLOCKS BOTH DOORS.
             */
 
-            updateLevelProgress(
-                level
-            );
+            updateLevelProgress(level);
 
-
-            /*
-                IMPORTANT FIX:
-                Put Elias's words on screen
-                BEFORE he begins speaking.
-            */
 
             curatorMessage.textContent =
                 level
@@ -1300,7 +1128,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .curatorSuccess;
 
 
-            await wait(300);
+            await wait(250);
 
 
             await speakAsCurator(
@@ -1310,9 +1138,48 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
+            /*
+                Retract the control panel
+                so the doors are clearly
+                available.
+            */
+
+            await wait(400);
+
+
             puzzlePanel.classList.add(
-                "puzzle-solved"
+                "hidden-panel"
             );
+
+
+            evidenceProgress.textContent =
+                "The doors are unlocked. Choose carefully.";
+
+
+            /*
+                One final explicit enable,
+                just to ensure Safari cannot
+                leave them disabled.
+            */
+
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.disabled =
+                            false;
+                    }
+                );
+
+
+            choicesContainer
+                .classList
+                .remove(
+                    "choices-locked"
+                );
 
 
         } else {
@@ -1333,6 +1200,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             keypadEntry = "";
 
+
             updateKeypadDisplay();
         }
     }
@@ -1350,16 +1218,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     function () {
 
                         if (
-                            keypadEntry
-                                .length >= 4
+                            keypadEntry.length >=
+                            4
                         ) {
                             return;
                         }
 
 
                         keypadEntry +=
-                            button.dataset
-                                .number;
+                            button.dataset.number;
 
 
                         updateKeypadDisplay();
@@ -1375,8 +1242,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             keypadEntry = "";
 
-            puzzleStatus.textContent =
-                "";
+            puzzleStatus.textContent = "";
 
             puzzleStatus.classList.remove(
                 "correct",
@@ -1395,15 +1261,237 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        LEVEL LOADING
+        CREEPY DOOR SOUND
+    */
+
+    function playDoorSound() {
+
+        try {
+
+            const AudioContextClass =
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+
+            if (!AudioContextClass) {
+                return;
+            }
+
+
+            const context =
+                new AudioContextClass();
+
+
+            const master =
+                context.createGain();
+
+
+            master.gain.setValueAtTime(
+                0.0001,
+                context.currentTime
+            );
+
+
+            master.gain.exponentialRampToValueAtTime(
+                0.12,
+                context.currentTime + 0.3
+            );
+
+
+            master.gain.exponentialRampToValueAtTime(
+                0.0001,
+                context.currentTime + 5
+            );
+
+
+            master.connect(
+                context.destination
+            );
+
+
+            /*
+                Deep industrial tone.
+            */
+
+            const bass =
+                context.createOscillator();
+
+
+            bass.type = "sine";
+
+
+            bass.frequency.setValueAtTime(
+                48,
+                context.currentTime
+            );
+
+
+            bass.frequency.exponentialRampToValueAtTime(
+                32,
+                context.currentTime + 4.5
+            );
+
+
+            bass.connect(master);
+
+
+            bass.start();
+
+
+            bass.stop(
+                context.currentTime + 5
+            );
+
+
+            /*
+                Three-note eerie motif.
+            */
+
+            const notes = [
+                {
+                    frequency: 146.83,
+                    delay: 0.4
+                },
+
+                {
+                    frequency: 110,
+                    delay: 1.45
+                },
+
+                {
+                    frequency: 87.31,
+                    delay: 2.5
+                }
+            ];
+
+
+            notes.forEach(
+                function (note) {
+
+                    const oscillator =
+                        context.createOscillator();
+
+
+                    const gain =
+                        context.createGain();
+
+
+                    oscillator.type =
+                        "sine";
+
+
+                    oscillator.frequency.value =
+                        note.frequency;
+
+
+                    gain.gain.setValueAtTime(
+                        0.0001,
+                        context.currentTime +
+                        note.delay
+                    );
+
+
+                    gain.gain.exponentialRampToValueAtTime(
+                        0.045,
+                        context.currentTime +
+                        note.delay +
+                        0.1
+                    );
+
+
+                    gain.gain.exponentialRampToValueAtTime(
+                        0.0001,
+                        context.currentTime +
+                        note.delay +
+                        1.5
+                    );
+
+
+                    oscillator.connect(
+                        gain
+                    );
+
+
+                    gain.connect(
+                        context.destination
+                    );
+
+
+                    oscillator.start(
+                        context.currentTime +
+                        note.delay
+                    );
+
+
+                    oscillator.stop(
+                        context.currentTime +
+                        note.delay +
+                        1.6
+                    );
+                }
+            );
+
+
+        } catch (error) {
+
+            console.log(
+                "Door sound unavailable."
+            );
+        }
+    }
+
+
+    /*
+        DOOR OPENING CINEMATIC
+    */
+
+    async function playDoorOpening() {
+
+        if (transitionRunning) {
+            return;
+        }
+
+
+        transitionRunning = true;
+
+
+        doorTransition.classList.add(
+            "active"
+        );
+
+
+        playDoorSound();
+
+
+        await wait(900);
+
+
+        doorTransition.classList.add(
+            "opening"
+        );
+
+
+        await wait(4200);
+
+
+        doorTransition.classList.remove(
+            "active",
+            "opening"
+        );
+
+
+        transitionRunning = false;
+    }
+
+
+    /*
+        LOAD LEVEL
     */
 
     function loadLevel() {
 
         const level =
-            levels[
-                currentLevelIndex
-            ];
+            levels[currentLevelIndex];
 
 
         resetLevelState();
@@ -1432,12 +1520,10 @@ document.addEventListener("DOMContentLoaded", function () {
             level.question;
 
 
-        curatorMessage.textContent =
-            "";
+        curatorMessage.textContent = "";
 
 
-        choicesContainer.innerHTML =
-            "";
+        choicesContainer.innerHTML = "";
 
 
         level.choices.forEach(
@@ -1454,6 +1540,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     "choice";
 
 
+                button.type = "button";
+
+
                 button.textContent =
                     choice.text;
 
@@ -1461,6 +1550,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.addEventListener(
                     "click",
                     function () {
+
+                        /*
+                            Extra protection:
+                            do nothing until puzzle
+                            has been solved.
+                        */
+
+                        if (
+                            level.puzzle &&
+                            !puzzleSolved
+                        ) {
+                            return;
+                        }
+
 
                         handleChoice(
                             choice
@@ -1477,34 +1580,27 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        renderInvestigations(
-            level
-        );
+        renderInvestigations(level);
 
+        setupPuzzle(level);
 
-        setupPuzzle(
-            level
-        );
-
-
-        updateLevelProgress(
-            level
-        );
+        updateLevelProgress(level);
     }
 
 
     /*
-        DOOR CHOICES
+        DOOR CHOICE
     */
 
-    async function handleChoice(
-        choice
-    ) {
+    async function handleChoice(choice) {
 
         const level =
-            levels[
-                currentLevelIndex
-            ];
+            levels[currentLevelIndex];
+
+
+        if (transitionRunning) {
+            return;
+        }
 
 
         const choiceButtons =
@@ -1523,6 +1619,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (choice.correct) {
+
+            /*
+                Level 1 gets the special
+                door-opening cinematic.
+            */
+
+            if (level.number === 1) {
+
+                curatorMessage.textContent =
+                    "The lock releases.";
+
+
+                await wait(500);
+
+
+                await playDoorOpening();
+            }
+
 
             successLabel.textContent =
                 "LEVEL " +
@@ -1577,37 +1691,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL BUTTONS
+        JOURNAL
     */
 
-    journalButton
-        .addEventListener(
-            "click",
-            function () {
+    journalButton.addEventListener(
+        "click",
+        function () {
 
-                renderJournal();
+            renderJournal();
 
-                journalOverlay
-                    .classList
-                    .add(
-                        "open"
-                    );
-            }
-        );
+            journalOverlay.classList.add(
+                "open"
+            );
+        }
+    );
 
 
-    closeJournalButton
-        .addEventListener(
-            "click",
-            function () {
+    closeJournalButton.addEventListener(
+        "click",
+        function () {
 
-                journalOverlay
-                    .classList
-                    .remove(
-                        "open"
-                    );
-            }
-        );
+            journalOverlay.classList.remove(
+                "open"
+            );
+        }
+    );
 
 
     journalOverlay.addEventListener(
@@ -1619,11 +1727,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 journalOverlay
             ) {
 
-                journalOverlay
-                    .classList
-                    .remove(
-                        "open"
-                    );
+                journalOverlay.classList.remove(
+                    "open"
+                );
             }
         }
     );
@@ -1641,8 +1747,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (
                     typeof
-                    startAmbientSound
-                    === "function"
+                    startAmbientSound ===
+                    "function"
                 ) {
 
                     startAmbientSound();
@@ -1686,43 +1792,42 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    continueButton
-        .addEventListener(
-            "click",
-            function () {
+    continueButton.addEventListener(
+        "click",
+        function () {
 
-                currentLevelIndex += 1;
-
-
-                if (
-                    currentLevelIndex >=
-                    levels.length
-                ) {
-
-                    alert(
-                        "You have completed the current prototype."
-                    );
+            currentLevelIndex += 1;
 
 
-                    currentLevelIndex = 0;
+            if (
+                currentLevelIndex >=
+                levels.length
+            ) {
+
+                alert(
+                    "You have completed the current prototype."
+                );
 
 
-                    showScreen(
-                        titleScreen
-                    );
-
-
-                    return;
-                }
-
-
-                loadLevel();
+                currentLevelIndex = 0;
 
 
                 showScreen(
-                    levelScreen
+                    titleScreen
                 );
+
+
+                return;
             }
-        );
+
+
+            loadLevel();
+
+
+            showScreen(
+                levelScreen
+            );
+        }
+    );
 
 });
