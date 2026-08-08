@@ -376,3 +376,66 @@ blockquote {
     color: #8f8f8f;
     line-height: 1.6;
 }
+.puzzle-panel {
+    width: min(430px, 100%);
+    margin: 30px auto;
+    padding: 24px;
+    border: 1px solid #444;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.puzzle-panel.hidden-panel {
+    display: none;
+}
+
+.puzzle-label {
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.puzzle-panel h3 {
+    margin: 10px 0;
+    letter-spacing: 3px;
+}
+
+.keypad-display {
+    margin: 22px 0;
+    padding: 17px;
+    border: 1px solid #555;
+    background: #020202;
+    color: #d8d8d8;
+    font-family: monospace;
+    font-size: 30px;
+    letter-spacing: 8px;
+}
+
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.keypad-grid button {
+    min-width: 0;
+    padding: 14px 8px;
+}
+
+.puzzle-status {
+    min-height: 24px;
+    margin-top: 18px;
+    letter-spacing: 2px;
+}
+
+.puzzle-status.correct {
+    color: #a7d9a7;
+}
+
+.puzzle-status.wrong {
+    color: #d36c6c;
+}
+
+.puzzle-solved {
+    border-color: #777;
+    opacity: 0.7;
+}
