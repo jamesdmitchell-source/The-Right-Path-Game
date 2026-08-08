@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
+
             <span>INVESTIGATE</span>
 
             <button
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             >
                 Journal
             </button>
+
         </div>
 
         <div
@@ -190,7 +192,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="journal-card">
 
             <div class="journal-topbar">
-                <span>SUBJECT 47 — JOURNAL</span>
+
+                <span>
+                    SUBJECT 47 — JOURNAL
+                </span>
 
                 <button
                     id="closeJournalButton"
@@ -199,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 >
                     Close
                 </button>
+
             </div>
 
             <div id="journalContent"></div>
@@ -227,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="steel-door">
 
                 <div class="door-left"></div>
+
                 <div class="door-right"></div>
 
                 <div class="door-light"></div>
@@ -289,8 +296,11 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     function wait(milliseconds) {
+
         return new Promise(function (resolve) {
+
             setTimeout(resolve, milliseconds);
+
         });
     }
 
@@ -303,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "active",
                 "fade-out"
             );
+
         });
 
         screen.classList.add("active");
@@ -329,7 +340,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function getEnglishVoices() {
 
         if (!("speechSynthesis" in window)) {
+
             return [];
+
         }
 
         return window.speechSynthesis
@@ -339,6 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return voice.lang
                     .toLowerCase()
                     .startsWith("en");
+
             });
     }
 
@@ -348,7 +362,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const voices = getEnglishVoices();
 
         if (!voices.length) {
+
             curatorVoice = null;
+
             return;
         }
 
@@ -358,9 +374,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const savedVoice =
                 voices.find(function (voice) {
 
-                    return voice.name ===
-                        selectedVoiceName;
+                    return (
+                        voice.name ===
+                        selectedVoiceName
+                    );
+
                 });
+
 
             if (savedVoice) {
 
@@ -385,10 +405,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const name =
                     voice.name.toLowerCase();
 
+
                 return (
+
                     voice.lang
                         .toLowerCase()
-                        .startsWith("en-gb") &&
+                        .startsWith("en-gb")
+
+                    &&
 
                     preferredNames.some(
                         function (preferred) {
@@ -396,9 +420,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             return name.includes(
                                 preferred
                             );
+
                         }
                     )
+
                 );
+
             })
 
             ||
@@ -408,6 +435,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return voice.lang
                     .toLowerCase()
                     .startsWith("en-gb");
+
             })
 
             ||
@@ -425,6 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 chooseCuratorVoice();
+
             };
     }
 
@@ -439,7 +468,9 @@ document.addEventListener("DOMContentLoaded", function () {
             function finish() {
 
                 if (finished) {
+
                     return;
+
                 }
 
                 finished = true;
@@ -463,27 +494,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             const safetyTimer =
-                setTimeout(function () {
+                setTimeout(
+                    function () {
 
-                    try {
+                        try {
 
-                        window
-                            .speechSynthesis
-                            .cancel();
+                            window
+                                .speechSynthesis
+                                .cancel();
 
-                    } catch (error) {
+                        } catch (error) {
 
-                        // Ignore.
-                    }
+                            // Ignore.
 
-                    finish();
+                        }
 
-                }, safetyTime);
+                        finish();
+
+                    },
+                    safetyTime
+                );
 
 
             if (!("speechSynthesis" in window)) {
 
-                clearTimeout(safetyTimer);
+                clearTimeout(
+                    safetyTimer
+                );
 
                 setTimeout(
                     finish,
@@ -499,6 +536,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!curatorVoice) {
 
                     chooseCuratorVoice();
+
                 }
 
 
@@ -517,43 +555,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     speech.voice =
                         curatorVoice;
+
                 }
 
 
                 speech.rate = 0.64;
+
                 speech.pitch = 0.45;
+
                 speech.volume = 1;
 
 
-                speech.onend = function () {
+                speech.onend =
+                    function () {
 
-                    clearTimeout(
-                        safetyTimer
-                    );
+                        clearTimeout(
+                            safetyTimer
+                        );
 
-                    setTimeout(
-                        finish,
-                        400
-                    );
-                };
+                        setTimeout(
+                            finish,
+                            400
+                        );
+
+                    };
 
 
-                speech.onerror = function () {
+                speech.onerror =
+                    function () {
 
-                    clearTimeout(
-                        safetyTimer
-                    );
+                        clearTimeout(
+                            safetyTimer
+                        );
 
-                    setTimeout(
-                        finish,
-                        700
-                    );
-                };
+                        setTimeout(
+                            finish,
+                            700
+                        );
+
+                    };
 
 
                 window
                     .speechSynthesis
-                    .speak(speech);
+                    .speak(
+                        speech
+                    );
 
 
             } catch (error) {
@@ -566,26 +613,40 @@ document.addEventListener("DOMContentLoaded", function () {
                     finish,
                     700
                 );
+
             }
+
         });
     }
 
 
     /*
-        INTRO
+        INTRODUCTION
     */
 
     async function showDialogueLine(line) {
 
-        introText.classList.add("hidden");
+        introText.classList.add(
+            "hidden"
+        );
+
 
         await wait(400);
 
-        introText.textContent = line;
 
-        introText.classList.remove("hidden");
+        introText.textContent =
+            line;
 
-        await speakAsCurator(line);
+
+        introText.classList.remove(
+            "hidden"
+        );
+
+
+        await speakAsCurator(
+            line
+        );
+
 
         await wait(250);
     }
@@ -593,34 +654,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function playIntroduction() {
 
-        startButton.disabled = true;
+        startButton.disabled =
+            true;
+
 
         await fadeToScreen(
             titleScreen,
             introScreen
         );
 
+
         await wait(1200);
 
 
         for (const line of introLines) {
 
-            await showDialogueLine(line);
+            await showDialogueLine(
+                line
+            );
+
         }
 
 
-        introText.classList.add("hidden");
+        introText.classList.add(
+            "hidden"
+        );
+
 
         await wait(800);
 
+
         loadLevel();
+
 
         await fadeToScreen(
             introScreen,
             levelScreen
         );
 
-        startButton.disabled = false;
+
+        startButton.disabled =
+            false;
     }
 
 
@@ -638,9 +712,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 function (entry) {
 
                     return (
-                        entry.level === level.number &&
-                        entry.id === investigation.id
+
+                        entry.level ===
+                            level.number
+
+                        &&
+
+                        entry.id ===
+                            investigation.id
+
                     );
+
                 }
             );
 
@@ -649,15 +731,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             journalEntries.push({
 
-                level: level.number,
+                level:
+                    level.number,
 
-                id: investigation.id,
+                id:
+                    investigation.id,
 
-                name: investigation.name,
+                name:
+                    investigation.name,
 
                 description:
                     investigation.description
+
             });
+
         }
     }
 
@@ -682,10 +769,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!grouped[entry.level]) {
 
                     grouped[entry.level] = [];
+
                 }
+
 
                 grouped[entry.level]
                     .push(entry);
+
             }
         );
 
@@ -701,9 +791,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .map(function (entry) {
 
                         return `
-                            <article
-                                class="journal-entry"
-                            >
+                            <article class="journal-entry">
 
                                 <h4>
                                     ${entry.name}
@@ -715,15 +803,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             </article>
                         `;
+
                     })
 
                     .join("");
 
 
                 return `
-                    <section
-                        class="journal-level"
-                    >
+                    <section class="journal-level">
 
                         <h3>
                             Room ${levelNumber}
@@ -733,6 +820,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     </section>
                 `;
+
             })
 
             .join("");
@@ -740,7 +828,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        LEVEL STATE
+        RESET LEVEL
     */
 
     function resetLevelState() {
@@ -748,11 +836,17 @@ document.addEventListener("DOMContentLoaded", function () {
         investigatedIds =
             new Set();
 
-        puzzleSolved = false;
 
-        keypadEntry = "";
+        puzzleSolved =
+            false;
 
-        transitionRunning = false;
+
+        keypadEntry =
+            "";
+
+
+        transitionRunning =
+            false;
 
 
         evidenceCard.textContent =
@@ -789,7 +883,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        INVESTIGATION
+        KEYPAD DISPLAY
     */
 
     function updateKeypadDisplay() {
@@ -799,8 +893,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 .padEnd(4, "_")
                 .split("")
                 .join(" ");
+
     }
 
+
+    /*
+        LEVEL PROGRESS
+    */
 
     function updateLevelProgress(level) {
 
@@ -831,7 +930,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     found +
                     " / " +
                     required;
+
             }
+
         }
 
 
@@ -844,23 +945,15 @@ document.addEventListener("DOMContentLoaded", function () {
             puzzlePanel.classList.remove(
                 "hidden-panel"
             );
+
         }
 
 
         const choiceButtons =
-            choicesContainer
-                .querySelectorAll(
-                    ".choice"
-                );
+            choicesContainer.querySelectorAll(
+                ".choice"
+            );
 
-
-        /*
-            IMPORTANT FIX:
-
-            After puzzleSolved becomes true,
-            ALL choice buttons are explicitly
-            enabled.
-        */
 
         if (level.puzzle) {
 
@@ -869,16 +962,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     button.disabled =
                         !puzzleSolved;
+
                 }
             );
 
 
-            choicesContainer
-                .classList
-                .toggle(
-                    "choices-locked",
-                    !puzzleSolved
-                );
+            choicesContainer.classList.toggle(
+                "choices-locked",
+                !puzzleSolved
+            );
+
 
         } else {
 
@@ -892,19 +985,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     button.disabled =
                         !unlocked;
+
                 }
             );
 
 
-            choicesContainer
-                .classList
-                .toggle(
-                    "choices-locked",
-                    !unlocked
-                );
+            choicesContainer.classList.toggle(
+                "choices-locked",
+                !unlocked
+            );
+
         }
     }
 
+
+    /*
+        INVESTIGATE
+    */
 
     async function investigate(
         level,
@@ -931,12 +1028,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         evidenceCard.innerHTML = `
             <strong>
+
                 ${investigation.icon || ""}
+
                 ${investigation.name}
+
             </strong>
 
             <span>
+
                 ${investigation.description}
+
             </span>
         `;
 
@@ -946,7 +1048,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        updateLevelProgress(level);
+        updateLevelProgress(
+            level
+        );
 
 
         if (
@@ -961,13 +1065,19 @@ document.addEventListener("DOMContentLoaded", function () {
             await speakAsCurator(
                 investigation.curator
             );
+
         }
     }
 
 
+    /*
+        RENDER INVESTIGATIONS
+    */
+
     function renderInvestigations(level) {
 
-        investigationGrid.innerHTML = "";
+        investigationGrid.innerHTML =
+            "";
 
 
         if (
@@ -975,49 +1085,47 @@ document.addEventListener("DOMContentLoaded", function () {
             !level.investigations.length
         ) {
 
-            investigationPanel
-                .classList
-                .add(
-                    "hidden-panel"
-                );
+            investigationPanel.classList.add(
+                "hidden-panel"
+            );
 
             return;
         }
 
 
-        investigationPanel
-            .classList
-            .remove(
-                "hidden-panel"
-            );
+        investigationPanel.classList.remove(
+            "hidden-panel"
+        );
 
 
         level.investigations.forEach(
             function (investigation) {
 
                 const button =
-                    document
-                        .createElement(
-                            "button"
-                        );
+                    document.createElement(
+                        "button"
+                    );
 
 
                 button.className =
                     "investigation-button";
 
 
-                button.type = "button";
+                button.type =
+                    "button";
 
 
                 button.innerHTML = `
-                    <span
-                        class="investigation-icon"
-                    >
+                    <span class="investigation-icon">
+
                         ${investigation.icon || "?"}
+
                     </span>
 
                     <span>
+
                         ${investigation.name}
+
                     </span>
                 `;
 
@@ -1031,28 +1139,33 @@ document.addEventListener("DOMContentLoaded", function () {
                             investigation,
                             button
                         );
+
                     }
                 );
 
 
-                investigationGrid
-                    .appendChild(
-                        button
-                    );
+                investigationGrid.appendChild(
+                    button
+                );
+
             }
         );
     }
 
 
     /*
-        KEYPAD
+        SET UP PUZZLE
     */
 
     function setupPuzzle(level) {
 
-        keypadEntry = "";
+        keypadEntry =
+            "";
 
-        puzzleStatus.textContent = "";
+
+        puzzleStatus.textContent =
+            "";
+
 
         updateKeypadDisplay();
 
@@ -1081,6 +1194,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /*
+        SUBMIT KEYPAD
+    */
+
     async function submitKeypad() {
 
         const level =
@@ -1088,7 +1205,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (!level.puzzle) {
+
             return;
+
         }
 
 
@@ -1097,7 +1216,8 @@ document.addEventListener("DOMContentLoaded", function () {
             level.puzzle.answer
         ) {
 
-            puzzleSolved = true;
+            puzzleSolved =
+                true;
 
 
             puzzleStatus.textContent =
@@ -1114,38 +1234,29 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            /*
-                THIS NOW EXPLICITLY
-                UNLOCKS BOTH DOORS.
-            */
-
-            updateLevelProgress(level);
+            updateLevelProgress(
+                level
+            );
 
 
             curatorMessage.textContent =
-                level
-                    .puzzle
-                    .curatorSuccess;
+                level.puzzle.curatorSuccess;
 
 
             await wait(250);
 
 
             await speakAsCurator(
-                level
-                    .puzzle
-                    .curatorSuccess
+                level.puzzle.curatorSuccess
             );
 
 
-            /*
-                Retract the control panel
-                so the doors are clearly
-                available.
-            */
-
             await wait(400);
 
+
+            /*
+                Hide keypad after successful code.
+            */
 
             puzzlePanel.classList.add(
                 "hidden-panel"
@@ -1157,29 +1268,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             /*
-                One final explicit enable,
-                just to ensure Safari cannot
-                leave them disabled.
+                Explicitly enable doors.
             */
 
             choicesContainer
-                .querySelectorAll(
-                    ".choice"
-                )
-                .forEach(
-                    function (button) {
+                .querySelectorAll(".choice")
+                .forEach(function (button) {
 
-                        button.disabled =
-                            false;
-                    }
-                );
+                    button.disabled =
+                        false;
+
+                });
 
 
-            choicesContainer
-                .classList
-                .remove(
-                    "choices-locked"
-                );
+            choicesContainer.classList.remove(
+                "choices-locked"
+            );
 
 
         } else {
@@ -1198,58 +1302,69 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            keypadEntry = "";
+            keypadEntry =
+                "";
 
 
             updateKeypadDisplay();
+
         }
     }
 
 
+    /*
+        KEYPAD BUTTONS
+    */
+
     document
-        .querySelectorAll(
-            ".keypad-number"
-        )
-        .forEach(
-            function (button) {
+        .querySelectorAll(".keypad-number")
+        .forEach(function (button) {
 
-                button.addEventListener(
-                    "click",
-                    function () {
+            button.addEventListener(
+                "click",
+                function () {
 
-                        if (
-                            keypadEntry.length >=
-                            4
-                        ) {
-                            return;
-                        }
+                    if (
+                        keypadEntry.length >= 4
+                    ) {
 
+                        return;
 
-                        keypadEntry +=
-                            button.dataset.number;
-
-
-                        updateKeypadDisplay();
                     }
-                );
-            }
-        );
+
+
+                    keypadEntry +=
+                        button.dataset.number;
+
+
+                    updateKeypadDisplay();
+
+                }
+            );
+
+        });
 
 
     keypadClear.addEventListener(
         "click",
         function () {
 
-            keypadEntry = "";
+            keypadEntry =
+                "";
 
-            puzzleStatus.textContent = "";
+
+            puzzleStatus.textContent =
+                "";
+
 
             puzzleStatus.classList.remove(
                 "correct",
                 "wrong"
             );
 
+
             updateKeypadDisplay();
+
         }
     );
 
@@ -1261,198 +1376,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        CREEPY DOOR SOUND
-    */
-
-    function playDoorSound() {
-
-        try {
-
-            const AudioContextClass =
-                window.AudioContext ||
-                window.webkitAudioContext;
-
-
-            if (!AudioContextClass) {
-                return;
-            }
-
-
-            const context =
-                new AudioContextClass();
-
-
-            const master =
-                context.createGain();
-
-
-            master.gain.setValueAtTime(
-                0.0001,
-                context.currentTime
-            );
-
-
-            master.gain.exponentialRampToValueAtTime(
-                0.12,
-                context.currentTime + 0.3
-            );
-
-
-            master.gain.exponentialRampToValueAtTime(
-                0.0001,
-                context.currentTime + 5
-            );
-
-
-            master.connect(
-                context.destination
-            );
-
-
-            /*
-                Deep industrial tone.
-            */
-
-            const bass =
-                context.createOscillator();
-
-
-            bass.type = "sine";
-
-
-            bass.frequency.setValueAtTime(
-                48,
-                context.currentTime
-            );
-
-
-            bass.frequency.exponentialRampToValueAtTime(
-                32,
-                context.currentTime + 4.5
-            );
-
-
-            bass.connect(master);
-
-
-            bass.start();
-
-
-            bass.stop(
-                context.currentTime + 5
-            );
-
-
-            /*
-                Three-note eerie motif.
-            */
-
-            const notes = [
-                {
-                    frequency: 146.83,
-                    delay: 0.4
-                },
-
-                {
-                    frequency: 110,
-                    delay: 1.45
-                },
-
-                {
-                    frequency: 87.31,
-                    delay: 2.5
-                }
-            ];
-
-
-            notes.forEach(
-                function (note) {
-
-                    const oscillator =
-                        context.createOscillator();
-
-
-                    const gain =
-                        context.createGain();
-
-
-                    oscillator.type =
-                        "sine";
-
-
-                    oscillator.frequency.value =
-                        note.frequency;
-
-
-                    gain.gain.setValueAtTime(
-                        0.0001,
-                        context.currentTime +
-                        note.delay
-                    );
-
-
-                    gain.gain.exponentialRampToValueAtTime(
-                        0.045,
-                        context.currentTime +
-                        note.delay +
-                        0.1
-                    );
-
-
-                    gain.gain.exponentialRampToValueAtTime(
-                        0.0001,
-                        context.currentTime +
-                        note.delay +
-                        1.5
-                    );
-
-
-                    oscillator.connect(
-                        gain
-                    );
-
-
-                    gain.connect(
-                        context.destination
-                    );
-
-
-                    oscillator.start(
-                        context.currentTime +
-                        note.delay
-                    );
-
-
-                    oscillator.stop(
-                        context.currentTime +
-                        note.delay +
-                        1.6
-                    );
-                }
-            );
-
-
-        } catch (error) {
-
-            console.log(
-                "Door sound unavailable."
-            );
-        }
-    }
-
-
-    /*
         DOOR OPENING CINEMATIC
+
+        IMPORTANT:
+        The music now comes from audio.js
+        using playDoorMusic().
     */
 
     async function playDoorOpening() {
 
         if (transitionRunning) {
+
             return;
+
         }
 
 
-        transitionRunning = true;
+        transitionRunning =
+            true;
 
 
         doorTransition.classList.add(
@@ -1460,10 +1401,24 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        if (typeof playDoorMusic === "function") {
-    playDoorMusic();
-}
+        /*
+            NEW HAUNTING MUSIC
+        */
 
+        if (
+            typeof playDoorMusic ===
+            "function"
+        ) {
+
+            playDoorMusic();
+
+        }
+
+
+        /*
+            Give the music a moment
+            before the door starts moving.
+        */
 
         await wait(900);
 
@@ -1482,7 +1437,8 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        transitionRunning = false;
+        transitionRunning =
+            false;
     }
 
 
@@ -1522,27 +1478,29 @@ document.addEventListener("DOMContentLoaded", function () {
             level.question;
 
 
-        curatorMessage.textContent = "";
+        curatorMessage.textContent =
+            "";
 
 
-        choicesContainer.innerHTML = "";
+        choicesContainer.innerHTML =
+            "";
 
 
         level.choices.forEach(
             function (choice) {
 
                 const button =
-                    document
-                        .createElement(
-                            "button"
-                        );
+                    document.createElement(
+                        "button"
+                    );
 
 
                 button.className =
                     "choice";
 
 
-                button.type = "button";
+                button.type =
+                    "button";
 
 
                 button.textContent =
@@ -1553,45 +1511,50 @@ document.addEventListener("DOMContentLoaded", function () {
                     "click",
                     function () {
 
-                        /*
-                            Extra protection:
-                            do nothing until puzzle
-                            has been solved.
-                        */
-
                         if (
                             level.puzzle &&
                             !puzzleSolved
                         ) {
+
                             return;
+
                         }
 
 
                         handleChoice(
                             choice
                         );
+
                     }
                 );
 
 
-                choicesContainer
-                    .appendChild(
-                        button
-                    );
+                choicesContainer.appendChild(
+                    button
+                );
+
             }
         );
 
 
-        renderInvestigations(level);
+        renderInvestigations(
+            level
+        );
 
-        setupPuzzle(level);
 
-        updateLevelProgress(level);
+        setupPuzzle(
+            level
+        );
+
+
+        updateLevelProgress(
+            level
+        );
     }
 
 
     /*
-        DOOR CHOICE
+        PLAYER CHOICE
     */
 
     async function handleChoice(choice) {
@@ -1601,30 +1564,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (transitionRunning) {
+
             return;
+
         }
 
 
         const choiceButtons =
-            choicesContainer
-                .querySelectorAll(
-                    ".choice"
-                );
+            choicesContainer.querySelectorAll(
+                ".choice"
+            );
 
 
         choiceButtons.forEach(
             function (button) {
 
-                button.disabled = true;
+                button.disabled =
+                    true;
+
             }
         );
 
 
+        /*
+            CORRECT CHOICE
+        */
+
         if (choice.correct) {
+
 
             /*
                 Level 1 gets the special
-                door-opening cinematic.
+                steel-door cinematic.
             */
 
             if (level.number === 1) {
@@ -1637,6 +1608,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 await playDoorOpening();
+
             }
 
 
@@ -1669,6 +1641,10 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
+        /*
+            WRONG CHOICE
+        */
+
         } else {
 
             deathMessage.textContent =
@@ -1688,12 +1664,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 levelScreen,
                 deathScreen
             );
+
         }
     }
 
 
     /*
-        JOURNAL
+        JOURNAL BUTTONS
     */
 
     journalButton.addEventListener(
@@ -1702,9 +1679,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             renderJournal();
 
+
             journalOverlay.classList.add(
                 "open"
             );
+
         }
     );
 
@@ -1716,6 +1695,7 @@ document.addEventListener("DOMContentLoaded", function () {
             journalOverlay.classList.remove(
                 "open"
             );
+
         }
     );
 
@@ -1732,28 +1712,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 journalOverlay.classList.remove(
                     "open"
                 );
+
             }
+
         }
     );
 
 
     /*
-        MAIN BUTTONS
+        START GAME
     */
 
     startButton.addEventListener(
         "click",
         function () {
 
+            /*
+                This initialises audio.js
+                while the player is physically
+                pressing a button.
+
+                This is important on iPad/Safari.
+            */
+
             try {
 
                 if (
-                    typeof
-                    startAmbientSound ===
+                    typeof startAmbientSound ===
                     "function"
                 ) {
 
                     startAmbientSound();
+
                 }
 
             } catch (error) {
@@ -1761,13 +1751,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(
                     "Ambient sound unavailable."
                 );
+
             }
 
 
             playIntroduction();
+
         }
     );
 
+
+    /*
+        RETRY
+    */
 
     retryButton.addEventListener(
         "click",
@@ -1781,6 +1777,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 window
                     .speechSynthesis
                     .cancel();
+
             }
 
 
@@ -1790,9 +1787,14 @@ document.addEventListener("DOMContentLoaded", function () {
             showScreen(
                 levelScreen
             );
+
         }
     );
 
+
+    /*
+        CONTINUE TO NEXT LEVEL
+    */
 
     continueButton.addEventListener(
         "click",
@@ -1811,7 +1813,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                currentLevelIndex = 0;
+                currentLevelIndex =
+                    0;
 
 
                 showScreen(
@@ -1829,6 +1832,7 @@ document.addEventListener("DOMContentLoaded", function () {
             showScreen(
                 levelScreen
             );
+
         }
     );
 
