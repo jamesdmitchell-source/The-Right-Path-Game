@@ -439,3 +439,147 @@ blockquote {
     border-color: #777;
     opacity: 0.7;
 }
+.door-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+}
+
+.door-transition.active {
+    display: flex;
+}
+
+.door-scene {
+    width: min(520px, 90vw);
+    text-align: center;
+}
+
+.door-status,
+.door-message {
+    color: #777;
+    font-size: 12px;
+    letter-spacing: 4px;
+}
+
+.door-status {
+    margin-bottom: 24px;
+}
+
+.door-message {
+    margin-top: 26px;
+    opacity: 0;
+
+    transition: opacity 1s ease;
+}
+
+.steel-door {
+    position: relative;
+
+    width: 100%;
+    height: 55vh;
+    max-height: 520px;
+
+    overflow: hidden;
+
+    border: 2px solid #383838;
+
+    background: #030303;
+
+    box-shadow:
+        0 0 40px rgba(255, 255, 255, 0.04);
+}
+
+.door-left,
+.door-right {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #111,
+            #272727,
+            #101010
+        );
+
+    transition:
+        transform 3.2s cubic-bezier(
+            0.7,
+            0,
+            0.25,
+            1
+        );
+}
+
+.door-left {
+    left: 0;
+
+    border-right:
+        1px solid #050505;
+}
+
+.door-right {
+    right: 0;
+
+    border-left:
+        1px solid #050505;
+}
+
+.door-light {
+    position: absolute;
+
+    top: 18px;
+    left: 50%;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #7e0000;
+
+    transform:
+        translateX(-50%);
+
+    box-shadow:
+        0 0 18px #7e0000;
+
+    transition:
+        background 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+.door-transition.opening
+.door-left {
+    transform:
+        translateX(-101%);
+}
+
+.door-transition.opening
+.door-right {
+    transform:
+        translateX(101%);
+}
+
+.door-transition.opening
+.door-light {
+    background: #6ca06c;
+
+    box-shadow:
+        0 0 22px #6ca06c;
+}
+
+.door-transition.opening
+.door-message {
+    opacity: 1;
+}
