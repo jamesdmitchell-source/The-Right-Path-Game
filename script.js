@@ -32,11 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentLevelIndex = 0;
     let investigatedIds = new Set();
     let journalEntries = [];
-
-    /*
-        We choose Elias's voice once and keep using
-        that same voice throughout the game.
-    */
     let curatorVoice = null;
 
     const introLines = [
@@ -48,8 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "Choose second."
     ];
 
-    const investigationPanel = document.createElement("section");
+    /*
+        INVESTIGATION PANEL
+    */
 
+    const investigationPanel = document.createElement("section");
     investigationPanel.className = "investigation-panel";
 
     investigationPanel.innerHTML = `
@@ -88,8 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
         choicesContainer
     );
 
-    const journalOverlay = document.createElement("div");
+    /*
+        JOURNAL
+    */
 
+    const journalOverlay = document.createElement("div");
     journalOverlay.id = "journalOverlay";
     journalOverlay.className = "journal-overlay";
 
@@ -97,9 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="journal-card">
 
             <div class="journal-topbar">
-                <span>
-                    SUBJECT 47 — JOURNAL
-                </span>
+                <span>SUBJECT 47 — JOURNAL</span>
 
                 <button
                     id="closeJournalButton"
@@ -114,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 id="journalContent"
                 class="journal-content"
             ></div>
-
         </div>
     `;
 
@@ -140,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        GENERAL FUNCTIONS
+        BASIC FUNCTIONS
     */
 
     function wait(milliseconds) {
@@ -188,10 +186,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        /*
-            First preference:
-            known British male-sounding voices.
-        */
+        const preferredNames = [
+            "daniel",
+            "arthur",
+            "george",
+            "oliver"
+        ];
 
         curatorVoice =
             voices.find(function (voice) {
@@ -200,33 +200,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return (
                     voice.lang.startsWith("en-GB") &&
-                    (
-                        name.includes("daniel") ||
-                        name.includes("arthur") ||
-                        name.includes("oliver") ||
-                        name.includes("george")
+                    preferredNames.some(
+                        function (preferred) {
+                            return name.includes(preferred);
+                        }
                     )
                 );
             }) ||
 
-            /*
-                Second preference:
-                another British English voice.
-            */
-
             voices.find(function (voice) {
-                return (
-                    voice.lang.startsWith("en-GB") &&
-                    !voice.name
-                        .toLowerCase()
-                        .includes("female")
-                );
+                return voice.lang.startsWith("en-GB");
             }) ||
-
-            /*
-                Last resort:
-                any English voice.
-            */
 
             voices.find(function (voice) {
                 return voice.lang.startsWith("en");
@@ -240,80 +224,124 @@ document.addEventListener("DOMContentLoaded", function () {
     if ("speechSynthesis" in window) {
         window.speechSynthesis.onvoiceschanged =
             function () {
-
-                /*
-                    Only choose again if we haven't
-                    already locked a voice.
-                */
-
                 if (!curatorVoice) {
                     chooseCuratorVoice();
                 }
             };
     }
 
+    /*
+        IMPORTANT:
+        Speech is allowed a maximum of 5 seconds.
+        If Safari gets stuck, the game carries on.
+    */
+
     function speakAsCurator(line) {
         return new Promise(function (resolve) {
+            let finished = false;
+
+            function finish() {
+                if (finished) {
+                    return;
+                }
+
+                finished = true;
+                resolve();
+            }
+
+            /*
+                Emergency timeout.
+                Voice can NEVER freeze the game.
+            */
+
+            const safetyTimer =
+                setTimeout(function () {
+                    try {
+                        window.speechSynthesis.cancel();
+                    } catch (error) {
+                        // Ignore speech errors.
+                    }
+
+                    finish();
+                }, 5000);
 
             if (!("speechSynthesis" in window)) {
-                setTimeout(resolve, 2000);
+                clearTimeout(safetyTimer);
+                setTimeout(finish, 1800);
                 return;
             }
 
-            /*
-                If Safari hadn't loaded the voice list
-                earlier, try once more now.
-            */
+            try {
+                if (!curatorVoice) {
+                    chooseCuratorVoice();
+                }
 
-            if (!curatorVoice) {
-                chooseCuratorVoice();
+                window.speechSynthesis.cancel();
+
+                const speech =
+                    new SpeechSynthesisUtterance(line);
+
+                if (curatorVoice) {
+                    speech.voice = curatorVoice;
+                }
+
+                speech.rate = 0.66;
+                speech.pitch = 0.45;
+                speech.volume = 1;
+
+                speech.onend = function () {
+                    clearTimeout(safetyTimer);
+
+                    setTimeout(
+                        finish,
+                        450
+                    );
+                };
+
+                speech.onerror = function () {
+                    clearTimeout(safetyTimer);
+
+                    setTimeout(
+                        finish,
+                        700
+                    );
+                };
+
+                window.speechSynthesis.speak(speech);
+
+            } catch (error) {
+                clearTimeout(safetyTimer);
+
+                setTimeout(
+                    finish,
+                    1000
+                );
             }
-
-            window.speechSynthesis.cancel();
-
-            const speech =
-                new SpeechSynthesisUtterance(line);
-
-            if (curatorVoice) {
-                speech.voice = curatorVoice;
-            }
-
-            /*
-                Elias:
-                slow, calm and low.
-            */
-
-            speech.rate = 0.63;
-            speech.pitch = 0.35;
-            speech.volume = 1.0;
-
-            speech.onend = function () {
-                setTimeout(resolve, 550);
-            };
-
-            speech.onerror = function () {
-                setTimeout(resolve, 1200);
-            };
-
-            window.speechSynthesis.speak(speech);
         });
     }
 
 
     /*
-        OPENING INTRODUCTION
+        INTRODUCTION
     */
 
     async function showDialogueLine(line) {
         introText.classList.add("hidden");
 
-        await wait(450);
+        await wait(400);
 
         introText.textContent = line;
 
         introText.classList.remove("hidden");
 
+        /*
+            Voice and text now have a guaranteed
+            maximum waiting time.
+        */
+
         await speakAsCurator(line);
+
+        await wait(250);
     }
 
     async function playIntroduction() {
@@ -324,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
             introScreen
         );
 
-        await wait(1300);
+        await wait(1200);
 
         for (const line of introLines) {
             await showDialogueLine(line);
@@ -332,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         introText.classList.add("hidden");
 
-        await wait(900);
+        await wait(800);
 
         loadLevel();
 
@@ -346,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL
+        JOURNAL FUNCTIONS
     */
 
     function addJournalEntry(
@@ -355,7 +383,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
         const alreadyAdded =
             journalEntries.some(function (entry) {
-
                 return (
                     entry.level === level.number &&
                     entry.id === investigation.id
@@ -375,7 +402,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderJournal() {
         if (journalEntries.length === 0) {
-
             journalContent.innerHTML =
                 "<p>No evidence recorded yet.</p>";
 
@@ -385,7 +411,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const grouped = {};
 
         journalEntries.forEach(function (entry) {
-
             if (!grouped[entry.level]) {
                 grouped[entry.level] = [];
             }
@@ -397,23 +422,14 @@ document.addEventListener("DOMContentLoaded", function () {
             Object.keys(grouped)
 
             .map(function (levelNumber) {
-
                 const entries =
                     grouped[levelNumber]
 
                     .map(function (entry) {
-
                         return `
-                            <article
-                                class="journal-entry"
-                            >
-                                <h4>
-                                    ${entry.name}
-                                </h4>
-
-                                <p>
-                                    ${entry.description}
-                                </p>
+                            <article class="journal-entry">
+                                <h4>${entry.name}</h4>
+                                <p>${entry.description}</p>
                             </article>
                         `;
                     })
@@ -421,13 +437,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     .join("");
 
                 return `
-                    <section
-                        class="journal-level"
-                    >
-                        <h3>
-                            Room ${levelNumber}
-                        </h3>
-
+                    <section class="journal-level">
+                        <h3>Room ${levelNumber}</h3>
                         ${entries}
                     </section>
                 `;
@@ -477,18 +488,13 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations &&
             level.investigations.length > 0
         ) {
-
-            if (enoughEvidence) {
-                evidenceProgress.textContent =
-                    "You have enough evidence. Make your choice.";
-            } else {
-                evidenceProgress.textContent =
-                    "Evidence examined: " +
-                    found +
-                    " / " +
-                    required;
-            }
-
+            evidenceProgress.textContent =
+                enoughEvidence
+                    ? "You have enough evidence. Make your choice."
+                    : "Evidence examined: " +
+                      found +
+                      " / " +
+                      required;
         } else {
             evidenceProgress.textContent = "";
         }
@@ -582,9 +588,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.type = "button";
 
                 button.innerHTML = `
-                    <span
-                        class="investigation-icon"
-                    >
+                    <span class="investigation-icon">
                         ${investigation.icon || "?"}
                     </span>
 
@@ -596,7 +600,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.addEventListener(
                     "click",
                     function () {
-
                         investigate(
                             level,
                             investigation,
@@ -645,30 +648,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         choicesContainer.innerHTML = "";
 
-        level.choices.forEach(
-            function (choice) {
+        level.choices.forEach(function (choice) {
+            const button =
+                document.createElement("button");
 
-                const button =
-                    document.createElement("button");
+            button.className = "choice";
 
-                button.className = "choice";
+            button.textContent =
+                choice.text;
 
-                button.textContent =
-                    choice.text;
+            button.addEventListener(
+                "click",
+                function () {
+                    handleChoice(choice);
+                }
+            );
 
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        handleChoice(choice);
-                    }
-                );
-
-                choicesContainer.appendChild(
-                    button
-                );
-            }
-        );
+            choicesContainer.appendChild(
+                button
+            );
+        });
 
         renderInvestigations(level);
 
@@ -676,20 +675,16 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations &&
             level.investigations.length > 0
         ) {
-
             updateInvestigationProgress(level);
 
         } else {
-
             const choiceButtons =
-                choicesContainer
-                    .querySelectorAll(
-                        ".choice"
-                    );
+                choicesContainer.querySelectorAll(
+                    ".choice"
+                );
 
             choiceButtons.forEach(
                 function (button) {
-
                     button.disabled = false;
                 }
             );
@@ -711,13 +706,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         choiceButtons.forEach(
             function (button) {
-
                 button.disabled = true;
             }
         );
 
         if (choice.correct) {
-
             curatorMessage.textContent =
                 level.success;
 
@@ -742,7 +735,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
         } else {
-
             curatorMessage.textContent =
                 level.death;
 
@@ -762,7 +754,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        BUTTONS
+        MAIN BUTTONS
     */
 
     startButton.addEventListener(
@@ -770,21 +762,18 @@ document.addEventListener("DOMContentLoaded", function () {
         function () {
 
             /*
-                Audio must never stop the game
-                from starting.
+                Ambient audio must never prevent
+                the game from starting.
             */
 
             try {
-
                 if (
                     typeof startAmbientSound ===
                     "function"
                 ) {
                     startAmbientSound();
                 }
-
             } catch (error) {
-
                 console.log(
                     "Ambient audio unavailable."
                 );
@@ -818,7 +807,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentLevelIndex >=
                 levels.length
             ) {
-
                 alert(
                     "You have completed the current prototype."
                 );
