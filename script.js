@@ -232,9 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data-number="9"
             >9</button>
 
-            <button
-                id="keypadClear"
-            >
+            <button id="keypadClear">
                 CLEAR
             </button>
 
@@ -243,9 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data-number="0"
             >0</button>
 
-            <button
-                id="keypadEnter"
-            >
+            <button id="keypadEnter">
                 ENTER
             </button>
 
@@ -264,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL OVERLAY
+        JOURNAL
     */
 
     const journalOverlay =
@@ -303,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        ELEMENT REFERENCES
+        REFERENCES
     */
 
     const investigationGrid =
@@ -544,6 +540,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /*
+        ELIAS SPEECH
+
+        IMPORTANT CHANGE:
+        Longer sentences now receive a longer
+        safety timeout.
+
+        Safari can no longer cut a long sentence
+        off simply because five seconds passed.
+    */
+
     function speakAsCurator(line) {
 
         return new Promise(
@@ -564,6 +571,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /*
+                    Work out how long the sentence
+                    should reasonably be allowed.
+
+                    Minimum: 7 seconds
+                    Maximum: 15 seconds
+                */
+
+                const calculatedTime =
+                    line.length * 140;
+
+                const safetyTime =
+                    Math.min(
+                        15000,
+                        Math.max(
+                            7000,
+                            calculatedTime
+                        )
+                    );
+
+
                 const safetyTimer =
                     setTimeout(
                         function () {
@@ -582,7 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             finish();
 
                         },
-                        5000
+                        safetyTime
                     );
 
 
@@ -599,7 +627,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(
                         finish,
-                        1500
+                        1800
                     );
 
                     return;
@@ -646,7 +674,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             setTimeout(
                                 finish,
-                                350
+                                400
                             );
                         };
 
@@ -660,7 +688,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             setTimeout(
                                 finish,
-                                600
+                                700
                             );
                         };
 
@@ -909,6 +937,15 @@ document.addEventListener("DOMContentLoaded", function () {
         puzzleStatus.textContent =
             "";
 
+        puzzleStatus.classList.remove(
+            "correct",
+            "wrong"
+        );
+
+        puzzlePanel.classList.remove(
+            "puzzle-solved"
+        );
+
         updateKeypadDisplay();
     }
 
@@ -970,7 +1007,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-            Show keypad once enough
+            Reveal the puzzle once enough
             evidence has been examined.
         */
 
@@ -987,8 +1024,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-            Door choices stay locked
-            until puzzle is solved.
+            Door choices stay locked until
+            the keypad has been solved.
         */
 
         const choiceButtons =
@@ -1236,22 +1273,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 "wrong"
             );
 
+
             puzzleStatus.classList.add(
                 "correct"
             );
 
+
+            /*
+                Unlock the doors immediately.
+            */
 
             updateLevelProgress(
                 level
             );
 
 
-            await speakAsCurator(
-                level
-                    .puzzle
-                    .curatorSuccess
-            );
-
+            /*
+                IMPORTANT FIX:
+                Put Elias's words on screen
+                BEFORE he begins speaking.
+            */
 
             curatorMessage.textContent =
                 level
@@ -1259,7 +1300,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     .curatorSuccess;
 
 
-            await wait(500);
+            await wait(300);
+
+
+            await speakAsCurator(
+                level
+                    .puzzle
+                    .curatorSuccess
+            );
 
 
             puzzlePanel.classList.add(
@@ -1276,6 +1324,7 @@ document.addEventListener("DOMContentLoaded", function () {
             puzzleStatus.classList.remove(
                 "correct"
             );
+
 
             puzzleStatus.classList.add(
                 "wrong"
@@ -1307,9 +1356,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             return;
                         }
 
+
                         keypadEntry +=
                             button.dataset
                                 .number;
+
 
                         updateKeypadDisplay();
                     }
@@ -1326,6 +1377,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             puzzleStatus.textContent =
                 "";
+
+            puzzleStatus.classList.remove(
+                "correct",
+                "wrong"
+            );
 
             updateKeypadDisplay();
         }
@@ -1438,7 +1494,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        CHOICES
+        DOOR CHOICES
     */
 
     async function handleChoice(
@@ -1449,6 +1505,21 @@ document.addEventListener("DOMContentLoaded", function () {
             levels[
                 currentLevelIndex
             ];
+
+
+        const choiceButtons =
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                );
+
+
+        choiceButtons.forEach(
+            function (button) {
+
+                button.disabled = true;
+            }
+        );
 
 
         if (choice.correct) {
@@ -1467,6 +1538,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 level.success;
 
 
+            curatorMessage.textContent =
+                level.success;
+
+
             await speakAsCurator(
                 level.success
             );
@@ -1481,6 +1556,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
 
             deathMessage.textContent =
+                level.death;
+
+
+            curatorMessage.textContent =
                 level.death;
 
 
@@ -1531,6 +1610,25 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
+    journalOverlay.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                journalOverlay
+            ) {
+
+                journalOverlay
+                    .classList
+                    .remove(
+                        "open"
+                    );
+            }
+        }
+    );
+
+
     /*
         MAIN BUTTONS
     */
@@ -1567,7 +1665,19 @@ document.addEventListener("DOMContentLoaded", function () {
         "click",
         function () {
 
+            if (
+                "speechSynthesis"
+                in window
+            ) {
+
+                window
+                    .speechSynthesis
+                    .cancel();
+            }
+
+
             loadLevel();
+
 
             showScreen(
                 levelScreen
@@ -1593,17 +1703,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         "You have completed the current prototype."
                     );
 
+
                     currentLevelIndex = 0;
+
 
                     showScreen(
                         titleScreen
                     );
+
 
                     return;
                 }
 
 
                 loadLevel();
+
 
                 showScreen(
                     levelScreen
