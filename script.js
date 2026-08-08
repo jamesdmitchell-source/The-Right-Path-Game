@@ -1,41 +1,102 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const screens = document.querySelectorAll(".screen");
 
-    const titleScreen = document.getElementById("titleScreen");
-    const introScreen = document.getElementById("introScreen");
-    const levelScreen = document.getElementById("levelScreen");
-    const deathScreen = document.getElementById("deathScreen");
-    const successScreen = document.getElementById("successScreen");
+    /*
+        MAIN SCREEN ELEMENTS
+    */
 
-    const startButton = document.getElementById("startButton");
-    const retryButton = document.getElementById("retryButton");
-    const continueButton = document.getElementById("continueButton");
+    const screens =
+        document.querySelectorAll(".screen");
 
-    const deathMessage = document.getElementById("deathMessage");
-    const successLabel = document.getElementById("successLabel");
-    const successTitle = document.getElementById("successTitle");
-    const successMessage = document.getElementById("successMessage");
+    const titleScreen =
+        document.getElementById("titleScreen");
 
-    const introText = document.getElementById("introText");
-    const curatorMessage = document.getElementById("curatorMessage");
-    const levelHeader = document.querySelector(".level-header");
-    const observationText = document.querySelector(".observation");
-    const clueText = document.querySelector("blockquote");
-    const questionTitle = document.querySelector(".room h2");
+    const introScreen =
+        document.getElementById("introScreen");
 
-    const questionText = document.querySelector(
-        ".room > p:not(.observation):not(.curator-message)"
-    );
+    const levelScreen =
+        document.getElementById("levelScreen");
 
-    const choicesContainer = document.querySelector(".choices");
+    const deathScreen =
+        document.getElementById("deathScreen");
+
+    const successScreen =
+        document.getElementById("successScreen");
+
+    const startButton =
+        document.getElementById("startButton");
+
+    const retryButton =
+        document.getElementById("retryButton");
+
+    const continueButton =
+        document.getElementById("continueButton");
+
+    const deathMessage =
+        document.getElementById("deathMessage");
+
+    const successLabel =
+        document.getElementById("successLabel");
+
+    const successTitle =
+        document.getElementById("successTitle");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+    const introText =
+        document.getElementById("introText");
+
+    const curatorMessage =
+        document.getElementById("curatorMessage");
+
+    const levelHeader =
+        document.querySelector(".level-header");
+
+    const observationText =
+        document.querySelector(".observation");
+
+    const clueText =
+        document.querySelector("blockquote");
+
+    const questionTitle =
+        document.querySelector(".room h2");
+
+    const questionText =
+        document.querySelector(
+            ".room > p:not(.observation):not(.curator-message)"
+        );
+
+    const choicesContainer =
+        document.querySelector(".choices");
+
+
+    /*
+        GAME STATE
+    */
 
     let currentLevelIndex = 0;
-    let investigatedIds = new Set();
+
+    let investigatedIds =
+        new Set();
+
     let journalEntries = [];
 
+    let puzzleSolved = false;
+
+    let keypadEntry = "";
+
+
+    /*
+        ELIAS VOICE
+    */
+
     let curatorVoice = null;
+
     let selectedVoiceName =
-        localStorage.getItem("rightPathCuratorVoice") || "";
+        localStorage.getItem(
+            "rightPathCuratorVoice"
+        ) || "";
+
 
     const introLines = [
         "Can you hear me?",
@@ -59,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
+
             <span>INVESTIGATE</span>
 
             <button
@@ -68,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
             >
                 Journal
             </button>
+
         </div>
 
         <div
@@ -95,20 +158,129 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL
+        KEYPAD PUZZLE
+    */
+
+    const puzzlePanel =
+        document.createElement("section");
+
+    puzzlePanel.className =
+        "puzzle-panel hidden-panel";
+
+    puzzlePanel.innerHTML = `
+        <p class="puzzle-label">
+            CONTROL PANEL
+        </p>
+
+        <h3 id="puzzleTitle">
+            OBSERVATION REQUIRED
+        </h3>
+
+        <p id="puzzleInstruction"></p>
+
+        <div
+            id="keypadDisplay"
+            class="keypad-display"
+        >
+            _ _ _ _
+        </div>
+
+        <div class="keypad-grid">
+
+            <button
+                class="keypad-number"
+                data-number="1"
+            >1</button>
+
+            <button
+                class="keypad-number"
+                data-number="2"
+            >2</button>
+
+            <button
+                class="keypad-number"
+                data-number="3"
+            >3</button>
+
+            <button
+                class="keypad-number"
+                data-number="4"
+            >4</button>
+
+            <button
+                class="keypad-number"
+                data-number="5"
+            >5</button>
+
+            <button
+                class="keypad-number"
+                data-number="6"
+            >6</button>
+
+            <button
+                class="keypad-number"
+                data-number="7"
+            >7</button>
+
+            <button
+                class="keypad-number"
+                data-number="8"
+            >8</button>
+
+            <button
+                class="keypad-number"
+                data-number="9"
+            >9</button>
+
+            <button
+                id="keypadClear"
+            >
+                CLEAR
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="0"
+            >0</button>
+
+            <button
+                id="keypadEnter"
+            >
+                ENTER
+            </button>
+
+        </div>
+
+        <p
+            id="puzzleStatus"
+            class="puzzle-status"
+        ></p>
+    `;
+
+    choicesContainer.parentNode.insertBefore(
+        puzzlePanel,
+        choicesContainer
+    );
+
+
+    /*
+        JOURNAL OVERLAY
     */
 
     const journalOverlay =
         document.createElement("div");
 
-    journalOverlay.id = "journalOverlay";
-    journalOverlay.className = "journal-overlay";
+    journalOverlay.className =
+        "journal-overlay";
 
     journalOverlay.innerHTML = `
         <div class="journal-card">
 
             <div class="journal-topbar">
-                <span>SUBJECT 47 — JOURNAL</span>
+
+                <span>
+                    SUBJECT 47 — JOURNAL
+                </span>
 
                 <button
                     id="closeJournalButton"
@@ -117,170 +289,82 @@ document.addEventListener("DOMContentLoaded", function () {
                 >
                     Close
                 </button>
+
             </div>
 
-            <div
-                id="journalContent"
-                class="journal-content"
-            ></div>
+            <div id="journalContent"></div>
 
         </div>
     `;
 
-    document.body.appendChild(journalOverlay);
-
-    const investigationGrid =
-        document.getElementById("investigationGrid");
-
-    const evidenceCard =
-        document.getElementById("evidenceCard");
-
-    const evidenceProgress =
-        document.getElementById("evidenceProgress");
-
-    const journalButton =
-        document.getElementById("journalButton");
-
-    const closeJournalButton =
-        document.getElementById("closeJournalButton");
-
-    const journalContent =
-        document.getElementById("journalContent");
+    document.body.appendChild(
+        journalOverlay
+    );
 
 
     /*
-        CURATOR VOICE SELECTOR
+        ELEMENT REFERENCES
     */
 
-    const voiceButton =
-        document.createElement("button");
+    const investigationGrid =
+        document.getElementById(
+            "investigationGrid"
+        );
 
-    voiceButton.type = "button";
-    voiceButton.textContent = "Choose Curator Voice";
+    const evidenceCard =
+        document.getElementById(
+            "evidenceCard"
+        );
 
-    voiceButton.style.marginTop = "18px";
-    voiceButton.style.minWidth = "220px";
+    const evidenceProgress =
+        document.getElementById(
+            "evidenceProgress"
+        );
 
-    titleScreen.appendChild(voiceButton);
+    const journalButton =
+        document.getElementById(
+            "journalButton"
+        );
 
+    const closeJournalButton =
+        document.getElementById(
+            "closeJournalButton"
+        );
 
-    const voiceOverlay =
-        document.createElement("div");
+    const journalContent =
+        document.getElementById(
+            "journalContent"
+        );
 
-    voiceOverlay.style.position = "fixed";
-    voiceOverlay.style.inset = "0";
-    voiceOverlay.style.zIndex = "2000";
-    voiceOverlay.style.display = "none";
-    voiceOverlay.style.alignItems = "center";
-    voiceOverlay.style.justifyContent = "center";
-    voiceOverlay.style.padding = "20px";
-    voiceOverlay.style.background =
-        "rgba(0, 0, 0, 0.96)";
+    const puzzleTitle =
+        document.getElementById(
+            "puzzleTitle"
+        );
 
+    const puzzleInstruction =
+        document.getElementById(
+            "puzzleInstruction"
+        );
 
-    const voiceCard =
-        document.createElement("div");
+    const keypadDisplay =
+        document.getElementById(
+            "keypadDisplay"
+        );
 
-    voiceCard.style.width = "min(700px, 100%)";
-    voiceCard.style.maxHeight = "85vh";
-    voiceCard.style.overflowY = "auto";
-    voiceCard.style.padding = "25px";
-    voiceCard.style.border = "1px solid #444";
-    voiceCard.style.background = "#080808";
-    voiceCard.style.color = "#eee";
-    voiceCard.style.textAlign = "left";
+    const keypadClear =
+        document.getElementById(
+            "keypadClear"
+        );
 
+    const keypadEnter =
+        document.getElementById(
+            "keypadEnter"
+        );
 
-    voiceCard.innerHTML = `
-        <h2 style="margin-top:0;">
-            Curator Voice Audition
-        </h2>
-
-        <p style="
-            color:#999;
-            line-height:1.6;
-        ">
-            Listen to the available English voices.
-            When you find the voice that suits Elias,
-            select it and press Save Voice.
-        </p>
-
-        <select
-            id="voiceSelect"
-            style="
-                width:100%;
-                padding:12px;
-                margin:15px 0;
-                background:#111;
-                color:#eee;
-                border:1px solid #555;
-                font-size:16px;
-            "
-        ></select>
-
-        <div style="
-            display:flex;
-            gap:10px;
-            flex-wrap:wrap;
-        ">
-            <button
-                id="testVoiceButton"
-                type="button"
-            >
-                Test Voice
-            </button>
-
-            <button
-                id="saveVoiceButton"
-                type="button"
-            >
-                Save Voice
-            </button>
-
-            <button
-                id="refreshVoicesButton"
-                type="button"
-            >
-                Refresh Voices
-            </button>
-
-            <button
-                id="closeVoiceButton"
-                type="button"
-            >
-                Close
-            </button>
-        </div>
-
-        <p
-            id="voiceStatus"
-            style="
-                margin-top:20px;
-                color:#aaa;
-            "
-        ></p>
-    `;
-
-    voiceOverlay.appendChild(voiceCard);
-    document.body.appendChild(voiceOverlay);
-
-    const voiceSelect =
-        document.getElementById("voiceSelect");
-
-    const testVoiceButton =
-        document.getElementById("testVoiceButton");
-
-    const saveVoiceButton =
-        document.getElementById("saveVoiceButton");
-
-    const refreshVoicesButton =
-        document.getElementById("refreshVoicesButton");
-
-    const closeVoiceButton =
-        document.getElementById("closeVoiceButton");
-
-    const voiceStatus =
-        document.getElementById("voiceStatus");
+    const puzzleStatus =
+        document.getElementById(
+            "puzzleStatus"
+        );
 
 
     /*
@@ -288,21 +372,34 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     function wait(milliseconds) {
-        return new Promise(function (resolve) {
-            setTimeout(resolve, milliseconds);
-        });
+
+        return new Promise(
+            function (resolve) {
+
+                setTimeout(
+                    resolve,
+                    milliseconds
+                );
+            }
+        );
     }
 
 
     function showScreen(screen) {
-        screens.forEach(function (item) {
-            item.classList.remove(
-                "active",
-                "fade-out"
-            );
-        });
 
-        screen.classList.add("active");
+        screens.forEach(
+            function (item) {
+
+                item.classList.remove(
+                    "active",
+                    "fade-out"
+                );
+            }
+        );
+
+        screen.classList.add(
+            "active"
+        );
     }
 
 
@@ -310,7 +407,10 @@ document.addEventListener("DOMContentLoaded", function () {
         currentScreen,
         nextScreen
     ) {
-        currentScreen.classList.add("fade-out");
+
+        currentScreen.classList.add(
+            "fade-out"
+        );
 
         await wait(900);
 
@@ -323,325 +423,267 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     function getEnglishVoices() {
-        if (!("speechSynthesis" in window)) {
+
+        if (
+            !("speechSynthesis" in window)
+        ) {
             return [];
         }
 
-        return window.speechSynthesis
+        return window
+            .speechSynthesis
             .getVoices()
-            .filter(function (voice) {
-                return voice.lang
-                    .toLowerCase()
-                    .startsWith("en");
-            });
+            .filter(
+                function (voice) {
+
+                    return voice.lang
+                        .toLowerCase()
+                        .startsWith("en");
+                }
+            );
     }
 
 
     function chooseCuratorVoice() {
-        const voices = getEnglishVoices();
+
+        const voices =
+            getEnglishVoices();
 
         if (!voices.length) {
+
             curatorVoice = null;
+
             return;
         }
 
-        /*
-            If the player has selected a voice,
-            always try to use exactly that one.
-        */
 
         if (selectedVoiceName) {
+
             const savedVoice =
-                voices.find(function (voice) {
-                    return (
-                        voice.name === selectedVoiceName
-                    );
-                });
+                voices.find(
+                    function (voice) {
+
+                        return (
+                            voice.name ===
+                            selectedVoiceName
+                        );
+                    }
+                );
 
             if (savedVoice) {
-                curatorVoice = savedVoice;
+
+                curatorVoice =
+                    savedVoice;
+
                 return;
             }
         }
 
-        /*
-            Otherwise try some commonly male
-            British voice names.
-        */
-
-        const preferredNames = [
-            "daniel",
-            "arthur",
-            "george",
-            "oliver"
-        ];
 
         curatorVoice =
-            voices.find(function (voice) {
-                const name =
-                    voice.name.toLowerCase();
+            voices.find(
+                function (voice) {
 
-                return (
-                    voice.lang
+                    const name =
+                        voice.name
+                            .toLowerCase();
+
+                    return (
+                        voice.lang
+                            .toLowerCase()
+                            .startsWith(
+                                "en-gb"
+                            ) &&
+                        (
+                            name.includes(
+                                "daniel"
+                            ) ||
+                            name.includes(
+                                "arthur"
+                            ) ||
+                            name.includes(
+                                "george"
+                            ) ||
+                            name.includes(
+                                "oliver"
+                            )
+                        )
+                    );
+                }
+            ) ||
+
+            voices.find(
+                function (voice) {
+
+                    return voice.lang
                         .toLowerCase()
-                        .startsWith("en-gb") &&
-                    preferredNames.some(
-                        function (preferred) {
-                            return name.includes(preferred);
-                        }
-                    )
-                );
-            }) ||
-
-            voices.find(function (voice) {
-                return voice.lang
-                    .toLowerCase()
-                    .startsWith("en-gb");
-            }) ||
+                        .startsWith(
+                            "en-gb"
+                        );
+                }
+            ) ||
 
             voices[0];
-    }
-
-
-    function populateVoiceSelector() {
-        const voices = getEnglishVoices();
-
-        voiceSelect.innerHTML = "";
-
-        if (!voices.length) {
-            const option =
-                document.createElement("option");
-
-            option.textContent =
-                "No voices loaded yet";
-
-            option.value = "";
-
-            voiceSelect.appendChild(option);
-
-            voiceStatus.textContent =
-                "Press Refresh Voices in a few seconds.";
-
-            return;
-        }
-
-        voices.forEach(function (voice) {
-            const option =
-                document.createElement("option");
-
-            option.value = voice.name;
-
-            option.textContent =
-                voice.name +
-                " — " +
-                voice.lang;
-
-            if (
-                voice.name === selectedVoiceName
-            ) {
-                option.selected = true;
-            }
-
-            voiceSelect.appendChild(option);
-        });
-
-        voiceStatus.textContent =
-            voices.length +
-            " English voices available.";
     }
 
 
     chooseCuratorVoice();
 
 
-    if ("speechSynthesis" in window) {
-        window.speechSynthesis.onvoiceschanged =
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        window
+            .speechSynthesis
+            .onvoiceschanged =
             function () {
 
                 chooseCuratorVoice();
-
-                if (
-                    voiceOverlay.style.display ===
-                    "flex"
-                ) {
-                    populateVoiceSelector();
-                }
             };
     }
 
 
-    function testSelectedVoice() {
-        if (!("speechSynthesis" in window)) {
-            voiceStatus.textContent =
-                "Speech is not supported on this device.";
-
-            return;
-        }
-
-        const voices = getEnglishVoices();
-
-        const chosen =
-            voices.find(function (voice) {
-                return (
-                    voice.name ===
-                    voiceSelect.value
-                );
-            });
-
-        if (!chosen) {
-            voiceStatus.textContent =
-                "Please choose a voice.";
-
-            return;
-        }
-
-        window.speechSynthesis.cancel();
-
-        const speech =
-            new SpeechSynthesisUtterance(
-                "Can you hear me? Good. We may begin."
-            );
-
-        speech.voice = chosen;
-
-        /*
-            We keep the pitch fairly low,
-            but not so low that it becomes distorted.
-        */
-
-        speech.rate = 0.64;
-        speech.pitch = 0.45;
-        speech.volume = 1;
-
-        window.speechSynthesis.speak(speech);
-    }
-
-
-    function saveSelectedVoice() {
-        const chosenName =
-            voiceSelect.value;
-
-        if (!chosenName) {
-            voiceStatus.textContent =
-                "Choose a voice first.";
-
-            return;
-        }
-
-        selectedVoiceName = chosenName;
-
-        localStorage.setItem(
-            "rightPathCuratorVoice",
-            selectedVoiceName
-        );
-
-        chooseCuratorVoice();
-
-        voiceStatus.textContent =
-            "Saved: " + selectedVoiceName;
-    }
-
-
-    /*
-        NORMAL ELIAS SPEECH
-    */
-
     function speakAsCurator(line) {
-        return new Promise(function (resolve) {
-            let finished = false;
 
-            function finish() {
-                if (finished) {
-                    return;
-                }
+        return new Promise(
+            function (resolve) {
 
-                finished = true;
-                resolve();
-            }
+                let finished = false;
 
-            /*
-                Safety timer:
-                voice can never freeze the game.
-            */
 
-            const safetyTimer =
-                setTimeout(function () {
+                function finish() {
 
-                    try {
-                        window.speechSynthesis.cancel();
-                    } catch (error) {
-                        // Ignore.
+                    if (finished) {
+                        return;
                     }
 
-                    finish();
+                    finished = true;
 
-                }, 5000);
-
-
-            if (!("speechSynthesis" in window)) {
-                clearTimeout(safetyTimer);
-
-                setTimeout(
-                    finish,
-                    1800
-                );
-
-                return;
-            }
-
-
-            try {
-                if (!curatorVoice) {
-                    chooseCuratorVoice();
+                    resolve();
                 }
 
-                window.speechSynthesis.cancel();
 
-                const speech =
-                    new SpeechSynthesisUtterance(
-                        line
+                const safetyTimer =
+                    setTimeout(
+                        function () {
+
+                            try {
+
+                                window
+                                    .speechSynthesis
+                                    .cancel();
+
+                            } catch (error) {
+
+                                // Ignore.
+                            }
+
+                            finish();
+
+                        },
+                        5000
                     );
 
-                if (curatorVoice) {
-                    speech.voice =
-                        curatorVoice;
-                }
 
-                speech.rate = 0.64;
-                speech.pitch = 0.45;
-                speech.volume = 1;
+                if (
+                    !(
+                        "speechSynthesis"
+                        in window
+                    )
+                ) {
 
-                speech.onend = function () {
-                    clearTimeout(safetyTimer);
+                    clearTimeout(
+                        safetyTimer
+                    );
 
                     setTimeout(
                         finish,
-                        400
+                        1500
                     );
-                };
 
-                speech.onerror = function () {
-                    clearTimeout(safetyTimer);
+                    return;
+                }
+
+
+                try {
+
+                    if (!curatorVoice) {
+
+                        chooseCuratorVoice();
+                    }
+
+
+                    window
+                        .speechSynthesis
+                        .cancel();
+
+
+                    const speech =
+                        new SpeechSynthesisUtterance(
+                            line
+                        );
+
+
+                    if (curatorVoice) {
+
+                        speech.voice =
+                            curatorVoice;
+                    }
+
+
+                    speech.rate = 0.64;
+                    speech.pitch = 0.45;
+                    speech.volume = 1;
+
+
+                    speech.onend =
+                        function () {
+
+                            clearTimeout(
+                                safetyTimer
+                            );
+
+                            setTimeout(
+                                finish,
+                                350
+                            );
+                        };
+
+
+                    speech.onerror =
+                        function () {
+
+                            clearTimeout(
+                                safetyTimer
+                            );
+
+                            setTimeout(
+                                finish,
+                                600
+                            );
+                        };
+
+
+                    window
+                        .speechSynthesis
+                        .speak(
+                            speech
+                        );
+
+                } catch (error) {
+
+                    clearTimeout(
+                        safetyTimer
+                    );
 
                     setTimeout(
                         finish,
                         700
                     );
-                };
-
-                window.speechSynthesis.speak(
-                    speech
-                );
-
-            } catch (error) {
-                clearTimeout(safetyTimer);
-
-                setTimeout(
-                    finish,
-                    900
-                );
+                }
             }
-        });
+        );
     }
 
 
@@ -649,22 +691,33 @@ document.addEventListener("DOMContentLoaded", function () {
         INTRODUCTION
     */
 
-    async function showDialogueLine(line) {
-        introText.classList.add("hidden");
+    async function showDialogueLine(
+        line
+    ) {
+
+        introText.classList.add(
+            "hidden"
+        );
 
         await wait(400);
 
-        introText.textContent = line;
+        introText.textContent =
+            line;
 
-        introText.classList.remove("hidden");
+        introText.classList.remove(
+            "hidden"
+        );
 
-        await speakAsCurator(line);
+        await speakAsCurator(
+            line
+        );
 
         await wait(250);
     }
 
 
     async function playIntroduction() {
+
         startButton.disabled = true;
 
         await fadeToScreen(
@@ -674,11 +727,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         await wait(1200);
 
-        for (const line of introLines) {
-            await showDialogueLine(line);
+
+        for (
+            const line
+            of introLines
+        ) {
+
+            await showDialogueLine(
+                line
+            );
         }
 
-        introText.classList.add("hidden");
+
+        introText.classList.add(
+            "hidden"
+        );
 
         await wait(800);
 
@@ -701,7 +764,8 @@ document.addEventListener("DOMContentLoaded", function () {
         level,
         investigation
     ) {
-        const alreadyAdded =
+
+        const exists =
             journalEntries.some(
                 function (entry) {
 
@@ -714,11 +778,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             );
 
-        if (!alreadyAdded) {
+
+        if (!exists) {
+
             journalEntries.push({
-                level: level.number,
-                id: investigation.id,
-                name: investigation.name,
+
+                level:
+                    level.number,
+
+                id:
+                    investigation.id,
+
+                name:
+                    investigation.name,
+
                 description:
                     investigation.description
             });
@@ -727,76 +800,90 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function renderJournal() {
-        if (journalEntries.length === 0) {
+
+        if (
+            journalEntries.length === 0
+        ) {
+
             journalContent.innerHTML =
                 "<p>No evidence recorded yet.</p>";
 
             return;
         }
 
+
         const grouped = {};
+
 
         journalEntries.forEach(
             function (entry) {
 
-                if (!grouped[entry.level]) {
-                    grouped[entry.level] = [];
+                if (
+                    !grouped[
+                        entry.level
+                    ]
+                ) {
+
+                    grouped[
+                        entry.level
+                    ] = [];
                 }
 
-                grouped[entry.level].push(
-                    entry
-                );
+                grouped[
+                    entry.level
+                ].push(entry);
             }
         );
 
+
         journalContent.innerHTML =
             Object.keys(grouped)
+                .map(
+                    function (
+                        levelNumber
+                    ) {
 
-            .map(function (levelNumber) {
-                const entries =
-                    grouped[levelNumber]
+                        const entries =
+                            grouped[
+                                levelNumber
+                            ]
+                            .map(
+                                function (
+                                    entry
+                                ) {
 
-                    .map(function (entry) {
+                                    return `
+                                        <article class="journal-entry">
+
+                                            <h4>
+                                                ${entry.name}
+                                            </h4>
+
+                                            <p>
+                                                ${entry.description}
+                                            </p>
+
+                                        </article>
+                                    `;
+                                }
+                            )
+                            .join("");
+
 
                         return `
-                            <article class="journal-entry">
-                                <h4>
-                                    ${entry.name}
-                                </h4>
+                            <section class="journal-level">
 
-                                <p>
-                                    ${entry.description}
-                                </p>
-                            </article>
+                                <h3>
+                                    Room ${levelNumber}
+                                </h3>
+
+                                ${entries}
+
+                            </section>
                         `;
-                    })
-
-                    .join("");
-
-                return `
-                    <section class="journal-level">
-                        <h3>
-                            Room ${levelNumber}
-                        </h3>
-
-                        ${entries}
-                    </section>
-                `;
-            })
-
-            .join("");
-    }
-
-
-    function openJournal() {
-        renderJournal();
-
-        journalOverlay.classList.add("open");
-    }
-
-
-    function closeJournal() {
-        journalOverlay.classList.remove("open");
+                    }
+                )
+                .join("");
     }
 
 
@@ -804,55 +891,137 @@ document.addEventListener("DOMContentLoaded", function () {
         INVESTIGATION
     */
 
-    function resetInvestigationState() {
-        investigatedIds = new Set();
+    function resetLevelState() {
+
+        investigatedIds =
+            new Set();
+
+        puzzleSolved = false;
+
+        keypadEntry = "";
 
         evidenceCard.textContent =
             "Select an object to examine it.";
+
+        evidenceProgress.textContent =
+            "";
+
+        puzzleStatus.textContent =
+            "";
+
+        updateKeypadDisplay();
     }
 
 
-    function updateInvestigationProgress(level) {
+    function updateKeypadDisplay() {
+
+        const characters =
+            keypadEntry
+                .padEnd(
+                    4,
+                    "_"
+                )
+                .split("")
+                .join(" ");
+
+        keypadDisplay.textContent =
+            characters;
+    }
+
+
+    function updateLevelProgress(
+        level
+    ) {
+
         const required =
-            level.requiredInvestigations || 0;
+            level
+                .requiredInvestigations
+                || 0;
 
         const found =
             investigatedIds.size;
 
-        const enoughEvidence =
-            found >= required;
 
-        const choiceButtons =
-            choicesContainer.querySelectorAll(
-                ".choice"
-            );
+        const hasInvestigation =
+            level.investigations &&
+            level.investigations.length;
+
+
+        if (hasInvestigation) {
+
+            if (
+                found >= required
+            ) {
+
+                evidenceProgress
+                    .textContent =
+                    "Enough evidence gathered.";
+
+            } else {
+
+                evidenceProgress
+                    .textContent =
+                    "Evidence examined: " +
+                    found +
+                    " / " +
+                    required;
+            }
+        }
+
+
+        /*
+            Show keypad once enough
+            evidence has been examined.
+        */
 
         if (
-            level.investigations &&
-            level.investigations.length > 0
+            level.puzzle &&
+            found >= required &&
+            !puzzleSolved
         ) {
-            evidenceProgress.textContent =
-                enoughEvidence
-                    ? "You have enough evidence. Make your choice."
-                    : "Evidence examined: " +
-                      found +
-                      " / " +
-                      required;
-        } else {
-            evidenceProgress.textContent = "";
+
+            puzzlePanel.classList.remove(
+                "hidden-panel"
+            );
         }
+
+
+        /*
+            Door choices stay locked
+            until puzzle is solved.
+        */
+
+        const choiceButtons =
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                );
+
+
+        const choicesUnlocked =
+            level.puzzle
+                ? puzzleSolved
+                : (
+                    !hasInvestigation ||
+                    found >= required
+                );
+
 
         choiceButtons.forEach(
             function (button) {
+
                 button.disabled =
-                    !enoughEvidence;
+                    !choicesUnlocked;
             }
         );
 
-        choicesContainer.classList.toggle(
-            "choices-locked",
-            !enoughEvidence
-        );
+
+        choicesContainer
+            .classList
+            .toggle(
+                "choices-locked",
+                !choicesUnlocked
+            );
     }
 
 
@@ -861,19 +1030,23 @@ document.addEventListener("DOMContentLoaded", function () {
         investigation,
         button
     ) {
+
         const firstVisit =
             !investigatedIds.has(
                 investigation.id
             );
 
+
         investigatedIds.add(
             investigation.id
         );
+
 
         addJournalEntry(
             level,
             investigation
         );
+
 
         evidenceCard.innerHTML = `
             <strong>
@@ -886,18 +1059,22 @@ document.addEventListener("DOMContentLoaded", function () {
             </span>
         `;
 
+
         button.classList.add(
             "investigated"
         );
 
-        updateInvestigationProgress(
+
+        updateLevelProgress(
             level
         );
+
 
         if (
             firstVisit &&
             investigation.curator
         ) {
+
             curatorMessage.textContent =
                 investigation.curator;
 
@@ -908,44 +1085,64 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function renderInvestigations(level) {
-        investigationGrid.innerHTML = "";
+    function renderInvestigations(
+        level
+    ) {
+
+        investigationGrid.innerHTML =
+            "";
+
 
         if (
             !level.investigations ||
-            level.investigations.length === 0
+            !level.investigations.length
         ) {
-            investigationPanel.classList.add(
-                "hidden-panel"
-            );
+
+            investigationPanel
+                .classList
+                .add(
+                    "hidden-panel"
+                );
 
             return;
         }
 
-        investigationPanel.classList.remove(
-            "hidden-panel"
-        );
+
+        investigationPanel
+            .classList
+            .remove(
+                "hidden-panel"
+            );
+
 
         level.investigations.forEach(
-            function (investigation) {
+            function (
+                investigation
+            ) {
 
                 const button =
-                    document.createElement("button");
+                    document
+                        .createElement(
+                            "button"
+                        );
+
 
                 button.className =
                     "investigation-button";
 
-                button.type = "button";
 
                 button.innerHTML = `
-                    <span class="investigation-icon">
-                        ${investigation.icon || "?"}
+                    <span
+                        class="investigation-icon"
+                    >
+                        ${investigation.icon}
                     </span>
 
                     <span>
                         ${investigation.name}
                     </span>
                 `;
+
 
                 button.addEventListener(
                     "click",
@@ -959,23 +1156,202 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 );
 
-                investigationGrid.appendChild(
-                    button
-                );
+
+                investigationGrid
+                    .appendChild(
+                        button
+                    );
             }
         );
     }
 
 
     /*
-        LEVEL SYSTEM
+        KEYPAD
+    */
+
+    function setupPuzzle(
+        level
+    ) {
+
+        keypadEntry = "";
+
+        puzzleStatus.textContent =
+            "";
+
+        updateKeypadDisplay();
+
+
+        if (!level.puzzle) {
+
+            puzzlePanel.classList.add(
+                "hidden-panel"
+            );
+
+            return;
+        }
+
+
+        puzzlePanel.classList.add(
+            "hidden-panel"
+        );
+
+
+        puzzleTitle.textContent =
+            level.puzzle.title;
+
+
+        puzzleInstruction
+            .textContent =
+            level.puzzle.instruction;
+    }
+
+
+    async function submitKeypad() {
+
+        const level =
+            levels[
+                currentLevelIndex
+            ];
+
+
+        if (!level.puzzle) {
+            return;
+        }
+
+
+        if (
+            keypadEntry ===
+            level.puzzle.answer
+        ) {
+
+            puzzleSolved = true;
+
+
+            puzzleStatus.textContent =
+                level.puzzle.correct;
+
+
+            puzzleStatus.classList.remove(
+                "wrong"
+            );
+
+            puzzleStatus.classList.add(
+                "correct"
+            );
+
+
+            updateLevelProgress(
+                level
+            );
+
+
+            await speakAsCurator(
+                level
+                    .puzzle
+                    .curatorSuccess
+            );
+
+
+            curatorMessage.textContent =
+                level
+                    .puzzle
+                    .curatorSuccess;
+
+
+            await wait(500);
+
+
+            puzzlePanel.classList.add(
+                "puzzle-solved"
+            );
+
+
+        } else {
+
+            puzzleStatus.textContent =
+                level.puzzle.wrong;
+
+
+            puzzleStatus.classList.remove(
+                "correct"
+            );
+
+            puzzleStatus.classList.add(
+                "wrong"
+            );
+
+
+            keypadEntry = "";
+
+            updateKeypadDisplay();
+        }
+    }
+
+
+    document
+        .querySelectorAll(
+            ".keypad-number"
+        )
+        .forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            keypadEntry
+                                .length >= 4
+                        ) {
+                            return;
+                        }
+
+                        keypadEntry +=
+                            button.dataset
+                                .number;
+
+                        updateKeypadDisplay();
+                    }
+                );
+            }
+        );
+
+
+    keypadClear.addEventListener(
+        "click",
+        function () {
+
+            keypadEntry = "";
+
+            puzzleStatus.textContent =
+                "";
+
+            updateKeypadDisplay();
+        }
+    );
+
+
+    keypadEnter.addEventListener(
+        "click",
+        submitKeypad
+    );
+
+
+    /*
+        LEVEL LOADING
     */
 
     function loadLevel() {
-        const level =
-            levels[currentLevelIndex];
 
-        resetInvestigationState();
+        const level =
+            levels[
+                currentLevelIndex
+            ];
+
+
+        resetLevelState();
+
 
         levelHeader.innerHTML =
             "<span>SUBJECT 47</span>" +
@@ -983,125 +1359,135 @@ document.addEventListener("DOMContentLoaded", function () {
             level.number +
             " / 100</span>";
 
+
         observationText.textContent =
             level.observation;
+
 
         clueText.textContent =
             level.clue;
 
+
         questionTitle.textContent =
             level.title;
+
 
         questionText.textContent =
             level.question;
 
-        curatorMessage.textContent = "";
 
-        choicesContainer.innerHTML = "";
+        curatorMessage.textContent =
+            "";
+
+
+        choicesContainer.innerHTML =
+            "";
+
 
         level.choices.forEach(
             function (choice) {
 
                 const button =
-                    document.createElement("button");
+                    document
+                        .createElement(
+                            "button"
+                        );
 
-                button.className = "choice";
+
+                button.className =
+                    "choice";
+
 
                 button.textContent =
                     choice.text;
+
 
                 button.addEventListener(
                     "click",
                     function () {
 
-                        handleChoice(choice);
+                        handleChoice(
+                            choice
+                        );
                     }
                 );
 
-                choicesContainer.appendChild(
-                    button
-                );
+
+                choicesContainer
+                    .appendChild(
+                        button
+                    );
             }
         );
 
-        renderInvestigations(level);
 
-        if (
-            level.investigations &&
-            level.investigations.length > 0
-        ) {
-            updateInvestigationProgress(
-                level
-            );
+        renderInvestigations(
+            level
+        );
 
-        } else {
-            const choiceButtons =
-                choicesContainer.querySelectorAll(
-                    ".choice"
-                );
 
-            choiceButtons.forEach(
-                function (button) {
-                    button.disabled = false;
-                }
-            );
+        setupPuzzle(
+            level
+        );
 
-            choicesContainer.classList.remove(
-                "choices-locked"
-            );
-        }
+
+        updateLevelProgress(
+            level
+        );
     }
 
 
-    async function handleChoice(choice) {
+    /*
+        CHOICES
+    */
+
+    async function handleChoice(
+        choice
+    ) {
+
         const level =
-            levels[currentLevelIndex];
+            levels[
+                currentLevelIndex
+            ];
 
-        const choiceButtons =
-            document.querySelectorAll(
-                ".choice"
-            );
-
-        choiceButtons.forEach(
-            function (button) {
-                button.disabled = true;
-            }
-        );
 
         if (choice.correct) {
-            curatorMessage.textContent =
-                level.success;
 
             successLabel.textContent =
                 "LEVEL " +
                 level.number +
                 " COMPLETE";
 
+
             successTitle.textContent =
                 "You chose correctly.";
+
 
             successMessage.textContent =
                 level.success;
 
+
             await speakAsCurator(
                 level.success
             );
+
 
             await fadeToScreen(
                 levelScreen,
                 successScreen
             );
 
+
         } else {
-            curatorMessage.textContent =
-                level.death;
 
             deathMessage.textContent =
                 level.death;
 
+
             await speakAsCurator(
                 level.death
             );
+
 
             await fadeToScreen(
                 levelScreen,
@@ -1109,6 +1495,40 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     }
+
+
+    /*
+        JOURNAL BUTTONS
+    */
+
+    journalButton
+        .addEventListener(
+            "click",
+            function () {
+
+                renderJournal();
+
+                journalOverlay
+                    .classList
+                    .add(
+                        "open"
+                    );
+            }
+        );
+
+
+    closeJournalButton
+        .addEventListener(
+            "click",
+            function () {
+
+                journalOverlay
+                    .classList
+                    .remove(
+                        "open"
+                    );
+            }
+        );
 
 
     /*
@@ -1120,17 +1540,23 @@ document.addEventListener("DOMContentLoaded", function () {
         function () {
 
             try {
+
                 if (
-                    typeof startAmbientSound ===
-                    "function"
+                    typeof
+                    startAmbientSound
+                    === "function"
                 ) {
+
                     startAmbientSound();
                 }
+
             } catch (error) {
+
                 console.log(
-                    "Ambient audio unavailable."
+                    "Ambient sound unavailable."
                 );
             }
+
 
             playIntroduction();
         }
@@ -1141,118 +1567,48 @@ document.addEventListener("DOMContentLoaded", function () {
         "click",
         function () {
 
-            if ("speechSynthesis" in window) {
-                window.speechSynthesis.cancel();
-            }
-
             loadLevel();
 
-            showScreen(levelScreen);
+            showScreen(
+                levelScreen
+            );
         }
     );
 
 
-    continueButton.addEventListener(
-        "click",
-        function () {
+    continueButton
+        .addEventListener(
+            "click",
+            function () {
 
-            currentLevelIndex += 1;
+                currentLevelIndex += 1;
 
-            if (
-                currentLevelIndex >=
-                levels.length
-            ) {
-                alert(
-                    "You have completed the current prototype."
+
+                if (
+                    currentLevelIndex >=
+                    levels.length
+                ) {
+
+                    alert(
+                        "You have completed the current prototype."
+                    );
+
+                    currentLevelIndex = 0;
+
+                    showScreen(
+                        titleScreen
+                    );
+
+                    return;
+                }
+
+
+                loadLevel();
+
+                showScreen(
+                    levelScreen
                 );
-
-                currentLevelIndex = 0;
-
-                showScreen(titleScreen);
-
-                return;
             }
+        );
 
-            loadLevel();
-
-            showScreen(levelScreen);
-        }
-    );
-
-
-    journalButton.addEventListener(
-        "click",
-        openJournal
-    );
-
-
-    closeJournalButton.addEventListener(
-        "click",
-        closeJournal
-    );
-
-
-    journalOverlay.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target ===
-                journalOverlay
-            ) {
-                closeJournal();
-            }
-        }
-    );
-
-
-    /*
-        VOICE SELECTOR BUTTONS
-    */
-
-    voiceButton.addEventListener(
-        "click",
-        function () {
-
-            populateVoiceSelector();
-
-            voiceOverlay.style.display =
-                "flex";
-        }
-    );
-
-
-    closeVoiceButton.addEventListener(
-        "click",
-        function () {
-
-            if ("speechSynthesis" in window) {
-                window.speechSynthesis.cancel();
-            }
-
-            voiceOverlay.style.display =
-                "none";
-        }
-    );
-
-
-    testVoiceButton.addEventListener(
-        "click",
-        testSelectedVoice
-    );
-
-
-    saveVoiceButton.addEventListener(
-        "click",
-        saveSelectedVoice
-    );
-
-
-    refreshVoicesButton.addEventListener(
-        "click",
-        function () {
-
-            populateVoiceSelector();
-        }
-    );
 });
