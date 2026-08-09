@@ -1,4 +1,12 @@
 const levels = [
+
+    /*
+        ==============================
+        LEVEL 1
+        OBSERVATION
+        ==============================
+    */
+
     {
         number: 1,
         title: "Observation",
@@ -13,6 +21,7 @@ const levels = [
             "The control panel is unlocked. Which door do you choose?",
 
         investigations: [
+
             {
                 id: "clock",
                 name: "Clock",
@@ -63,11 +72,13 @@ const levels = [
                 description:
                     "The handle is clean. Dust has been disturbed around the base, as though this door opened recently."
             }
+
         ],
 
         requiredInvestigations: 5,
 
         puzzle: {
+
             type: "keypad",
 
             title:
@@ -90,6 +101,7 @@ const levels = [
         },
 
         choices: [
+
             {
                 text: "Black Door",
                 correct: false
@@ -99,6 +111,7 @@ const levels = [
                 text: "White Door",
                 correct: true
             }
+
         ],
 
         success:
@@ -110,8 +123,10 @@ const levels = [
 
 
     /*
+        ==============================
         LEVEL 2
         THE THREE VOICES
+        ==============================
     */
 
     {
@@ -132,14 +147,11 @@ const levels = [
 
 
         /*
-            THREE SPEAKERS
-
-            script.js will turn these into
-            visual speaker panels with
-            PLAY buttons.
+            SPEAKER RECORDINGS
         */
 
         speakers: [
+
             {
                 id: "speakerA",
                 label: "SPEAKER A",
@@ -153,7 +165,7 @@ const levels = [
                 label: "SPEAKER B",
 
                 statement:
-                    "Speaker A is the liar."
+                    "Do not trust the first speaker."
             },
 
             {
@@ -163,6 +175,7 @@ const levels = [
                 statement:
                     "The correct door is white."
             }
+
         ],
 
 
@@ -171,6 +184,7 @@ const levels = [
         */
 
         investigations: [
+
             {
                 id: "speakerAUnit",
                 name: "Speaker A",
@@ -209,19 +223,13 @@ const levels = [
                 curator:
                     "You are beginning to understand. Information and truth are not the same thing."
             }
+
         ],
 
         requiredInvestigations: 4,
 
-
-        /*
-            No keypad in Level 2.
-
-            Once all evidence has been
-            examined, the three doors unlock.
-        */
-
         choices: [
+
             {
                 text: "Red Door",
                 correct: false,
@@ -242,6 +250,7 @@ const levels = [
                 consequence:
                     "The black door opens into total darkness. Something mechanical moves behind you."
             }
+
         ],
 
         success:
@@ -249,5 +258,194 @@ const levels = [
 
         death:
             "You trusted the statement. You ignored the source."
+    },
+
+
+    /*
+        ==============================
+        LEVEL 3
+        THE PREVIOUS SUBJECT
+        ==============================
+    */
+
+    {
+        number: 3,
+        title: "The Previous Subject",
+
+        observation:
+            "The next room is older than the others. Damp stains spread across the concrete walls. A restraint chair is bolted to the centre of the floor. Above it, scratched deeply into the wall, are the words SUBJECT 19.",
+
+        clue:
+            "Someone was here before you.",
+
+        intro:
+            "Some people leave remarkably persistent traces behind.",
+
+        question:
+            "Find what Subject 19 discovered.",
+
+
+        /*
+            SUBJECT 19 RECORDING
+        */
+
+        recording: {
+
+            id: "subject19Recording",
+
+            label:
+                "DAMAGED RECORDER",
+
+            lines: [
+
+                "If someone finds this... don't listen to him.",
+
+                "The rooms aren't what he's testing.",
+
+                "He's testing you."
+
+            ],
+
+            curatorAfter:
+                "Curiosity can be a dangerous habit."
+        },
+
+
+        /*
+            LEVEL 3 INVESTIGATIONS
+        */
+
+        investigations: [
+
+            {
+                id: "brokenWatch",
+                name: "Broken Watch",
+                icon: "⌚",
+
+                description:
+                    "A cracked wristwatch lies beneath the chair. Its hands are frozen, but someone has scratched four marks into the back: left, right, right, left."
+            },
+
+            {
+                id: "restraints",
+                name: "Restraints",
+                icon: "⛓️",
+
+                description:
+                    "Leather restraints are fixed to both arms of the chair. Beneath each armrest is a small metal pressure switch."
+            },
+
+            {
+                id: "floorScratches",
+                name: "Floor Scratches",
+                icon: "〰️",
+
+                description:
+                    "The floor around the chair is scored with repeated drag marks. Four of them have been deliberately deepened: left, right, right, left."
+            },
+
+            {
+                id: "photograph",
+                name: "Photograph",
+                icon: "📷",
+
+                description:
+                    "A faded photograph shows a frightened man standing beside a woman and young girl. Someone has written SUBJECT 19 on the back.",
+
+                optional: true,
+
+                journalSecret:
+                    "Subject 19 had a family. Elias did not choose people without lives outside this place."
+            },
+
+            {
+                id: "recorder",
+                name: "Audio Recorder",
+                icon: "🎙️",
+
+                description:
+                    "An old handheld recorder has been wedged beneath the chair. Its battery indicator flickers weakly."
+            }
+
+        ],
+
+
+        /*
+            The player only NEEDS four
+            investigation discoveries.
+
+            The photograph is optional evidence.
+        */
+
+        requiredInvestigations: 4,
+
+
+        /*
+            NEW LEVEL 3 PUZZLE TYPE
+
+            script.js will turn this into
+            LEFT and RIGHT switches.
+
+            Required sequence:
+
+            LEFT
+            RIGHT
+            RIGHT
+            LEFT
+        */
+
+        sequencePuzzle: {
+
+            type:
+                "direction",
+
+            title:
+                "RESTRAINT CONTROL",
+
+            instruction:
+                "Four inputs are required.",
+
+            answer: [
+                "LEFT",
+                "RIGHT",
+                "RIGHT",
+                "LEFT"
+            ],
+
+            correct:
+                "RELEASE MECHANISM ENGAGED",
+
+            wrong:
+                "SEQUENCE REJECTED",
+
+            curatorSuccess:
+                "He noticed more than I expected."
+        },
+
+
+        /*
+            Only one exit.
+
+            The puzzle unlocks it.
+        */
+
+        choices: [
+
+            {
+                text:
+                    "Heavy Steel Door",
+
+                correct:
+                    true
+            }
+
+        ],
+
+        success:
+            "Subject 19 found the pattern. You found what he left behind.",
+
+        death:
+            "Patterns are meaningless if you cannot follow them."
     }
+
 ];
