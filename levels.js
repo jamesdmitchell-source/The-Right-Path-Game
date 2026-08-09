@@ -153,7 +153,7 @@ const levels = [
                 label: "SPEAKER B",
 
                 statement:
-                    "Speaker A is lying."
+                    "Speaker A is the liar."
             },
 
             {
