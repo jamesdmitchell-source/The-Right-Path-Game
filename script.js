@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "rightPathCuratorVoice"
         ) || "";
 
-
     const introLines = [
         "Are you listening?",
         "Good.",
@@ -122,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     investigationPanel.className =
         "investigation-panel";
-
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
@@ -157,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ></p>
     `;
 
-
     choicesContainer.parentNode.insertBefore(
         investigationPanel,
         choicesContainer
@@ -171,30 +168,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const puzzleOverlay =
         document.createElement("div");
 
-
     Object.assign(
         puzzleOverlay.style,
         {
             position: "fixed",
             inset: "0",
             zIndex: "2500",
-
             display: "none",
-
             alignItems: "flex-start",
             justifyContent: "center",
-
             padding: "7vh 18px 30px",
-
             boxSizing: "border-box",
-
             overflowY: "auto",
-
             background:
                 "rgba(0, 0, 0, 0.88)"
         }
     );
-
 
     const puzzlePanel =
         document.createElement("section");
@@ -202,29 +191,22 @@ document.addEventListener("DOMContentLoaded", function () {
     puzzlePanel.className =
         "puzzle-panel";
 
-
     Object.assign(
         puzzlePanel.style,
         {
             display: "block",
-
             width:
                 "min(430px, 92vw)",
-
             maxHeight:
                 "84vh",
-
             overflowY:
                 "auto",
-
             margin:
                 "0",
-
             boxSizing:
                 "border-box"
         }
     );
-
 
     puzzlePanel.innerHTML = `
         <p class="puzzle-label">
@@ -330,11 +312,9 @@ document.addEventListener("DOMContentLoaded", function () {
         ></p>
     `;
 
-
     puzzleOverlay.appendChild(
         puzzlePanel
     );
-
 
     document.body.appendChild(
         puzzleOverlay
@@ -350,7 +330,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     journalOverlay.className =
         "journal-overlay";
-
 
     journalOverlay.innerHTML = `
         <div class="journal-card">
@@ -376,7 +355,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-
     document.body.appendChild(
         journalOverlay
     );
@@ -391,7 +369,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     doorTransition.className =
         "door-transition";
-
 
     doorTransition.innerHTML = `
         <div class="door-scene">
@@ -414,7 +391,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         </div>
     `;
-
 
     document.body.appendChild(
         doorTransition
@@ -518,7 +494,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
 
-
         screen.classList.add(
             "active"
         );
@@ -534,9 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "fade-out"
         );
 
-
         await wait(700);
-
 
         showScreen(
             nextScreen
@@ -558,7 +531,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
         return window
             .speechSynthesis
             .getVoices()
@@ -579,7 +551,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const voices =
             getEnglishVoices();
 
-
         if (!voices.length) {
 
             curatorVoice =
@@ -588,10 +559,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /*
-            Previously selected voice.
-        */
 
         if (selectedVoiceName) {
 
@@ -607,7 +574,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 );
 
-
             if (saved) {
 
                 curatorVoice =
@@ -617,10 +583,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-
-        /*
-            Prefer deeper British voices.
-        */
 
         const preferredNames = [
             "daniel",
@@ -638,7 +600,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     const name =
                         voice.name
                             .toLowerCase();
-
 
                     return (
                         voice.lang
@@ -682,7 +643,6 @@ document.addEventListener("DOMContentLoaded", function () {
             ||
 
             voices[0];
-
     }
 
 
@@ -740,10 +700,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
-
                     completed =
                         true;
-
 
                     resolve();
                 }
@@ -777,7 +735,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             }
 
-
                             finish();
 
                         },
@@ -805,14 +762,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /*
-                        More natural on iPad.
+                        NATURAL IPAD SETTINGS
                     */
 
                     speech.rate =
-                        0.72;
+                        0.78;
 
                     speech.pitch =
-                        0.82;
+                        0.95;
 
                     speech.volume =
                         1;
@@ -824,7 +781,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             clearTimeout(
                                 timer
                             );
-
 
                             setTimeout(
                                 finish,
@@ -840,7 +796,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             clearTimeout(
                                 timer
                             );
-
 
                             setTimeout(
                                 finish,
@@ -865,7 +820,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         timer
                     );
 
-
                     finish();
 
                 }
@@ -877,12 +831,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /*
         FIRST INTRO LINE
-
-        IMPORTANT IPAD FIX:
-
-        This is called immediately from the
-        Begin Trial tap. There is NO wait
-        before speech starts.
     */
 
     function speakFirstIntroLineImmediately() {
@@ -951,11 +899,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
 
+                    /*
+                        SAME NATURAL SETTINGS
+                        FOR FIRST LINE
+                    */
+
                     speech.rate =
-                        0.72;
+                        0.78;
 
                     speech.pitch =
-                        0.82;
+                        0.95;
 
                     speech.volume =
                         1;
@@ -973,10 +926,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
-
                         done =
                             true;
-
 
                         resolve();
 
@@ -1005,20 +956,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         };
 
 
-                    /*
-                        Safety protection.
-                    */
-
                     setTimeout(
                         finish,
                         6500
                     );
 
-
-                    /*
-                        THIS happens directly from
-                        the player's button press.
-                    */
 
                     window
                         .speechSynthesis
@@ -1085,17 +1027,8 @@ document.addEventListener("DOMContentLoaded", function () {
             true;
 
 
-        /*
-            Wait for the first line which
-            has ALREADY started speaking.
-        */
-
         await firstLinePromise;
 
-
-        /*
-            Lines 2 onward.
-        */
 
         for (
             let i = 1;
@@ -1438,12 +1371,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /*
-            With Level 1 set to 5,
-            keypad now appears after
-            ALL five objects.
-        */
 
         if (
             level.puzzle &&
@@ -1909,13 +1836,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /*
-            Desktop fallback.
-
-            On iPad the sound is started
-            immediately from the actual door tap.
-        */
-
         if (
             !soundAlreadyStarted &&
             typeof playDoorMusic ===
@@ -2029,13 +1949,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
-
-                        /*
-                            IMPORTANT IPAD AUDIO FIX:
-
-                            Start the real WAV immediately
-                            from the White Door tap.
-                        */
 
                         let soundStarted =
                             false;
@@ -2256,9 +2169,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /*
         BEGIN TRIAL
-
-        CRITICAL IPAD CHANGE:
-        Elias starts speaking immediately.
     */
 
     startButton.addEventListener(
@@ -2268,11 +2178,6 @@ document.addEventListener("DOMContentLoaded", function () {
             startButton.disabled =
                 true;
 
-
-            /*
-                Prepare the door WAV.
-                This should NOT play it.
-            */
 
             try {
 
@@ -2296,21 +2201,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            /*
-                Start Elias IMMEDIATELY.
-                No await.
-                No delay.
-                No animation first.
-            */
-
             const firstLine =
                 speakFirstIntroLineImmediately();
 
-
-            /*
-                Continue the rest of the intro
-                after that first utterance.
-            */
 
             continueIntroduction(
                 firstLine
