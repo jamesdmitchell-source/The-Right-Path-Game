@@ -108,35 +108,146 @@ const levels = [
             "You saw the evidence. You simply chose to ignore it."
     },
 
+
+    /*
+        LEVEL 2
+        THE THREE VOICES
+    */
+
     {
         number: 2,
-        title: "The Silent Room",
+        title: "The Three Voices",
 
         observation:
-            "Two corridors lie ahead. Music plays from one. The other is completely silent.",
+            "A narrow concrete chamber. Three old wall speakers face you from behind metal grilles. Beneath them are three doors: RED, WHITE and BLACK.",
 
         clue:
-            "Noise is designed to attract attention. Silence often hides the truth.",
+            "A statement is only useful if the source can be trusted.",
+
+        intro:
+            "Observation served you well. But observation is useless if you cannot distinguish truth from deception.",
 
         question:
-            "Which corridor do you enter?",
+            "Which door do you trust?",
 
-        choices: [
+
+        /*
+            THREE SPEAKERS
+
+            script.js will turn these into
+            visual speaker panels with
+            PLAY buttons.
+        */
+
+        speakers: [
             {
-                text: "The Corridor With Music",
-                correct: false
+                id: "speakerA",
+                label: "SPEAKER A",
+
+                statement:
+                    "The correct door is not red."
             },
 
             {
-                text: "The Silent Corridor",
+                id: "speakerB",
+                label: "SPEAKER B",
+
+                statement:
+                    "Speaker A is lying."
+            },
+
+            {
+                id: "speakerC",
+                label: "SPEAKER C",
+
+                statement:
+                    "The correct door is white."
+            }
+        ],
+
+
+        /*
+            INVESTIGATION CLUES
+        */
+
+        investigations: [
+            {
+                id: "speakerAUnit",
+                name: "Speaker A",
+                icon: "🔊",
+
+                description:
+                    "The grille is dusty but undamaged. The wiring behind the casing appears old and untouched."
+            },
+
+            {
+                id: "speakerBUnit",
+                name: "Speaker B",
+                icon: "🔊",
+
+                description:
+                    "The casing has been opened recently. One of the internal wires is newer than the others."
+            },
+
+            {
+                id: "speakerCUnit",
+                name: "Speaker C",
+                icon: "🔊",
+
+                description:
+                    "The speaker casing is intact. Several scratches have been carved into the wall beneath it."
+            },
+
+            {
+                id: "maintenancePanel",
+                name: "Maintenance Panel",
+                icon: "🛠️",
+
+                description:
+                    "Inside is a faded technician's note: UNIT B — MEMORY FAULT. OUTPUT UNRELIABLE.",
+
+                curator:
+                    "You are beginning to understand. Information and truth are not the same thing."
+            }
+        ],
+
+        requiredInvestigations: 4,
+
+
+        /*
+            No keypad in Level 2.
+
+            Once all evidence has been
+            examined, the three doors unlock.
+        */
+
+        choices: [
+            {
+                text: "Red Door",
+                correct: false,
+
+                consequence:
+                    "The red door opens three inches, then locks. A pressure valve releases above you."
+            },
+
+            {
+                text: "White Door",
                 correct: true
+            },
+
+            {
+                text: "Black Door",
+                correct: false,
+
+                consequence:
+                    "The black door opens into total darkness. Something mechanical moves behind you."
             }
         ],
 
         success:
-            "You resisted the distraction. Continue.",
+            "Good. You did not believe what you were told. You looked for evidence. Perhaps there is hope for you yet.",
 
         death:
-            "You followed what wanted to be noticed."
+            "You trusted the statement. You ignored the source."
     }
 ];
