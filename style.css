@@ -583,3 +583,52 @@ blockquote {
 .door-message {
     opacity: 1;
 }
+/* CORRIDOR TRANSITION */
+
+.corridor-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 2800;
+
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.5)
+        ),
+        url("corridor.png")
+        center center / cover
+        no-repeat;
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+}
+
+.corridor-transition.active {
+    display: flex;
+    opacity: 1;
+}
+
+.corridor-caption {
+    margin-bottom: 8vh;
+
+    padding: 14px 22px;
+
+    max-width: 80%;
+
+    border: 1px solid #444;
+
+    background:
+        rgba(0, 0, 0, 0.72);
+
+    color: #d0d0d0;
+
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-align: center;
+}
