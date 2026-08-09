@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="journal-topbar">
 
                 <span>
-                    SUBJECT 47 — JOURNAL
+                    SUBJECT 28 — JOURNAL
                 </span>
 
                 <button
@@ -436,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     corridorTransition.innerHTML = `
         <div class="corridor-caption">
-            SUBJECT 47 IS MOVED TO THE NEXT ROOM...
+            SUBJECT 28 IS MOVED TO THE NEXT ROOM...
         </div>
     `;
 
@@ -2472,7 +2472,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         levelHeader.innerHTML =
-            "<span>SUBJECT 47</span>" +
+            "<span>SUBJECT 28</span>" +
             "<span>LEVEL " +
             level.number +
             " / 100</span>";
