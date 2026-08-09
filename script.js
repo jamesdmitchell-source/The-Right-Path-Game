@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
         MAIN GAME SCRIPT
     */
 
-    const screens = document.querySelectorAll(".screen");
+    const screens =
+        document.querySelectorAll(".screen");
 
     const titleScreen =
         document.getElementById("titleScreen");
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        ELIAS VOICE
+        ELIAS
     */
 
     let curatorVoice = null;
@@ -103,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const introLines = [
-        "Can you hear me?",
+        "Are you listening?",
         "Good.",
         "You have been looking for answers.",
         "Now you will discover whether you deserve them.",
@@ -121,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     investigationPanel.className =
         "investigation-panel";
+
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
@@ -169,14 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const puzzleOverlay =
         document.createElement("div");
 
-    puzzleOverlay.id =
-        "puzzleOverlay";
-
-
-    /*
-        Inline positioning means we do not
-        need to alter style.css for this fix.
-    */
 
     Object.assign(
         puzzleOverlay.style,
@@ -184,14 +178,20 @@ document.addEventListener("DOMContentLoaded", function () {
             position: "fixed",
             inset: "0",
             zIndex: "2500",
+
             display: "none",
+
             alignItems: "flex-start",
             justifyContent: "center",
-            padding: "8vh 18px 30px",
+
+            padding: "7vh 18px 30px",
+
             boxSizing: "border-box",
+
             overflowY: "auto",
+
             background:
-                "rgba(0, 0, 0, 0.86)"
+                "rgba(0, 0, 0, 0.88)"
         }
     );
 
@@ -207,11 +207,21 @@ document.addEventListener("DOMContentLoaded", function () {
         puzzlePanel.style,
         {
             display: "block",
-            width: "min(430px, 92vw)",
-            maxHeight: "82vh",
-            overflowY: "auto",
-            margin: "0",
-            boxSizing: "border-box"
+
+            width:
+                "min(430px, 92vw)",
+
+            maxHeight:
+                "84vh",
+
+            overflowY:
+                "auto",
+
+            margin:
+                "0",
+
+            boxSizing:
+                "border-box"
         }
     );
 
@@ -240,73 +250,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 class="keypad-number"
                 data-number="1"
                 type="button"
-            >
-                1
-            </button>
+            >1</button>
 
             <button
                 class="keypad-number"
                 data-number="2"
                 type="button"
-            >
-                2
-            </button>
+            >2</button>
 
             <button
                 class="keypad-number"
                 data-number="3"
                 type="button"
-            >
-                3
-            </button>
+            >3</button>
 
             <button
                 class="keypad-number"
                 data-number="4"
                 type="button"
-            >
-                4
-            </button>
+            >4</button>
 
             <button
                 class="keypad-number"
                 data-number="5"
                 type="button"
-            >
-                5
-            </button>
+            >5</button>
 
             <button
                 class="keypad-number"
                 data-number="6"
                 type="button"
-            >
-                6
-            </button>
+            >6</button>
 
             <button
                 class="keypad-number"
                 data-number="7"
                 type="button"
-            >
-                7
-            </button>
+            >7</button>
 
             <button
                 class="keypad-number"
                 data-number="8"
                 type="button"
-            >
-                8
-            </button>
+            >8</button>
 
             <button
                 class="keypad-number"
                 data-number="9"
                 type="button"
-            >
-                9
-            </button>
+            >9</button>
 
             <button
                 id="keypadClear"
@@ -336,7 +328,6 @@ document.addEventListener("DOMContentLoaded", function () {
             id="puzzleStatus"
             class="puzzle-status"
         ></p>
-
     `;
 
 
@@ -412,9 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="steel-door">
 
                 <div class="door-left"></div>
-
                 <div class="door-right"></div>
-
                 <div class="door-light"></div>
 
             </div>
@@ -433,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        ELEMENT REFERENCES
+        REFERENCES
     */
 
     const investigationGrid =
@@ -546,7 +535,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(900);
+        await wait(700);
 
 
         showScreen(
@@ -556,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        ELIAS VOICE SYSTEM
+        VOICE SELECTION
     */
 
     function getEnglishVoices() {
@@ -593,20 +582,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!voices.length) {
 
-            curatorVoice = null;
+            curatorVoice =
+                null;
 
-            return false;
+            return;
         }
 
 
         /*
-            First use the voice previously
-            selected by the player.
+            Previously selected voice.
         */
 
         if (selectedVoiceName) {
 
-            const savedVoice =
+            const saved =
                 voices.find(
                     function (voice) {
 
@@ -619,20 +608,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-            if (savedVoice) {
+            if (saved) {
 
                 curatorVoice =
-                    savedVoice;
+                    saved;
 
-                return true;
+                return;
             }
         }
 
 
         /*
-            Prefer naturally male British
-            voices instead of artificially
-            forcing pitch down.
+            Prefer deeper British voices.
         */
 
         const preferredNames = [
@@ -640,9 +627,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "arthur",
             "george",
             "oliver",
-            "jamie",
-            "ryan",
-            "male"
+            "ryan"
         ];
 
 
@@ -658,7 +643,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     return (
                         voice.lang
                             .toLowerCase()
-                            .startsWith("en-gb")
+                            .startsWith(
+                                "en-gb"
+                            )
 
                         &&
 
@@ -696,47 +683,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             voices[0];
 
-
-        return !!curatorVoice;
-    }
-
-
-    /*
-        iPad Safari often loads its voice list
-        slightly later than desktop browsers.
-
-        Wait briefly before giving up.
-    */
-
-    async function waitForCuratorVoice() {
-
-        if (
-            !("speechSynthesis" in window)
-        ) {
-
-            return;
-        }
-
-
-        window.speechSynthesis.resume();
-
-
-        for (
-            let attempt = 0;
-            attempt < 12;
-            attempt++
-        ) {
-
-            if (
-                chooseCuratorVoice()
-            ) {
-
-                return;
-            }
-
-
-            await wait(150);
-        }
     }
 
 
@@ -747,7 +693,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "speechSynthesis" in window
     ) {
 
-        window.speechSynthesis
+        window
+            .speechSynthesis
             .onvoiceschanged =
             function () {
 
@@ -757,30 +704,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /*
+        NORMAL ELIAS SPEECH
+    */
+
     function speakAsCurator(line) {
 
         return new Promise(
             function (resolve) {
-
-                let finished =
-                    false;
-
-
-                function finish() {
-
-                    if (finished) {
-
-                        return;
-                    }
-
-
-                    finished =
-                        true;
-
-
-                    resolve();
-                }
-
 
                 if (
                     !(
@@ -790,29 +721,45 @@ document.addEventListener("DOMContentLoaded", function () {
                 ) {
 
                     setTimeout(
-                        finish,
-                        1400
+                        resolve,
+                        1200
                     );
 
                     return;
                 }
 
 
-                const calculatedTime =
-                    line.length * 150;
+                let completed =
+                    false;
+
+
+                function finish() {
+
+                    if (completed) {
+
+                        return;
+                    }
+
+
+                    completed =
+                        true;
+
+
+                    resolve();
+                }
 
 
                 const safetyTime =
                     Math.min(
                         16000,
                         Math.max(
-                            7000,
-                            calculatedTime
+                            6500,
+                            line.length * 150
                         )
                     );
 
 
-                const safetyTimer =
+                const timer =
                     setTimeout(
                         function () {
 
@@ -840,21 +787,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 try {
 
-                    if (!curatorVoice) {
-
-                        chooseCuratorVoice();
-
-                    }
-
-
-                    window
-                        .speechSynthesis
-                        .cancel();
-
-
-                    window
-                        .speechSynthesis
-                        .resume();
+                    chooseCuratorVoice();
 
 
                     const speech =
@@ -872,14 +805,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /*
-                        IMPORTANT IPAD FIX
-
-                        0.45 was creating distorted
-                        words on some Apple voices.
-
-                        0.82 keeps Elias slightly
-                        deeper without mangling the
-                        voice.
+                        More natural on iPad.
                     */
 
                     speech.rate =
@@ -896,13 +822,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         function () {
 
                             clearTimeout(
-                                safetyTimer
+                                timer
                             );
 
 
                             setTimeout(
                                 finish,
-                                300
+                                250
                             );
 
                         };
@@ -912,13 +838,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         function () {
 
                             clearTimeout(
-                                safetyTimer
+                                timer
                             );
 
 
                             setTimeout(
                                 finish,
-                                500
+                                400
                             );
 
                         };
@@ -936,12 +862,177 @@ document.addEventListener("DOMContentLoaded", function () {
                 ) {
 
                     clearTimeout(
-                        safetyTimer
+                        timer
                     );
 
 
+                    finish();
+
+                }
+
+            }
+        );
+    }
+
+
+    /*
+        FIRST INTRO LINE
+
+        IMPORTANT IPAD FIX:
+
+        This is called immediately from the
+        Begin Trial tap. There is NO wait
+        before speech starts.
+    */
+
+    function speakFirstIntroLineImmediately() {
+
+        return new Promise(
+            function (resolve) {
+
+                showScreen(
+                    introScreen
+                );
+
+
+                introText.textContent =
+                    introLines[0];
+
+
+                introText.classList.remove(
+                    "hidden"
+                );
+
+
+                if (
+                    !(
+                        "speechSynthesis"
+                        in window
+                    )
+                ) {
+
+                    setTimeout(
+                        resolve,
+                        1200
+                    );
+
+                    return;
+                }
+
+
+                try {
+
+                    window
+                        .speechSynthesis
+                        .cancel();
+
+
+                    window
+                        .speechSynthesis
+                        .resume();
+
+
+                    chooseCuratorVoice();
+
+
+                    const speech =
+                        new SpeechSynthesisUtterance(
+                            introLines[0]
+                        );
+
+
+                    if (
+                        curatorVoice
+                    ) {
+
+                        speech.voice =
+                            curatorVoice;
+
+                    }
+
+
+                    speech.rate =
+                        0.72;
+
+                    speech.pitch =
+                        0.82;
+
+                    speech.volume =
+                        1;
+
+
+                    let done =
+                        false;
+
+
+                    function finish() {
+
+                        if (done) {
+
+                            return;
+
+                        }
+
+
+                        done =
+                            true;
+
+
+                        resolve();
+
+                    }
+
+
+                    speech.onend =
+                        function () {
+
+                            setTimeout(
+                                finish,
+                                300
+                            );
+
+                        };
+
+
+                    speech.onerror =
+                        function () {
+
+                            setTimeout(
+                                finish,
+                                500
+                            );
+
+                        };
+
+
+                    /*
+                        Safety protection.
+                    */
+
                     setTimeout(
                         finish,
+                        6500
+                    );
+
+
+                    /*
+                        THIS happens directly from
+                        the player's button press.
+                    */
+
+                    window
+                        .speechSynthesis
+                        .speak(
+                            speech
+                        );
+
+
+                } catch (
+                    error
+                ) {
+
+                    setTimeout(
+                        resolve,
                         500
                     );
 
@@ -953,7 +1044,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        INTRODUCTION
+        REST OF INTRO
     */
 
     async function showDialogueLine(
@@ -965,7 +1056,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(350);
+        await wait(300);
 
 
         introText.textContent =
@@ -982,41 +1073,38 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(220);
+        await wait(200);
     }
 
 
-    async function playIntroduction() {
+    async function continueIntroduction(
+        firstLinePromise
+    ) {
 
         startButton.disabled =
             true;
 
 
         /*
-            Give iPad Safari time to expose
-            its speech voices BEFORE Elias'
-            first sentence.
+            Wait for the first line which
+            has ALREADY started speaking.
         */
 
-        await waitForCuratorVoice();
+        await firstLinePromise;
 
 
-        await fadeToScreen(
-            titleScreen,
-            introScreen
-        );
-
-
-        await wait(900);
-
+        /*
+            Lines 2 onward.
+        */
 
         for (
-            const line
-            of introLines
+            let i = 1;
+            i < introLines.length;
+            i++
         ) {
 
             await showDialogueLine(
-                line
+                introLines[i]
             );
 
         }
@@ -1027,7 +1115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(700);
+        await wait(600);
 
 
         loadLevel();
@@ -1218,11 +1306,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "flex";
 
 
-        /*
-            Always begin at the top of the
-            overlay on iPad.
-        */
-
         puzzleOverlay.scrollTop =
             0;
     }
@@ -1261,10 +1344,6 @@ document.addEventListener("DOMContentLoaded", function () {
             false;
 
 
-        puzzleVisible =
-            false;
-
-
         hidePuzzleOverlay();
 
 
@@ -1286,11 +1365,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        puzzlePanel.classList.remove(
-            "puzzle-solved"
-        );
-
-
         doorTransition.classList.remove(
             "active",
             "opening"
@@ -1302,7 +1376,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        KEYPAD DISPLAY
+        KEYPAD
     */
 
     function updateKeypadDisplay() {
@@ -1341,35 +1415,34 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations.length > 0;
 
 
-        if (hasInvestigations) {
+        if (
+            hasInvestigations
+        ) {
 
             if (
                 found >= required
             ) {
 
-                evidenceProgress
-                    .textContent =
+                evidenceProgress.textContent =
                     "Enough evidence gathered.";
 
             } else {
 
-                evidenceProgress
-                    .textContent =
+                evidenceProgress.textContent =
                     "Evidence examined: " +
                     found +
                     " / " +
                     required;
 
             }
+
         }
 
 
         /*
-            The keypad only appears after
-            ALL required items have been
-            investigated.
-
-            Level 1 currently requires 5.
+            With Level 1 set to 5,
+            keypad now appears after
+            ALL five objects.
         */
 
         if (
@@ -1390,7 +1463,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-        if (level.puzzle) {
+        if (
+            level.puzzle
+        ) {
 
             choiceButtons.forEach(
                 function (button) {
@@ -1402,12 +1477,10 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            choicesContainer
-                .classList
-                .toggle(
-                    "choices-locked",
-                    !puzzleSolved
-                );
+            choicesContainer.classList.toggle(
+                "choices-locked",
+                !puzzleSolved
+            );
 
 
         } else {
@@ -1427,19 +1500,17 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            choicesContainer
-                .classList
-                .toggle(
-                    "choices-locked",
-                    !unlocked
-                );
+            choicesContainer.classList.toggle(
+                "choices-locked",
+                !unlocked
+            );
 
         }
     }
 
 
     /*
-        INVESTIGATION
+        INVESTIGATE
     */
 
     async function investigate(
@@ -1467,17 +1538,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         evidenceCard.innerHTML = `
             <strong>
-
                 ${investigation.icon || ""}
-
                 ${investigation.name}
-
             </strong>
 
             <span>
-
                 ${investigation.description}
-
             </span>
         `;
 
@@ -1486,15 +1552,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "investigated"
         );
 
-
-        /*
-            Speak first, THEN decide whether
-            the final investigation should
-            open the keypad.
-
-            This avoids the panel covering
-            Elias' final clue immediately.
-        */
 
         if (
             firstVisit &&
@@ -1518,10 +1575,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*
-        INVESTIGATION BUTTONS
-    */
-
     function renderInvestigations(
         level
     ) {
@@ -1535,21 +1588,17 @@ document.addEventListener("DOMContentLoaded", function () {
             !level.investigations.length
         ) {
 
-            investigationPanel
-                .classList
-                .add(
-                    "hidden-panel"
-                );
+            investigationPanel.classList.add(
+                "hidden-panel"
+            );
 
             return;
         }
 
 
-        investigationPanel
-            .classList
-            .remove(
-                "hidden-panel"
-            );
+        investigationPanel.classList.remove(
+            "hidden-panel"
+        );
 
 
         level.investigations.forEach(
@@ -1575,15 +1624,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span
                         class="investigation-icon"
                     >
-
                         ${investigation.icon || "?"}
-
                     </span>
 
                     <span>
-
                         ${investigation.name}
-
                     </span>
                 `;
 
@@ -1602,10 +1647,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                investigationGrid
-                    .appendChild(
-                        button
-                    );
+                investigationGrid.appendChild(
+                    button
+                );
 
             }
         );
@@ -1634,7 +1678,9 @@ document.addEventListener("DOMContentLoaded", function () {
         hidePuzzleOverlay();
 
 
-        if (!level.puzzle) {
+        if (
+            !level.puzzle
+        ) {
 
             return;
         }
@@ -1650,7 +1696,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        SUBMIT KEYPAD
+        SUBMIT CODE
     */
 
     async function submitKeypad() {
@@ -1661,7 +1707,9 @@ document.addEventListener("DOMContentLoaded", function () {
             ];
 
 
-        if (!level.puzzle) {
+        if (
+            !level.puzzle
+        ) {
 
             return;
         }
@@ -1690,10 +1738,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            /*
-                Unlock the doors immediately.
-            */
-
             updateLevelProgress(
                 level
             );
@@ -1704,7 +1748,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .curatorSuccess;
 
 
-            await wait(300);
+            await wait(250);
 
 
             await speakAsCurator(
@@ -1713,13 +1757,8 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            await wait(350);
+            await wait(300);
 
-
-            /*
-                Remove the keypad and return
-                to the room.
-            */
 
             hidePuzzleOverlay();
 
@@ -1791,11 +1830,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     function () {
 
                         if (
-                            keypadEntry
-                                .length >= 4
+                            keypadEntry.length >=
+                            4
                         ) {
 
                             return;
+
                         }
 
 
@@ -1844,16 +1884,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        DOOR OPENING
+        DOOR CINEMATIC
     */
 
-    async function playDoorOpening() {
+    async function playDoorOpening(
+        soundAlreadyStarted
+    ) {
 
         if (
             transitionRunning
         ) {
 
             return;
+
         }
 
 
@@ -1861,19 +1904,20 @@ document.addEventListener("DOMContentLoaded", function () {
             true;
 
 
-        doorTransition
-            .classList
-            .add(
-                "active"
-            );
+        doorTransition.classList.add(
+            "active"
+        );
 
 
         /*
-            Real door-creak.wav is played
-            by audio.js.
+            Desktop fallback.
+
+            On iPad the sound is started
+            immediately from the actual door tap.
         */
 
         if (
+            !soundAlreadyStarted &&
             typeof playDoorMusic ===
             "function"
         ) {
@@ -1883,25 +1927,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        await wait(900);
+        await wait(700);
 
 
-        doorTransition
-            .classList
-            .add(
-                "opening"
-            );
+        doorTransition.classList.add(
+            "opening"
+        );
 
 
         await wait(4200);
 
 
-        doorTransition
-            .classList
-            .remove(
-                "active",
-                "opening"
-            );
+        doorTransition.classList.remove(
+            "active",
+            "opening"
+        );
 
 
         transitionRunning =
@@ -1986,21 +2026,48 @@ document.addEventListener("DOMContentLoaded", function () {
                         ) {
 
                             return;
+
+                        }
+
+
+                        /*
+                            IMPORTANT IPAD AUDIO FIX:
+
+                            Start the real WAV immediately
+                            from the White Door tap.
+                        */
+
+                        let soundStarted =
+                            false;
+
+
+                        if (
+                            choice.correct &&
+                            level.number === 1 &&
+                            typeof playDoorMusic ===
+                            "function"
+                        ) {
+
+                            playDoorMusic();
+
+                            soundStarted =
+                                true;
+
                         }
 
 
                         handleChoice(
-                            choice
+                            choice,
+                            soundStarted
                         );
 
                     }
                 );
 
 
-                choicesContainer
-                    .appendChild(
-                        button
-                    );
+                choicesContainer.appendChild(
+                    button
+                );
 
             }
         );
@@ -2027,7 +2094,8 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     async function handleChoice(
-        choice
+        choice,
+        soundStarted
     ) {
 
         const level =
@@ -2041,45 +2109,43 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             return;
+
         }
 
 
-        const choiceButtons =
-            choicesContainer
-                .querySelectorAll(
-                    ".choice"
-                );
+        choicesContainer
+            .querySelectorAll(
+                ".choice"
+            )
+            .forEach(
+                function (button) {
+
+                    button.disabled =
+                        true;
+
+                }
+            );
 
 
-        choiceButtons.forEach(
-            function (button) {
-
-                button.disabled =
-                    true;
-
-            }
-        );
-
-
-        /*
-            CORRECT DOOR
-        */
-
-        if (choice.correct) {
+        if (
+            choice.correct
+        ) {
 
             if (
-                level.number === 1
+                level.number ===
+                1
             ) {
 
-                curatorMessage
-                    .textContent =
+                curatorMessage.textContent =
                     "The lock releases.";
 
 
-                await wait(450);
+                await wait(350);
 
 
-                await playDoorOpening();
+                await playDoorOpening(
+                    soundStarted
+                );
 
             }
 
@@ -2113,10 +2179,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        /*
-            WRONG DOOR
-        */
-
         } else {
 
             deathMessage.textContent =
@@ -2142,7 +2204,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        JOURNAL BUTTONS
+        JOURNAL
     */
 
     journalButton.addEventListener(
@@ -2152,11 +2214,9 @@ document.addEventListener("DOMContentLoaded", function () {
             renderJournal();
 
 
-            journalOverlay
-                .classList
-                .add(
-                    "open"
-                );
+            journalOverlay.classList.add(
+                "open"
+            );
 
         }
     );
@@ -2167,52 +2227,51 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
+                journalOverlay.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+
+    journalOverlay.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
                 journalOverlay
-                    .classList
-                    .remove(
-                        "open"
-                    );
+            ) {
+
+                journalOverlay.classList.remove(
+                    "open"
+                );
 
             }
-        );
 
-
-    journalOverlay
-        .addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    event.target ===
-                    journalOverlay
-                ) {
-
-                    journalOverlay
-                        .classList
-                        .remove(
-                            "open"
-                        );
-
-                }
-
-            }
-        );
+        }
+    );
 
 
     /*
         BEGIN TRIAL
+
+        CRITICAL IPAD CHANGE:
+        Elias starts speaking immediately.
     */
 
     startButton.addEventListener(
         "click",
         function () {
 
-            /*
-                audio.js now only prepares
-                door-creak.wav.
+            startButton.disabled =
+                true;
 
-                It must NOT play the creak
-                at this point.
+
+            /*
+                Prepare the door WAV.
+                This should NOT play it.
             */
 
             try {
@@ -2238,27 +2297,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             /*
-                Wake up iPad speech synthesis
-                while we're still inside the
-                player's button press.
+                Start Elias IMMEDIATELY.
+                No await.
+                No delay.
+                No animation first.
             */
 
-            if (
-                "speechSynthesis"
-                in window
-            ) {
-
-                window
-                    .speechSynthesis
-                    .resume();
+            const firstLine =
+                speakFirstIntroLineImmediately();
 
 
-                chooseCuratorVoice();
+            /*
+                Continue the rest of the intro
+                after that first utterance.
+            */
 
-            }
-
-
-            playIntroduction();
+            continueIntroduction(
+                firstLine
+            );
 
         }
     );
