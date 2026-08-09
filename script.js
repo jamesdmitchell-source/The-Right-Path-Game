@@ -76,12 +76,28 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     let currentLevelIndex = 0;
-    let investigatedIds = new Set();
+
+    let investigatedIds =
+        new Set();
+
     let journalEntries = [];
+
     let puzzleSolved = false;
+
     let keypadEntry = "";
+
     let transitionRunning = false;
+
     let puzzleVisible = false;
+
+    /*
+        LEVEL 2 SPEAKER STATE
+    */
+
+    let playedSpeakerIds =
+        new Set();
+
+    let speakerWall = null;
 
 
     /*
@@ -155,6 +171,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
+        LEVEL 2 SPEAKER WALL
+
+        This sits above the investigation panel.
+    */
+
+    speakerWall =
+        document.createElement("section");
+
+    speakerWall.className =
+        "speaker-wall";
+
+    investigationPanel.parentNode.insertBefore(
+        speakerWall,
+        investigationPanel
+    );
+
+
+    /*
         KEYPAD OVERLAY
     */
 
@@ -188,11 +222,16 @@ document.addEventListener("DOMContentLoaded", function () {
         puzzlePanel.style,
         {
             display: "block",
-            width: "min(430px, 92vw)",
-            maxHeight: "84vh",
-            overflowY: "auto",
-            margin: "0",
-            boxSizing: "border-box"
+            width:
+                "min(430px, 92vw)",
+            maxHeight:
+                "84vh",
+            overflowY:
+                "auto",
+            margin:
+                "0",
+            boxSizing:
+                "border-box"
         }
     );
 
@@ -216,27 +255,79 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <div class="keypad-grid">
 
-            <button class="keypad-number" data-number="1" type="button">1</button>
-            <button class="keypad-number" data-number="2" type="button">2</button>
-            <button class="keypad-number" data-number="3" type="button">3</button>
+            <button
+                class="keypad-number"
+                data-number="1"
+                type="button"
+            >1</button>
 
-            <button class="keypad-number" data-number="4" type="button">4</button>
-            <button class="keypad-number" data-number="5" type="button">5</button>
-            <button class="keypad-number" data-number="6" type="button">6</button>
+            <button
+                class="keypad-number"
+                data-number="2"
+                type="button"
+            >2</button>
 
-            <button class="keypad-number" data-number="7" type="button">7</button>
-            <button class="keypad-number" data-number="8" type="button">8</button>
-            <button class="keypad-number" data-number="9" type="button">9</button>
+            <button
+                class="keypad-number"
+                data-number="3"
+                type="button"
+            >3</button>
 
-            <button id="keypadClear" type="button">
+            <button
+                class="keypad-number"
+                data-number="4"
+                type="button"
+            >4</button>
+
+            <button
+                class="keypad-number"
+                data-number="5"
+                type="button"
+            >5</button>
+
+            <button
+                class="keypad-number"
+                data-number="6"
+                type="button"
+            >6</button>
+
+            <button
+                class="keypad-number"
+                data-number="7"
+                type="button"
+            >7</button>
+
+            <button
+                class="keypad-number"
+                data-number="8"
+                type="button"
+            >8</button>
+
+            <button
+                class="keypad-number"
+                data-number="9"
+                type="button"
+            >9</button>
+
+            <button
+                id="keypadClear"
+                type="button"
+            >
                 CLEAR
             </button>
 
-            <button class="keypad-number" data-number="0" type="button">
+            <button
+                class="keypad-number"
+                data-number="0"
+                type="button"
+            >
                 0
             </button>
 
-            <button id="keypadEnter" type="button">
+            <button
+                id="keypadEnter"
+                type="button"
+            >
                 ENTER
             </button>
 
@@ -334,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        NEW CORRIDOR TRANSITION
+        CORRIDOR TRANSITION
     */
 
     const corridorTransition =
@@ -783,6 +874,175 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
+        LEVEL 2 SPEAKER VOICE
+
+        Deliberately different from Elias.
+        Slightly quicker and flatter so it
+        sounds like an old recording.
+    */
+
+    function speakSpeakerRecording(
+        line,
+        speakerNumber
+    ) {
+
+        return new Promise(
+            function (resolve) {
+
+                if (
+                    !(
+                        "speechSynthesis"
+                        in window
+                    )
+                ) {
+
+                    setTimeout(
+                        resolve,
+                        1000
+                    );
+
+                    return;
+                }
+
+
+                try {
+
+                    window
+                        .speechSynthesis
+                        .cancel();
+
+
+                    const voices =
+                        getEnglishVoices();
+
+
+                    let recordingVoice =
+                        voices.find(
+                            function (voice) {
+
+                                return (
+                                    curatorVoice &&
+                                    voice.name !==
+                                        curatorVoice.name
+                                );
+
+                            }
+                        )
+
+                        ||
+
+                        voices[0]
+
+                        ||
+
+                        null;
+
+
+                    const speech =
+                        new SpeechSynthesisUtterance(
+                            line
+                        );
+
+
+                    if (recordingVoice) {
+
+                        speech.voice =
+                            recordingVoice;
+
+                    }
+
+
+                    /*
+                        Tiny differences between
+                        the three recordings.
+                    */
+
+                    if (
+                        speakerNumber === 2
+                    ) {
+
+                        speech.rate =
+                            0.88;
+
+                        speech.pitch =
+                            0.92;
+
+                    } else {
+
+                        speech.rate =
+                            0.84;
+
+                        speech.pitch =
+                            1.0;
+
+                    }
+
+
+                    speech.volume =
+                        0.9;
+
+
+                    let finished =
+                        false;
+
+
+                    function finish() {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+                        finished =
+                            true;
+
+                        resolve();
+                    }
+
+
+                    speech.onend =
+                        function () {
+
+                            setTimeout(
+                                finish,
+                                150
+                            );
+
+                        };
+
+
+                    speech.onerror =
+                        finish;
+
+
+                    setTimeout(
+                        finish,
+                        7000
+                    );
+
+
+                    window
+                        .speechSynthesis
+                        .speak(
+                            speech
+                        );
+
+
+                } catch (
+                    error
+                ) {
+
+                    resolve();
+
+                }
+
+            }
+        );
+    }
+
+
+    /*
         FIRST INTRO LINE
     */
 
@@ -945,18 +1205,23 @@ document.addEventListener("DOMContentLoaded", function () {
             "hidden"
         );
 
+
         await wait(300);
+
 
         introText.textContent =
             line;
+
 
         introText.classList.remove(
             "hidden"
         );
 
+
         await speakAsCurator(
             line
         );
+
 
         await wait(200);
     }
@@ -968,6 +1233,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         startButton.disabled =
             true;
+
 
         await firstLinePromise;
 
@@ -989,14 +1255,18 @@ document.addEventListener("DOMContentLoaded", function () {
             "hidden"
         );
 
+
         await wait(600);
 
+
         loadLevel();
+
 
         await fadeToScreen(
             introScreen,
             levelScreen
         );
+
 
         startButton.disabled =
             false;
@@ -1202,16 +1472,33 @@ document.addEventListener("DOMContentLoaded", function () {
         investigatedIds =
             new Set();
 
+
+        playedSpeakerIds =
+            new Set();
+
+
         puzzleSolved =
             false;
+
 
         keypadEntry =
             "";
 
+
         transitionRunning =
             false;
 
+
         hidePuzzleOverlay();
+
+
+        speakerWall.innerHTML =
+            "";
+
+
+        speakerWall.classList.remove(
+            "active"
+        );
 
 
         evidenceCard.textContent =
@@ -1260,6 +1547,225 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
+        LEVEL 2 SPEAKERS
+    */
+
+    function allSpeakersPlayed(
+        level
+    ) {
+
+        if (
+            !level.speakers ||
+            !level.speakers.length
+        ) {
+
+            return true;
+        }
+
+
+        return (
+            playedSpeakerIds.size >=
+            level.speakers.length
+        );
+    }
+
+
+    async function playSpeaker(
+        level,
+        speaker,
+        speakerNumber,
+        button,
+        unit,
+        statement
+    ) {
+
+        playedSpeakerIds.add(
+            speaker.id
+        );
+
+
+        button.classList.add(
+            "played"
+        );
+
+
+        button.textContent =
+            "REPLAY";
+
+
+        statement.textContent =
+            "\"" +
+            speaker.statement +
+            "\"";
+
+
+        unit.classList.add(
+            "playing"
+        );
+
+
+        updateLevelProgress(
+            level
+        );
+
+
+        await speakSpeakerRecording(
+            speaker.statement,
+            speakerNumber
+        );
+
+
+        unit.classList.remove(
+            "playing"
+        );
+    }
+
+
+    function renderSpeakers(
+        level
+    ) {
+
+        speakerWall.innerHTML =
+            "";
+
+
+        if (
+            !level.speakers ||
+            !level.speakers.length
+        ) {
+
+            speakerWall.classList.remove(
+                "active"
+            );
+
+            return;
+        }
+
+
+        speakerWall.classList.add(
+            "active"
+        );
+
+
+        level.speakers.forEach(
+            function (
+                speaker,
+                index
+            ) {
+
+                const unit =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                unit.className =
+                    "speaker-unit";
+
+
+                const label =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                label.className =
+                    "speaker-label";
+
+
+                label.textContent =
+                    speaker.label;
+
+
+                const grille =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                grille.className =
+                    "speaker-grille";
+
+
+                const playButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                playButton.type =
+                    "button";
+
+
+                playButton.className =
+                    "speaker-play";
+
+
+                playButton.textContent =
+                    "PLAY";
+
+
+                const statement =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                statement.className =
+                    "speaker-statement";
+
+
+                statement.textContent =
+                    "Recording ready.";
+
+
+                playButton.addEventListener(
+                    "click",
+                    function () {
+
+                        playSpeaker(
+                            level,
+                            speaker,
+                            index + 1,
+                            playButton,
+                            unit,
+                            statement
+                        );
+
+                    }
+                );
+
+
+                unit.appendChild(
+                    label
+                );
+
+
+                unit.appendChild(
+                    grille
+                );
+
+
+                unit.appendChild(
+                    playButton
+                );
+
+
+                unit.appendChild(
+                    statement
+                );
+
+
+                speakerWall.appendChild(
+                    unit
+                );
+
+            }
+        );
+    }
+
+
+    /*
         LEVEL PROGRESS
     */
 
@@ -1282,7 +1788,43 @@ document.addEventListener("DOMContentLoaded", function () {
             level.investigations.length > 0;
 
 
+        const speakersComplete =
+            allSpeakersPlayed(
+                level
+            );
+
+
         if (
+            level.speakers &&
+            level.speakers.length
+        ) {
+
+            const heard =
+                playedSpeakerIds.size;
+
+
+            evidenceProgress.textContent =
+                "Recordings heard: " +
+                heard +
+                " / " +
+                level.speakers.length +
+                " — Evidence examined: " +
+                found +
+                " / " +
+                required;
+
+
+            if (
+                found >= required &&
+                speakersComplete
+            ) {
+
+                evidenceProgress.textContent =
+                    "Evidence complete. The three doors unlock.";
+
+            }
+
+        } else if (
             hasInvestigations
         ) {
 
@@ -1306,6 +1848,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        /*
+            LEVEL 1 KEYPAD
+        */
+
         if (
             level.puzzle &&
             found >= required &&
@@ -1323,6 +1869,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     ".choice"
                 );
 
+
+        /*
+            KEYPAD LEVEL
+        */
 
         if (
             level.puzzle
@@ -1344,11 +1894,25 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        } else {
+            return;
+        }
+
+
+        /*
+            SPEAKER LEVEL
+
+            Must hear ALL recordings AND
+            examine ALL required evidence.
+        */
+
+        if (
+            level.speakers &&
+            level.speakers.length
+        ) {
 
             const unlocked =
-                !hasInvestigations ||
-                found >= required;
+                found >= required &&
+                speakersComplete;
 
 
             choiceButtons.forEach(
@@ -1366,7 +1930,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 !unlocked
             );
 
+
+            return;
         }
+
+
+        /*
+            NORMAL INVESTIGATION LEVEL
+        */
+
+        const unlocked =
+            !hasInvestigations ||
+            found >= required;
+
+
+        choiceButtons.forEach(
+            function (button) {
+
+                button.disabled =
+                    !unlocked;
+
+            }
+        );
+
+
+        choicesContainer.classList.toggle(
+            "choices-locked",
+            !unlocked
+        );
     }
 
 
@@ -1528,10 +2119,13 @@ document.addEventListener("DOMContentLoaded", function () {
         keypadEntry =
             "";
 
+
         puzzleStatus.textContent =
             "";
 
+
         updateKeypadDisplay();
+
 
         hidePuzzleOverlay();
 
@@ -1554,7 +2148,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        SUBMIT CODE
+        SUBMIT KEYPAD
     */
 
     async function submitKeypad() {
@@ -1801,7 +2395,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        NEW CORRIDOR SEQUENCE
+        CORRIDOR SEQUENCE
     */
 
     async function playCorridorSequence() {
@@ -1830,6 +2424,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         await wait(500);
+    }
+
+
+    /*
+        LEVEL INTRODUCTION
+
+        Level 2 gets a short Elias
+        introduction after the corridor.
+    */
+
+    async function playLevelIntroduction(
+        level
+    ) {
+
+        if (
+            !level.intro
+        ) {
+
+            return;
+        }
+
+
+        curatorMessage.textContent =
+            level.intro;
+
+
+        await speakAsCurator(
+            level.intro
+        );
     }
 
 
@@ -1880,7 +2503,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         level.choices.forEach(
-            function (choice) {
+            function (
+                choice,
+                choiceIndex
+            ) {
 
                 const button =
                     document.createElement(
@@ -1914,6 +2540,37 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
 
+                        if (
+                            level.speakers &&
+                            level.speakers.length
+                        ) {
+
+                            const evidenceComplete =
+                                investigatedIds.size >=
+                                (
+                                    level
+                                    .requiredInvestigations
+                                    || 0
+                                );
+
+
+                            const recordingsComplete =
+                                allSpeakersPlayed(
+                                    level
+                                );
+
+
+                            if (
+                                !evidenceComplete ||
+                                !recordingsComplete
+                            ) {
+
+                                return;
+
+                            }
+                        }
+
+
                         let soundStarted =
                             false;
 
@@ -1935,7 +2592,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         handleChoice(
                             choice,
-                            soundStarted
+                            soundStarted,
+                            choiceIndex
                         );
 
                     }
@@ -1947,6 +2605,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
             }
+        );
+
+
+        renderSpeakers(
+            level
         );
 
 
@@ -2058,8 +2721,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } else {
 
+            /*
+                Level 2 can have a specific
+                consequence for each wrong door.
+            */
+
+            const failureText =
+                choice.consequence
+                    ? choice.consequence +
+                      " " +
+                      level.death
+                    : level.death;
+
+
             deathMessage.textContent =
-                level.death;
+                failureText;
 
 
             curatorMessage.textContent =
@@ -2207,6 +2883,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 levelScreen
             );
 
+
+            const level =
+                levels[
+                    currentLevelIndex
+                ];
+
+
+            if (
+                level &&
+                level.intro
+            ) {
+
+                playLevelIntroduction(
+                    level
+                );
+
+            }
+
         }
     );
 
@@ -2214,20 +2908,23 @@ document.addEventListener("DOMContentLoaded", function () {
     /*
         CONTINUE
 
-        NEW:
-        After Level 1 we show the corridor.
+        Level 1:
+        show corridor before Level 2.
+
+        Level 2+:
+        continue normally.
     */
 
     continueButton.addEventListener(
         "click",
         async function () {
 
-            /*
-                If Level 1 has just been
-                completed, start the corridor
-                ambience DIRECTLY from this tap.
+            continueButton.disabled =
+                true;
 
-                This helps iPad/Safari.
+
+            /*
+                LEVEL 1 -> CORRIDOR
             */
 
             if (
@@ -2255,11 +2952,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
-
-                /*
-                    Hide the Level Complete
-                    screen underneath.
-                */
 
                 successScreen.classList.remove(
                     "active"
@@ -2294,6 +2986,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
+                continueButton.disabled =
+                    false;
+
+
                 return;
             }
 
@@ -2304,6 +3000,25 @@ document.addEventListener("DOMContentLoaded", function () {
             showScreen(
                 levelScreen
             );
+
+
+            const newLevel =
+                levels[
+                    currentLevelIndex
+                ];
+
+
+            /*
+                Elias introduces Level 2.
+            */
+
+            await playLevelIntroduction(
+                newLevel
+            );
+
+
+            continueButton.disabled =
+                false;
 
         }
     );
