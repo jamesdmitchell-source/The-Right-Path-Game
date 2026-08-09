@@ -781,3 +781,459 @@ blockquote {
         margin-bottom: 12px;
     }
 }
+/* ========================================
+   LEVEL 3 — THE PREVIOUS SUBJECT
+   ======================================== */
+
+
+/* SUBJECT 19 RECORDER */
+
+.subject-recorder {
+    display: none;
+
+    margin: 22px 0;
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #050505
+        );
+
+    border: 1px solid #444;
+
+    box-shadow:
+        inset 0 0 25px rgba(0, 0, 0, 0.9),
+        0 5px 20px rgba(0, 0, 0, 0.55);
+
+    text-align: center;
+}
+
+
+.subject-recorder.active {
+    display: block;
+}
+
+
+.recorder-label {
+    margin-bottom: 12px;
+
+    color: #999;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+
+.recorder-device {
+    width: 170px;
+
+    margin:
+        0 auto 15px;
+
+    padding:
+        15px;
+
+    border:
+        2px solid #333;
+
+    background:
+        #080808;
+
+    box-shadow:
+        inset 0 0 15px #000;
+}
+
+
+.recorder-reel {
+    width: 55px;
+    height: 55px;
+
+    margin:
+        0 auto 12px;
+
+    border:
+        5px solid #292929;
+
+    border-radius:
+        50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #222 0,
+            #222 3px,
+            #050505 4px,
+            #050505 7px
+        );
+}
+
+
+.subject-recorder.playing
+.recorder-reel {
+
+    animation:
+        recorderSpin 1.4s
+        linear infinite;
+}
+
+
+@keyframes recorderSpin {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+.recorder-play {
+
+    width:
+        min(260px, 100%);
+
+    padding:
+        12px;
+
+    border:
+        1px solid #666;
+
+    background:
+        #111;
+
+    color:
+        #ddd;
+
+    font-family:
+        inherit;
+
+    letter-spacing:
+        3px;
+
+    cursor:
+        pointer;
+}
+
+
+.recorder-play:hover {
+
+    background:
+        #1c1c1c;
+}
+
+
+.recorder-play.played {
+
+    color:
+        #999;
+
+    border-color:
+        #444;
+}
+
+
+.recorder-transcript {
+
+    min-height:
+        42px;
+
+    margin-top:
+        14px;
+
+    color:
+        #aaa;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.6;
+
+    font-style:
+        italic;
+}
+
+
+/* ========================================
+   RESTRAINT CONTROL
+   ======================================== */
+
+.sequence-control {
+
+    display:
+        none;
+
+    margin:
+        24px 0;
+
+    padding:
+        20px;
+
+    border:
+        1px solid #3d3d3d;
+
+    background:
+        #070707;
+
+    text-align:
+        center;
+
+    box-shadow:
+        inset 0 0 25px #000;
+}
+
+
+.sequence-control.active {
+
+    display:
+        block;
+}
+
+
+.sequence-label {
+
+    color:
+        #888;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        4px;
+
+    margin-bottom:
+        8px;
+}
+
+
+.sequence-control h3 {
+
+    margin:
+        5px 0 10px;
+
+    letter-spacing:
+        2px;
+}
+
+
+.sequence-instruction {
+
+    color:
+        #999;
+
+    margin-bottom:
+        18px;
+}
+
+
+.sequence-display {
+
+    min-height:
+        48px;
+
+    margin:
+        15px 0;
+
+    padding:
+        12px;
+
+    border:
+        1px solid #333;
+
+    background:
+        #020202;
+
+    color:
+        #ccc;
+
+    letter-spacing:
+        3px;
+
+    line-height:
+        24px;
+}
+
+
+.sequence-buttons {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        12px;
+
+    margin-top:
+        15px;
+}
+
+
+.sequence-button {
+
+    padding:
+        17px 10px;
+
+    border:
+        1px solid #555;
+
+    background:
+        #111;
+
+    color:
+        #ddd;
+
+    font-family:
+        inherit;
+
+    letter-spacing:
+        3px;
+
+    cursor:
+        pointer;
+}
+
+
+.sequence-button:hover {
+
+    background:
+        #1d1d1d;
+}
+
+
+.sequence-button:active {
+
+    transform:
+        translateY(2px);
+}
+
+
+.sequence-status {
+
+    min-height:
+        24px;
+
+    margin-top:
+        15px;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        2px;
+}
+
+
+.sequence-status.correct {
+
+    color:
+        #a8c7a8;
+}
+
+
+.sequence-status.wrong {
+
+    color:
+        #c78d8d;
+}
+
+
+/* ========================================
+   OPTIONAL EVIDENCE
+   ======================================== */
+
+.investigation-button.optional-evidence {
+
+    border-style:
+        dashed;
+}
+
+
+.secret-evidence {
+
+    margin-top:
+        12px;
+
+    padding:
+        10px;
+
+    border-left:
+        2px solid #555;
+
+    color:
+        #aaa;
+
+    font-size:
+        12px;
+
+    font-style:
+        italic;
+}
+
+
+/* ========================================
+   LEVEL 3 MOBILE / IPAD
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .subject-recorder {
+
+        margin:
+            16px 0;
+
+        padding:
+            14px;
+    }
+
+
+    .recorder-device {
+
+        width:
+            135px;
+    }
+
+
+    .sequence-control {
+
+        margin:
+            18px 0;
+
+        padding:
+            15px;
+    }
+
+
+    .sequence-buttons {
+
+        gap:
+            8px;
+    }
+
+
+    .sequence-button {
+
+        padding:
+            15px 6px;
+
+        font-size:
+            13px;
+    }
+
+
+    .sequence-display {
+
+        font-size:
+            12px;
+
+        letter-spacing:
+            2px;
+    }
+}
