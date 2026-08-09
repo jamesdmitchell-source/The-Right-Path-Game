@@ -2396,7 +2396,51 @@ async function submitSequenceInput(
 
 
         evidenceProgress.textContent =
-            "The heavy steel door unlocks.";
+              "The release mechanism engages...";
+
+
+/*
+    LEVEL 3 HORROR AUDIO
+*/
+
+if (
+    typeof playDoorMusic ===
+    "function"
+) {
+
+    playDoorMusic();
+
+}
+
+
+/*
+    Let the door begin to creak,
+    then place the scream further
+    away in the corridor.
+*/
+
+setTimeout(
+    function () {
+
+        if (
+            typeof playDistantScream ===
+            "function"
+        ) {
+
+            playDistantScream();
+
+        }
+
+    },
+    1400
+);
+
+
+await wait(2200);
+
+
+evidenceProgress.textContent =
+    "The heavy steel door is open.";
 
 
         choicesContainer
