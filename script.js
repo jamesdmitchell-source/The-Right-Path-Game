@@ -76,18 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     let currentLevelIndex = 0;
-
-    let investigatedIds =
-        new Set();
-
+    let investigatedIds = new Set();
     let journalEntries = [];
-
     let puzzleSolved = false;
-
     let keypadEntry = "";
-
     let transitionRunning = false;
-
     let puzzleVisible = false;
 
 
@@ -195,16 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
         puzzlePanel.style,
         {
             display: "block",
-            width:
-                "min(430px, 92vw)",
-            maxHeight:
-                "84vh",
-            overflowY:
-                "auto",
-            margin:
-                "0",
-            boxSizing:
-                "border-box"
+            width: "min(430px, 92vw)",
+            maxHeight: "84vh",
+            overflowY: "auto",
+            margin: "0",
+            boxSizing: "border-box"
         }
     );
 
@@ -228,79 +216,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <div class="keypad-grid">
 
-            <button
-                class="keypad-number"
-                data-number="1"
-                type="button"
-            >1</button>
+            <button class="keypad-number" data-number="1" type="button">1</button>
+            <button class="keypad-number" data-number="2" type="button">2</button>
+            <button class="keypad-number" data-number="3" type="button">3</button>
 
-            <button
-                class="keypad-number"
-                data-number="2"
-                type="button"
-            >2</button>
+            <button class="keypad-number" data-number="4" type="button">4</button>
+            <button class="keypad-number" data-number="5" type="button">5</button>
+            <button class="keypad-number" data-number="6" type="button">6</button>
 
-            <button
-                class="keypad-number"
-                data-number="3"
-                type="button"
-            >3</button>
+            <button class="keypad-number" data-number="7" type="button">7</button>
+            <button class="keypad-number" data-number="8" type="button">8</button>
+            <button class="keypad-number" data-number="9" type="button">9</button>
 
-            <button
-                class="keypad-number"
-                data-number="4"
-                type="button"
-            >4</button>
-
-            <button
-                class="keypad-number"
-                data-number="5"
-                type="button"
-            >5</button>
-
-            <button
-                class="keypad-number"
-                data-number="6"
-                type="button"
-            >6</button>
-
-            <button
-                class="keypad-number"
-                data-number="7"
-                type="button"
-            >7</button>
-
-            <button
-                class="keypad-number"
-                data-number="8"
-                type="button"
-            >8</button>
-
-            <button
-                class="keypad-number"
-                data-number="9"
-                type="button"
-            >9</button>
-
-            <button
-                id="keypadClear"
-                type="button"
-            >
+            <button id="keypadClear" type="button">
                 CLEAR
             </button>
 
-            <button
-                class="keypad-number"
-                data-number="0"
-                type="button"
-            >
+            <button class="keypad-number" data-number="0" type="button">
                 0
             </button>
 
-            <button
-                id="keypadEnter"
-                type="button"
-            >
+            <button id="keypadEnter" type="button">
                 ENTER
             </button>
 
@@ -361,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        DOOR CINEMATIC
+        LEVEL 1 DOOR CINEMATIC
     */
 
     const doorTransition =
@@ -394,6 +330,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.body.appendChild(
         doorTransition
+    );
+
+
+    /*
+        NEW CORRIDOR TRANSITION
+    */
+
+    const corridorTransition =
+        document.createElement("div");
+
+    corridorTransition.className =
+        "corridor-transition";
+
+    corridorTransition.innerHTML = `
+        <div class="corridor-caption">
+            SUBJECT 47 IS MOVED TO THE NEXT ROOM...
+        </div>
+    `;
+
+    document.body.appendChild(
+        corridorTransition
     );
 
 
@@ -761,10 +718,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
 
-                    /*
-                        NATURAL IPAD SETTINGS
-                    */
-
                     speech.rate =
                         0.78;
 
@@ -899,11 +852,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
 
-                    /*
-                        SAME NATURAL SETTINGS
-                        FOR FIRST LINE
-                    */
-
                     speech.rate =
                         0.78;
 
@@ -997,23 +945,18 @@ document.addEventListener("DOMContentLoaded", function () {
             "hidden"
         );
 
-
         await wait(300);
-
 
         introText.textContent =
             line;
-
 
         introText.classList.remove(
             "hidden"
         );
 
-
         await speakAsCurator(
             line
         );
-
 
         await wait(200);
     }
@@ -1025,7 +968,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         startButton.disabled =
             true;
-
 
         await firstLinePromise;
 
@@ -1047,18 +989,14 @@ document.addEventListener("DOMContentLoaded", function () {
             "hidden"
         );
 
-
         await wait(600);
 
-
         loadLevel();
-
 
         await fadeToScreen(
             introScreen,
             levelScreen
         );
-
 
         startButton.disabled =
             false;
@@ -1264,18 +1202,14 @@ document.addEventListener("DOMContentLoaded", function () {
         investigatedIds =
             new Set();
 
-
         puzzleSolved =
             false;
-
 
         keypadEntry =
             "";
 
-
         transitionRunning =
             false;
-
 
         hidePuzzleOverlay();
 
@@ -1594,13 +1528,10 @@ document.addEventListener("DOMContentLoaded", function () {
         keypadEntry =
             "";
 
-
         puzzleStatus.textContent =
             "";
 
-
         updateKeypadDisplay();
-
 
         hidePuzzleOverlay();
 
@@ -1811,7 +1742,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        DOOR CINEMATIC
+        LEVEL 1 DOOR CINEMATIC
     */
 
     async function playDoorOpening(
@@ -1866,6 +1797,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
         transitionRunning =
             false;
+    }
+
+
+    /*
+        NEW CORRIDOR SEQUENCE
+    */
+
+    async function playCorridorSequence() {
+
+        corridorTransition.classList.add(
+            "active"
+        );
+
+
+        await wait(5000);
+
+
+        corridorTransition.classList.remove(
+            "active"
+        );
+
+
+        if (
+            typeof stopCorridorAmbience ===
+            "function"
+        ) {
+
+            stopCorridorAmbience();
+
+        }
+
+
+        await wait(500);
     }
 
 
@@ -2249,11 +2213,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /*
         CONTINUE
+
+        NEW:
+        After Level 1 we show the corridor.
     */
 
     continueButton.addEventListener(
         "click",
-        function () {
+        async function () {
+
+            /*
+                If Level 1 has just been
+                completed, start the corridor
+                ambience DIRECTLY from this tap.
+
+                This helps iPad/Safari.
+            */
+
+            if (
+                currentLevelIndex === 0
+            ) {
+
+                try {
+
+                    if (
+                        typeof playCorridorAmbience ===
+                        "function"
+                    ) {
+
+                        playCorridorAmbience();
+
+                    }
+
+                } catch (
+                    error
+                ) {
+
+                    console.log(
+                        "Corridor ambience unavailable."
+                    );
+
+                }
+
+
+                /*
+                    Hide the Level Complete
+                    screen underneath.
+                */
+
+                successScreen.classList.remove(
+                    "active"
+                );
+
+
+                await playCorridorSequence();
+
+            }
+
 
             currentLevelIndex +=
                 1;
