@@ -1237,3 +1237,31 @@ blockquote {
             2px;
     }
 }
+/* LEVEL 3 — FIXED PUZZLE OVERLAY */
+
+.sequence-control.active {
+    position: fixed;
+
+    top: 8vh;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 2600;
+
+    width: min(430px, 92vw);
+
+    max-height: 82vh;
+
+    overflow-y: auto;
+
+    margin: 0;
+
+    box-sizing: border-box;
+
+    background: #070707;
+
+    box-shadow:
+        0 0 0 9999px rgba(0, 0, 0, 0.82),
+        inset 0 0 25px #000;
+}
