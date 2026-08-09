@@ -2422,26 +2422,43 @@ if (
 setTimeout(
     function () {
 
-        if (
-            typeof playDistantScream ===
-            "function"
-        ) {
-
-            playDistantScream();
-
-        }
-
-    },
-    1400
-);
+      await wait(500);
 
 
-await wait(2200);
+if (
+    typeof playDoorMusic ===
+    "function"
+) {
+
+    playDoorMusic();
+
+}
+
+
+/*
+    Give the door time to begin opening.
+*/
+
+await wait(2600);
 
 
 evidenceProgress.textContent =
     "The heavy steel door is open.";
 
+
+/*
+    The scream is heard only once
+    the doorway has opened.
+*/
+
+if (
+    typeof playDistantScream ===
+    "function"
+) {
+
+    playDistantScream();
+
+}
 
         choicesContainer
             .querySelectorAll(
