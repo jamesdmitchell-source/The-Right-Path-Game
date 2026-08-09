@@ -98,6 +98,19 @@ document.addEventListener("DOMContentLoaded", function () {
         new Set();
 
     let speakerWall = null;
+    /*
+    LEVEL 3 STATE
+*/
+
+let subject19RecordingPlayed = false;
+
+let sequenceEntry = [];
+
+let sequenceSolved = false;
+
+let subjectRecorder = null;
+
+let sequenceControl = null;
 
 
     /*
@@ -186,7 +199,150 @@ document.addEventListener("DOMContentLoaded", function () {
         speakerWall,
         investigationPanel
     );
+/*
+    ========================================
+    LEVEL 3 — SUBJECT 19 RECORDER
+    ========================================
+*/
 
+subjectRecorder =
+    document.createElement("section");
+
+subjectRecorder.className =
+    "subject-recorder";
+
+subjectRecorder.innerHTML = `
+    <div class="recorder-label">
+        DAMAGED RECORDER
+    </div>
+
+    <div class="recorder-device">
+
+        <div class="recorder-reel"></div>
+
+        <div>
+            SUBJECT 19
+        </div>
+
+    </div>
+
+    <button
+        id="subject19Play"
+        class="recorder-play"
+        type="button"
+    >
+        PLAY RECORDING
+    </button>
+
+    <div
+        id="subject19Transcript"
+        class="recorder-transcript"
+    >
+        Tape detected.
+    </div>
+`;
+
+investigationPanel.parentNode.insertBefore(
+    subjectRecorder,
+    investigationPanel
+);
+
+
+/*
+    ========================================
+    LEVEL 3 — RESTRAINT CONTROL
+    ========================================
+*/
+
+sequenceControl =
+    document.createElement("section");
+
+sequenceControl.className =
+    "sequence-control";
+
+sequenceControl.innerHTML = `
+    <div class="sequence-label">
+        RESTRAINT CONTROL
+    </div>
+
+    <h3>
+        FOUR INPUTS REQUIRED
+    </h3>
+
+    <p class="sequence-instruction">
+        Reproduce the sequence.
+    </p>
+
+    <div
+        id="sequenceDisplay"
+        class="sequence-display"
+    >
+        _ → _ → _ → _
+    </div>
+
+    <div class="sequence-buttons">
+
+        <button
+            id="sequenceLeft"
+            class="sequence-button"
+            type="button"
+        >
+            LEFT
+        </button>
+
+        <button
+            id="sequenceRight"
+            class="sequence-button"
+            type="button"
+        >
+            RIGHT
+        </button>
+
+    </div>
+
+    <div
+        id="sequenceStatus"
+        class="sequence-status"
+    ></div>
+
+</section>
+`;
+
+investigationPanel.parentNode.insertBefore(
+    sequenceControl,
+    choicesContainer
+);
+
+
+const subject19Play =
+    document.getElementById(
+        "subject19Play"
+    );
+
+const subject19Transcript =
+    document.getElementById(
+        "subject19Transcript"
+    );
+
+const sequenceDisplay =
+    document.getElementById(
+        "sequenceDisplay"
+    );
+
+const sequenceLeft =
+    document.getElementById(
+        "sequenceLeft"
+    );
+
+const sequenceRight =
+    document.getElementById(
+        "sequenceRight"
+    );
+
+const sequenceStatus =
+    document.getElementById(
+        "sequenceStatus"
+    );
 
     /*
         KEYPAD OVERLAY
@@ -1475,7 +1631,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
         playedSpeakerIds =
             new Set();
+  /*
+        LEVEL 3 RESET
+    */
 
+    subject19RecordingPlayed =
+        false;
+
+    sequenceEntry =
+        [];
+
+    sequenceSolved =
+        false;
+
+    subjectRecorder.classList.remove(
+        "active",
+        "playing"
+    );
+
+    sequenceControl.classList.remove(
+        "active"
+    );
+
+    sequenceStatus.textContent =
+        "";
+
+    sequenceStatus.classList.remove(
+        "correct",
+        "wrong"
+    );
+
+    updateSequenceDisplay();
+
+
+    puzzleSolved =
+        false;
+
+
+    keypadEntry =
+        "";
 
         puzzleSolved =
             false;
@@ -1764,7 +1958,632 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
+/*
+    ========================================
+    SUBJECT 19 VOICE
+    ========================================
+*/
 
+function speakAsSubject19(line) {
+
+    return new Promise(
+        function (resolve) {
+
+            if (
+                !(
+                    "speechSynthesis"
+                    in window
+                )
+            ) {
+
+                setTimeout(
+                    resolve,
+                    1200
+                );
+
+                return;
+            }
+
+
+            try {
+
+                window
+                    .speechSynthesis
+                    .cancel();
+
+
+                const voices =
+                    getEnglishVoices();
+
+
+                /*
+                    Try to use a voice other
+                    than Elias.
+                */
+
+                let subjectVoice =
+                    voices.find(
+                        function (voice) {
+
+                            return (
+                                curatorVoice &&
+                                voice.name !==
+                                    curatorVoice.name
+                            );
+
+                        }
+                    )
+
+                    ||
+
+                    voices[0]
+
+                    ||
+
+                    null;
+
+
+                const speech =
+                    new SpeechSynthesisUtterance(
+                        line
+                    );
+
+
+                if (subjectVoice) {
+
+                    speech.voice =
+                        subjectVoice;
+
+                }
+
+
+                /*
+                    Subject 19 should sound
+                    frightened and tired,
+                    not theatrical.
+                */
+
+                speech.rate =
+                    0.83;
+
+                speech.pitch =
+                    0.96;
+
+                speech.volume =
+                    0.9;
+
+
+                let finished =
+                    false;
+
+
+                function finish() {
+
+                    if (finished) {
+
+                        return;
+
+                    }
+
+
+                    finished =
+                        true;
+
+
+                    resolve();
+                }
+
+
+                speech.onend =
+                    function () {
+
+                        setTimeout(
+                            finish,
+                            200
+                        );
+
+                    };
+
+
+                speech.onerror =
+                    finish;
+
+
+                setTimeout(
+                    finish,
+                    7000
+                );
+
+
+                window
+                    .speechSynthesis
+                    .speak(
+                        speech
+                    );
+
+
+            } catch (
+                error
+            ) {
+
+                resolve();
+
+            }
+
+        }
+    );
+}
+
+
+/*
+    SUBJECT 19 RECORDING
+*/
+
+async function playSubject19Recording() {
+
+    const level =
+        levels[
+            currentLevelIndex
+        ];
+
+
+    if (
+        !level.recording
+    ) {
+
+        return;
+    }
+
+
+    subject19RecordingPlayed =
+        true;
+
+
+    subjectRecorder.classList.add(
+        "playing"
+    );
+
+
+    subject19Play.textContent =
+        "REPLAY RECORDING";
+
+
+    subject19Play.classList.add(
+        "played"
+    );
+
+
+    for (
+        const line
+        of level.recording.lines
+    ) {
+
+        subject19Transcript.textContent =
+            "\"" +
+            line +
+            "\"";
+
+
+        await speakAsSubject19(
+            line
+        );
+
+
+        /*
+            Deliberate silence between
+            fragments of the recording.
+        */
+
+        await wait(800);
+    }
+
+
+    subjectRecorder.classList.remove(
+        "playing"
+    );
+
+
+    subject19Transcript.textContent =
+        "The recording ends abruptly.";
+
+
+    await wait(1100);
+
+
+    if (
+        level.recording.curatorAfter
+    ) {
+
+        curatorMessage.textContent =
+            level.recording
+                .curatorAfter;
+
+
+        await speakAsCurator(
+            level.recording
+                .curatorAfter
+        );
+
+    }
+
+
+    updateLevelProgress(
+        level
+    );
+}
+
+
+/*
+    SHOW RECORDER ONLY AFTER
+    THE PLAYER FINDS IT
+*/
+
+function updateLevel3Recorder(
+    level
+) {
+
+    if (
+        !level.recording
+    ) {
+
+        subjectRecorder.classList.remove(
+            "active"
+        );
+
+        return;
+    }
+
+
+    if (
+        investigatedIds.has(
+            "recorder"
+        )
+    ) {
+
+        subjectRecorder.classList.add(
+            "active"
+        );
+
+    } else {
+
+        subjectRecorder.classList.remove(
+            "active"
+        );
+
+    }
+}
+
+
+/*
+    ========================================
+    LEVEL 3 SEQUENCE PUZZLE
+    ========================================
+*/
+
+function updateSequenceDisplay() {
+
+    const visible =
+        sequenceEntry.slice();
+
+
+    while (
+        visible.length < 4
+    ) {
+
+        visible.push(
+            "_"
+        );
+
+    }
+
+
+    sequenceDisplay.textContent =
+        visible.join(
+            " → "
+        );
+}
+
+
+function arraysMatch(
+    first,
+    second
+) {
+
+    if (
+        first.length !==
+        second.length
+    ) {
+
+        return false;
+
+    }
+
+
+    return first.every(
+        function (
+            value,
+            index
+        ) {
+
+            return (
+                value ===
+                second[index]
+            );
+
+        }
+    );
+}
+
+
+async function submitSequenceInput(
+    direction
+) {
+
+    const level =
+        levels[
+            currentLevelIndex
+        ];
+
+
+    if (
+        !level.sequencePuzzle ||
+        sequenceSolved
+    ) {
+
+        return;
+    }
+
+
+    if (
+        sequenceEntry.length >=
+        4
+    ) {
+
+        return;
+    }
+
+
+    sequenceEntry.push(
+        direction
+    );
+
+
+    updateSequenceDisplay();
+
+
+    /*
+        Do not reveal whether individual
+        presses are correct.
+
+        Only judge the full four-input
+        sequence.
+    */
+
+    if (
+        sequenceEntry.length < 4
+    ) {
+
+        return;
+    }
+
+
+    await wait(350);
+
+
+    if (
+        arraysMatch(
+            sequenceEntry,
+            level.sequencePuzzle.answer
+        )
+    ) {
+
+        sequenceSolved =
+            true;
+
+
+        sequenceStatus.textContent =
+            level.sequencePuzzle.correct;
+
+
+        sequenceStatus.classList.remove(
+            "wrong"
+        );
+
+
+        sequenceStatus.classList.add(
+            "correct"
+        );
+
+
+        evidenceProgress.textContent =
+            "The heavy steel door unlocks.";
+
+
+        choicesContainer
+            .querySelectorAll(
+                ".choice"
+            )
+            .forEach(
+                function (button) {
+
+                    button.disabled =
+                        false;
+
+                }
+            );
+
+
+        choicesContainer.classList.remove(
+            "choices-locked"
+        );
+
+
+        if (
+            level.sequencePuzzle
+                .curatorSuccess
+        ) {
+
+            curatorMessage.textContent =
+                level.sequencePuzzle
+                    .curatorSuccess;
+
+
+            await speakAsCurator(
+                level.sequencePuzzle
+                    .curatorSuccess
+            );
+
+        }
+
+
+    } else {
+
+        sequenceStatus.textContent =
+            level.sequencePuzzle.wrong;
+
+
+        sequenceStatus.classList.remove(
+            "correct"
+        );
+
+
+        sequenceStatus.classList.add(
+            "wrong"
+        );
+
+
+        await wait(900);
+
+
+        /*
+            Wrong answer does not kill
+            the player.
+
+            The mechanism simply resets.
+        */
+
+        sequenceEntry =
+            [];
+
+
+        updateSequenceDisplay();
+
+
+        sequenceStatus.textContent =
+            "CONTROL RESET";
+
+
+        await wait(700);
+
+
+        sequenceStatus.textContent =
+            "";
+
+
+        sequenceStatus.classList.remove(
+            "wrong"
+        );
+
+    }
+}
+
+
+sequenceLeft.addEventListener(
+    "click",
+    function () {
+
+        submitSequenceInput(
+            "LEFT"
+        );
+
+    }
+);
+
+
+sequenceRight.addEventListener(
+    "click",
+    function () {
+
+        submitSequenceInput(
+            "RIGHT"
+        );
+
+    }
+);
+
+
+subject19Play.addEventListener(
+    "click",
+    function () {
+
+        playSubject19Recording();
+
+    }
+);
+
+
+/*
+    LEVEL 3 CONTROL VISIBILITY
+*/
+
+function updateLevel3Sequence(
+    level
+) {
+
+    if (
+        !level.sequencePuzzle
+    ) {
+
+        sequenceControl.classList.remove(
+            "active"
+        );
+
+        return;
+    }
+
+
+    const required =
+        level.requiredInvestigations
+        || 0;
+
+
+    /*
+        The player must:
+
+        - investigate enough evidence
+        - discover the recorder
+        - actually listen to Subject 19
+    */
+
+    const ready =
+        investigatedIds.size >=
+            required
+
+        &&
+
+        investigatedIds.has(
+            "recorder"
+        )
+
+        &&
+
+        subject19RecordingPlayed;
+
+
+    if (ready) {
+
+        sequenceControl.classList.add(
+            "active"
+        );
+
+    } else {
+
+        sequenceControl.classList.remove(
+            "active"
+        );
+
+    }
+}
     /*
         LEVEL PROGRESS
     */
