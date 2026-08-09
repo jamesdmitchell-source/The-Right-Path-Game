@@ -1,39 +1,73 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /*
-        MAIN ELEMENTS
+        THE RIGHT PATH
+        MAIN GAME SCRIPT
     */
 
     const screens = document.querySelectorAll(".screen");
 
-    const titleScreen = document.getElementById("titleScreen");
-    const introScreen = document.getElementById("introScreen");
-    const levelScreen = document.getElementById("levelScreen");
-    const deathScreen = document.getElementById("deathScreen");
-    const successScreen = document.getElementById("successScreen");
+    const titleScreen =
+        document.getElementById("titleScreen");
 
-    const startButton = document.getElementById("startButton");
-    const retryButton = document.getElementById("retryButton");
-    const continueButton = document.getElementById("continueButton");
+    const introScreen =
+        document.getElementById("introScreen");
 
-    const deathMessage = document.getElementById("deathMessage");
-    const successLabel = document.getElementById("successLabel");
-    const successTitle = document.getElementById("successTitle");
-    const successMessage = document.getElementById("successMessage");
+    const levelScreen =
+        document.getElementById("levelScreen");
 
-    const introText = document.getElementById("introText");
-    const curatorMessage = document.getElementById("curatorMessage");
+    const deathScreen =
+        document.getElementById("deathScreen");
 
-    const levelHeader = document.querySelector(".level-header");
-    const observationText = document.querySelector(".observation");
-    const clueText = document.querySelector("blockquote");
-    const questionTitle = document.querySelector(".room h2");
+    const successScreen =
+        document.getElementById("successScreen");
 
-    const questionText = document.querySelector(
-        ".room > p:not(.observation):not(.curator-message)"
-    );
+    const startButton =
+        document.getElementById("startButton");
 
-    const choicesContainer = document.querySelector(".choices");
+    const retryButton =
+        document.getElementById("retryButton");
+
+    const continueButton =
+        document.getElementById("continueButton");
+
+    const deathMessage =
+        document.getElementById("deathMessage");
+
+    const successLabel =
+        document.getElementById("successLabel");
+
+    const successTitle =
+        document.getElementById("successTitle");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+    const introText =
+        document.getElementById("introText");
+
+    const curatorMessage =
+        document.getElementById("curatorMessage");
+
+    const levelHeader =
+        document.querySelector(".level-header");
+
+    const observationText =
+        document.querySelector(".observation");
+
+    const clueText =
+        document.querySelector("blockquote");
+
+    const questionTitle =
+        document.querySelector(".room h2");
+
+    const questionText =
+        document.querySelector(
+            ".room > p:not(.observation):not(.curator-message)"
+        );
+
+    const choicesContainer =
+        document.querySelector(".choices");
 
 
     /*
@@ -41,21 +75,32 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     let currentLevelIndex = 0;
-    let investigatedIds = new Set();
+
+    let investigatedIds =
+        new Set();
+
     let journalEntries = [];
+
     let puzzleSolved = false;
+
     let keypadEntry = "";
+
     let transitionRunning = false;
+
+    let puzzleVisible = false;
 
 
     /*
-        CURATOR VOICE
+        ELIAS VOICE
     */
 
     let curatorVoice = null;
 
     const selectedVoiceName =
-        localStorage.getItem("rightPathCuratorVoice") || "";
+        localStorage.getItem(
+            "rightPathCuratorVoice"
+        ) || "";
+
 
     const introLines = [
         "Can you hear me?",
@@ -71,9 +116,11 @@ document.addEventListener("DOMContentLoaded", function () {
         INVESTIGATION PANEL
     */
 
-    const investigationPanel = document.createElement("section");
+    const investigationPanel =
+        document.createElement("section");
 
-    investigationPanel.className = "investigation-panel";
+    investigationPanel.className =
+        "investigation-panel";
 
     investigationPanel.innerHTML = `
         <div class="investigation-heading">
@@ -108,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ></p>
     `;
 
+
     choicesContainer.parentNode.insertBefore(
         investigationPanel,
         choicesContainer
@@ -115,12 +163,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        KEYPAD PANEL
+        KEYPAD OVERLAY
     */
 
-    const puzzlePanel = document.createElement("section");
+    const puzzleOverlay =
+        document.createElement("div");
 
-    puzzlePanel.className = "puzzle-panel hidden-panel";
+    puzzleOverlay.id =
+        "puzzleOverlay";
+
+
+    /*
+        Inline positioning means we do not
+        need to alter style.css for this fix.
+    */
+
+    Object.assign(
+        puzzleOverlay.style,
+        {
+            position: "fixed",
+            inset: "0",
+            zIndex: "2500",
+            display: "none",
+            alignItems: "flex-start",
+            justifyContent: "center",
+            padding: "8vh 18px 30px",
+            boxSizing: "border-box",
+            overflowY: "auto",
+            background:
+                "rgba(0, 0, 0, 0.86)"
+        }
+    );
+
+
+    const puzzlePanel =
+        document.createElement("section");
+
+    puzzlePanel.className =
+        "puzzle-panel";
+
+
+    Object.assign(
+        puzzlePanel.style,
+        {
+            display: "block",
+            width: "min(430px, 92vw)",
+            maxHeight: "82vh",
+            overflowY: "auto",
+            margin: "0",
+            boxSizing: "border-box"
+        }
+    );
+
 
     puzzlePanel.innerHTML = `
         <p class="puzzle-label">
@@ -142,27 +236,97 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <div class="keypad-grid">
 
-            <button class="keypad-number" data-number="1">1</button>
-            <button class="keypad-number" data-number="2">2</button>
-            <button class="keypad-number" data-number="3">3</button>
+            <button
+                class="keypad-number"
+                data-number="1"
+                type="button"
+            >
+                1
+            </button>
 
-            <button class="keypad-number" data-number="4">4</button>
-            <button class="keypad-number" data-number="5">5</button>
-            <button class="keypad-number" data-number="6">6</button>
+            <button
+                class="keypad-number"
+                data-number="2"
+                type="button"
+            >
+                2
+            </button>
 
-            <button class="keypad-number" data-number="7">7</button>
-            <button class="keypad-number" data-number="8">8</button>
-            <button class="keypad-number" data-number="9">9</button>
+            <button
+                class="keypad-number"
+                data-number="3"
+                type="button"
+            >
+                3
+            </button>
 
-            <button id="keypadClear">
+            <button
+                class="keypad-number"
+                data-number="4"
+                type="button"
+            >
+                4
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="5"
+                type="button"
+            >
+                5
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="6"
+                type="button"
+            >
+                6
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="7"
+                type="button"
+            >
+                7
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="8"
+                type="button"
+            >
+                8
+            </button>
+
+            <button
+                class="keypad-number"
+                data-number="9"
+                type="button"
+            >
+                9
+            </button>
+
+            <button
+                id="keypadClear"
+                type="button"
+            >
                 CLEAR
             </button>
 
-            <button class="keypad-number" data-number="0">
+            <button
+                class="keypad-number"
+                data-number="0"
+                type="button"
+            >
                 0
             </button>
 
-            <button id="keypadEnter">
+            <button
+                id="keypadEnter"
+                type="button"
+            >
                 ENTER
             </button>
 
@@ -172,11 +336,17 @@ document.addEventListener("DOMContentLoaded", function () {
             id="puzzleStatus"
             class="puzzle-status"
         ></p>
+
     `;
 
-    choicesContainer.parentNode.insertBefore(
-        puzzlePanel,
-        choicesContainer
+
+    puzzleOverlay.appendChild(
+        puzzlePanel
+    );
+
+
+    document.body.appendChild(
+        puzzleOverlay
     );
 
 
@@ -184,9 +354,12 @@ document.addEventListener("DOMContentLoaded", function () {
         JOURNAL
     */
 
-    const journalOverlay = document.createElement("div");
+    const journalOverlay =
+        document.createElement("div");
 
-    journalOverlay.className = "journal-overlay";
+    journalOverlay.className =
+        "journal-overlay";
+
 
     journalOverlay.innerHTML = `
         <div class="journal-card">
@@ -212,16 +385,22 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-    document.body.appendChild(journalOverlay);
+
+    document.body.appendChild(
+        journalOverlay
+    );
 
 
     /*
         DOOR CINEMATIC
     */
 
-    const doorTransition = document.createElement("div");
+    const doorTransition =
+        document.createElement("div");
 
-    doorTransition.className = "door-transition";
+    doorTransition.className =
+        "door-transition";
+
 
     doorTransition.innerHTML = `
         <div class="door-scene">
@@ -247,48 +426,75 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-    document.body.appendChild(doorTransition);
+
+    document.body.appendChild(
+        doorTransition
+    );
 
 
     /*
-        REFERENCES
+        ELEMENT REFERENCES
     */
 
     const investigationGrid =
-        document.getElementById("investigationGrid");
+        document.getElementById(
+            "investigationGrid"
+        );
 
     const evidenceCard =
-        document.getElementById("evidenceCard");
+        document.getElementById(
+            "evidenceCard"
+        );
 
     const evidenceProgress =
-        document.getElementById("evidenceProgress");
+        document.getElementById(
+            "evidenceProgress"
+        );
 
     const journalButton =
-        document.getElementById("journalButton");
+        document.getElementById(
+            "journalButton"
+        );
 
     const closeJournalButton =
-        document.getElementById("closeJournalButton");
+        document.getElementById(
+            "closeJournalButton"
+        );
 
     const journalContent =
-        document.getElementById("journalContent");
+        document.getElementById(
+            "journalContent"
+        );
 
     const puzzleTitle =
-        document.getElementById("puzzleTitle");
+        document.getElementById(
+            "puzzleTitle"
+        );
 
     const puzzleInstruction =
-        document.getElementById("puzzleInstruction");
+        document.getElementById(
+            "puzzleInstruction"
+        );
 
     const keypadDisplay =
-        document.getElementById("keypadDisplay");
+        document.getElementById(
+            "keypadDisplay"
+        );
 
     const keypadClear =
-        document.getElementById("keypadClear");
+        document.getElementById(
+            "keypadClear"
+        );
 
     const keypadEnter =
-        document.getElementById("keypadEnter");
+        document.getElementById(
+            "keypadEnter"
+        );
 
     const puzzleStatus =
-        document.getElementById("puzzleStatus");
+        document.getElementById(
+            "puzzleStatus"
+        );
 
 
     /*
@@ -297,26 +503,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function wait(milliseconds) {
 
-        return new Promise(function (resolve) {
+        return new Promise(
+            function (resolve) {
 
-            setTimeout(resolve, milliseconds);
+                setTimeout(
+                    resolve,
+                    milliseconds
+                );
 
-        });
+            }
+        );
     }
 
 
     function showScreen(screen) {
 
-        screens.forEach(function (item) {
+        screens.forEach(
+            function (item) {
 
-            item.classList.remove(
-                "active",
-                "fade-out"
-            );
+                item.classList.remove(
+                    "active",
+                    "fade-out"
+                );
 
-        });
+            }
+        );
 
-        screen.classList.add("active");
+
+        screen.classList.add(
+            "active"
+        );
     }
 
 
@@ -325,131 +541,214 @@ document.addEventListener("DOMContentLoaded", function () {
         nextScreen
     ) {
 
-        currentScreen.classList.add("fade-out");
+        currentScreen.classList.add(
+            "fade-out"
+        );
+
 
         await wait(900);
 
-        showScreen(nextScreen);
+
+        showScreen(
+            nextScreen
+        );
     }
 
 
     /*
-        CURATOR VOICE
+        ELIAS VOICE SYSTEM
     */
 
     function getEnglishVoices() {
 
-        if (!("speechSynthesis" in window)) {
+        if (
+            !("speechSynthesis" in window)
+        ) {
 
             return [];
 
         }
 
-        return window.speechSynthesis
+
+        return window
+            .speechSynthesis
             .getVoices()
-            .filter(function (voice) {
+            .filter(
+                function (voice) {
 
-                return voice.lang
-                    .toLowerCase()
-                    .startsWith("en");
+                    return voice.lang
+                        .toLowerCase()
+                        .startsWith("en");
 
-            });
+                }
+            );
     }
 
 
     function chooseCuratorVoice() {
 
-        const voices = getEnglishVoices();
+        const voices =
+            getEnglishVoices();
+
 
         if (!voices.length) {
 
             curatorVoice = null;
 
-            return;
+            return false;
         }
 
+
+        /*
+            First use the voice previously
+            selected by the player.
+        */
 
         if (selectedVoiceName) {
 
             const savedVoice =
-                voices.find(function (voice) {
+                voices.find(
+                    function (voice) {
 
-                    return (
-                        voice.name ===
-                        selectedVoiceName
-                    );
+                        return (
+                            voice.name ===
+                            selectedVoiceName
+                        );
 
-                });
+                    }
+                );
 
 
             if (savedVoice) {
 
-                curatorVoice = savedVoice;
+                curatorVoice =
+                    savedVoice;
 
-                return;
+                return true;
             }
         }
 
+
+        /*
+            Prefer naturally male British
+            voices instead of artificially
+            forcing pitch down.
+        */
 
         const preferredNames = [
             "daniel",
             "arthur",
             "george",
-            "oliver"
+            "oliver",
+            "jamie",
+            "ryan",
+            "male"
         ];
 
 
         curatorVoice =
-            voices.find(function (voice) {
+            voices.find(
+                function (voice) {
 
-                const name =
-                    voice.name.toLowerCase();
+                    const name =
+                        voice.name
+                            .toLowerCase();
 
 
-                return (
+                    return (
+                        voice.lang
+                            .toLowerCase()
+                            .startsWith("en-gb")
 
-                    voice.lang
-                        .toLowerCase()
-                        .startsWith("en-gb")
+                        &&
 
-                    &&
-
-                    preferredNames.some(
-                        function (preferred) {
-
-                            return name.includes(
+                        preferredNames.some(
+                            function (
                                 preferred
-                            );
+                            ) {
 
-                        }
-                    )
+                                return name.includes(
+                                    preferred
+                                );
 
-                );
+                            }
+                        )
+                    );
 
-            })
+                }
+            )
 
             ||
 
-            voices.find(function (voice) {
+            voices.find(
+                function (voice) {
 
-                return voice.lang
-                    .toLowerCase()
-                    .startsWith("en-gb");
+                    return voice.lang
+                        .toLowerCase()
+                        .startsWith(
+                            "en-gb"
+                        );
 
-            })
+                }
+            )
 
             ||
 
             voices[0];
+
+
+        return !!curatorVoice;
+    }
+
+
+    /*
+        iPad Safari often loads its voice list
+        slightly later than desktop browsers.
+
+        Wait briefly before giving up.
+    */
+
+    async function waitForCuratorVoice() {
+
+        if (
+            !("speechSynthesis" in window)
+        ) {
+
+            return;
+        }
+
+
+        window.speechSynthesis.resume();
+
+
+        for (
+            let attempt = 0;
+            attempt < 12;
+            attempt++
+        ) {
+
+            if (
+                chooseCuratorVoice()
+            ) {
+
+                return;
+            }
+
+
+            await wait(150);
+        }
     }
 
 
     chooseCuratorVoice();
 
 
-    if ("speechSynthesis" in window) {
+    if (
+        "speechSynthesis" in window
+    ) {
 
-        window.speechSynthesis.onvoiceschanged =
+        window.speechSynthesis
+            .onvoiceschanged =
             function () {
 
                 chooseCuratorVoice();
@@ -460,163 +759,196 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function speakAsCurator(line) {
 
-        return new Promise(function (resolve) {
+        return new Promise(
+            function (resolve) {
 
-            let finished = false;
+                let finished =
+                    false;
 
 
-            function finish() {
+                function finish() {
 
-                if (finished) {
+                    if (finished) {
+
+                        return;
+                    }
+
+
+                    finished =
+                        true;
+
+
+                    resolve();
+                }
+
+
+                if (
+                    !(
+                        "speechSynthesis"
+                        in window
+                    )
+                ) {
+
+                    setTimeout(
+                        finish,
+                        1400
+                    );
 
                     return;
-
-                }
-
-                finished = true;
-
-                resolve();
-            }
-
-
-            const calculatedTime =
-                line.length * 140;
-
-
-            const safetyTime =
-                Math.min(
-                    15000,
-                    Math.max(
-                        7000,
-                        calculatedTime
-                    )
-                );
-
-
-            const safetyTimer =
-                setTimeout(
-                    function () {
-
-                        try {
-
-                            window
-                                .speechSynthesis
-                                .cancel();
-
-                        } catch (error) {
-
-                            // Ignore.
-
-                        }
-
-                        finish();
-
-                    },
-                    safetyTime
-                );
-
-
-            if (!("speechSynthesis" in window)) {
-
-                clearTimeout(
-                    safetyTimer
-                );
-
-                setTimeout(
-                    finish,
-                    1500
-                );
-
-                return;
-            }
-
-
-            try {
-
-                if (!curatorVoice) {
-
-                    chooseCuratorVoice();
-
                 }
 
 
-                window
-                    .speechSynthesis
-                    .cancel();
+                const calculatedTime =
+                    line.length * 150;
 
 
-                const speech =
-                    new SpeechSynthesisUtterance(
-                        line
+                const safetyTime =
+                    Math.min(
+                        16000,
+                        Math.max(
+                            7000,
+                            calculatedTime
+                        )
                     );
 
 
-                if (curatorVoice) {
+                const safetyTimer =
+                    setTimeout(
+                        function () {
 
-                    speech.voice =
-                        curatorVoice;
+                            try {
 
-                }
+                                window
+                                    .speechSynthesis
+                                    .cancel();
 
+                            } catch (
+                                error
+                            ) {
 
-                speech.rate = 0.64;
+                                // Ignore.
 
-                speech.pitch = 0.45;
-
-                speech.volume = 1;
-
-
-                speech.onend =
-                    function () {
-
-                        clearTimeout(
-                            safetyTimer
-                        );
-
-                        setTimeout(
-                            finish,
-                            400
-                        );
-
-                    };
+                            }
 
 
-                speech.onerror =
-                    function () {
+                            finish();
 
-                        clearTimeout(
-                            safetyTimer
-                        );
-
-                        setTimeout(
-                            finish,
-                            700
-                        );
-
-                    };
-
-
-                window
-                    .speechSynthesis
-                    .speak(
-                        speech
+                        },
+                        safetyTime
                     );
 
 
-            } catch (error) {
+                try {
 
-                clearTimeout(
-                    safetyTimer
-                );
+                    if (!curatorVoice) {
 
-                setTimeout(
-                    finish,
-                    700
-                );
+                        chooseCuratorVoice();
+
+                    }
+
+
+                    window
+                        .speechSynthesis
+                        .cancel();
+
+
+                    window
+                        .speechSynthesis
+                        .resume();
+
+
+                    const speech =
+                        new SpeechSynthesisUtterance(
+                            line
+                        );
+
+
+                    if (curatorVoice) {
+
+                        speech.voice =
+                            curatorVoice;
+
+                    }
+
+
+                    /*
+                        IMPORTANT IPAD FIX
+
+                        0.45 was creating distorted
+                        words on some Apple voices.
+
+                        0.82 keeps Elias slightly
+                        deeper without mangling the
+                        voice.
+                    */
+
+                    speech.rate =
+                        0.72;
+
+                    speech.pitch =
+                        0.82;
+
+                    speech.volume =
+                        1;
+
+
+                    speech.onend =
+                        function () {
+
+                            clearTimeout(
+                                safetyTimer
+                            );
+
+
+                            setTimeout(
+                                finish,
+                                300
+                            );
+
+                        };
+
+
+                    speech.onerror =
+                        function () {
+
+                            clearTimeout(
+                                safetyTimer
+                            );
+
+
+                            setTimeout(
+                                finish,
+                                500
+                            );
+
+                        };
+
+
+                    window
+                        .speechSynthesis
+                        .speak(
+                            speech
+                        );
+
+
+                } catch (
+                    error
+                ) {
+
+                    clearTimeout(
+                        safetyTimer
+                    );
+
+
+                    setTimeout(
+                        finish,
+                        500
+                    );
+
+                }
 
             }
-
-        });
+        );
     }
 
 
@@ -624,14 +956,16 @@ document.addEventListener("DOMContentLoaded", function () {
         INTRODUCTION
     */
 
-    async function showDialogueLine(line) {
+    async function showDialogueLine(
+        line
+    ) {
 
         introText.classList.add(
             "hidden"
         );
 
 
-        await wait(400);
+        await wait(350);
 
 
         introText.textContent =
@@ -648,7 +982,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(250);
+        await wait(220);
     }
 
 
@@ -658,16 +992,28 @@ document.addEventListener("DOMContentLoaded", function () {
             true;
 
 
+        /*
+            Give iPad Safari time to expose
+            its speech voices BEFORE Elias'
+            first sentence.
+        */
+
+        await waitForCuratorVoice();
+
+
         await fadeToScreen(
             titleScreen,
             introScreen
         );
 
 
-        await wait(1200);
+        await wait(900);
 
 
-        for (const line of introLines) {
+        for (
+            const line
+            of introLines
+        ) {
 
             await showDialogueLine(
                 line
@@ -681,7 +1027,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        await wait(800);
+        await wait(700);
 
 
         loadLevel();
@@ -712,7 +1058,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 function (entry) {
 
                     return (
-
                         entry.level ===
                             level.number
 
@@ -720,7 +1065,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         entry.id ===
                             investigation.id
-
                     );
 
                 }
@@ -729,21 +1073,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!exists) {
 
-            journalEntries.push({
+            journalEntries.push(
+                {
+                    level:
+                        level.number,
 
-                level:
-                    level.number,
+                    id:
+                        investigation.id,
 
-                id:
-                    investigation.id,
+                    name:
+                        investigation.name,
 
-                name:
-                    investigation.name,
-
-                description:
-                    investigation.description
-
-            });
+                    description:
+                        investigation.description
+                }
+            );
 
         }
     }
@@ -751,7 +1095,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderJournal() {
 
-        if (!journalEntries.length) {
+        if (
+            !journalEntries.length
+        ) {
 
             journalContent.innerHTML =
                 "<p>No evidence recorded yet.</p>";
@@ -766,64 +1112,130 @@ document.addEventListener("DOMContentLoaded", function () {
         journalEntries.forEach(
             function (entry) {
 
-                if (!grouped[entry.level]) {
+                if (
+                    !grouped[
+                        entry.level
+                    ]
+                ) {
 
-                    grouped[entry.level] = [];
+                    grouped[
+                        entry.level
+                    ] = [];
 
                 }
 
 
-                grouped[entry.level]
-                    .push(entry);
+                grouped[
+                    entry.level
+                ].push(
+                    entry
+                );
 
             }
         );
 
 
         journalContent.innerHTML =
-            Object.keys(grouped)
+            Object.keys(
+                grouped
+            )
 
-            .map(function (levelNumber) {
+            .map(
+                function (
+                    levelNumber
+                ) {
 
-                const entries =
-                    grouped[levelNumber]
+                    const entries =
+                        grouped[
+                            levelNumber
+                        ]
 
-                    .map(function (entry) {
+                        .map(
+                            function (
+                                entry
+                            ) {
 
-                        return `
-                            <article class="journal-entry">
+                                return `
+                                    <article
+                                        class="journal-entry"
+                                    >
 
-                                <h4>
-                                    ${entry.name}
-                                </h4>
+                                        <h4>
+                                            ${entry.name}
+                                        </h4>
 
-                                <p>
-                                    ${entry.description}
-                                </p>
+                                        <p>
+                                            ${entry.description}
+                                        </p>
 
-                            </article>
-                        `;
+                                    </article>
+                                `;
 
-                    })
+                            }
+                        )
 
-                    .join("");
+                        .join("");
 
 
-                return `
-                    <section class="journal-level">
+                    return `
+                        <section
+                            class="journal-level"
+                        >
 
-                        <h3>
-                            Room ${levelNumber}
-                        </h3>
+                            <h3>
+                                Room ${levelNumber}
+                            </h3>
 
-                        ${entries}
+                            ${entries}
 
-                    </section>
-                `;
+                        </section>
+                    `;
 
-            })
+                }
+            )
 
             .join("");
+    }
+
+
+    /*
+        KEYPAD OVERLAY
+    */
+
+    function showPuzzleOverlay() {
+
+        if (puzzleVisible) {
+
+            return;
+        }
+
+
+        puzzleVisible =
+            true;
+
+
+        puzzleOverlay.style.display =
+            "flex";
+
+
+        /*
+            Always begin at the top of the
+            overlay on iPad.
+        */
+
+        puzzleOverlay.scrollTop =
+            0;
+    }
+
+
+    function hidePuzzleOverlay() {
+
+        puzzleVisible =
+            false;
+
+
+        puzzleOverlay.style.display =
+            "none";
     }
 
 
@@ -847,6 +1259,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         transitionRunning =
             false;
+
+
+        puzzleVisible =
+            false;
+
+
+        hidePuzzleOverlay();
 
 
         evidenceCard.textContent =
@@ -890,10 +1309,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         keypadDisplay.textContent =
             keypadEntry
-                .padEnd(4, "_")
+                .padEnd(
+                    4,
+                    "_"
+                )
                 .split("")
                 .join(" ");
-
     }
 
 
@@ -901,10 +1322,14 @@ document.addEventListener("DOMContentLoaded", function () {
         LEVEL PROGRESS
     */
 
-    function updateLevelProgress(level) {
+    function updateLevelProgress(
+        level
+    ) {
 
         const required =
-            level.requiredInvestigations || 0;
+            level
+                .requiredInvestigations
+                || 0;
 
 
         const found =
@@ -918,23 +1343,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (hasInvestigations) {
 
-            if (found >= required) {
+            if (
+                found >= required
+            ) {
 
-                evidenceProgress.textContent =
+                evidenceProgress
+                    .textContent =
                     "Enough evidence gathered.";
 
             } else {
 
-                evidenceProgress.textContent =
+                evidenceProgress
+                    .textContent =
                     "Evidence examined: " +
                     found +
                     " / " +
                     required;
 
             }
-
         }
 
+
+        /*
+            The keypad only appears after
+            ALL required items have been
+            investigated.
+
+            Level 1 currently requires 5.
+        */
 
         if (
             level.puzzle &&
@@ -942,17 +1378,16 @@ document.addEventListener("DOMContentLoaded", function () {
             !puzzleSolved
         ) {
 
-            puzzlePanel.classList.remove(
-                "hidden-panel"
-            );
+            showPuzzleOverlay();
 
         }
 
 
         const choiceButtons =
-            choicesContainer.querySelectorAll(
-                ".choice"
-            );
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                );
 
 
         if (level.puzzle) {
@@ -967,10 +1402,12 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            choicesContainer.classList.toggle(
-                "choices-locked",
-                !puzzleSolved
-            );
+            choicesContainer
+                .classList
+                .toggle(
+                    "choices-locked",
+                    !puzzleSolved
+                );
 
 
         } else {
@@ -990,17 +1427,19 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            choicesContainer.classList.toggle(
-                "choices-locked",
-                !unlocked
-            );
+            choicesContainer
+                .classList
+                .toggle(
+                    "choices-locked",
+                    !unlocked
+                );
 
         }
     }
 
 
     /*
-        INVESTIGATE
+        INVESTIGATION
     */
 
     async function investigate(
@@ -1048,10 +1487,14 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        updateLevelProgress(
-            level
-        );
+        /*
+            Speak first, THEN decide whether
+            the final investigation should
+            open the keypad.
 
+            This avoids the panel covering
+            Elias' final clue immediately.
+        */
 
         if (
             firstVisit &&
@@ -1067,14 +1510,21 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
         }
+
+
+        updateLevelProgress(
+            level
+        );
     }
 
 
     /*
-        RENDER INVESTIGATIONS
+        INVESTIGATION BUTTONS
     */
 
-    function renderInvestigations(level) {
+    function renderInvestigations(
+        level
+    ) {
 
         investigationGrid.innerHTML =
             "";
@@ -1085,21 +1535,27 @@ document.addEventListener("DOMContentLoaded", function () {
             !level.investigations.length
         ) {
 
-            investigationPanel.classList.add(
-                "hidden-panel"
-            );
+            investigationPanel
+                .classList
+                .add(
+                    "hidden-panel"
+                );
 
             return;
         }
 
 
-        investigationPanel.classList.remove(
-            "hidden-panel"
-        );
+        investigationPanel
+            .classList
+            .remove(
+                "hidden-panel"
+            );
 
 
         level.investigations.forEach(
-            function (investigation) {
+            function (
+                investigation
+            ) {
 
                 const button =
                     document.createElement(
@@ -1116,7 +1572,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 button.innerHTML = `
-                    <span class="investigation-icon">
+                    <span
+                        class="investigation-icon"
+                    >
 
                         ${investigation.icon || "?"}
 
@@ -1144,9 +1602,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                investigationGrid.appendChild(
-                    button
-                );
+                investigationGrid
+                    .appendChild(
+                        button
+                    );
 
             }
         );
@@ -1154,10 +1613,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        SET UP PUZZLE
+        PUZZLE SETUP
     */
 
-    function setupPuzzle(level) {
+    function setupPuzzle(
+        level
+    ) {
 
         keypadEntry =
             "";
@@ -1170,19 +1631,13 @@ document.addEventListener("DOMContentLoaded", function () {
         updateKeypadDisplay();
 
 
-        if (!level.puzzle) {
+        hidePuzzleOverlay();
 
-            puzzlePanel.classList.add(
-                "hidden-panel"
-            );
+
+        if (!level.puzzle) {
 
             return;
         }
-
-
-        puzzlePanel.classList.add(
-            "hidden-panel"
-        );
 
 
         puzzleTitle.textContent =
@@ -1201,13 +1656,14 @@ document.addEventListener("DOMContentLoaded", function () {
     async function submitKeypad() {
 
         const level =
-            levels[currentLevelIndex];
+            levels[
+                currentLevelIndex
+            ];
 
 
         if (!level.puzzle) {
 
             return;
-
         }
 
 
@@ -1234,56 +1690,63 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
+            /*
+                Unlock the doors immediately.
+            */
+
             updateLevelProgress(
                 level
             );
 
 
             curatorMessage.textContent =
-                level.puzzle.curatorSuccess;
+                level.puzzle
+                    .curatorSuccess;
 
 
-            await wait(250);
+            await wait(300);
 
 
             await speakAsCurator(
-                level.puzzle.curatorSuccess
+                level.puzzle
+                    .curatorSuccess
             );
 
 
-            await wait(400);
+            await wait(350);
 
 
             /*
-                Hide keypad after successful code.
+                Remove the keypad and return
+                to the room.
             */
 
-            puzzlePanel.classList.add(
-                "hidden-panel"
-            );
+            hidePuzzleOverlay();
 
 
             evidenceProgress.textContent =
                 "The doors are unlocked. Choose carefully.";
 
 
-            /*
-                Explicitly enable doors.
-            */
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.disabled =
+                            false;
+
+                    }
+                );
+
 
             choicesContainer
-                .querySelectorAll(".choice")
-                .forEach(function (button) {
-
-                    button.disabled =
-                        false;
-
-                });
-
-
-            choicesContainer.classList.remove(
-                "choices-locked"
-            );
+                .classList
+                .remove(
+                    "choices-locked"
+                );
 
 
         } else {
@@ -1317,32 +1780,37 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     document
-        .querySelectorAll(".keypad-number")
-        .forEach(function (button) {
+        .querySelectorAll(
+            ".keypad-number"
+        )
+        .forEach(
+            function (button) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    if (
-                        keypadEntry.length >= 4
-                    ) {
+                        if (
+                            keypadEntry
+                                .length >= 4
+                        ) {
 
-                        return;
+                            return;
+                        }
+
+
+                        keypadEntry +=
+                            button.dataset
+                                .number;
+
+
+                        updateKeypadDisplay();
 
                     }
+                );
 
-
-                    keypadEntry +=
-                        button.dataset.number;
-
-
-                    updateKeypadDisplay();
-
-                }
-            );
-
-        });
+            }
+        );
 
 
     keypadClear.addEventListener(
@@ -1376,19 +1844,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        DOOR OPENING CINEMATIC
-
-        IMPORTANT:
-        The music now comes from audio.js
-        using playDoorMusic().
+        DOOR OPENING
     */
 
     async function playDoorOpening() {
 
-        if (transitionRunning) {
+        if (
+            transitionRunning
+        ) {
 
             return;
-
         }
 
 
@@ -1396,13 +1861,16 @@ document.addEventListener("DOMContentLoaded", function () {
             true;
 
 
-        doorTransition.classList.add(
-            "active"
-        );
+        doorTransition
+            .classList
+            .add(
+                "active"
+            );
 
 
         /*
-            NEW HAUNTING MUSIC
+            Real door-creak.wav is played
+            by audio.js.
         */
 
         if (
@@ -1415,26 +1883,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /*
-            Give the music a moment
-            before the door starts moving.
-        */
-
         await wait(900);
 
 
-        doorTransition.classList.add(
-            "opening"
-        );
+        doorTransition
+            .classList
+            .add(
+                "opening"
+            );
 
 
         await wait(4200);
 
 
-        doorTransition.classList.remove(
-            "active",
-            "opening"
-        );
+        doorTransition
+            .classList
+            .remove(
+                "active",
+                "opening"
+            );
 
 
         transitionRunning =
@@ -1449,7 +1916,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadLevel() {
 
         const level =
-            levels[currentLevelIndex];
+            levels[
+                currentLevelIndex
+            ];
 
 
         resetLevelState();
@@ -1517,7 +1986,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         ) {
 
                             return;
-
                         }
 
 
@@ -1529,9 +1997,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                choicesContainer.appendChild(
-                    button
-                );
+                choicesContainer
+                    .appendChild(
+                        button
+                    );
 
             }
         );
@@ -1557,23 +2026,29 @@ document.addEventListener("DOMContentLoaded", function () {
         PLAYER CHOICE
     */
 
-    async function handleChoice(choice) {
+    async function handleChoice(
+        choice
+    ) {
 
         const level =
-            levels[currentLevelIndex];
+            levels[
+                currentLevelIndex
+            ];
 
 
-        if (transitionRunning) {
+        if (
+            transitionRunning
+        ) {
 
             return;
-
         }
 
 
         const choiceButtons =
-            choicesContainer.querySelectorAll(
-                ".choice"
-            );
+            choicesContainer
+                .querySelectorAll(
+                    ".choice"
+                );
 
 
         choiceButtons.forEach(
@@ -1587,24 +2062,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-            CORRECT CHOICE
+            CORRECT DOOR
         */
 
         if (choice.correct) {
 
+            if (
+                level.number === 1
+            ) {
 
-            /*
-                Level 1 gets the special
-                steel-door cinematic.
-            */
-
-            if (level.number === 1) {
-
-                curatorMessage.textContent =
+                curatorMessage
+                    .textContent =
                     "The lock releases.";
 
 
-                await wait(500);
+                await wait(450);
 
 
                 await playDoorOpening();
@@ -1642,7 +2114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-            WRONG CHOICE
+            WRONG DOOR
         */
 
         } else {
@@ -1680,47 +2152,55 @@ document.addEventListener("DOMContentLoaded", function () {
             renderJournal();
 
 
-            journalOverlay.classList.add(
-                "open"
-            );
-
-        }
-    );
-
-
-    closeJournalButton.addEventListener(
-        "click",
-        function () {
-
-            journalOverlay.classList.remove(
-                "open"
-            );
-
-        }
-    );
-
-
-    journalOverlay.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target ===
-                journalOverlay
-            ) {
-
-                journalOverlay.classList.remove(
+            journalOverlay
+                .classList
+                .add(
                     "open"
                 );
 
-            }
-
         }
     );
 
 
+    closeJournalButton
+        .addEventListener(
+            "click",
+            function () {
+
+                journalOverlay
+                    .classList
+                    .remove(
+                        "open"
+                    );
+
+            }
+        );
+
+
+    journalOverlay
+        .addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    journalOverlay
+                ) {
+
+                    journalOverlay
+                        .classList
+                        .remove(
+                            "open"
+                        );
+
+                }
+
+            }
+        );
+
+
     /*
-        START GAME
+        BEGIN TRIAL
     */
 
     startButton.addEventListener(
@@ -1728,11 +2208,11 @@ document.addEventListener("DOMContentLoaded", function () {
         function () {
 
             /*
-                This initialises audio.js
-                while the player is physically
-                pressing a button.
+                audio.js now only prepares
+                door-creak.wav.
 
-                This is important on iPad/Safari.
+                It must NOT play the creak
+                at this point.
             */
 
             try {
@@ -1746,11 +2226,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
-            } catch (error) {
+            } catch (
+                error
+            ) {
 
                 console.log(
-                    "Ambient sound unavailable."
+                    "Audio preparation unavailable."
                 );
+
+            }
+
+
+            /*
+                Wake up iPad speech synthesis
+                while we're still inside the
+                player's button press.
+            */
+
+            if (
+                "speechSynthesis"
+                in window
+            ) {
+
+                window
+                    .speechSynthesis
+                    .resume();
+
+
+                chooseCuratorVoice();
 
             }
 
@@ -1781,6 +2284,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
+            hidePuzzleOverlay();
+
+
             loadLevel();
 
 
@@ -1793,14 +2299,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /*
-        CONTINUE TO NEXT LEVEL
+        CONTINUE
     */
 
     continueButton.addEventListener(
         "click",
         function () {
 
-            currentLevelIndex += 1;
+            currentLevelIndex +=
+                1;
 
 
             if (
