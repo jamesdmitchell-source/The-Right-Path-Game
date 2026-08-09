@@ -632,3 +632,152 @@ blockquote {
     letter-spacing: 2px;
     text-align: center;
 }
+/* ========================================
+   LEVEL 2 — THE THREE VOICES
+   ======================================== */
+
+.speaker-wall {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.speaker-wall.active {
+    display: grid;
+}
+
+.speaker-unit {
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #080808
+        );
+
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+
+    padding: 18px 12px;
+
+    text-align: center;
+
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.speaker-label {
+    margin-bottom: 12px;
+
+    color: #aaa;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.speaker-grille {
+    width: 105px;
+    height: 105px;
+
+    margin: 0 auto 16px;
+
+    border: 5px solid #262626;
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #222 0px,
+            #222 2px,
+            #090909 3px,
+            #090909 5px
+        );
+
+    box-shadow:
+        inset 0 0 22px #000;
+}
+
+.speaker-unit.playing .speaker-grille {
+    animation:
+        speakerPulse 0.35s
+        infinite alternate;
+}
+
+@keyframes speakerPulse {
+
+    from {
+        transform: scale(1);
+        box-shadow:
+            inset 0 0 22px #000;
+    }
+
+    to {
+        transform: scale(1.025);
+        box-shadow:
+            inset 0 0 22px #000,
+            0 0 12px rgba(255,255,255,0.12);
+    }
+}
+
+.speaker-play {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #666;
+
+    background: #111;
+
+    color: #ddd;
+
+    font-family: inherit;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+}
+
+.speaker-play:hover {
+    background: #1c1c1c;
+}
+
+.speaker-play:active {
+    transform: translateY(1px);
+}
+
+.speaker-play.played {
+    border-color: #777;
+    color: #999;
+}
+
+.speaker-statement {
+    min-height: 38px;
+
+    margin-top: 12px;
+
+    color: #999;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* iPad / phone layout */
+
+@media (max-width: 760px) {
+
+    .speaker-wall {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .speaker-unit {
+        padding: 14px;
+    }
+
+    .speaker-grille {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 12px;
+    }
+}
