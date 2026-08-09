@@ -5,15 +5,11 @@
 
 let doorCreak = null;
 let corridorAmbience = null;
+let distantScream = null;
 
 
 /*
     PREPARE AUDIO
-
-    This prepares the files when the player
-    presses Begin Trial.
-
-    It does NOT play either sound.
 */
 
 function startAmbientSound() {
@@ -49,11 +45,32 @@ function startAmbientSound() {
         corridorAmbience.loop =
             true;
     }
+
+
+    if (!distantScream) {
+
+        distantScream =
+            new Audio(
+                "distant-scream.wav"
+            );
+
+        distantScream.preload =
+            "auto";
+
+        /*
+            Keep it distant,
+            not like a jump scare
+            right beside the player.
+        */
+
+        distantScream.volume =
+            0.28;
+    }
 }
 
 
 /*
-    LEVEL 1 DOOR CREAK
+    DOOR CREAK
 */
 
 function playDoorMusic() {
@@ -96,8 +113,62 @@ function playDoorMusic() {
                     "Door sound could not play:",
                     error
                 );
+
             }
         );
+
+    }
+}
+
+
+/*
+    DISTANT SCREAM
+*/
+
+function playDistantScream() {
+
+    if (!distantScream) {
+
+        distantScream =
+            new Audio(
+                "distant-scream.wav"
+            );
+
+        distantScream.preload =
+            "auto";
+
+        distantScream.volume =
+            0.28;
+    }
+
+
+    distantScream.pause();
+
+    distantScream.currentTime =
+        0;
+
+
+    const playAttempt =
+        distantScream.play();
+
+
+    if (
+        playAttempt &&
+        typeof playAttempt.catch ===
+        "function"
+    ) {
+
+        playAttempt.catch(
+            function (error) {
+
+                console.log(
+                    "Scream could not play:",
+                    error
+                );
+
+            }
+        );
+
     }
 }
 
@@ -149,8 +220,10 @@ function playCorridorAmbience() {
                     "Corridor ambience could not play:",
                     error
                 );
+
             }
         );
+
     }
 }
 
