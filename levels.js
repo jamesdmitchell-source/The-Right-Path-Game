@@ -65,7 +65,7 @@ const levels = [
             }
         ],
 
-        requiredInvestigations: 3,
+        requiredInvestigations: 5,
 
         puzzle: {
             type: "keypad",
