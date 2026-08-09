@@ -2753,7 +2753,48 @@ function updateLevel3Sequence(
             return;
         }
 
+/*
+    LEVEL 3 SEQUENCE PUZZLE
+*/
 
+if (
+    level.sequencePuzzle
+) {
+
+    updateLevel3Recorder(
+        level
+    );
+
+
+    updateLevel3Sequence(
+        level
+    );
+
+
+    /*
+        Keep the exit locked
+        until the LEFT / RIGHT
+        sequence is solved.
+    */
+
+    choiceButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                !sequenceSolved;
+
+        }
+    );
+
+
+    choicesContainer.classList.toggle(
+        "choices-locked",
+        !sequenceSolved
+    );
+
+
+    return;
+}
         /*
             NORMAL INVESTIGATION LEVEL
         */
