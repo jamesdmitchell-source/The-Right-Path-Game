@@ -2839,7 +2839,13 @@ function updateLevel3Sequence(
 
         }
 
+updateLevel3Recorder(
+    level
+);
 
+updateLevel3Sequence(
+    level
+);
         updateLevelProgress(
             level
         );
