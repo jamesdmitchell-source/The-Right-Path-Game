@@ -2394,13 +2394,19 @@ async function submitSequenceInput(
             "correct"
         );
 
-
-        evidenceProgress.textContent =
-              "The release mechanism engages...";
+evidenceProgress.textContent =
+    "The release mechanism engages...";
 
 
 /*
-    LEVEL 3 HORROR AUDIO
+    LEVEL 3 — DOOR OPENING
+*/
+
+await wait(500);
+
+
+/*
+    Door begins to creak open.
 */
 
 if (
@@ -2414,29 +2420,8 @@ if (
 
 
 /*
-    Let the door begin to creak,
-    then place the scream further
-    away in the corridor.
-*/
-
-setTimeout(
-    function () {
-
-      await wait(500);
-
-
-if (
-    typeof playDoorMusic ===
-    "function"
-) {
-
-    playDoorMusic();
-
-}
-
-
-/*
-    Give the door time to begin opening.
+    Allow the door to open before
+    we hear anything beyond it.
 */
 
 await wait(2600);
@@ -2447,8 +2432,9 @@ evidenceProgress.textContent =
 
 
 /*
-    The scream is heard only once
-    the doorway has opened.
+    Now that the door is open,
+    a scream is heard somewhere
+    in the distance.
 */
 
 if (
@@ -2459,7 +2445,6 @@ if (
     playDistantScream();
 
 }
-
         choicesContainer
             .querySelectorAll(
                 ".choice"
