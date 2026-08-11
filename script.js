@@ -2394,57 +2394,7 @@ async function submitSequenceInput(
             "correct"
         );
 
-evidenceProgress.textContent =
-    "The release mechanism engages...";
 
-
-/*
-    LEVEL 3 — DOOR OPENING
-*/
-
-await wait(500);
-
-
-/*
-    Door begins to creak open.
-*/
-
-if (
-    typeof playDoorMusic ===
-    "function"
-) {
-
-    playDoorMusic();
-
-}
-
-
-/*
-    Allow the door to open before
-    we hear anything beyond it.
-*/
-
-await wait(2600);
-
-
-evidenceProgress.textContent =
-    "The heavy steel door is open.";
-
-
-/*
-    Now that the door is open,
-    a scream is heard somewhere
-    in the distance.
-*/
-
-if (
-    typeof playDistantScream ===
-    "function"
-) {
-
-    playDistantScream();
-
-}
         choicesContainer
             .querySelectorAll(
                 ".choice"
@@ -2457,7 +2407,16 @@ if (
 
                 }
             );
+evidenceProgress.textContent =
+    "The release mechanism disengages. The steel door is unlocked.";
 
+
+/*
+    DO NOT OPEN THE DOOR YET.
+
+    The player must physically press
+    the Heavy Steel Door.
+*/
 
         choicesContainer.classList.remove(
             "choices-locked"
