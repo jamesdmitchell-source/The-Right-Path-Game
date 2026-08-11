@@ -2409,7 +2409,14 @@ async function submitSequenceInput(
             );
 evidenceProgress.textContent =
     "The release mechanism disengages. The steel door is unlocked.";
+/*
+    Close the restraint control
+    now that the puzzle is solved.
+*/
 
+sequenceControl.classList.remove(
+    "active"
+);
 
 /*
     DO NOT OPEN THE DOOR YET.
