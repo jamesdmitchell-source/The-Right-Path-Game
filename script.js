@@ -3538,27 +3538,80 @@ updateLevel3Sequence(
             );
 
 
-        if (
-            choice.correct
-        ) {
+        /*
+    LEVEL 1 DOOR
+*/
 
-            if (
-                level.number ===
-                1
-            ) {
+if (
+    level.number === 1
+) {
 
-                curatorMessage.textContent =
-                    "The lock releases.";
+    curatorMessage.textContent =
+        "The lock releases.";
+
+    await wait(350);
+
+    await playDoorOpening(
+        soundStarted
+    );
+
+}
 
 
-                await wait(350);
+/*
+    LEVEL 3 — HEAVY STEEL DOOR
+
+    This only happens when the PLAYER
+    actually presses the unlocked door.
+*/
+
+if (
+    level.number === 3
+) {
+
+    curatorMessage.textContent =
+        "The steel door begins to move.";
 
 
-                await playDoorOpening(
-                    soundStarted
-                );
+    /*
+        Start the real door creak.
+    */
 
-            }
+    if (
+        typeof playDoorMusic ===
+        "function"
+    ) {
+
+        playDoorMusic();
+
+    }
+
+
+    /*
+        Give the door time to open.
+    */
+
+    await wait(3200);
+
+
+    /*
+        NOW the scream comes from
+        somewhere beyond the doorway.
+    */
+
+    if (
+        typeof playDistantScream ===
+        "function"
+    ) {
+
+        playDistantScream();
+
+    }
+
+
+    await wait(1200);
+
+}
 
 
             successLabel.textContent =
