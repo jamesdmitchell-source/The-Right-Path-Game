@@ -3618,17 +3618,22 @@ if (
         somewhere beyond the doorway.
     */
 
-    if (
-        typeof playDistantScream ===
-        "function"
-    ) {
+   if (
+    typeof playDistantScream ===
+    "function"
+) {
 
-        playDistantScream();
+    playDistantScream();
 
-    }
+}
 
 
-    await wait(1200);
+/*
+    Let the scream echo and fade
+    before Elias speaks.
+*/
+
+await wait(4500);
 
 }
 
