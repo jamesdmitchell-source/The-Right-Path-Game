@@ -594,7 +594,7 @@ corridorTransition.innerHTML = `
 
     <img
         class="corridor-image"
-        src="corridor.png?v=4"
+        src="corridor-28.png"
         alt="Dark corridor"
     >
 
