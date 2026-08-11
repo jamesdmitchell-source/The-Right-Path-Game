@@ -584,31 +584,29 @@ const sequenceStatus =
         CORRIDOR TRANSITION
     */
 
-    const corridorTransition =
-        document.createElement("div");
+   const corridorTransition =
+    document.createElement("div");
 
-    corridorTransition.className =
-        "corridor-transition";
-corridorTransition.style.backgroundImage =
-    'linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.5)), url("corridor.png?v=3")';
+corridorTransition.className =
+    "corridor-transition";
 
-corridorTransition.style.backgroundPosition =
-    "center center";
+corridorTransition.innerHTML = `
 
-corridorTransition.style.backgroundSize =
-    "cover";
+    <img
+        class="corridor-image"
+        src="corridor.png?v=4"
+        alt="Dark corridor"
+    >
 
-corridorTransition.style.backgroundRepeat =
-    "no-repeat";
-    corridorTransition.innerHTML = `
-        <div class="corridor-caption">
-            SUBJECT 28 IS MOVED TO THE NEXT ROOM...
-        </div>
-    `;
+    <div class="corridor-caption">
+        SUBJECT 28 IS MOVED TO THE NEXT ROOM...
+    </div>
 
-    document.body.appendChild(
-        corridorTransition
-    );
+`;
+
+document.body.appendChild(
+    corridorTransition
+);
 
 
     /*
