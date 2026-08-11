@@ -589,7 +589,17 @@ const sequenceStatus =
 
     corridorTransition.className =
         "corridor-transition";
+corridorTransition.style.backgroundImage =
+    'linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.5)), url("corridor.png?v=3")';
 
+corridorTransition.style.backgroundPosition =
+    "center center";
+
+corridorTransition.style.backgroundSize =
+    "cover";
+
+corridorTransition.style.backgroundRepeat =
+    "no-repeat";
     corridorTransition.innerHTML = `
         <div class="corridor-caption">
             SUBJECT 28 IS MOVED TO THE NEXT ROOM...
