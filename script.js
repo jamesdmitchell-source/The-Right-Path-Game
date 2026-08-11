@@ -3537,7 +3537,9 @@ updateLevel3Sequence(
                 }
             );
 
-
+if (
+    choice.correct
+) {
         /*
     LEVEL 1 DOOR
 */
