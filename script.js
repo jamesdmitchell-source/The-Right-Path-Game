@@ -3342,6 +3342,13 @@ async function submitPressureSymbol(
 }
 
 
+/*
+    ========================================
+    LEVEL 4 — FAILURE / CEILING ENGINE
+    ========================================
+*/
+
+
 async function pressureFailure() {
 
     const level =
@@ -3356,10 +3363,6 @@ async function pressureFailure() {
         return;
     }
 
-
-    /*
-        STOP THE PRESSURE ENGINE
-    */
 
     pressureRunning =
         false;
@@ -3377,10 +3380,6 @@ async function pressureFailure() {
             null;
     }
 
-
-    /*
-        Disable interaction immediately.
-    */
 
     pressureSymbolButtons.forEach(
         function (button) {
@@ -3407,8 +3406,7 @@ async function pressureFailure() {
 
 
     /*
-        Give the existing pressure screen
-        one last violent movement.
+        Normal room reaches its limit.
     */
 
     pressureCeiling.style.height =
@@ -3421,13 +3419,9 @@ async function pressureFailure() {
 
 
     await wait(
-        550
+        500
     );
 
-
-    /*
-        Hide the normal puzzle interface.
-    */
 
     pressureOverlay.classList.remove(
         "active"
@@ -3436,7 +3430,7 @@ async function pressureFailure() {
 
     /*
         ========================================
-        CREATE FIRST-PERSON DEATH CINEMATIC
+        FIRST-PERSON DEATH CINEMATIC
         ========================================
     */
 
@@ -3494,13 +3488,9 @@ async function pressureFailure() {
         document.body.appendChild(
             cinematic
         );
+
     }
 
-
-    /*
-        Reset cinematic state in case
-        the player is retrying Level 4.
-    */
 
     cinematic.classList.remove(
         "closing",
@@ -3514,25 +3504,19 @@ async function pressureFailure() {
     );
 
 
-    /*
-        Give the first-person view
-        a fraction of a second to appear.
-    */
-
     await wait(
         300
     );
 
 
+    /*
+        Ceiling approaches the player's face.
+    */
+
     cinematic.classList.add(
         "closing"
     );
 
-
-    /*
-        Machinery gets increasingly violent
-        as the ceiling approaches.
-    */
 
     await wait(
         2300
@@ -3550,13 +3534,7 @@ async function pressureFailure() {
 
 
     /*
-        ========================================
         SUBJECT 28 SCREAM
-        ========================================
-
-        This uses the SAME WAV as Level 3,
-        but creates a separate Audio object
-        so it can be much louder here.
     */
 
     try {
@@ -3570,13 +3548,6 @@ async function pressureFailure() {
         subjectScream.preload =
             "auto";
 
-
-        /*
-            Level 3 is distant.
-
-            Here the scream represents
-            Subject 28, so it is loud.
-        */
 
         subjectScream.volume =
             0.95;
@@ -3599,11 +3570,7 @@ async function pressureFailure() {
             screamAttempt.catch(
                 function () {
 
-                    /*
-                        If iPad blocks the
-                        sound, continue the
-                        cinematic anyway.
-                    */
+                    // Continue without audio.
 
                 }
             );
@@ -3614,27 +3581,15 @@ async function pressureFailure() {
         error
     ) {
 
-        /*
-            Cinematic still works even
-            if audio is unavailable.
-        */
+        // Continue cinematic.
 
     }
 
-
-    /*
-        Very short moment between scream
-        and impact.
-    */
 
     await wait(
         850
     );
 
-
-    /*
-        IMPACT.
-    */
 
     cinematic.classList.add(
         "blackout"
@@ -3653,12 +3608,6 @@ async function pressureFailure() {
     );
 
 
-    /*
-        ========================================
-        DEATH SCREEN
-        ========================================
-    */
-
     deathMessage.textContent =
         "SUBJECT 28 — TERMINATED. CAUSE: FAILURE UNDER PRESSURE.";
 
@@ -3672,6 +3621,175 @@ async function pressureFailure() {
     );
 }
 
+
+/*
+    ========================================
+    DESCENDING CEILING UPDATE
+    ========================================
+*/
+
+function updatePressureCeiling(
+    level
+) {
+
+    if (
+        !pressureRunning ||
+        pressureSolved
+    ) {
+
+        return;
+    }
+
+
+    const now =
+        Date.now();
+
+
+    const totalTime =
+        level.pressurePuzzle
+            .timeLimit *
+        1000;
+
+
+    const remaining =
+        Math.max(
+            0,
+            pressureDeadline -
+            now
+        );
+
+
+    const progress =
+        1 -
+        (
+            remaining /
+            totalTime
+        );
+
+
+    /*
+        Start at 10% of the screen.
+
+        Gradually descend to 94%.
+    */
+
+    const ceilingHeight =
+        10 +
+        (
+            progress *
+            84
+        );
+
+
+    pressureCeiling.style.height =
+        ceilingHeight +
+        "%";
+
+
+    /*
+        HALF-WAY WARNING
+    */
+
+    if (
+        progress >=
+            0.5 &&
+        !pressureHalfwaySpoken
+    ) {
+
+        pressureHalfwaySpoken =
+            true;
+
+
+        if (
+            level.pressurePuzzle
+                .curatorHalfway
+        ) {
+
+            curatorMessage.textContent =
+                level.pressurePuzzle
+                    .curatorHalfway;
+
+
+            speakAsCurator(
+                level.pressurePuzzle
+                    .curatorHalfway
+            );
+
+        }
+
+    }
+
+
+    /*
+        ROOM BEGINS TO SHAKE.
+    */
+
+    if (
+        progress >=
+        0.72
+    ) {
+
+        pressureOverlay.classList.add(
+            "warning-stage"
+        );
+
+    }
+
+
+    /*
+        FINAL ELIAS WARNING.
+    */
+
+    if (
+        progress >=
+            0.82 &&
+        !pressureWarningSpoken
+    ) {
+
+        pressureWarningSpoken =
+            true;
+
+
+        if (
+            level.pressurePuzzle
+                .curatorWarning
+        ) {
+
+            curatorMessage.textContent =
+                level.pressurePuzzle
+                    .curatorWarning;
+
+
+            speakAsCurator(
+                level.pressurePuzzle
+                    .curatorWarning
+            );
+
+        }
+
+    }
+
+
+    /*
+        TIME HAS EXPIRED.
+    */
+
+    if (
+        remaining <=
+        0
+    ) {
+
+        pressureFailure();
+
+    }
+}
+
+
+/*
+    ========================================
+    START LEVEL 4 PRESSURE SYSTEM
+    ========================================
+*/
 
 async function startPressureLevel(
     level
@@ -3689,6 +3807,31 @@ async function startPressureLevel(
     resetPressureState();
 
 
+    /*
+        Re-enable controls in case the
+        player previously died and retried.
+    */
+
+    pressureSymbolButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                false;
+
+        }
+    );
+
+
+    pressureInvestigationButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                false;
+
+        }
+    );
+
+
     pressureOverlay.classList.add(
         "active"
     );
@@ -3697,12 +3840,6 @@ async function startPressureLevel(
     pressureWarning.textContent =
         "CHAMBER SEALED";
 
-
-    /*
-        Give the player a moment
-        to see the room before
-        the trap starts.
-    */
 
     await wait(
         700
@@ -3735,6 +3872,16 @@ async function startPressureLevel(
         "CEILING DESCENDING";
 
 
+    /*
+        Run immediately once so the
+        ceiling system is definitely alive.
+    */
+
+    updatePressureCeiling(
+        level
+    );
+
+
     pressureTimer =
         setInterval(
             function () {
@@ -3747,8 +3894,6 @@ async function startPressureLevel(
             100
         );
 }
-
-
 /*
     LEVEL 4 INVESTIGATION BUTTONS
 */
