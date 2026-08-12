@@ -565,3 +565,4 @@ const levels = [
     death:
         "Failure under pressure."
 }
+];
