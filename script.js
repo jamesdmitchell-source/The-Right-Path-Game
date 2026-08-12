@@ -414,7 +414,243 @@ const sequenceStatus =
     document.getElementById(
         "sequenceStatus"
     );
+/*
+    ========================================
+    LEVEL 4 — PRESSURE CHAMBER UI
+    ========================================
+*/
 
+pressureOverlay =
+    document.createElement("div");
+
+pressureOverlay.className =
+    "pressure-overlay";
+
+
+pressureOverlay.innerHTML = `
+
+    <div
+        id="pressureCeiling"
+        class="pressure-ceiling"
+    ></div>
+
+
+    <div class="pressure-room">
+
+        <div class="pressure-heading">
+            LEVEL 4 — PRESSURE
+        </div>
+
+
+        <div
+            id="pressureWarning"
+            class="pressure-warning"
+        >
+            SYSTEM IDLE
+        </div>
+
+
+        <div
+            id="pressureEvidence"
+            class="evidence-card"
+        >
+            Examine the chamber.
+        </div>
+
+
+        <div class="investigation-grid">
+
+            <button
+                type="button"
+                class="investigation-button pressure-investigation"
+                data-investigation="eye"
+            >
+                <span class="investigation-icon">
+                    👁️
+                </span>
+
+                <span>
+                    Eye
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="investigation-button pressure-investigation"
+                data-investigation="doorSymbol"
+            >
+                <span class="investigation-icon">
+                    🚪
+                </span>
+
+                <span>
+                    Door
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="investigation-button pressure-investigation"
+                data-investigation="clockSymbol"
+            >
+                <span class="investigation-icon">
+                    🕒
+                </span>
+
+                <span>
+                    Clock
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="investigation-button pressure-investigation"
+                data-investigation="hand"
+            >
+                <span class="investigation-icon">
+                    ✋
+                </span>
+
+                <span>
+                    Handprint
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="investigation-button pressure-investigation"
+                data-investigation="scratching"
+            >
+                <span class="investigation-icon">
+                    🔎
+                </span>
+
+                <span>
+                    Wall Scratching
+                </span>
+            </button>
+
+        </div>
+
+
+        <div
+            id="pressureSequenceDisplay"
+            class="pressure-sequence-display"
+        >
+            _ → _ → _ → _
+        </div>
+
+
+        <div class="pressure-symbols">
+
+            <button
+                type="button"
+                class="pressure-symbol"
+                data-symbol="EYE"
+            >
+                👁️
+                <br>
+                EYE
+            </button>
+
+
+            <button
+                type="button"
+                class="pressure-symbol"
+                data-symbol="DOOR"
+            >
+                🚪
+                <br>
+                DOOR
+            </button>
+
+
+            <button
+                type="button"
+                class="pressure-symbol"
+                data-symbol="CLOCK"
+            >
+                🕒
+                <br>
+                CLOCK
+            </button>
+
+
+            <button
+                type="button"
+                class="pressure-symbol"
+                data-symbol="HAND"
+            >
+                ✋
+                <br>
+                HAND
+            </button>
+
+        </div>
+
+
+        <div
+            id="pressureStatus"
+            class="pressure-status"
+        ></div>
+
+    </div>
+`;
+
+
+document.body.appendChild(
+    pressureOverlay
+);
+
+
+/*
+    LEVEL 4 REFERENCES
+*/
+
+pressureCeiling =
+    document.getElementById(
+        "pressureCeiling"
+    );
+
+pressureEvidence =
+    document.getElementById(
+        "pressureEvidence"
+    );
+
+pressureWarning =
+    document.getElementById(
+        "pressureWarning"
+    );
+
+pressureSequenceDisplay =
+    document.getElementById(
+        "pressureSequenceDisplay"
+    );
+
+pressureStatus =
+    document.getElementById(
+        "pressureStatus"
+    );
+
+
+pressureSymbolButtons =
+    Array.from(
+        pressureOverlay.querySelectorAll(
+            ".pressure-symbol"
+        )
+    );
+
+
+pressureInvestigationButtons =
+    Array.from(
+        pressureOverlay.querySelectorAll(
+            ".pressure-investigation"
+        )
+    );
     /*
         KEYPAD OVERLAY
     */
