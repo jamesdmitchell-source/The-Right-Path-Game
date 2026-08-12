@@ -2912,6 +2912,767 @@ function updateLevel3Sequence(
     }
 }
     /*
+    ========================================
+    LEVEL 4 — PRESSURE ENGINE
+    ========================================
+*/
+
+
+function updatePressureSequenceDisplay() {
+
+    const visible =
+        pressureEntry.slice();
+
+
+    while (
+        visible.length < 4
+    ) {
+
+        visible.push(
+            "_"
+        );
+
+    }
+
+
+    pressureSequenceDisplay.textContent =
+        visible.join(
+            " → "
+        );
+}
+
+
+function resetPressureState() {
+
+    pressureEntry =
+        [];
+
+    pressureSolved =
+        false;
+
+    pressureRunning =
+        false;
+
+    pressureDeadline =
+        0;
+
+    pressureHalfwaySpoken =
+        false;
+
+    pressureWarningSpoken =
+        false;
+
+
+    if (
+        pressureTimer
+    ) {
+
+        clearInterval(
+            pressureTimer
+        );
+
+        pressureTimer =
+            null;
+    }
+
+
+    pressureOverlay.classList.remove(
+        "active",
+        "warning-stage",
+        "crushed"
+    );
+
+
+    pressureCeiling.style.height =
+        "10%";
+
+
+    pressureWarning.textContent =
+        "SYSTEM IDLE";
+
+
+    pressureEvidence.textContent =
+        "Examine the chamber.";
+
+
+    pressureStatus.textContent =
+        "";
+
+
+    pressureStatus.classList.remove(
+        "correct",
+        "wrong"
+    );
+
+
+    pressureInvestigationButtons.forEach(
+        function (button) {
+
+            button.classList.remove(
+                "investigated"
+            );
+
+        }
+    );
+
+
+    updatePressureSequenceDisplay();
+}
+
+
+function getCurrentPressureLevel() {
+
+    const level =
+        levels[
+            currentLevelIndex
+        ];
+
+
+    if (
+        !level ||
+        !level.pressurePuzzle
+    ) {
+
+        return null;
+    }
+
+
+    return level;
+}
+
+
+async function investigatePressureObject(
+    button
+) {
+
+    const level =
+        getCurrentPressureLevel();
+
+
+    if (
+        !level ||
+        pressureSolved
+    ) {
+
+        return;
+    }
+
+
+    const investigationId =
+        button.dataset
+            .investigation;
+
+
+    const investigation =
+        level.investigations.find(
+            function (item) {
+
+                return (
+                    item.id ===
+                    investigationId
+                );
+
+            }
+        );
+
+
+    if (
+        !investigation
+    ) {
+
+        return;
+    }
+
+
+    const firstVisit =
+        !investigatedIds.has(
+            investigation.id
+        );
+
+
+    investigatedIds.add(
+        investigation.id
+    );
+
+
+    addJournalEntry(
+        level,
+        investigation
+    );
+
+
+    button.classList.add(
+        "investigated"
+    );
+
+
+    pressureEvidence.innerHTML = `
+        <strong>
+            ${investigation.icon || ""}
+            ${investigation.name}
+        </strong>
+
+        <span>
+            ${investigation.description}
+        </span>
+    `;
+
+
+    if (
+        firstVisit &&
+        investigation.curator
+    ) {
+
+        curatorMessage.textContent =
+            investigation.curator;
+
+
+        await speakAsCurator(
+            investigation.curator
+        );
+
+    }
+}
+
+
+async function submitPressureSymbol(
+    symbol
+) {
+
+    const level =
+        getCurrentPressureLevel();
+
+
+    if (
+        !level ||
+        pressureSolved ||
+        !pressureRunning
+    ) {
+
+        return;
+    }
+
+
+    if (
+        pressureEntry.length >=
+        4
+    ) {
+
+        return;
+    }
+
+
+    pressureEntry.push(
+        symbol
+    );
+
+
+    updatePressureSequenceDisplay();
+
+
+    if (
+        pressureEntry.length < 4
+    ) {
+
+        return;
+    }
+
+
+    await wait(
+        250
+    );
+
+
+    if (
+        arraysMatch(
+            pressureEntry,
+            level.pressurePuzzle.answer
+        )
+    ) {
+
+        pressureSolved =
+            true;
+
+        pressureRunning =
+            false;
+
+
+        if (
+            pressureTimer
+        ) {
+
+            clearInterval(
+                pressureTimer
+            );
+
+            pressureTimer =
+                null;
+        }
+
+
+        pressureStatus.textContent =
+            level.pressurePuzzle.correct;
+
+
+        pressureStatus.classList.remove(
+            "wrong"
+        );
+
+
+        pressureStatus.classList.add(
+            "correct"
+        );
+
+
+        pressureWarning.textContent =
+            "CEILING HALTED";
+
+
+        pressureOverlay.classList.remove(
+            "warning-stage"
+        );
+
+
+        pressureCeiling.style.height =
+            "10%";
+
+
+        /*
+            Give the ceiling time
+            to retract.
+        */
+
+        await wait(
+            1600
+        );
+
+
+        pressureWarning.textContent =
+            "EXIT UNLOCKED";
+
+
+        choicesContainer
+            .querySelectorAll(
+                ".choice"
+            )
+            .forEach(
+                function (button) {
+
+                    button.disabled =
+                        false;
+
+                }
+            );
+
+
+        choicesContainer.classList.remove(
+            "choices-locked"
+        );
+
+
+        pressureOverlay.classList.remove(
+            "active"
+        );
+
+
+        if (
+            level.pressurePuzzle
+                .curatorSuccess
+        ) {
+
+            curatorMessage.textContent =
+                level.pressurePuzzle
+                    .curatorSuccess;
+
+
+            await speakAsCurator(
+                level.pressurePuzzle
+                    .curatorSuccess
+            );
+
+        }
+
+
+    } else {
+
+        pressureStatus.textContent =
+            level.pressurePuzzle.wrong;
+
+
+        pressureStatus.classList.remove(
+            "correct"
+        );
+
+
+        pressureStatus.classList.add(
+            "wrong"
+        );
+
+
+        await wait(
+            700
+        );
+
+
+        pressureEntry =
+            [];
+
+
+        updatePressureSequenceDisplay();
+
+
+        pressureStatus.textContent =
+            "CONTROL RESET";
+
+
+        await wait(
+            500
+        );
+
+
+        pressureStatus.textContent =
+            "";
+
+
+        pressureStatus.classList.remove(
+            "wrong"
+        );
+
+    }
+}
+
+
+async function pressureFailure() {
+
+    const level =
+        getCurrentPressureLevel();
+
+
+    if (
+        !level ||
+        pressureSolved
+    ) {
+
+        return;
+    }
+
+
+    pressureRunning =
+        false;
+
+
+    if (
+        pressureTimer
+    ) {
+
+        clearInterval(
+            pressureTimer
+        );
+
+        pressureTimer =
+            null;
+    }
+
+
+    pressureCeiling.style.height =
+        "100%";
+
+
+    pressureOverlay.classList.add(
+        "crushed"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    pressureOverlay.classList.remove(
+        "active"
+    );
+
+
+    deathMessage.textContent =
+        "SUBJECT 28 — TERMINATED. CAUSE: FAILURE UNDER PRESSURE.";
+
+
+    curatorMessage.textContent =
+        level.death;
+
+
+    await fadeToScreen(
+        levelScreen,
+        deathScreen
+    );
+}
+
+
+function updatePressureCeiling(
+    level
+) {
+
+    if (
+        !pressureRunning ||
+        pressureSolved
+    ) {
+
+        return;
+    }
+
+
+    const now =
+        Date.now();
+
+
+    const totalTime =
+        level.pressurePuzzle
+            .timeLimit * 1000;
+
+
+    const remaining =
+        Math.max(
+            0,
+            pressureDeadline - now
+        );
+
+
+    const progress =
+        1 -
+        (
+            remaining /
+            totalTime
+        );
+
+
+    /*
+        Ceiling begins at 10%
+        and finishes at 94%.
+
+        Leaving a tiny amount
+        at the bottom makes the
+        final moment feel oppressive
+        without visually breaking
+        the interface.
+    */
+
+    const ceilingHeight =
+        10 +
+        (
+            progress *
+            84
+        );
+
+
+    pressureCeiling.style.height =
+        ceilingHeight + "%";
+
+
+    /*
+        No visible countdown.
+
+        We only change the atmosphere.
+    */
+
+
+    if (
+        progress >= 0.5 &&
+        !pressureHalfwaySpoken
+    ) {
+
+        pressureHalfwaySpoken =
+            true;
+
+
+        if (
+            level.pressurePuzzle
+                .curatorHalfway
+        ) {
+
+            curatorMessage.textContent =
+                level.pressurePuzzle
+                    .curatorHalfway;
+
+
+            speakAsCurator(
+                level.pressurePuzzle
+                    .curatorHalfway
+            );
+
+        }
+
+    }
+
+
+    if (
+        progress >= 0.72
+    ) {
+
+        pressureOverlay.classList.add(
+            "warning-stage"
+        );
+
+    }
+
+
+    if (
+        progress >= 0.82 &&
+        !pressureWarningSpoken
+    ) {
+
+        pressureWarningSpoken =
+            true;
+
+
+        if (
+            level.pressurePuzzle
+                .curatorWarning
+        ) {
+
+            curatorMessage.textContent =
+                level.pressurePuzzle
+                    .curatorWarning;
+
+
+            speakAsCurator(
+                level.pressurePuzzle
+                    .curatorWarning
+            );
+
+        }
+
+    }
+
+
+    if (
+        remaining <= 0
+    ) {
+
+        pressureFailure();
+
+    }
+}
+
+
+async function startPressureLevel(
+    level
+) {
+
+    if (
+        !level ||
+        !level.pressurePuzzle
+    ) {
+
+        return;
+    }
+
+
+    resetPressureState();
+
+
+    pressureOverlay.classList.add(
+        "active"
+    );
+
+
+    pressureWarning.textContent =
+        "CHAMBER SEALED";
+
+
+    /*
+        Give the player a moment
+        to see the room before
+        the trap starts.
+    */
+
+    await wait(
+        700
+    );
+
+
+    pressureWarning.textContent =
+        "PRESSURE SYSTEM ARMED";
+
+
+    await wait(
+        700
+    );
+
+
+    pressureRunning =
+        true;
+
+
+    pressureDeadline =
+        Date.now() +
+        (
+            level.pressurePuzzle
+                .timeLimit *
+            1000
+        );
+
+
+    pressureWarning.textContent =
+        "CEILING DESCENDING";
+
+
+    pressureTimer =
+        setInterval(
+            function () {
+
+                updatePressureCeiling(
+                    level
+                );
+
+            },
+            100
+        );
+}
+
+
+/*
+    LEVEL 4 INVESTIGATION BUTTONS
+*/
+
+pressureInvestigationButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                investigatePressureObject(
+                    button
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/*
+    LEVEL 4 SYMBOL BUTTONS
+*/
+
+pressureSymbolButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                submitPressureSymbol(
+                    button.dataset.symbol
+                );
+
+            }
+        );
+
+    }
+);
+    /*
         LEVEL PROGRESS
     */
 
