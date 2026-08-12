@@ -5248,6 +5248,19 @@ retryButton.addEventListener(
     then the pressure trap starts.
 */
 
+/*
+    ========================================
+    CONTINUE — UNIVERSAL CORRIDOR
+    ========================================
+
+    After every completed level:
+    1. corridor ambience starts
+    2. corridor visual plays
+    3. next level loads
+    4. Elias introduces it
+    5. Level 4 pressure starts if needed
+*/
+
 continueButton.addEventListener(
     "click",
     async function () {
@@ -5257,45 +5270,48 @@ continueButton.addEventListener(
 
 
         /*
-            LEVEL 1 -> CORRIDOR
+            ========================================
+            CORRIDOR AFTER EVERY LEVEL
+            ========================================
         */
 
-        if (
-            currentLevelIndex ===
-            0
-        ) {
+        try {
 
-            try {
-
-                if (
-                    typeof playCorridorAmbience ===
-                    "function"
-                ) {
-
-                    playCorridorAmbience();
-                }
-
-            } catch (
-                error
+            if (
+                typeof playCorridorAmbience ===
+                "function"
             ) {
 
-                console.log(
-                    "Corridor ambience unavailable."
-                );
+                playCorridorAmbience();
             }
 
+        } catch (
+            error
+        ) {
 
-            successScreen.classList.remove(
-                "active"
+            console.log(
+                "Corridor ambience unavailable."
             );
-
-
-            await playCorridorSequence();
         }
 
 
         /*
-            Move to the next level.
+            Hide the success screen so
+            the corridor can take over.
+        */
+
+        successScreen.classList.remove(
+            "active"
+        );
+
+
+        await playCorridorSequence();
+
+
+        /*
+            ========================================
+            MOVE TO NEXT LEVEL
+            ========================================
         */
 
         currentLevelIndex +=
@@ -5303,7 +5319,12 @@ continueButton.addEventListener(
 
 
         /*
-            End of prototype.
+            ========================================
+            END OF CURRENT PROTOTYPE
+            ========================================
+
+            If there is no next level,
+            don't load another room.
         */
 
         if (
@@ -5334,7 +5355,9 @@ continueButton.addEventListener(
 
 
         /*
-            Load the new room.
+            ========================================
+            LOAD NEXT ROOM
+            ========================================
         */
 
         loadLevel();
@@ -5352,10 +5375,9 @@ continueButton.addEventListener(
 
 
         /*
-            Elias introduces the room.
-
-            Level 4 therefore remains safe
-            while he is speaking.
+            ========================================
+            ELIAS INTRODUCTION
+            ========================================
         */
 
         await playLevelIntroduction(
@@ -5364,10 +5386,14 @@ continueButton.addEventListener(
 
 
         /*
+            ========================================
             LEVEL 4 — PRESSURE
+            ========================================
 
-            The ceiling only starts moving
-            AFTER Elias finishes his intro.
+            Elias finishes speaking first.
+
+            Only then does the chamber seal
+            and the ceiling begin descending.
         */
 
         if (
