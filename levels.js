@@ -446,11 +446,10 @@ const levels = [
 
         death:
             "Patterns are meaningless if you cannot follow them."
-    }
-
     },
-    ,
-{
+
+    {
+
     number: 4,
 
     title: "Pressure",
