@@ -71,48 +71,119 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".choices");
 
 
-    /*
-        GAME STATE
-    */
-
-    let currentLevelIndex = 0;
-
-    let investigatedIds =
-        new Set();
-
-    let journalEntries = [];
-
-    let puzzleSolved = false;
-
-    let keypadEntry = "";
-
-    let transitionRunning = false;
-
-    let puzzleVisible = false;
-
-    /*
-        LEVEL 2 SPEAKER STATE
-    */
-
-    let playedSpeakerIds =
-        new Set();
-
-    let speakerWall = null;
-    /*
-    LEVEL 3 STATE
+ /*
+    ========================================
+    GAME STATE
+    ========================================
 */
 
-let subject19RecordingPlayed = false;
+let currentLevelIndex =
+    0;
 
-let sequenceEntry = [];
+let investigatedIds =
+    new Set();
 
-let sequenceSolved = false;
+let journalEntries =
+    [];
 
-let subjectRecorder = null;
+let puzzleSolved =
+    false;
 
-let sequenceControl = null;
+let keypadEntry =
+    "";
+
+let transitionRunning =
+    false;
+
+let puzzleVisible =
+    false;
 
 
+/*
+    ========================================
+    LEVEL 2 — SPEAKER STATE
+    ========================================
+*/
+
+let playedSpeakerIds =
+    new Set();
+
+let speakerWall =
+    null;
+
+
+/*
+    ========================================
+    LEVEL 3 — SUBJECT 19 STATE
+    ========================================
+*/
+
+let subject19RecordingPlayed =
+    false;
+
+let sequenceEntry =
+    [];
+
+let sequenceSolved =
+    false;
+
+let subjectRecorder =
+    null;
+
+let sequenceControl =
+    null;
+
+
+/*
+    ========================================
+    LEVEL 4 — PRESSURE STATE
+    ========================================
+*/
+
+let pressureOverlay =
+    null;
+
+let pressureCeiling =
+    null;
+
+let pressureEvidence =
+    null;
+
+let pressureWarning =
+    null;
+
+let pressureSequenceDisplay =
+    null;
+
+let pressureStatus =
+    null;
+
+let pressureSymbolButtons =
+    [];
+
+let pressureInvestigationButtons =
+    [];
+
+let pressureEntry =
+    [];
+
+let pressureSolved =
+    false;
+
+let pressureRunning =
+    false;
+
+let pressureTimer =
+    null;
+
+let pressureDeadline =
+    0;
+
+let pressureHalfwaySpoken =
+    false;
+
+let pressureWarningSpoken =
+    false;
     /*
         ELIAS
     */
