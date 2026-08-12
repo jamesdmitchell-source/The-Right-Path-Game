@@ -1670,3 +1670,310 @@ blockquote {
             1px;
     }
 }
+/* ========================================
+   LEVEL 4 — FIRST PERSON DEATH CINEMATIC
+   ======================================== */
+
+.pressure-death-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 5000;
+
+    display: none;
+
+    overflow: hidden;
+
+    background: #020202;
+}
+
+.pressure-death-cinematic.active {
+    display: block;
+}
+
+
+/* ========================================
+   FIRST PERSON VIEW
+   ======================================== */
+
+.pressure-death-view {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #191919 0%,
+            #080808 55%,
+            #000 100%
+        );
+}
+
+
+/* ========================================
+   DESCENDING CEILING
+   ======================================== */
+
+.pressure-death-ceiling {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 72vw;
+    height: 54vh;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.42);
+
+    transform-origin:
+        center center;
+
+    border:
+        5px solid #292929;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #111 0,
+            #111 38px,
+            #272727 39px,
+            #272727 78px
+        );
+
+    box-shadow:
+        0 0 80px #000,
+        inset 0 0 60px #000;
+
+    transition:
+        transform 5.4s
+        cubic-bezier(
+            0.22,
+            0.02,
+            0.25,
+            1
+        );
+}
+
+
+/* Heavy cross beams */
+
+.pressure-death-ceiling::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 44%;
+
+    height: 12%;
+
+    background:
+        linear-gradient(
+            #323232,
+            #111
+        );
+
+    border-top:
+        2px solid #444;
+
+    border-bottom:
+        2px solid #050505;
+}
+
+
+/* Warning light */
+
+.pressure-death-ceiling::after {
+    content: "";
+
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    left: 50%;
+    bottom: 28px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        #7a0000;
+
+    box-shadow:
+        0 0 28px #9b0000;
+}
+
+
+/* ========================================
+   CLOSING MOVEMENT
+   ======================================== */
+
+.pressure-death-cinematic.closing
+.pressure-death-ceiling {
+
+    transform:
+        translate(-50%, -50%)
+        scale(2.25);
+}
+
+
+/* ========================================
+   FIRST PERSON VIGNETTE
+   ======================================== */
+
+.pressure-death-vignette {
+    position: absolute;
+    inset: 0;
+
+    z-index: 4;
+
+    pointer-events: none;
+
+    box-shadow:
+        inset 0 0 130px 50px
+        rgba(0, 0, 0, 0.95);
+
+    transition:
+        box-shadow 5s linear,
+        background 5s linear;
+}
+
+.pressure-death-cinematic.closing
+.pressure-death-vignette {
+
+    box-shadow:
+        inset 0 0 190px 90px
+        rgba(0, 0, 0, 1);
+
+    background:
+        rgba(0, 0, 0, 0.32);
+}
+
+
+/* ========================================
+   CAMERA SHAKE
+   ======================================== */
+
+.pressure-death-cinematic.shaking
+.pressure-death-view {
+
+    animation:
+        pressureDeathShake
+        0.12s
+        infinite alternate;
+}
+
+@keyframes pressureDeathShake {
+
+    from {
+        transform:
+            translate(-2px, 1px)
+            rotate(-0.15deg);
+    }
+
+    to {
+        transform:
+            translate(2px, -1px)
+            rotate(0.15deg);
+    }
+}
+
+
+/* ========================================
+   CINEMATIC TEXT
+   ======================================== */
+
+.pressure-death-message {
+    position: absolute;
+
+    left: 50%;
+    bottom: 7vh;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 8;
+
+    width:
+        min(650px, 88vw);
+
+    color:
+        #999;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        4px;
+
+    text-align:
+        center;
+
+    opacity:
+        0;
+
+    transition:
+        opacity 1s ease;
+}
+
+.pressure-death-cinematic.closing
+.pressure-death-message {
+    opacity: 1;
+}
+
+
+/* ========================================
+   FINAL BLACKOUT
+   ======================================== */
+
+.pressure-death-blackout {
+    position: absolute;
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    background: #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.18s linear;
+}
+
+.pressure-death-cinematic.blackout
+.pressure-death-blackout {
+    opacity: 1;
+}
+
+
+/* ========================================
+   IPAD / MOBILE
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .pressure-death-ceiling {
+        width: 88vw;
+        height: 48vh;
+    }
+
+    .pressure-death-message {
+        bottom: 5vh;
+
+        font-size: 10px;
+
+        letter-spacing: 3px;
+    }
+}
