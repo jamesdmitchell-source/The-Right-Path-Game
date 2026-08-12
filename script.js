@@ -4867,174 +4867,264 @@ await wait(4500);
     );
 
 
-    /*
-        RETRY
-    */
+  /*
+    ========================================
+    RETRY
+    ========================================
+*/
 
-    retryButton.addEventListener(
-        "click",
-        function () {
+retryButton.addEventListener(
+    "click",
+    async function () {
 
-            if (
-                "speechSynthesis"
-                in window
-            ) {
+        /*
+            Stop any existing speech.
+        */
 
-                window
-                    .speechSynthesis
-                    .cancel();
+        if (
+            "speechSynthesis"
+            in window
+        ) {
 
-            }
-
-
-            hidePuzzleOverlay();
-
-
-            loadLevel();
-
-
-            showScreen(
-                levelScreen
-            );
-
-
-            const level =
-                levels[
-                    currentLevelIndex
-                ];
-
-
-            if (
-                level &&
-                level.intro
-            ) {
-
-                playLevelIntroduction(
-                    level
-                );
-
-            }
-
+            window
+                .speechSynthesis
+                .cancel();
         }
-    );
 
 
-    /*
-        CONTINUE
+        /*
+            Stop / reset the Level 4
+            pressure system if necessary.
+        */
 
-        Level 1:
-        show corridor before Level 2.
+        if (
+            typeof resetPressureState ===
+            "function"
+        ) {
 
-        Level 2+:
-        continue normally.
-    */
-
-    continueButton.addEventListener(
-        "click",
-        async function () {
-
-            continueButton.disabled =
-                true;
+            resetPressureState();
+        }
 
 
-            /*
-                LEVEL 1 -> CORRIDOR
-            */
-
-            if (
-                currentLevelIndex === 0
-            ) {
-
-                try {
-
-                    if (
-                        typeof playCorridorAmbience ===
-                        "function"
-                    ) {
-
-                        playCorridorAmbience();
-
-                    }
-
-                } catch (
-                    error
-                ) {
-
-                    console.log(
-                        "Corridor ambience unavailable."
-                    );
-
-                }
+        hidePuzzleOverlay();
 
 
-                successScreen.classList.remove(
-                    "active"
-                );
+        /*
+            Reload the current level.
+        */
+
+        loadLevel();
 
 
-                await playCorridorSequence();
-
-            }
-
-
-            currentLevelIndex +=
-                1;
+        showScreen(
+            levelScreen
+        );
 
 
-            if (
-                currentLevelIndex >=
-                levels.length
-            ) {
-
-                alert(
-                    "You have completed the current prototype."
-                );
+        const level =
+            levels[
+                currentLevelIndex
+            ];
 
 
-                currentLevelIndex =
-                    0;
+        /*
+            Elias speaks first.
+        */
 
-
-                showScreen(
-                    titleScreen
-                );
-
-
-                continueButton.disabled =
-                    false;
-
-
-                return;
-            }
-
-
-            loadLevel();
-
-
-            showScreen(
-                levelScreen
-            );
-
-
-            const newLevel =
-                levels[
-                    currentLevelIndex
-                ];
-
-
-            /*
-                Elias introduces Level 2.
-            */
+        if (
+            level &&
+            level.intro
+        ) {
 
             await playLevelIntroduction(
-                newLevel
+                level
+            );
+        }
+
+
+        /*
+            LEVEL 4
+
+            Only begin the pressure trap
+            AFTER Elias has finished speaking.
+        */
+
+        if (
+            level &&
+            level.pressurePuzzle
+        ) {
+
+            await wait(
+                500
+            );
+
+
+            await startPressureLevel(
+                level
+            );
+        }
+
+    }
+);
+
+
+/*
+    ========================================
+    CONTINUE
+    ========================================
+
+    Level 1:
+    corridor before Level 2.
+
+    Levels 2 and 3:
+    continue normally.
+
+    Level 4:
+    Elias speaks first,
+    then the pressure trap starts.
+*/
+
+continueButton.addEventListener(
+    "click",
+    async function () {
+
+        continueButton.disabled =
+            true;
+
+
+        /*
+            LEVEL 1 -> CORRIDOR
+        */
+
+        if (
+            currentLevelIndex ===
+            0
+        ) {
+
+            try {
+
+                if (
+                    typeof playCorridorAmbience ===
+                    "function"
+                ) {
+
+                    playCorridorAmbience();
+                }
+
+            } catch (
+                error
+            ) {
+
+                console.log(
+                    "Corridor ambience unavailable."
+                );
+            }
+
+
+            successScreen.classList.remove(
+                "active"
+            );
+
+
+            await playCorridorSequence();
+        }
+
+
+        /*
+            Move to the next level.
+        */
+
+        currentLevelIndex +=
+            1;
+
+
+        /*
+            End of prototype.
+        */
+
+        if (
+            currentLevelIndex >=
+            levels.length
+        ) {
+
+            alert(
+                "You have completed the current prototype."
+            );
+
+
+            currentLevelIndex =
+                0;
+
+
+            showScreen(
+                titleScreen
             );
 
 
             continueButton.disabled =
                 false;
 
-        }
-    );
 
+            return;
+        }
+
+
+        /*
+            Load the new room.
+        */
+
+        loadLevel();
+
+
+        showScreen(
+            levelScreen
+        );
+
+
+        const newLevel =
+            levels[
+                currentLevelIndex
+            ];
+
+
+        /*
+            Elias introduces the room.
+
+            Level 4 therefore remains safe
+            while he is speaking.
+        */
+
+        await playLevelIntroduction(
+            newLevel
+        );
+
+
+        /*
+            LEVEL 4 — PRESSURE
+
+            The ceiling only starts moving
+            AFTER Elias finishes his intro.
+        */
+
+        if (
+            newLevel &&
+            newLevel.pressurePuzzle
+        ) {
+
+            await wait(
+                500
+            );
+
+
+            await startPressureLevel(
+                newLevel
+            );
+        }
+
+
+        continueButton.disabled =
+            false;
+
+    }
+);
 });
