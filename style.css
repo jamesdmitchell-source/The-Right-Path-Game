@@ -1294,3 +1294,379 @@ blockquote {
 
     z-index: 2;
 }
+/* ========================================
+   LEVEL 4 — PRESSURE
+   DESCENDING CEILING
+   ======================================== */
+
+.pressure-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 2700;
+
+    display: none;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(35, 35, 35, 0.25),
+            rgba(0, 0, 0, 0.98)
+        );
+}
+
+.pressure-overlay.active {
+    display: block;
+}
+
+
+/* ========================================
+   MOVING CEILING
+   ======================================== */
+
+.pressure-ceiling {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 10%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #161616 0,
+            #161616 28px,
+            #242424 29px,
+            #242424 58px
+        );
+
+    border-bottom:
+        4px solid #3a3a3a;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.95);
+
+    transition:
+        height 1s linear;
+
+    z-index: 5;
+}
+
+
+/* ========================================
+   CEILING DETAIL
+   ======================================== */
+
+.pressure-ceiling::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.03),
+            rgba(0,0,0,0.5)
+        );
+}
+
+.pressure-ceiling::after {
+    content: "";
+
+    position: absolute;
+
+    left: 8%;
+    right: 8%;
+    bottom: 8px;
+
+    height: 5px;
+
+    background: #470000;
+
+    box-shadow:
+        0 0 18px rgba(150,0,0,0.7);
+}
+
+
+/* ========================================
+   LEVEL 4 CONTENT
+   ======================================== */
+
+.pressure-room {
+    position: absolute;
+
+    left: 50%;
+    bottom: 5vh;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(760px, 92vw);
+
+    max-height:
+        72vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        20px;
+
+    border:
+        1px solid #343434;
+
+    background:
+        rgba(5, 5, 5, 0.92);
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,0.9);
+
+    text-align:
+        center;
+
+    z-index:
+        10;
+}
+
+
+/* ========================================
+   PRESSURE STATUS
+   ======================================== */
+
+.pressure-heading {
+    margin-bottom:
+        12px;
+
+    color:
+        #999;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        4px;
+}
+
+.pressure-warning {
+    min-height:
+        28px;
+
+    margin:
+        8px 0 14px;
+
+    color:
+        #b7b7b7;
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        2px;
+}
+
+
+/* ========================================
+   SYMBOL CONTROLS
+   ======================================== */
+
+.pressure-symbols {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        10px;
+
+    margin-top:
+        18px;
+}
+
+.pressure-symbol {
+    min-width:
+        0;
+
+    padding:
+        15px 8px;
+
+    border:
+        1px solid #4b4b4b;
+
+    background:
+        #111;
+
+    color:
+        #ddd;
+
+    cursor:
+        pointer;
+}
+
+.pressure-symbol:hover {
+    background:
+        #1a1a1a;
+}
+
+.pressure-symbol:active {
+    transform:
+        translateY(2px);
+}
+
+
+/* ========================================
+   INPUT DISPLAY
+   ======================================== */
+
+.pressure-sequence-display {
+    min-height:
+        48px;
+
+    margin:
+        18px 0 8px;
+
+    padding:
+        12px;
+
+    border:
+        1px solid #333;
+
+    background:
+        #020202;
+
+    color:
+        #ccc;
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        2px;
+
+    line-height:
+        24px;
+}
+
+.pressure-status {
+    min-height:
+        26px;
+
+    margin-top:
+        10px;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        2px;
+}
+
+.pressure-status.correct {
+    color:
+        #9fc39f;
+}
+
+.pressure-status.wrong {
+    color:
+        #c98c8c;
+}
+
+
+/* ========================================
+   ROOM SHAKING EFFECT
+   ======================================== */
+
+.pressure-overlay.warning-stage {
+    animation:
+        pressureShake 0.35s
+        infinite alternate;
+}
+
+@keyframes pressureShake {
+
+    from {
+        transform:
+            translate(0, 0);
+    }
+
+    to {
+        transform:
+            translate(1px, 1px);
+    }
+}
+
+
+/* ========================================
+   FAILURE BLACKOUT
+   ======================================== */
+
+.pressure-overlay.crushed {
+    animation:
+        pressureBlackout 0.8s
+        forwards;
+}
+
+@keyframes pressureBlackout {
+
+    from {
+        background:
+            rgba(0,0,0,0.3);
+    }
+
+    to {
+        background:
+            #000;
+    }
+}
+
+
+/* ========================================
+   LEVEL 4 IPAD / MOBILE
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .pressure-room {
+        width:
+            min(94vw, 620px);
+
+        bottom:
+            3vh;
+
+        max-height:
+            68vh;
+
+        padding:
+            15px;
+    }
+
+    .pressure-symbols {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap:
+            8px;
+    }
+
+    .pressure-symbol {
+        padding:
+            13px 6px;
+
+        font-size:
+            12px;
+    }
+
+    .pressure-sequence-display {
+        font-size:
+            12px;
+
+        letter-spacing:
+            1px;
+    }
+}
