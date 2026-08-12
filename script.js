@@ -4636,31 +4636,68 @@ updateLevel3Sequence(
 
     async function playCorridorSequence() {
 
-        corridorTransition.classList.add(
-            "active"
-        );
+    /*
+        Show the level that has just
+        been completed.
+    */
 
+    if (
+        corridorLevelText
+    ) {
 
-        await wait(5000);
-
-
-        corridorTransition.classList.remove(
-            "active"
-        );
+        const completedLevel =
+            levels[
+                currentLevelIndex
+            ];
 
 
         if (
-            typeof stopCorridorAmbience ===
-            "function"
+            completedLevel
         ) {
 
-            stopCorridorAmbience();
+            corridorLevelText.textContent =
+                "LEVEL " +
+                completedLevel.number +
+                " COMPLETE";
+
+        } else {
+
+            corridorLevelText.textContent =
+                "LEVEL COMPLETE";
 
         }
 
-
-        await wait(500);
     }
+
+
+    corridorTransition.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        5000
+    );
+
+
+    corridorTransition.classList.remove(
+        "active"
+    );
+
+
+    if (
+        typeof stopCorridorAmbience ===
+        "function"
+    ) {
+
+        stopCorridorAmbience();
+    }
+
+
+    await wait(
+        500
+    );
+}
 
 
     /*
