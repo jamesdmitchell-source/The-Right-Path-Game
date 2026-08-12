@@ -887,11 +887,13 @@ pressureInvestigationButtons =
     );
 
 
-    /*
-        CORRIDOR TRANSITION
-    */
+  /*
+    ========================================
+    CORRIDOR TRANSITION
+    ========================================
+*/
 
-   const corridorTransition =
+const corridorTransition =
     document.createElement("div");
 
 corridorTransition.className =
@@ -906,7 +908,18 @@ corridorTransition.innerHTML = `
     >
 
     <div class="corridor-caption">
-        SUBJECT 28 IS MOVED TO THE NEXT ROOM...
+
+        <div
+            id="corridorLevelText"
+            class="corridor-level-text"
+        >
+            LEVEL COMPLETE
+        </div>
+
+        <div>
+            SUBJECT 28 IS MOVED TO THE NEXT ROOM...
+        </div>
+
     </div>
 
 `;
@@ -915,6 +928,11 @@ document.body.appendChild(
     corridorTransition
 );
 
+
+const corridorLevelText =
+    document.getElementById(
+        "corridorLevelText"
+    );
 
     /*
         REFERENCES
