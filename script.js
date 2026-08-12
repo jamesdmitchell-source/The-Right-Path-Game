@@ -3357,6 +3357,10 @@ async function pressureFailure() {
     }
 
 
+    /*
+        STOP THE PRESSURE ENGINE
+    */
+
     pressureRunning =
         false;
 
@@ -3374,6 +3378,39 @@ async function pressureFailure() {
     }
 
 
+    /*
+        Disable interaction immediately.
+    */
+
+    pressureSymbolButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                true;
+
+        }
+    );
+
+
+    pressureInvestigationButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                true;
+
+        }
+    );
+
+
+    pressureWarning.textContent =
+        "STRUCTURAL LIMIT REACHED";
+
+
+    /*
+        Give the existing pressure screen
+        one last violent movement.
+    */
+
     pressureCeiling.style.height =
         "100%";
 
@@ -3384,14 +3421,243 @@ async function pressureFailure() {
 
 
     await wait(
-        900
+        550
     );
 
+
+    /*
+        Hide the normal puzzle interface.
+    */
 
     pressureOverlay.classList.remove(
         "active"
     );
 
+
+    /*
+        ========================================
+        CREATE FIRST-PERSON DEATH CINEMATIC
+        ========================================
+    */
+
+    let cinematic =
+        document.getElementById(
+            "pressureDeathCinematic"
+        );
+
+
+    if (
+        !cinematic
+    ) {
+
+        cinematic =
+            document.createElement(
+                "div"
+            );
+
+
+        cinematic.id =
+            "pressureDeathCinematic";
+
+
+        cinematic.className =
+            "pressure-death-cinematic";
+
+
+        cinematic.innerHTML = `
+
+            <div class="pressure-death-view">
+
+                <div
+                    class="pressure-death-ceiling"
+                ></div>
+
+                <div
+                    class="pressure-death-vignette"
+                ></div>
+
+                <div
+                    class="pressure-death-message"
+                >
+                    LOOK UP.
+                </div>
+
+                <div
+                    class="pressure-death-blackout"
+                ></div>
+
+            </div>
+
+        `;
+
+
+        document.body.appendChild(
+            cinematic
+        );
+    }
+
+
+    /*
+        Reset cinematic state in case
+        the player is retrying Level 4.
+    */
+
+    cinematic.classList.remove(
+        "closing",
+        "shaking",
+        "blackout"
+    );
+
+
+    cinematic.classList.add(
+        "active"
+    );
+
+
+    /*
+        Give the first-person view
+        a fraction of a second to appear.
+    */
+
+    await wait(
+        300
+    );
+
+
+    cinematic.classList.add(
+        "closing"
+    );
+
+
+    /*
+        Machinery gets increasingly violent
+        as the ceiling approaches.
+    */
+
+    await wait(
+        2300
+    );
+
+
+    cinematic.classList.add(
+        "shaking"
+    );
+
+
+    await wait(
+        2200
+    );
+
+
+    /*
+        ========================================
+        SUBJECT 28 SCREAM
+        ========================================
+
+        This uses the SAME WAV as Level 3,
+        but creates a separate Audio object
+        so it can be much louder here.
+    */
+
+    try {
+
+        const subjectScream =
+            new Audio(
+                "distant-scream.wav"
+            );
+
+
+        subjectScream.preload =
+            "auto";
+
+
+        /*
+            Level 3 is distant.
+
+            Here the scream represents
+            Subject 28, so it is loud.
+        */
+
+        subjectScream.volume =
+            0.95;
+
+
+        subjectScream.currentTime =
+            0;
+
+
+        const screamAttempt =
+            subjectScream.play();
+
+
+        if (
+            screamAttempt &&
+            typeof screamAttempt.catch ===
+            "function"
+        ) {
+
+            screamAttempt.catch(
+                function () {
+
+                    /*
+                        If iPad blocks the
+                        sound, continue the
+                        cinematic anyway.
+                    */
+
+                }
+            );
+
+        }
+
+    } catch (
+        error
+    ) {
+
+        /*
+            Cinematic still works even
+            if audio is unavailable.
+        */
+
+    }
+
+
+    /*
+        Very short moment between scream
+        and impact.
+    */
+
+    await wait(
+        850
+    );
+
+
+    /*
+        IMPACT.
+    */
+
+    cinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    cinematic.classList.remove(
+        "active",
+        "closing",
+        "shaking"
+    );
+
+
+    /*
+        ========================================
+        DEATH SCREEN
+        ========================================
+    */
 
     deathMessage.textContent =
         "SUBJECT 28 — TERMINATED. CAUSE: FAILURE UNDER PRESSURE.";
@@ -3401,156 +3667,9 @@ async function pressureFailure() {
         level.death;
 
 
-    await fadeToScreen(
-        levelScreen,
+    showScreen(
         deathScreen
     );
-}
-
-
-function updatePressureCeiling(
-    level
-) {
-
-    if (
-        !pressureRunning ||
-        pressureSolved
-    ) {
-
-        return;
-    }
-
-
-    const now =
-        Date.now();
-
-
-    const totalTime =
-        level.pressurePuzzle
-            .timeLimit * 1000;
-
-
-    const remaining =
-        Math.max(
-            0,
-            pressureDeadline - now
-        );
-
-
-    const progress =
-        1 -
-        (
-            remaining /
-            totalTime
-        );
-
-
-    /*
-        Ceiling begins at 10%
-        and finishes at 94%.
-
-        Leaving a tiny amount
-        at the bottom makes the
-        final moment feel oppressive
-        without visually breaking
-        the interface.
-    */
-
-    const ceilingHeight =
-        10 +
-        (
-            progress *
-            84
-        );
-
-
-    pressureCeiling.style.height =
-        ceilingHeight + "%";
-
-
-    /*
-        No visible countdown.
-
-        We only change the atmosphere.
-    */
-
-
-    if (
-        progress >= 0.5 &&
-        !pressureHalfwaySpoken
-    ) {
-
-        pressureHalfwaySpoken =
-            true;
-
-
-        if (
-            level.pressurePuzzle
-                .curatorHalfway
-        ) {
-
-            curatorMessage.textContent =
-                level.pressurePuzzle
-                    .curatorHalfway;
-
-
-            speakAsCurator(
-                level.pressurePuzzle
-                    .curatorHalfway
-            );
-
-        }
-
-    }
-
-
-    if (
-        progress >= 0.72
-    ) {
-
-        pressureOverlay.classList.add(
-            "warning-stage"
-        );
-
-    }
-
-
-    if (
-        progress >= 0.82 &&
-        !pressureWarningSpoken
-    ) {
-
-        pressureWarningSpoken =
-            true;
-
-
-        if (
-            level.pressurePuzzle
-                .curatorWarning
-        ) {
-
-            curatorMessage.textContent =
-                level.pressurePuzzle
-                    .curatorWarning;
-
-
-            speakAsCurator(
-                level.pressurePuzzle
-                    .curatorWarning
-            );
-
-        }
-
-    }
-
-
-    if (
-        remaining <= 0
-    ) {
-
-        pressureFailure();
-
-    }
 }
 
 
