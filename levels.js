@@ -448,4 +448,121 @@ const levels = [
             "Patterns are meaningless if you cannot follow them."
     }
 
-];
+    },
+    ,
+{
+    number: 4,
+
+    title: "Pressure",
+
+    intro: [
+        "You've had time to think until now.",
+        "Let's see what happens when I take that away."
+    ],
+
+    observation:
+        "A wide concrete chamber. Four symbols are mounted around the walls beneath a heavy steel ceiling. Somewhere above you, machinery begins to stir.",
+
+    clue:
+        "The symbols are not the answer. Their order is.",
+
+    investigations: [
+
+        {
+            id: "eye",
+            name: "Eye",
+            icon: "👁️",
+
+            description:
+                "A surveillance lens is mounted behind the eye symbol. Its recording indicator was activated before the chamber door opened.",
+
+            curator:
+                "Observation should always come first."
+        },
+
+        {
+            id: "doorSymbol",
+            name: "Door",
+            icon: "🚪",
+
+            description:
+                "The locking mechanism logged its last activation immediately after someone crossed the threshold."
+        },
+
+        {
+            id: "clockSymbol",
+            name: "Clock",
+            icon: "🕒",
+
+            description:
+                "The clock stopped at 03:17. The glass is cracked inward, as though something struck it from inside the room."
+        },
+
+        {
+            id: "hand",
+            name: "Handprint",
+            icon: "✋",
+
+            description:
+                "A dark handprint has been dragged downward across the wall beneath the clock."
+        },
+
+        {
+            id: "scratching",
+            name: "Wall Scratching",
+            icon: "🔎",
+
+            description:
+                "Four words have been scratched repeatedly into the concrete: WATCH. ENTER. TIME. FALL.",
+
+            curator:
+                "Someone before you understood eventually."
+        }
+
+    ],
+
+    requiredInvestigations: 5,
+
+    pressurePuzzle: {
+
+        answer: [
+            "EYE",
+            "DOOR",
+            "CLOCK",
+            "HAND"
+        ],
+
+        timeLimit: 85,
+
+        instruction:
+            "Reconstruct the sequence.",
+
+        wrong:
+            "SEQUENCE REJECTED",
+
+        correct:
+            "SEQUENCE ACCEPTED",
+
+        curatorHalfway:
+            "Pressure changes people.",
+
+        curatorWarning:
+            "You're running out of room, Subject 28.",
+
+        curatorSuccess:
+            "Interesting. Fear usually makes people careless. You appear to be learning."
+    },
+
+    choices: [
+        {
+            text: "Exit Chamber",
+            correct: true
+        }
+    ],
+
+    success:
+        "The ceiling retracts. The exit unlocks.",
+
+    death:
+        "Failure under pressure."
+}
