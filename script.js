@@ -887,9 +887,9 @@ pressureInvestigationButtons =
     );
 
 
-  /*
+ /*
     ========================================
-    CORRIDOR TRANSITION
+    FIRST-PERSON CORRIDOR TRANSITION
     ========================================
 */
 
@@ -897,17 +897,26 @@ const corridorTransition =
     document.createElement("div");
 
 corridorTransition.className =
-    "corridor-transition";
+    "corridor-transition corridor-walk-transition";
 
 corridorTransition.innerHTML = `
 
-    <img
-        class="corridor-image"
-        src="corridor-28.png"
-        alt="Dark corridor"
-    >
+    <div class="corridor-walk-camera">
 
-    <div class="corridor-caption">
+        <img
+            class="corridor-walk-image"
+            src="corridor-walk.png"
+            alt="Dark underground corridor"
+        >
+
+        <div class="corridor-light-flicker"></div>
+
+        <div class="corridor-walk-vignette"></div>
+
+    </div>
+
+
+    <div class="corridor-walk-caption">
 
         <div
             id="corridorLevelText"
@@ -916,8 +925,8 @@ corridorTransition.innerHTML = `
             LEVEL COMPLETE
         </div>
 
-        <div>
-            SUBJECT 28 IS MOVED TO THE NEXT ROOM...
+        <div class="corridor-subject-text">
+            SUBJECT 28
         </div>
 
     </div>
