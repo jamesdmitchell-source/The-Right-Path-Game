@@ -2400,3 +2400,893 @@ blockquote {
             rgba(0,0,0,0.92);
     }
 }
+/* ========================================
+   LEVEL 5 — INTERVENTION
+   ======================================== */
+
+.blade-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 4200;
+
+    display: none;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(25, 0, 0, 0.16),
+            rgba(0, 0, 0, 0.97)
+        );
+}
+
+.blade-overlay.active {
+    display: block;
+}
+
+
+/* ========================================
+   ROOM
+   ======================================== */
+
+.blade-room {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.3),
+            rgba(0,0,0,0.72)
+        ),
+        radial-gradient(
+            circle at center,
+            #1c1c1c 0%,
+            #0b0b0b 55%,
+            #020202 100%
+        );
+}
+
+
+/* ========================================
+   CAPTIVE
+   ======================================== */
+
+.blade-captive {
+    position: absolute;
+
+    left: 50%;
+    bottom: 7vh;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(280px, 46vw);
+
+    height:
+        min(430px, 56vh);
+
+    z-index: 8;
+}
+
+.blade-chair {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    transform:
+        translateX(-50%);
+
+    width: 68%;
+    height: 76%;
+
+    border:
+        5px solid #222;
+
+    background:
+        linear-gradient(
+            90deg,
+            #111,
+            #242424,
+            #111
+        );
+
+    box-shadow:
+        0 0 30px #000;
+}
+
+.blade-person-head {
+    position: absolute;
+
+    left: 50%;
+    top: 2%;
+
+    transform:
+        translateX(-50%);
+
+    width: 30%;
+    aspect-ratio: 0.82;
+
+    border-radius:
+        46% 46% 42% 42%;
+
+    background:
+        linear-gradient(
+            #4a362f,
+            #241a17
+        );
+
+    box-shadow:
+        inset 0 -12px 18px
+        rgba(0,0,0,0.55);
+}
+
+.blade-gag {
+    position: absolute;
+
+    left: 50%;
+    top: 19%;
+
+    transform:
+        translateX(-50%);
+
+    width: 42%;
+    height: 8%;
+
+    background:
+        #252525;
+
+    border:
+        1px solid #555;
+
+    z-index: 4;
+}
+
+.blade-person-body {
+    position: absolute;
+
+    left: 50%;
+    top: 25%;
+
+    transform:
+        translateX(-50%);
+
+    width: 54%;
+    height: 46%;
+
+    background:
+        linear-gradient(
+            #262626,
+            #101010
+        );
+
+    border-radius:
+        18px 18px 8px 8px;
+
+    box-shadow:
+        0 8px 20px #000;
+}
+
+.blade-restraint {
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+
+    height: 10px;
+
+    background:
+        #3d291d;
+
+    border:
+        1px solid #6a4a34;
+
+    z-index: 9;
+}
+
+.blade-restraint.one {
+    top: 45%;
+}
+
+.blade-restraint.two {
+    top: 61%;
+}
+
+
+/* ========================================
+   SUSPENDED BLADE
+   ======================================== */
+
+.blade-assembly {
+    position: absolute;
+
+    left: 50%;
+    top: -4vh;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(170px, 22vw);
+
+    z-index: 12;
+
+    transition:
+        transform 0.6s ease,
+        top 0.6s ease;
+}
+
+.blade-magnet {
+    width: 100%;
+    height: 78px;
+
+    border:
+        3px solid #353535;
+
+    background:
+        linear-gradient(
+            90deg,
+            #121212,
+            #2a2a2a,
+            #101010
+        );
+
+    box-shadow:
+        0 10px 30px #000;
+}
+
+.blade-weapon {
+    position: relative;
+
+    margin:
+        0 auto;
+
+    width: 28px;
+    height: 270px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6f6f6f,
+            #d2d2d2 45%,
+            #747474 55%,
+            #2a2a2a
+        );
+
+    clip-path:
+        polygon(
+            12% 0,
+            88% 0,
+            78% 83%,
+            50% 100%,
+            22% 83%
+        );
+
+    filter:
+        drop-shadow(
+            0 12px 16px
+            rgba(0,0,0,0.9)
+        );
+}
+
+
+/* ========================================
+   RED WARNING LIGHT
+   ======================================== */
+
+.blade-warning-light {
+    position: absolute;
+
+    right: 6vw;
+    top: 8vh;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    background:
+        #6a0000;
+
+    box-shadow:
+        0 0 14px #a00000,
+        0 0 32px rgba(255,0,0,0.5);
+
+    z-index: 20;
+}
+
+.blade-overlay.running
+.blade-warning-light {
+    animation:
+        bladeWarningPulse
+        1s
+        infinite;
+}
+
+@keyframes bladeWarningPulse {
+
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(0.92);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+
+/* ========================================
+   CONTROL PANEL
+   ======================================== */
+
+.blade-control-panel {
+    position: absolute;
+
+    right: 4vw;
+    bottom: 5vh;
+
+    width:
+        min(440px, 46vw);
+
+    max-height:
+        82vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        20px;
+
+    border:
+        1px solid #3a3a3a;
+
+    background:
+        rgba(5,5,5,0.94);
+
+    box-shadow:
+        0 0 38px #000;
+
+    z-index: 25;
+}
+
+.blade-control-title {
+    margin-bottom: 10px;
+
+    color: #bdbdbd;
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+}
+
+.blade-control-instruction {
+    margin-bottom: 14px;
+
+    color: #888;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   TIMER
+   ======================================== */
+
+.blade-timer {
+    margin:
+        12px auto 18px;
+
+    padding:
+        10px 12px;
+
+    width:
+        min(210px, 80%);
+
+    border:
+        1px solid #4b1515;
+
+    background:
+        #090000;
+
+    color:
+        #d22929;
+
+    font-family:
+        monospace;
+
+    font-size:
+        34px;
+
+    letter-spacing:
+        4px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        inset 0 0 20px rgba(110,0,0,0.35);
+}
+
+
+/* ========================================
+   INVESTIGATION GRID
+   ======================================== */
+
+.blade-investigation-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        8px;
+
+    margin-bottom:
+        14px;
+}
+
+.blade-investigation {
+    padding:
+        11px 8px;
+
+    border:
+        1px solid #3e3e3e;
+
+    background:
+        #111;
+
+    color:
+        #c9c9c9;
+
+    cursor:
+        pointer;
+
+    font-size:
+        12px;
+}
+
+.blade-investigation.investigated {
+    border-color:
+        #6b6b6b;
+
+    background:
+        #1a1a1a;
+}
+
+
+/* ========================================
+   EVIDENCE
+   ======================================== */
+
+.blade-evidence {
+    min-height:
+        74px;
+
+    margin-bottom:
+        14px;
+
+    padding:
+        12px;
+
+    border:
+        1px solid #303030;
+
+    background:
+        #070707;
+
+    color:
+        #aaa;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.55;
+}
+
+
+/* ========================================
+   SEQUENCE DISPLAY
+   ======================================== */
+
+.blade-sequence-display {
+    min-height:
+        46px;
+
+    padding:
+        12px;
+
+    margin-bottom:
+        12px;
+
+    border:
+        1px solid #393939;
+
+    background:
+        #020202;
+
+    color:
+        #ccc;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        2px;
+
+    text-align:
+        center;
+}
+
+
+/* ========================================
+   CONTROL BUTTONS
+   ======================================== */
+
+.blade-controls {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        10px;
+}
+
+.blade-control-button {
+    padding:
+        14px 8px;
+
+    border:
+        1px solid #4b4b4b;
+
+    background:
+        linear-gradient(
+            #181818,
+            #0a0a0a
+        );
+
+    color:
+        #ddd;
+
+    cursor:
+        pointer;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        1px;
+}
+
+.blade-control-button:hover {
+    background:
+        #202020;
+}
+
+.blade-control-button:active {
+    transform:
+        translateY(2px);
+}
+
+
+/* ========================================
+   STATUS
+   ======================================== */
+
+.blade-status {
+    min-height:
+        24px;
+
+    margin-top:
+        12px;
+
+    color:
+        #999;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        2px;
+
+    text-align:
+        center;
+}
+
+.blade-status.correct {
+    color:
+        #8eb88e;
+}
+
+.blade-status.wrong {
+    color:
+        #ca8282;
+}
+
+
+/* ========================================
+   INCREASING PANIC
+   ======================================== */
+
+.blade-overlay.warning-stage {
+    animation:
+        bladeRoomShake
+        0.18s
+        infinite alternate;
+}
+
+@keyframes bladeRoomShake {
+
+    from {
+        transform:
+            translate(-1px, 0);
+    }
+
+    to {
+        transform:
+            translate(1px, 1px);
+    }
+}
+
+
+/* ========================================
+   BLADE DROPS LOWER AS TIME RUNS OUT
+   ======================================== */
+
+.blade-overlay.stage-one
+.blade-assembly {
+    top:
+        1vh;
+}
+
+.blade-overlay.stage-two
+.blade-assembly {
+    top:
+        7vh;
+}
+
+.blade-overlay.stage-three
+.blade-assembly {
+    top:
+        14vh;
+}
+
+
+/* ========================================
+   SUCCESS
+   ======================================== */
+
+.blade-overlay.secured
+.blade-warning-light {
+    background:
+        #0e5016;
+
+    box-shadow:
+        0 0 16px #1b8a2a;
+}
+
+.blade-overlay.secured
+.blade-assembly {
+    top:
+        -4vh;
+}
+
+
+/* ========================================
+   FAILURE CINEMATIC
+   ======================================== */
+
+.blade-death-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 5200;
+
+    display: none;
+
+    overflow: hidden;
+
+    background:
+        #000;
+}
+
+.blade-death-cinematic.active {
+    display: block;
+}
+
+.blade-death-view {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #1a0808 0%,
+            #050000 60%,
+            #000 100%
+        );
+
+    overflow: hidden;
+}
+
+.blade-death-weapon {
+    position: absolute;
+
+    left: 50%;
+    top: -45vh;
+
+    transform:
+        translateX(-50%);
+
+    width: 38px;
+    height: 360px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #545454,
+            #e1e1e1 45%,
+            #636363 55%,
+            #181818
+        );
+
+    clip-path:
+        polygon(
+            12% 0,
+            88% 0,
+            78% 83%,
+            50% 100%,
+            22% 83%
+        );
+
+    transition:
+        top 1.25s
+        cubic-bezier(
+            0.15,
+            0.8,
+            0.18,
+            1
+        );
+
+    filter:
+        drop-shadow(
+            0 15px 22px #000
+        );
+}
+
+.blade-death-cinematic.drop
+.blade-death-weapon {
+    top:
+        85vh;
+}
+
+.blade-death-blackout {
+    position: absolute;
+    inset: 0;
+
+    z-index: 15;
+
+    background:
+        #000;
+
+    opacity:
+        0;
+
+    transition:
+        opacity 0.12s linear;
+}
+
+.blade-death-cinematic.blackout
+.blade-death-blackout {
+    opacity: 1;
+}
+
+
+/* ========================================
+   MOBILE / IPAD
+   ======================================== */
+
+@media (max-width: 900px) {
+
+    .blade-captive {
+        left:
+            34%;
+
+        width:
+            min(220px, 40vw);
+    }
+
+    .blade-control-panel {
+        right:
+            2vw;
+
+        width:
+            min(52vw, 420px);
+    }
+
+    .blade-weapon {
+        height:
+            220px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .blade-captive {
+        left:
+            50%;
+
+        bottom:
+            46vh;
+
+        width:
+            170px;
+
+        height:
+            260px;
+    }
+
+    .blade-control-panel {
+        left:
+            50%;
+
+        right:
+            auto;
+
+        bottom:
+            2vh;
+
+        transform:
+            translateX(-50%);
+
+        width:
+            92vw;
+
+        max-height:
+            47vh;
+
+        padding:
+            14px;
+    }
+
+    .blade-investigation-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .blade-controls {
+        grid-template-columns:
+            repeat(4, 1fr);
+    }
+
+    .blade-control-button {
+        padding:
+            11px 4px;
+
+        font-size:
+            10px;
+    }
+
+    .blade-timer {
+        font-size:
+            26px;
+    }
+}
