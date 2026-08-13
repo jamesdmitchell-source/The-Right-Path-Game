@@ -707,6 +707,328 @@ pressureInvestigationButtons =
         )
     );
     /*
+    ========================================
+    LEVEL 5 — INTERVENTION UI
+    ========================================
+*/
+
+bladeOverlay =
+    document.createElement(
+        "div"
+    );
+
+bladeOverlay.className =
+    "blade-overlay";
+
+
+bladeOverlay.innerHTML = `
+
+    <div class="blade-room">
+
+
+        <!-- ================================
+             SUSPENDED BLADE
+             ================================ -->
+
+        <div
+            id="bladeAssembly"
+            class="blade-assembly"
+        >
+
+            <div class="blade-magnet"></div>
+
+            <div class="blade-weapon"></div>
+
+        </div>
+
+
+        <!-- ================================
+             WARNING LIGHT
+             ================================ -->
+
+        <div
+            class="blade-warning-light"
+        ></div>
+
+
+        <!-- ================================
+             CAPTIVE
+             ================================ -->
+
+        <div class="blade-captive">
+
+            <div class="blade-chair"></div>
+
+
+            <div class="blade-person-head"></div>
+
+
+            <div class="blade-gag"></div>
+
+
+            <div class="blade-person-body"></div>
+
+
+            <div
+                class="blade-restraint one"
+            ></div>
+
+
+            <div
+                class="blade-restraint two"
+            ></div>
+
+        </div>
+
+
+        <!-- ================================
+             CONTROL PANEL
+             ================================ -->
+
+        <section class="blade-control-panel">
+
+
+            <div class="blade-control-title">
+
+                SUSPENSION CONTROL
+
+            </div>
+
+
+            <div class="blade-control-instruction">
+
+                COMPLETE THE EMERGENCY
+                SHUTDOWN PROCEDURE
+
+            </div>
+
+
+            <!-- TIMER -->
+
+            <div
+                id="bladeTimerDisplay"
+                class="blade-timer"
+            >
+                01:10
+            </div>
+
+
+            <!-- INVESTIGATION CONTROLS -->
+
+            <div
+                class="blade-investigation-grid"
+            >
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="magnet"
+                >
+                    🧲
+                    ELECTROMAGNET
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="brake"
+                >
+                    ⚙️
+                    BRAKE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="lock"
+                >
+                    🔒
+                    SAFETY LOCK
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="power"
+                >
+                    ⚡
+                    POWER
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="release"
+                >
+                    🔧
+                    RELEASE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-investigation"
+                    data-investigation="serviceDiagram"
+                >
+                    📋
+                    SERVICE DIAGRAM
+                </button>
+
+
+            </div>
+
+
+            <!-- EVIDENCE DISPLAY -->
+
+            <div
+                id="bladeEvidence"
+                class="blade-evidence"
+            >
+
+                Examine the suspension system.
+
+            </div>
+
+
+            <!-- SEQUENCE DISPLAY -->
+
+            <div
+                id="bladeSequenceDisplay"
+                class="blade-sequence-display"
+            >
+
+                _ → _ → _ → _
+
+            </div>
+
+
+            <!-- PUZZLE CONTROLS -->
+
+            <div class="blade-controls">
+
+
+                <button
+                    type="button"
+                    class="blade-control-button"
+                    data-control="BRAKE"
+                >
+                    BRAKE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-control-button"
+                    data-control="LOCK"
+                >
+                    LOCK
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-control-button"
+                    data-control="POWER"
+                >
+                    POWER
+                </button>
+
+
+                <button
+                    type="button"
+                    class="blade-control-button"
+                    data-control="RELEASE"
+                >
+                    RELEASE
+                </button>
+
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div
+                id="bladeStatus"
+                class="blade-status"
+            ></div>
+
+
+        </section>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    bladeOverlay
+);
+
+
+/*
+    ========================================
+    LEVEL 5 — REFERENCES
+    ========================================
+*/
+
+bladeAssembly =
+    document.getElementById(
+        "bladeAssembly"
+    );
+
+
+bladeTimerDisplay =
+    document.getElementById(
+        "bladeTimerDisplay"
+    );
+
+
+bladeEvidence =
+    document.getElementById(
+        "bladeEvidence"
+    );
+
+
+bladeSequenceDisplay =
+    document.getElementById(
+        "bladeSequenceDisplay"
+    );
+
+
+bladeStatus =
+    document.getElementById(
+        "bladeStatus"
+    );
+
+
+bladeControlButtons =
+    Array.from(
+        bladeOverlay.querySelectorAll(
+            ".blade-control-button"
+        )
+    );
+
+
+bladeInvestigationButtons =
+    Array.from(
+        bladeOverlay.querySelectorAll(
+            ".blade-investigation"
+        )
+    );
+
+
+/*
+    ========================================
+    END LEVEL 5 UI
+    ========================================
+*/
+    /*
         KEYPAD OVERLAY
     */
 
