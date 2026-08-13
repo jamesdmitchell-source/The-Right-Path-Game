@@ -184,6 +184,61 @@ let pressureHalfwaySpoken =
 
 let pressureWarningSpoken =
     false;
+
+
+/*
+    ========================================
+    LEVEL 5 — INTERVENTION STATE
+    ========================================
+*/
+
+let bladeOverlay =
+    null;
+
+let bladeAssembly =
+    null;
+
+let bladeTimerDisplay =
+    null;
+
+let bladeEvidence =
+    null;
+
+let bladeSequenceDisplay =
+    null;
+
+let bladeStatus =
+    null;
+
+let bladeControlButtons =
+    [];
+
+let bladeInvestigationButtons =
+    [];
+
+let bladeEntry =
+    [];
+
+let bladeSolved =
+    false;
+
+let bladeRunning =
+    false;
+
+let bladeTimer =
+    null;
+
+let bladeDeadline =
+    0;
+
+let bladeHalfwaySpoken =
+    false;
+
+let bladeWarningSpoken =
+    false;
+
+let bladeFailureRunning =
+    false;
     /*
         ELIAS
     */
