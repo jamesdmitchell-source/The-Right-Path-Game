@@ -4643,40 +4643,55 @@ updateLevel3Sequence(
         CORRIDOR SEQUENCE
     */
 
-    async function playCorridorSequence() {
+  /*
+    ========================================
+    FIRST-PERSON WALKING SEQUENCE
+    ========================================
+*/
+
+async function playCorridorSequence() {
 
     /*
-        Show the level that has just
+        Work out which level has just
         been completed.
     */
 
+    const completedLevel =
+        levels[
+            currentLevelIndex
+        ];
+
+
     if (
-        corridorLevelText
+        corridorLevelText &&
+        completedLevel
     ) {
 
-        const completedLevel =
-            levels[
-                currentLevelIndex
-            ];
-
-
-        if (
-            completedLevel
-        ) {
-
-            corridorLevelText.textContent =
-                "LEVEL " +
-                completedLevel.number +
-                " COMPLETE";
-
-        } else {
-
-            corridorLevelText.textContent =
-                "LEVEL COMPLETE";
-
-        }
-
+        corridorLevelText.textContent =
+            "LEVEL " +
+            completedLevel.number +
+            " COMPLETE";
     }
+
+
+    /*
+        Completely reset the animation
+        before every corridor sequence.
+    */
+
+    corridorTransition.classList.remove(
+        "active",
+        "walking",
+        "corridor-fade"
+    );
+
+
+    /*
+        Force the browser to restart
+        the CSS animation.
+    */
+
+    void corridorTransition.offsetWidth;
 
 
     corridorTransition.classList.add(
@@ -4685,14 +4700,45 @@ updateLevel3Sequence(
 
 
     await wait(
-        5000
+        250
+    );
+
+
+    corridorTransition.classList.add(
+        "walking"
+    );
+
+
+    /*
+        Approximately 6 seconds of walking.
+    */
+
+    await wait(
+        5800
+    );
+
+
+    corridorTransition.classList.add(
+        "corridor-fade"
+    );
+
+
+    await wait(
+        700
     );
 
 
     corridorTransition.classList.remove(
-        "active"
+        "active",
+        "walking",
+        "corridor-fade"
     );
 
+
+    /*
+        Stop existing haunting corridor
+        ambience before entering the room.
+    */
 
     if (
         typeof stopCorridorAmbience ===
@@ -4704,7 +4750,7 @@ updateLevel3Sequence(
 
 
     await wait(
-        500
+        250
     );
 }
 
