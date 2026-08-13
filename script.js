@@ -6868,7 +6868,7 @@ await wait(4500);
     );
 
 
-  /*
+/*
     ========================================
     RETRY
     ========================================
@@ -6894,8 +6894,9 @@ retryButton.addEventListener(
 
 
         /*
-            Stop / reset the Level 4
-            pressure system if necessary.
+            ========================================
+            RESET LEVEL 4
+            ========================================
         */
 
         if (
@@ -6904,6 +6905,21 @@ retryButton.addEventListener(
         ) {
 
             resetPressureState();
+        }
+
+
+        /*
+            ========================================
+            RESET LEVEL 5
+            ========================================
+        */
+
+        if (
+            typeof resetBladeState ===
+            "function"
+        ) {
+
+            resetBladeState();
         }
 
 
@@ -6944,10 +6960,9 @@ retryButton.addEventListener(
 
 
         /*
-            LEVEL 4
-
-            Only begin the pressure trap
-            AFTER Elias has finished speaking.
+            ========================================
+            LEVEL 4 — PRESSURE
+            ========================================
         */
 
         if (
@@ -6963,6 +6978,34 @@ retryButton.addEventListener(
             await startPressureLevel(
                 level
             );
+
+
+            return;
+        }
+
+
+        /*
+            ========================================
+            LEVEL 5 — INTERVENTION
+            ========================================
+
+            Elias finishes speaking before
+            the hostage scene is activated.
+        */
+
+        if (
+            level &&
+            level.bladePuzzle
+        ) {
+
+            await wait(
+                500
+            );
+
+
+            await startBladeLevel(
+                level
+            );
         }
 
     }
@@ -6971,32 +7014,18 @@ retryButton.addEventListener(
 
 /*
     ========================================
-    CONTINUE
-    ========================================
-
-    Level 1:
-    corridor before Level 2.
-
-    Levels 2 and 3:
-    continue normally.
-
-    Level 4:
-    Elias speaks first,
-    then the pressure trap starts.
-*/
-
-/*
-    ========================================
     CONTINUE — UNIVERSAL CORRIDOR
     ========================================
 
-    After every completed level:
-    1. corridor ambience starts
-    2. corridor visual plays
-    3. next level loads
-    4. Elias introduces it
-    5. Level 4 pressure starts if needed
+    After every successful level:
+
+    1. Corridor ambience begins
+    2. Walking corridor plays
+    3. Next level loads
+    4. Elias introduces the room
+    5. Special level engine starts
 */
+
 
 continueButton.addEventListener(
     "click",
@@ -7033,8 +7062,8 @@ continueButton.addEventListener(
 
 
         /*
-            Hide the success screen so
-            the corridor can take over.
+            Hide success screen while
+            Subject 28 moves onward.
         */
 
         successScreen.classList.remove(
@@ -7059,9 +7088,6 @@ continueButton.addEventListener(
             ========================================
             END OF CURRENT PROTOTYPE
             ========================================
-
-            If there is no next level,
-            don't load another room.
         */
 
         if (
@@ -7115,6 +7141,9 @@ continueButton.addEventListener(
             ========================================
             ELIAS INTRODUCTION
             ========================================
+
+            Special traps do not begin until
+            Elias has finished speaking.
         */
 
         await playLevelIntroduction(
@@ -7126,11 +7155,6 @@ continueButton.addEventListener(
             ========================================
             LEVEL 4 — PRESSURE
             ========================================
-
-            Elias finishes speaking first.
-
-            Only then does the chamber seal
-            and the ceiling begin descending.
         */
 
         if (
@@ -7146,8 +7170,58 @@ continueButton.addEventListener(
             await startPressureLevel(
                 newLevel
             );
+
+
+            continueButton.disabled =
+                false;
+
+
+            return;
         }
 
+
+        /*
+            ========================================
+            LEVEL 5 — INTERVENTION
+            ========================================
+
+            Corridor ends.
+
+            Elias speaks.
+
+            Then the restrained captive
+            and suspended blade are revealed.
+
+            Only after that does the
+            70-second countdown begin.
+        */
+
+        if (
+            newLevel &&
+            newLevel.bladePuzzle
+        ) {
+
+            await wait(
+                500
+            );
+
+
+            await startBladeLevel(
+                newLevel
+            );
+
+
+            continueButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        /*
+            Normal levels.
+        */
 
         continueButton.disabled =
             false;
