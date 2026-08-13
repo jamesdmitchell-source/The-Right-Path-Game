@@ -537,203 +537,378 @@ const levels = [
     },
 
 
+  /*
+    ==============================
+    LEVEL 4
+    PRESSURE
+    ==============================
+*/
+
+{
+    number:
+        4,
+
+    title:
+        "Pressure",
+
+    intro:
+        "You've had time to think until now. Let's see what happens when I take that away.",
+
+    observation:
+        "A wide concrete chamber. Four symbols are mounted around the walls beneath a heavy steel ceiling. Somewhere above you, machinery begins to stir.",
+
+    clue:
+        "The symbols are not the answer. Their order is.",
+
+    question:
+        "Reconstruct the sequence before the chamber closes around you.",
+
+    investigations: [
+
+        {
+            id:
+                "eye",
+
+            name:
+                "Eye",
+
+            icon:
+                "👁️",
+
+            description:
+                "A surveillance lens is mounted behind the eye symbol. Its recording indicator was activated before the chamber door opened.",
+
+            curator:
+                "Observation should always come first."
+        },
+
+        {
+            id:
+                "doorSymbol",
+
+            name:
+                "Door",
+
+            icon:
+                "🚪",
+
+            description:
+                "The locking mechanism logged its last activation immediately after someone crossed the threshold."
+        },
+
+        {
+            id:
+                "clockSymbol",
+
+            name:
+                "Clock",
+
+            icon:
+                "🕒",
+
+            description:
+                "The clock stopped at 03:17. The glass is cracked inward, as though something struck it from inside the room."
+        },
+
+        {
+            id:
+                "hand",
+
+            name:
+                "Handprint",
+
+            icon:
+                "✋",
+
+            description:
+                "A dark handprint has been dragged downward across the wall beneath the clock."
+        },
+
+        {
+            id:
+                "scratching",
+
+            name:
+                "Wall Scratching",
+
+            icon:
+                "🔎",
+
+            description:
+                "Four words have been scratched repeatedly into the concrete: WATCH. ENTER. TIME. FALL.",
+
+            curator:
+                "Someone before you understood eventually."
+        }
+
+    ],
+
+    requiredInvestigations:
+        5,
+
+    pressurePuzzle: {
+
+        type:
+            "pressure-sequence",
+
+        title:
+            "PRESSURE CONTROL",
+
+        instruction:
+            "Reconstruct the sequence.",
+
+        answer: [
+            "EYE",
+            "DOOR",
+            "CLOCK",
+            "HAND"
+        ],
+
+        timeLimit:
+            85,
+
+        wrong:
+            "SEQUENCE REJECTED",
+
+        correct:
+            "SEQUENCE ACCEPTED",
+
+        curatorHalfway:
+            "Pressure changes people.",
+
+        curatorWarning:
+            "You're running out of room, Subject 28.",
+
+        curatorSuccess:
+            "Interesting. Fear usually makes people careless. You appear to be learning."
+    },
+
+    choices: [
+
+        {
+            text:
+                "Exit Chamber",
+
+            correct:
+                true
+        }
+
+    ],
+
+    success:
+        "The ceiling retracts. The exit unlocks.",
+
+    death:
+        "Failure under pressure."
+},
+
+
+/*
+    ==============================
+    LEVEL 5
+    INTERVENTION
+    ==============================
+*/
+
+{
+    number:
+        5,
+
+    title:
+        "Intervention",
+
+    intro:
+        "Until now, your mistakes have only endangered you. I thought it was time we changed that.",
+
+    observation:
+        "A woman is restrained in a steel chair at the centre of the chamber. A cloth gag covers her mouth. Directly above her, a heavy blade hangs vertically from an electromagnetic release mechanism. A red warning lamp begins to pulse.",
+
+    clue:
+        "Stopping the machine is not the same as switching it off.",
+
+    question:
+        "Disable the suspension system before the blade is released.",
+
+
     /*
         ==============================
-        LEVEL 4
-        PRESSURE
+        LEVEL 5 INVESTIGATIONS
         ==============================
     */
 
-    {
-        number:
-            4,
+    investigations: [
 
-        title:
-            "Pressure",
+        {
+            id:
+                "magnet",
 
-        /*
-            This is deliberately one string.
-            Your current script expects
-            level.intro to be a string.
-        */
+            name:
+                "Electromagnet",
 
-        intro:
-            "You've had time to think until now. Let's see what happens when I take that away.",
+            icon:
+                "🧲",
 
-        observation:
-            "A wide concrete chamber. Four symbols are mounted around the walls beneath a heavy steel ceiling. Somewhere above you, machinery begins to stir.",
+            description:
+                "The blade is suspended by a powered electromagnet. A warning plate reads: LOSS OF CURRENT WILL RELEASE LOAD.",
 
-        clue:
-            "The symbols are not the answer. Their order is.",
-
-        question:
-            "Reconstruct the sequence before the chamber closes around you.",
-
-
-        /*
-            LEVEL 4 INVESTIGATIONS
-        */
-
-        investigations: [
-
-            {
-                id:
-                    "eye",
-
-                name:
-                    "Eye",
-
-                icon:
-                    "👁️",
-
-                description:
-                    "A surveillance lens is mounted behind the eye symbol. Its recording indicator was activated before the chamber door opened.",
-
-                curator:
-                    "Observation should always come first."
-            },
-
-            {
-                id:
-                    "doorSymbol",
-
-                name:
-                    "Door",
-
-                icon:
-                    "🚪",
-
-                description:
-                    "The locking mechanism logged its last activation immediately after someone crossed the threshold."
-            },
-
-            {
-                id:
-                    "clockSymbol",
-
-                name:
-                    "Clock",
-
-                icon:
-                    "🕒",
-
-                description:
-                    "The clock stopped at 03:17. The glass is cracked inward, as though something struck it from inside the room."
-            },
-
-            {
-                id:
-                    "hand",
-
-                name:
-                    "Handprint",
-
-                icon:
-                    "✋",
-
-                description:
-                    "A dark handprint has been dragged downward across the wall beneath the clock."
-            },
-
-            {
-                id:
-                    "scratching",
-
-                name:
-                    "Wall Scratching",
-
-                icon:
-                    "🔎",
-
-                description:
-                    "Four words have been scratched repeatedly into the concrete: WATCH. ENTER. TIME. FALL.",
-
-                curator:
-                    "Someone before you understood eventually."
-            }
-
-        ],
-
-        requiredInvestigations:
-            5,
-
-
-        /*
-            LEVEL 4 PRESSURE PUZZLE
-
-            WATCH = EYE
-            ENTER = DOOR
-            TIME  = CLOCK
-            FALL  = HAND
-
-            Correct order:
-
-            EYE
-            DOOR
-            CLOCK
-            HAND
-        */
-
-        pressurePuzzle: {
-
-            type:
-                "pressure-sequence",
-
-            title:
-                "PRESSURE CONTROL",
-
-            instruction:
-                "Reconstruct the sequence.",
-
-            answer: [
-                "EYE",
-                "DOOR",
-                "CLOCK",
-                "HAND"
-            ],
-
-            timeLimit:
-                85,
-
-            wrong:
-                "SEQUENCE REJECTED",
-
-            correct:
-                "SEQUENCE ACCEPTED",
-
-            curatorHalfway:
-                "Pressure changes people.",
-
-            curatorWarning:
-                "You're running out of room, Subject 28.",
-
-            curatorSuccess:
-                "Interesting. Fear usually makes people careless. You appear to be learning."
+            curator:
+                "The obvious solution is often the most dangerous."
         },
 
+        {
+            id:
+                "brake",
 
-        /*
-            EXIT REMAINS LOCKED UNTIL
-            THE PRESSURE PUZZLE IS SOLVED.
-        */
+            name:
+                "Mechanical Brake",
 
-        choices: [
+            icon:
+                "⚙️",
 
-            {
-                text:
-                    "Exit Chamber",
+            description:
+                "A secondary brake surrounds the suspension rail. Its indicator is dark. A handwritten maintenance note says: ENGAGE BRAKE BEFORE POWER IS INTERRUPTED."
+        },
 
-                correct:
-                    true
-            }
+        {
+            id:
+                "lock",
 
+            name:
+                "Safety Lock",
+
+            icon:
+                "🔒",
+
+            description:
+                "The locking pin cannot engage while the suspension rail is moving. A diagram shows the brake stopping the rail before the lock slides into position."
+        },
+
+        {
+            id:
+                "power",
+
+            name:
+                "Power Control",
+
+            icon:
+                "⚡",
+
+            description:
+                "The emergency power switch isolates the electromagnet. Turning it off before the mechanical safeguards engage would release the blade immediately."
+        },
+
+        {
+            id:
+                "release",
+
+            name:
+                "Release Control",
+
+            icon:
+                "🔧",
+
+            description:
+                "The final control disengages the automated drop mechanism. A service label reads: SAFETY LOCK REQUIRED BEFORE RELEASE CIRCUIT MAY BE DISABLED."
+        },
+
+        {
+            id:
+                "serviceDiagram",
+
+            name:
+                "Service Diagram",
+
+            icon:
+                "📋",
+
+            description:
+                "A faded diagram shows four stages of shutdown: stop movement, secure the load, isolate power, disable the release circuit."
+        }
+
+    ],
+
+    requiredInvestigations:
+        6,
+
+
+    /*
+        ==============================
+        LEVEL 5 BLADE PUZZLE
+        ==============================
+
+        STOP MOVEMENT = BRAKE
+        SECURE LOAD   = LOCK
+        ISOLATE       = POWER
+        DISABLE       = RELEASE
+
+        Correct sequence:
+
+        BRAKE
+        LOCK
+        POWER
+        RELEASE
+    */
+
+    bladePuzzle: {
+
+        type:
+            "timed-sequence",
+
+        title:
+            "SUSPENSION CONTROL",
+
+        instruction:
+            "Complete the emergency shutdown procedure.",
+
+        answer: [
+            "BRAKE",
+            "LOCK",
+            "POWER",
+            "RELEASE"
         ],
 
-        success:
-            "The ceiling retracts. The exit unlocks.",
+        timeLimit:
+            70,
 
-        death:
-            "Failure under pressure."
-    }
+        wrong:
+            "UNSAFE SHUTDOWN SEQUENCE",
+
+        correct:
+            "SUSPENSION SECURED",
+
+        curatorHalfway:
+            "Interesting, isn't it? People think very differently when the consequences belong to someone else.",
+
+        curatorWarning:
+            "She's running out of time, Subject 28.",
+
+        curatorSuccess:
+            "You acted. Most people spend longer deciding whether another life is worth the risk."
+    },
+
+
+    /*
+        The player cannot leave until
+        the blade system is secured.
+    */
+
+    choices: [
+
+        {
+            text:
+                "Open Exit Door",
+
+            correct:
+                true
+        }
+
+    ],
+
+    success:
+        "The blade locks in place. The warning light dies. The exit mechanism releases.",
+
+    death:
+        "You hesitated."
+}
 
 ];
