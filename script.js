@@ -4341,6 +4341,1256 @@ pressureSymbolButtons.forEach(
     }
 );
     /*
+    ========================================
+    LEVEL 5 — INTERVENTION ENGINE
+    ========================================
+*/
+
+
+function updateBladeSequenceDisplay() {
+
+    const visible =
+        bladeEntry.slice();
+
+
+    while (
+        visible.length < 4
+    ) {
+
+        visible.push(
+            "_"
+        );
+
+    }
+
+
+    bladeSequenceDisplay.textContent =
+        visible.join(
+            " → "
+        );
+}
+
+
+/*
+    ========================================
+    TIMER DISPLAY
+    ========================================
+*/
+
+function updateBladeTimerDisplay(
+    milliseconds
+) {
+
+    const totalSeconds =
+        Math.max(
+            0,
+            Math.ceil(
+                milliseconds / 1000
+            )
+        );
+
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    bladeTimerDisplay.textContent =
+        String(minutes)
+            .padStart(2, "0")
+        +
+        ":"
+        +
+        String(seconds)
+            .padStart(2, "0");
+}
+
+
+/*
+    ========================================
+    RESET LEVEL 5
+    ========================================
+*/
+
+function resetBladeState() {
+
+    bladeEntry =
+        [];
+
+    bladeSolved =
+        false;
+
+    bladeRunning =
+        false;
+
+    bladeDeadline =
+        0;
+
+    bladeHalfwaySpoken =
+        false;
+
+    bladeWarningSpoken =
+        false;
+
+    bladeFailureRunning =
+        false;
+
+
+    if (
+        bladeTimer
+    ) {
+
+        clearInterval(
+            bladeTimer
+        );
+
+        bladeTimer =
+            null;
+    }
+
+
+    bladeOverlay.classList.remove(
+        "active",
+        "running",
+        "warning-stage",
+        "stage-one",
+        "stage-two",
+        "stage-three",
+        "secured"
+    );
+
+
+    bladeEvidence.textContent =
+        "Examine the suspension system.";
+
+
+    bladeStatus.textContent =
+        "";
+
+
+    bladeStatus.classList.remove(
+        "correct",
+        "wrong"
+    );
+
+
+    bladeInvestigationButtons.forEach(
+        function (button) {
+
+            button.classList.remove(
+                "investigated"
+            );
+
+
+            button.disabled =
+                false;
+
+        }
+    );
+
+
+    bladeControlButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                false;
+
+        }
+    );
+
+
+    updateBladeTimerDisplay(
+        70000
+    );
+
+
+    updateBladeSequenceDisplay();
+}
+
+
+/*
+    ========================================
+    CURRENT LEVEL 5 DATA
+    ========================================
+*/
+
+function getCurrentBladeLevel() {
+
+    const level =
+        levels[
+            currentLevelIndex
+        ];
+
+
+    if (
+        !level ||
+        !level.bladePuzzle
+    ) {
+
+        return null;
+    }
+
+
+    return level;
+}
+
+
+/*
+    ========================================
+    INVESTIGATE LEVEL 5
+    ========================================
+*/
+
+async function investigateBladeObject(
+    button
+) {
+
+    const level =
+        getCurrentBladeLevel();
+
+
+    if (
+        !level ||
+        bladeSolved ||
+        bladeFailureRunning
+    ) {
+
+        return;
+    }
+
+
+    const investigationId =
+        button.dataset
+            .investigation;
+
+
+    const investigation =
+        level.investigations.find(
+            function (item) {
+
+                return (
+                    item.id ===
+                    investigationId
+                );
+
+            }
+        );
+
+
+    if (
+        !investigation
+    ) {
+
+        return;
+    }
+
+
+    const firstVisit =
+        !investigatedIds.has(
+            investigation.id
+        );
+
+
+    investigatedIds.add(
+        investigation.id
+    );
+
+
+    addJournalEntry(
+        level,
+        investigation
+    );
+
+
+    button.classList.add(
+        "investigated"
+    );
+
+
+    bladeEvidence.innerHTML = `
+
+        <strong>
+            ${investigation.icon || ""}
+            ${investigation.name}
+        </strong>
+
+        <br><br>
+
+        ${investigation.description}
+
+    `;
+
+
+    /*
+        Elias only comments the first
+        time a clue is examined.
+    */
+
+    if (
+        firstVisit &&
+        investigation.curator
+    ) {
+
+        curatorMessage.textContent =
+            investigation.curator;
+
+
+        await speakAsCurator(
+            investigation.curator
+        );
+
+    }
+}
+
+
+/*
+    ========================================
+    LEVEL 5 CONTROL INPUT
+    ========================================
+*/
+
+async function submitBladeControl(
+    control
+) {
+
+    const level =
+        getCurrentBladeLevel();
+
+
+    if (
+        !level ||
+        !bladeRunning ||
+        bladeSolved ||
+        bladeFailureRunning
+    ) {
+
+        return;
+    }
+
+
+    if (
+        bladeEntry.length >=
+        4
+    ) {
+
+        return;
+    }
+
+
+    bladeEntry.push(
+        control
+    );
+
+
+    updateBladeSequenceDisplay();
+
+
+    /*
+        Do not reveal whether individual
+        controls are right or wrong.
+
+        Judge only after all four
+        have been entered.
+    */
+
+    if (
+        bladeEntry.length < 4
+    ) {
+
+        return;
+    }
+
+
+    await wait(
+        250
+    );
+
+
+    /*
+        ========================================
+        CORRECT SEQUENCE
+        ========================================
+    */
+
+    if (
+        arraysMatch(
+            bladeEntry,
+            level.bladePuzzle.answer
+        )
+    ) {
+
+        bladeSolved =
+            true;
+
+        bladeRunning =
+            false;
+
+
+        if (
+            bladeTimer
+        ) {
+
+            clearInterval(
+                bladeTimer
+            );
+
+            bladeTimer =
+                null;
+        }
+
+
+        bladeStatus.textContent =
+            level.bladePuzzle.correct;
+
+
+        bladeStatus.classList.remove(
+            "wrong"
+        );
+
+
+        bladeStatus.classList.add(
+            "correct"
+        );
+
+
+        bladeOverlay.classList.remove(
+            "running",
+            "warning-stage",
+            "stage-one",
+            "stage-two",
+            "stage-three"
+        );
+
+
+        bladeOverlay.classList.add(
+            "secured"
+        );
+
+
+        /*
+            Lock the controls.
+        */
+
+        bladeControlButtons.forEach(
+            function (button) {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+
+        bladeInvestigationButtons.forEach(
+            function (button) {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+
+        await wait(
+            1300
+        );
+
+
+        bladeStatus.textContent =
+            "BLADE SECURED — EXIT UNLOCKED";
+
+
+        /*
+            Allow the normal Level 5
+            exit button to be pressed.
+        */
+
+        choicesContainer
+            .querySelectorAll(
+                ".choice"
+            )
+            .forEach(
+                function (button) {
+
+                    button.disabled =
+                        false;
+
+                }
+            );
+
+
+        choicesContainer.classList.remove(
+            "choices-locked"
+        );
+
+
+        /*
+            Hold the secured scene briefly.
+        */
+
+        await wait(
+            1200
+        );
+
+
+        bladeOverlay.classList.remove(
+            "active"
+        );
+
+
+        if (
+            level.bladePuzzle
+                .curatorSuccess
+        ) {
+
+            curatorMessage.textContent =
+                level.bladePuzzle
+                    .curatorSuccess;
+
+
+            await speakAsCurator(
+                level.bladePuzzle
+                    .curatorSuccess
+            );
+
+        }
+
+
+        return;
+    }
+
+
+    /*
+        ========================================
+        WRONG SEQUENCE
+        ========================================
+
+        Wrong sequence costs time,
+        but does not instantly kill
+        the captive.
+    */
+
+    bladeStatus.textContent =
+        level.bladePuzzle.wrong;
+
+
+    bladeStatus.classList.remove(
+        "correct"
+    );
+
+
+    bladeStatus.classList.add(
+        "wrong"
+    );
+
+
+    /*
+        Penalty:
+        remove five seconds.
+    */
+
+    bladeDeadline -=
+        5000;
+
+
+    await wait(
+        700
+    );
+
+
+    bladeEntry =
+        [];
+
+
+    updateBladeSequenceDisplay();
+
+
+    bladeStatus.textContent =
+        "SYSTEM RESET — 5 SECONDS LOST";
+
+
+    await wait(
+        650
+    );
+
+
+    bladeStatus.textContent =
+        "";
+
+
+    bladeStatus.classList.remove(
+        "wrong"
+    );
+}
+
+
+/*
+    ========================================
+    LEVEL 5 FAILURE CINEMATIC
+    ========================================
+*/
+
+async function bladeFailure() {
+
+    const level =
+        getCurrentBladeLevel();
+
+
+    if (
+        !level ||
+        bladeSolved ||
+        bladeFailureRunning
+    ) {
+
+        return;
+    }
+
+
+    bladeFailureRunning =
+        true;
+
+    bladeRunning =
+        false;
+
+
+    if (
+        bladeTimer
+    ) {
+
+        clearInterval(
+            bladeTimer
+        );
+
+        bladeTimer =
+            null;
+    }
+
+
+    bladeControlButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                true;
+
+        }
+    );
+
+
+    bladeInvestigationButtons.forEach(
+        function (button) {
+
+            button.disabled =
+                true;
+
+        }
+    );
+
+
+    bladeTimerDisplay.textContent =
+        "00:00";
+
+
+    bladeStatus.textContent =
+        "RELEASE MECHANISM ACTIVATED";
+
+
+    bladeOverlay.classList.add(
+        "warning-stage",
+        "stage-three"
+    );
+
+
+    await wait(
+        500
+    );
+
+
+    /*
+        Hide normal puzzle view.
+    */
+
+    bladeOverlay.classList.remove(
+        "active"
+    );
+
+
+    /*
+        ========================================
+        CREATE DEATH CINEMATIC
+        ========================================
+    */
+
+    let cinematic =
+        document.getElementById(
+            "bladeDeathCinematic"
+        );
+
+
+    if (
+        !cinematic
+    ) {
+
+        cinematic =
+            document.createElement(
+                "div"
+            );
+
+
+        cinematic.id =
+            "bladeDeathCinematic";
+
+
+        cinematic.className =
+            "blade-death-cinematic";
+
+
+        cinematic.innerHTML = `
+
+            <div class="blade-death-view">
+
+                <div
+                    class="blade-death-weapon"
+                ></div>
+
+                <div
+                    class="blade-death-blackout"
+                ></div>
+
+            </div>
+
+        `;
+
+
+        document.body.appendChild(
+            cinematic
+        );
+
+    }
+
+
+    cinematic.classList.remove(
+        "drop",
+        "blackout"
+    );
+
+
+    cinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        300
+    );
+
+
+    /*
+        Blade releases.
+    */
+
+    cinematic.classList.add(
+        "drop"
+    );
+
+
+    /*
+        Cut away BEFORE impact.
+    */
+
+    await wait(
+        850
+    );
+
+
+    /*
+        High-pitched version of the
+        existing scream.
+    */
+
+    try {
+
+        const captiveScream =
+            new Audio(
+                "distant-scream.wav"
+            );
+
+
+        captiveScream.preload =
+            "auto";
+
+
+        captiveScream.volume =
+            1;
+
+
+        captiveScream.playbackRate =
+            1.22;
+
+
+        captiveScream.currentTime =
+            0;
+
+
+        const screamAttempt =
+            captiveScream.play();
+
+
+        if (
+            screamAttempt &&
+            typeof screamAttempt.catch ===
+            "function"
+        ) {
+
+            screamAttempt.catch(
+                function () {
+
+                    // Continue without audio.
+
+                }
+            );
+
+        }
+
+    } catch (
+        error
+    ) {
+
+        // Continue without audio.
+
+    }
+
+
+    /*
+        Instant blackout before
+        anything graphic is shown.
+    */
+
+    cinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        1300
+    );
+
+
+    cinematic.classList.remove(
+        "active",
+        "drop"
+    );
+
+
+    /*
+        Death screen.
+    */
+
+    deathMessage.textContent =
+        "INTERVENTION FAILED.";
+
+
+    curatorMessage.textContent =
+        level.death;
+
+
+    showScreen(
+        deathScreen
+    );
+
+
+    /*
+        Elias waits until after the
+        scream and blackout.
+    */
+
+    await wait(
+        500
+    );
+
+
+    if (
+        level.death
+    ) {
+
+        await speakAsCurator(
+            level.death
+        );
+
+    }
+}
+
+
+/*
+    ========================================
+    LEVEL 5 TIMER ENGINE
+    ========================================
+*/
+
+function updateBladeTimer(
+    level
+) {
+
+    if (
+        !bladeRunning ||
+        bladeSolved ||
+        bladeFailureRunning
+    ) {
+
+        return;
+    }
+
+
+    const now =
+        Date.now();
+
+
+    const totalTime =
+        level.bladePuzzle
+            .timeLimit *
+        1000;
+
+
+    const remaining =
+        Math.max(
+            0,
+            bladeDeadline -
+            now
+        );
+
+
+    const progress =
+        1 -
+        (
+            remaining /
+            totalTime
+        );
+
+
+    updateBladeTimerDisplay(
+        remaining
+    );
+
+
+    /*
+        ========================================
+        BLADE LOWERS IN STAGES
+        ========================================
+    */
+
+    if (
+        progress >=
+        0.25
+    ) {
+
+        bladeOverlay.classList.add(
+            "stage-one"
+        );
+
+    }
+
+
+    if (
+        progress >=
+        0.50
+    ) {
+
+        bladeOverlay.classList.add(
+            "stage-two"
+        );
+
+    }
+
+
+    if (
+        progress >=
+        0.72
+    ) {
+
+        bladeOverlay.classList.add(
+            "stage-three"
+        );
+
+    }
+
+
+    /*
+        Half-way Elias dialogue.
+    */
+
+    if (
+        progress >= 0.50 &&
+        !bladeHalfwaySpoken
+    ) {
+
+        bladeHalfwaySpoken =
+            true;
+
+
+        if (
+            level.bladePuzzle
+                .curatorHalfway
+        ) {
+
+            curatorMessage.textContent =
+                level.bladePuzzle
+                    .curatorHalfway;
+
+
+            speakAsCurator(
+                level.bladePuzzle
+                    .curatorHalfway
+            );
+
+        }
+
+    }
+
+
+    /*
+        Panic begins in final portion.
+    */
+
+    if (
+        progress >=
+        0.75
+    ) {
+
+        bladeOverlay.classList.add(
+            "warning-stage"
+        );
+
+    }
+
+
+    /*
+        Final Elias warning.
+    */
+
+    if (
+        progress >= 0.82 &&
+        !bladeWarningSpoken
+    ) {
+
+        bladeWarningSpoken =
+            true;
+
+
+        if (
+            level.bladePuzzle
+                .curatorWarning
+        ) {
+
+            curatorMessage.textContent =
+                level.bladePuzzle
+                    .curatorWarning;
+
+
+            speakAsCurator(
+                level.bladePuzzle
+                    .curatorWarning
+            );
+
+        }
+
+    }
+
+
+    /*
+        Time expired.
+    */
+
+    if (
+        remaining <= 0
+    ) {
+
+        bladeFailure();
+
+    }
+}
+
+
+/*
+    ========================================
+    START LEVEL 5
+    ========================================
+*/
+
+async function startBladeLevel(
+    level
+) {
+
+    if (
+        !level ||
+        !level.bladePuzzle
+    ) {
+
+        return;
+    }
+
+
+    resetBladeState();
+
+
+    /*
+        Exit is locked until the
+        suspension system is secured.
+    */
+
+    choicesContainer
+        .querySelectorAll(
+            ".choice"
+        )
+        .forEach(
+            function (button) {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+
+    choicesContainer.classList.add(
+        "choices-locked"
+    );
+
+
+    /*
+        Reveal the captive scene.
+    */
+
+    bladeOverlay.classList.add(
+        "active"
+    );
+
+
+    bladeTimerDisplay.textContent =
+        "01:10";
+
+
+    bladeStatus.textContent =
+        "SUSPENSION SYSTEM ONLINE";
+
+
+    /*
+        Give the player a moment
+        to understand what they see.
+    */
+
+    await wait(
+        900
+    );
+
+
+    bladeStatus.textContent =
+        "EMERGENCY SHUTDOWN REQUIRED";
+
+
+    await wait(
+        700
+    );
+
+
+    /*
+        Timer starts now.
+    */
+
+    bladeRunning =
+        true;
+
+
+    bladeOverlay.classList.add(
+        "running"
+    );
+
+
+    bladeDeadline =
+        Date.now() +
+        (
+            level.bladePuzzle
+                .timeLimit *
+            1000
+        );
+
+
+    updateBladeTimer(
+        level
+    );
+
+
+    bladeTimer =
+        setInterval(
+            function () {
+
+                updateBladeTimer(
+                    level
+                );
+
+            },
+            100
+        );
+}
+
+
+/*
+    ========================================
+    LEVEL 5 INVESTIGATION BUTTONS
+    ========================================
+*/
+
+bladeInvestigationButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                investigateBladeObject(
+                    button
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/*
+    ========================================
+    LEVEL 5 CONTROL BUTTONS
+    ========================================
+*/
+
+bladeControlButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                submitBladeControl(
+                    button.dataset.control
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/*
+    ========================================
+    END LEVEL 5 ENGINE
+    ========================================
+*/
+    /*
         LEVEL PROGRESS
     */
 
