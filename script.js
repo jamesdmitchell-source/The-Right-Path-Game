@@ -5314,7 +5314,13 @@ async function bladeFailure() {
 
     bladeRunning =
         false;
+if (
+    typeof stopLevel5Hum ===
+    "function"
+) {
 
+    stopLevel5Hum();
+}
 
     if (
         bladeTimer
