@@ -1096,7 +1096,7 @@ const level5CinematicCaption =
 async function playLevel5Cinematic() {
 
     /*
-        Completely reset the cinematic.
+        Completely reset cinematic.
     */
 
     level5Cinematic.classList.remove(
@@ -1117,16 +1117,11 @@ async function playLevel5Cinematic() {
         "";
 
 
-    /*
-        Force the animation to restart
-        if Level 5 is retried.
-    */
-
     void level5Cinematic.offsetWidth;
 
 
     /*
-        Fade the chamber into view.
+        Fade chamber into view.
     */
 
     level5Cinematic.classList.add(
@@ -1140,13 +1135,21 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Woman struggles against
-        the restraints.
+        FIRST STRUGGLE
     */
 
     level5Cinematic.classList.add(
         "struggle"
     );
+
+
+    if (
+        typeof playLevel5StruggleSound ===
+        "function"
+    ) {
+
+        playLevel5StruggleSound();
+    }
 
 
     await wait(
@@ -1160,8 +1163,7 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Elias speaks while the player
-        is looking at the captive.
+        ELIAS — LINE 1
     */
 
     const lineOne =
@@ -1188,12 +1190,21 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Warning lights activate.
+        MACHINE ACTIVATES.
     */
 
     level5Cinematic.classList.add(
         "warning"
     );
+
+
+    if (
+        typeof playLevel5PowerupSound ===
+        "function"
+    ) {
+
+        playLevel5PowerupSound();
+    }
 
 
     const lineTwo =
@@ -1225,13 +1236,21 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Second struggle as the mechanism
-        above her becomes active.
+        SECOND STRUGGLE
     */
 
     level5Cinematic.classList.add(
         "struggle"
     );
+
+
+    if (
+        typeof playLevel5StruggleSound ===
+        "function"
+    ) {
+
+        playLevel5StruggleSound();
+    }
 
 
     await wait(
@@ -1243,6 +1262,10 @@ async function playLevel5Cinematic() {
         "struggle"
     );
 
+
+    /*
+        ELIAS — LINE 3
+    */
 
     const lineThree =
         "I thought it was time we changed that.";
@@ -1278,8 +1301,7 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Final warning before control
-        is handed to the player.
+        ELIAS — FINAL WARNING
     */
 
     const lineFour =
@@ -1316,7 +1338,7 @@ async function playLevel5Cinematic() {
 
 
     /*
-        Fade to black.
+        BLACKOUT.
     */
 
     level5CinematicCaption.classList.remove(
@@ -1333,10 +1355,6 @@ async function playLevel5Cinematic() {
         900
     );
 
-
-    /*
-        Remove cinematic.
-    */
 
     level5Cinematic.classList.add(
         "fade-out"
@@ -1356,7 +1374,6 @@ async function playLevel5Cinematic() {
         "fade-out"
     );
 }
-
 
 /*
     ========================================
