@@ -7350,7 +7350,20 @@ await wait(4500);
     startButton.addEventListener(
         "click",
         function () {
+  /*
+            Unlock Level 5 sounds while this
+            is still a genuine player tap.
 
+            Required for iPad / Safari.
+        */
+
+        if (
+            typeof unlockLevel5Audio ===
+            "function"
+        ) {
+
+            unlockLevel5Audio();
+        }
             startButton.disabled =
                 true;
 
