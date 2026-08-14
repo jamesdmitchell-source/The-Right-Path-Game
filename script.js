@@ -5324,9 +5324,7 @@ async function bladeFailure() {
 
 
     /*
-        ========================================
-        KILL THE NORMAL MACHINERY HUM
-        ========================================
+        Stop normal Level 5 hum.
     */
 
     if (
@@ -5339,7 +5337,7 @@ async function bladeFailure() {
 
 
     /*
-        Stop timer.
+        Stop countdown.
     */
 
     if (
@@ -5356,7 +5354,7 @@ async function bladeFailure() {
 
 
     /*
-        Player has lost control.
+        Disable all controls.
     */
 
     bladeControlButtons.forEach(
@@ -5387,26 +5385,18 @@ async function bladeFailure() {
         "RELEASE MECHANISM ACTIVATED";
 
 
-    bladeOverlay.classList.add(
-        "warning-stage",
-        "stage-three"
-    );
-
-
     /*
-        Give the player just enough time
-        to realise what has happened.
+        Give the player a fraction of
+        a second to see 00:00.
     */
 
     await wait(
-        650
+        550
     );
 
 
     /*
-        ========================================
-        FINAL RESTRAINT STRUGGLE
-        ========================================
+        Final restraint movement.
     */
 
     if (
@@ -5418,17 +5408,15 @@ async function bladeFailure() {
     }
 
 
-    bladeStatus.textContent =
-        "FAILSAFE DISENGAGED";
-
-
     await wait(
-        650
+        450
     );
 
 
     /*
-        Hide interactive puzzle.
+        ========================================
+        REMOVE PUZZLE VIEW
+        ========================================
     */
 
     bladeOverlay.classList.remove(
@@ -5438,7 +5426,7 @@ async function bladeFailure() {
 
     /*
         ========================================
-        CREATE DEATH CINEMATIC
+        CREATE BLACK DEATH SCREEN
         ========================================
     */
 
@@ -5468,14 +5456,12 @@ async function bladeFailure() {
 
         cinematic.innerHTML = `
 
-            <div class="blade-death-view">
+            <div
+                class="blade-death-black-screen"
+            >
 
                 <div
-                    class="blade-death-weapon"
-                ></div>
-
-                <div
-                    class="blade-death-blackout"
+                    class="blade-blood-splatter"
                 ></div>
 
             </div>
@@ -5490,12 +5476,12 @@ async function bladeFailure() {
 
 
     /*
-        Reset cinematic so Retry works.
+        Reset previous attempt.
     */
 
     cinematic.classList.remove(
-        "drop",
-        "blackout"
+        "splatter",
+        "fade-blood"
     );
 
 
@@ -5508,17 +5494,19 @@ async function bladeFailure() {
 
 
     /*
-        Silence before release.
+        ========================================
+        SILENCE
+        ========================================
     */
 
     await wait(
-        500
+        450
     );
 
 
     /*
         ========================================
-        MECHANISM RELEASE
+        RELEASE MECHANISM
         ========================================
     */
 
@@ -5532,28 +5520,7 @@ async function bladeFailure() {
 
 
     await wait(
-        350
-    );
-
-
-    /*
-        ========================================
-        BLADE DROPS
-        ========================================
-    */
-
-    cinematic.classList.add(
-        "drop"
-    );
-
-
-    /*
-        Allow the player to see it falling,
-        but cut away before impact.
-    */
-
-    await wait(
-        720
+        650
     );
 
 
@@ -5561,74 +5528,23 @@ async function bladeFailure() {
         ========================================
         SCREAM
         ========================================
+
+        This uses the persistent,
+        iPad-unlocked audio object.
     */
 
-    try {
-
-        const captiveScream =
-            new Audio(
-                "distant-scream.wav"
-            );
-
-
-        captiveScream.preload =
-            "auto";
-
-
-        captiveScream.volume =
-            1;
-
-
-        /*
-            Slightly higher pitch than the
-            earlier scream.
-        */
-
-        captiveScream.playbackRate =
-            1.25;
-
-
-        captiveScream.currentTime =
-            0;
-
-
-        const screamAttempt =
-            captiveScream.play();
-
-
-        if (
-            screamAttempt &&
-            typeof screamAttempt.catch ===
-            "function"
-        ) {
-
-            screamAttempt.catch(
-                function () {
-
-                    // Continue silently.
-
-                }
-            );
-        }
-
-    } catch (
-        error
+    if (
+        typeof playLevel5DeathScream ===
+        "function"
     ) {
 
-        // Continue cinematic.
-
+        playLevel5DeathScream();
     }
 
 
     /*
-        ========================================
-        HARD CUT TO BLACK
-        ========================================
-
-        Blackout happens almost immediately
-        after the scream begins.
-
-        Nothing graphic is shown.
+        Blood hits shortly after
+        the scream begins.
     */
 
     await wait(
@@ -5637,30 +5553,57 @@ async function bladeFailure() {
 
 
     cinematic.classList.add(
-        "blackout"
+        "splatter"
     );
 
 
     /*
-        Hold on darkness.
-
-        The scream has room to finish before
-        Elias speaks.
+        Hold the image while scream plays.
     */
 
     await wait(
-        1750
+        1200
     );
 
 
     /*
-        Remove cinematic while screen
-        remains visually dark.
+        Blood slowly disappears
+        back into darkness.
+    */
+
+    cinematic.classList.add(
+        "fade-blood"
+    );
+
+
+    await wait(
+        1300
+    );
+
+
+    /*
+        ========================================
+        PURE BLACK
+        ========================================
+    */
+
+    cinematic.classList.remove(
+        "splatter"
+    );
+
+
+    await wait(
+        600
+    );
+
+
+    /*
+        Remove cinematic.
     */
 
     cinematic.classList.remove(
         "active",
-        "drop"
+        "fade-blood"
     );
 
 
@@ -5684,22 +5627,14 @@ async function bladeFailure() {
 
 
     /*
-        Silence before Elias.
-
-        This makes his voice feel deliberately
-        detached from what just happened.
+        Elias deliberately waits until
+        everything has gone silent.
     */
 
     await wait(
         700
     );
 
-
-    /*
-        ========================================
-        ELIAS
-        ========================================
-    */
 
     if (
         level.death
@@ -5710,9 +5645,6 @@ async function bladeFailure() {
         );
     }
 }
-
-
-/*
     ========================================
     LEVEL 5 TIMER ENGINE
     ========================================
