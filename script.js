@@ -4770,7 +4770,13 @@ function updateBladeTimerDisplay(
 */
 
 function resetBladeState() {
+if (
+    typeof stopLevel5Hum ===
+    "function"
+) {
 
+    stopLevel5Hum();
+}
     bladeEntry =
         [];
 
