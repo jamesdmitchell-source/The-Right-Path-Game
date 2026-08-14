@@ -5794,11 +5794,6 @@ async function startBladeLevel(
     resetBladeState();
 
 
-    /*
-        Lock the exit until the puzzle
-        has been completed.
-    */
-
     choicesContainer
         .querySelectorAll(
             ".choice"
@@ -5818,12 +5813,6 @@ async function startBladeLevel(
     );
 
 
-    /*
-        Make absolutely sure the puzzle
-        scene is hidden before the
-        cinematic begins.
-    */
-
     bladeOverlay.classList.remove(
         "active",
         "running",
@@ -5837,7 +5826,7 @@ async function startBladeLevel(
 
     /*
         ========================================
-        LEVEL 5 OPENING CINEMATIC
+        OPENING CINEMATIC
         ========================================
     */
 
@@ -5846,8 +5835,7 @@ async function startBladeLevel(
 
     /*
         ========================================
-        CINEMATIC FINISHED
-        REVEAL THE PUZZLE
+        REVEAL PUZZLE
         ========================================
     */
 
@@ -5864,10 +5852,6 @@ async function startBladeLevel(
         "SUSPENSION SYSTEM ONLINE";
 
 
-    /*
-        Brief pause before the countdown.
-    */
-
     await wait(
         900
     );
@@ -5880,6 +5864,20 @@ async function startBladeLevel(
     await wait(
         650
     );
+
+
+    /*
+        Start machinery hum at exactly
+        the same moment as the timer.
+    */
+
+    if (
+        typeof startLevel5Hum ===
+        "function"
+    ) {
+
+        startLevel5Hum();
+    }
 
 
     /*
@@ -5923,9 +5921,6 @@ async function startBladeLevel(
             100
         );
 }
-
-
-/*
     ========================================
     LEVEL 5 INVESTIGATION BUTTONS
     ========================================
