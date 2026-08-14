@@ -4045,3 +4045,207 @@ blockquote {
             no-repeat !important;
     }
 }
+/* ========================================
+   LEVEL 5 — BLACKOUT DEATH CINEMATIC
+   ======================================== */
+
+.blade-death-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 8000;
+
+    display: none;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+.blade-death-cinematic.active {
+    display: block;
+}
+
+
+/* Completely black death view */
+
+.blade-death-black-screen {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+/* ========================================
+   BLOOD SPLATTER
+   ======================================== */
+
+.blade-blood-splatter {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: scale(1.12);
+
+    transition:
+        opacity 0.08s linear;
+}
+
+
+/*
+    Main splatter marks.
+*/
+
+.blade-blood-splatter::before {
+    content: "";
+
+    position: absolute;
+    inset: -10%;
+
+    background:
+
+        radial-gradient(
+            ellipse at 18% 26%,
+            rgba(145,0,0,0.95) 0 2%,
+            transparent 2.7%
+        ),
+
+        radial-gradient(
+            ellipse at 27% 39%,
+            rgba(125,0,0,0.92) 0 3%,
+            transparent 3.8%
+        ),
+
+        radial-gradient(
+            ellipse at 72% 22%,
+            rgba(150,0,0,0.9) 0 2.2%,
+            transparent 3%
+        ),
+
+        radial-gradient(
+            ellipse at 83% 47%,
+            rgba(110,0,0,0.95) 0 3.5%,
+            transparent 4.3%
+        ),
+
+        radial-gradient(
+            ellipse at 51% 58%,
+            rgba(155,0,0,0.95) 0 4%,
+            transparent 5%
+        ),
+
+        linear-gradient(
+            74deg,
+            transparent 0 34%,
+            rgba(125,0,0,0.9) 35% 36%,
+            transparent 37% 100%
+        ),
+
+        linear-gradient(
+            105deg,
+            transparent 0 57%,
+            rgba(150,0,0,0.82) 58% 59%,
+            transparent 60% 100%
+        );
+}
+
+
+/*
+    Long downward streaks.
+*/
+
+.blade-blood-splatter::after {
+    content: "";
+
+    position: absolute;
+
+    top: 14%;
+    left: 12%;
+    right: 12%;
+    bottom: -15%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent 8%,
+            rgba(120,0,0,0.92) 9%,
+            transparent 10%,
+
+            transparent 28%,
+            rgba(150,0,0,0.8) 29%,
+            transparent 30%,
+
+            transparent 51%,
+            rgba(105,0,0,0.88) 52%,
+            transparent 53%,
+
+            transparent 73%,
+            rgba(145,0,0,0.9) 74%,
+            transparent 75%,
+
+            transparent 89%,
+            rgba(100,0,0,0.8) 90%,
+            transparent 91%
+        );
+
+    filter:
+        blur(0.4px);
+
+    transform:
+        skewX(-7deg);
+}
+
+
+/*
+    Splatter hits screen.
+*/
+
+.blade-death-cinematic.splatter
+.blade-blood-splatter {
+
+    opacity: 1;
+
+    animation:
+        bladeBloodHit
+        0.22s
+        ease-out
+        forwards;
+}
+
+
+@keyframes bladeBloodHit {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(1.45);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1);
+    }
+}
+
+
+/*
+    Fade everything back into darkness.
+*/
+
+.blade-death-cinematic.fade-blood
+.blade-blood-splatter {
+
+    opacity: 0;
+
+    transition:
+        opacity 1.2s ease;
+}
