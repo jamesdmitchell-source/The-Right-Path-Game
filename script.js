@@ -5927,7 +5927,7 @@ async function startBladeLevel(
     );
 
 
-    bladeTimer =
+     bladeTimer =
         setInterval(
             function () {
 
@@ -5939,6 +5939,9 @@ async function startBladeLevel(
             100
         );
 }
+
+
+/*
     ========================================
     LEVEL 5 INVESTIGATION BUTTONS
     ========================================
