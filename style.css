@@ -3290,3 +3290,357 @@ blockquote {
             26px;
     }
 }
+/* ========================================
+   LEVEL 5 — CINEMATIC OPENING
+   ======================================== */
+
+.level5-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 6000;
+
+    display: none;
+
+    overflow: hidden;
+
+    background: #000;
+
+    opacity: 0;
+}
+
+.level5-cinematic.active {
+    display: block;
+
+    animation:
+        level5CinematicFadeIn
+        1.2s
+        forwards;
+}
+
+
+/* ========================================
+   CINEMATIC IMAGE
+   ======================================== */
+
+.level5-cinematic-image {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 108%;
+    height: 108%;
+
+    object-fit: cover;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    filter:
+        brightness(0.72)
+        contrast(1.14)
+        saturate(0.82);
+
+    will-change:
+        transform,
+        filter;
+}
+
+
+/*
+    Slow first-person camera movement.
+*/
+
+.level5-cinematic.active
+.level5-cinematic-image {
+
+    animation:
+        level5CameraPush
+        11s
+        ease-in-out
+        forwards;
+}
+
+
+@keyframes level5CameraPush {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.02);
+    }
+
+    30% {
+        transform:
+            translate(-49.5%, -50.3%)
+            scale(1.07);
+    }
+
+    60% {
+        transform:
+            translate(-50.4%, -49.7%)
+            scale(1.12);
+    }
+
+    100% {
+        transform:
+            translate(-50%, -47%)
+            scale(1.18);
+    }
+}
+
+
+/* ========================================
+   STRUGGLING / CAMERA JOLT
+   ======================================== */
+
+.level5-cinematic.struggle
+.level5-cinematic-image {
+
+    animation:
+        level5Struggle
+        0.16s
+        5
+        alternate;
+}
+
+
+@keyframes level5Struggle {
+
+    from {
+        transform:
+            translate(-50.5%, -49.8%)
+            scale(1.11)
+            rotate(-0.12deg);
+    }
+
+    to {
+        transform:
+            translate(-49.5%, -50.2%)
+            scale(1.11)
+            rotate(0.12deg);
+    }
+}
+
+
+/* ========================================
+   RED WARNING LIGHT
+   ======================================== */
+
+.level5-cinematic-redlight {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    pointer-events: none;
+
+    background:
+        rgba(110,0,0,0);
+
+    mix-blend-mode:
+        screen;
+}
+
+
+.level5-cinematic.warning
+.level5-cinematic-redlight {
+
+    animation:
+        level5RedPulse
+        1.1s
+        infinite;
+}
+
+
+@keyframes level5RedPulse {
+
+    0%,
+    100% {
+        background:
+            rgba(90,0,0,0.02);
+    }
+
+    50% {
+        background:
+            rgba(180,0,0,0.16);
+    }
+}
+
+
+/* ========================================
+   CINEMATIC VIGNETTE
+   ======================================== */
+
+.level5-cinematic-vignette {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0,0,0,0.25) 65%,
+            rgba(0,0,0,0.86) 100%
+        );
+
+    box-shadow:
+        inset 0 0 150px 35px
+        rgba(0,0,0,0.82);
+}
+
+
+/* ========================================
+   CINEMATIC TEXT
+   ======================================== */
+
+.level5-cinematic-caption {
+    position: absolute;
+
+    left: 50%;
+    bottom: 7vh;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 12;
+
+    width:
+        min(760px, 88vw);
+
+    padding:
+        14px 18px;
+
+    color:
+        #d0d0d0;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+
+    letter-spacing:
+        1px;
+
+    text-align:
+        center;
+
+    text-shadow:
+        0 2px 12px #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.6s ease;
+}
+
+
+.level5-cinematic-caption.visible {
+    opacity: 1;
+}
+
+
+/* ========================================
+   CINEMATIC BLACKOUT
+   ======================================== */
+
+.level5-cinematic-blackout {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    background: #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.75s ease;
+}
+
+
+.level5-cinematic.blackout
+.level5-cinematic-blackout {
+    opacity: 1;
+}
+
+
+/* ========================================
+   CINEMATIC EXIT
+   ======================================== */
+
+.level5-cinematic.fade-out {
+    animation:
+        level5CinematicFadeOut
+        0.8s
+        forwards;
+}
+
+
+@keyframes level5CinematicFadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes level5CinematicFadeOut {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+/* ========================================
+   MOBILE / IPAD
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .level5-cinematic-image {
+        width: 125%;
+        height: 110%;
+
+        object-position:
+            center center;
+    }
+
+    .level5-cinematic-caption {
+        bottom:
+            5vh;
+
+        font-size:
+            12px;
+
+        width:
+            92vw;
+    }
+
+    .level5-cinematic-vignette {
+        box-shadow:
+            inset 0 0 100px 25px
+            rgba(0,0,0,0.88);
+    }
+}
