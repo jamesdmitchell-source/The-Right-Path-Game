@@ -5636,7 +5636,7 @@ async function bladeFailure() {
     );
 
 
-    if (
+     if (
         level.death
     ) {
 
@@ -5645,6 +5645,9 @@ async function bladeFailure() {
         );
     }
 }
+
+
+/*
     ========================================
     LEVEL 5 TIMER ENGINE
     ========================================
