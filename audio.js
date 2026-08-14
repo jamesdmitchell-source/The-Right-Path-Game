@@ -248,6 +248,7 @@ function stopCorridorAmbience() {
 /*
     ========================================
     LEVEL 5 — AUDIO
+    IPAD / SAFARI SAFE VERSION
     ========================================
 */
 
@@ -260,6 +261,209 @@ let level5PowerupAudio =
 let level5HumAudio =
     null;
 
+let level5DeathScreamAudio =
+    null;
+
+
+/*
+    ========================================
+    CREATE LEVEL 5 AUDIO
+    ========================================
+*/
+
+function prepareLevel5Audio() {
+
+    if (
+        !level5StruggleAudio
+    ) {
+
+        level5StruggleAudio =
+            new Audio(
+                "restraint-struggle.mp3"
+            );
+
+        level5StruggleAudio.preload =
+            "auto";
+
+        level5StruggleAudio.volume =
+            0.8;
+    }
+
+
+    if (
+        !level5PowerupAudio
+    ) {
+
+        level5PowerupAudio =
+            new Audio(
+                "machine-powerup.mp3"
+            );
+
+        level5PowerupAudio.preload =
+            "auto";
+
+        level5PowerupAudio.volume =
+            0.75;
+    }
+
+
+    if (
+        !level5HumAudio
+    ) {
+
+        level5HumAudio =
+            new Audio(
+                "blade-hum.mp3"
+            );
+
+        level5HumAudio.preload =
+            "auto";
+
+        level5HumAudio.loop =
+            true;
+
+        level5HumAudio.volume =
+            0.28;
+    }
+
+
+    if (
+        !level5DeathScreamAudio
+    ) {
+
+        level5DeathScreamAudio =
+            new Audio(
+                "distant-scream.wav"
+            );
+
+        level5DeathScreamAudio.preload =
+            "auto";
+
+        level5DeathScreamAudio.volume =
+            1;
+
+        level5DeathScreamAudio.playbackRate =
+            1.25;
+    }
+}
+
+
+/*
+    ========================================
+    UNLOCK LEVEL 5 AUDIO
+    ========================================
+
+    IMPORTANT:
+
+    This must be called DIRECTLY from
+    the player's Begin Trial tap.
+
+    iPad Safari then sees these audio
+    objects as having been activated
+    by the player.
+*/
+
+function unlockLevel5Audio() {
+
+    prepareLevel5Audio();
+
+
+    const sounds = [
+
+        level5StruggleAudio,
+        level5PowerupAudio,
+        level5HumAudio,
+        level5DeathScreamAudio
+
+    ];
+
+
+    sounds.forEach(
+        function (sound) {
+
+            if (
+                !sound
+            ) {
+
+                return;
+            }
+
+
+            try {
+
+                const originalVolume =
+                    sound.volume;
+
+
+                sound.volume =
+                    0;
+
+
+                sound.currentTime =
+                    0;
+
+
+                const attempt =
+                    sound.play();
+
+
+                if (
+                    attempt &&
+                    typeof attempt.then ===
+                    "function"
+                ) {
+
+                    attempt
+                        .then(
+                            function () {
+
+                                sound.pause();
+
+                                sound.currentTime =
+                                    0;
+
+                                sound.volume =
+                                    originalVolume;
+
+                            }
+                        )
+                        .catch(
+                            function () {
+
+                                sound.pause();
+
+                                sound.currentTime =
+                                    0;
+
+                                sound.volume =
+                                    originalVolume;
+
+                            }
+                        );
+
+                } else {
+
+                    sound.pause();
+
+                    sound.currentTime =
+                        0;
+
+                    sound.volume =
+                        originalVolume;
+                }
+
+            } catch (
+                error
+            ) {
+
+                // Continue game normally.
+
+            }
+
+        }
+    );
+}
+
 
 /*
     ========================================
@@ -269,35 +473,18 @@ let level5HumAudio =
 
 function playLevel5StruggleSound() {
 
+    prepareLevel5Audio();
+
+
     try {
 
-        if (
-            level5StruggleAudio
-        ) {
-
-            level5StruggleAudio.pause();
-
-            level5StruggleAudio.currentTime =
-                0;
-        }
-
-
-        level5StruggleAudio =
-            new Audio(
-                "restraint-struggle.mp3"
-            );
-
-
-        level5StruggleAudio.preload =
-            "auto";
-
-
-        level5StruggleAudio.volume =
-            0.8;
-
+        level5StruggleAudio.pause();
 
         level5StruggleAudio.currentTime =
             0;
+
+        level5StruggleAudio.volume =
+            0.8;
 
 
         const attempt =
@@ -311,9 +498,12 @@ function playLevel5StruggleSound() {
         ) {
 
             attempt.catch(
-                function () {
+                function (error) {
 
-                    // Continue silently.
+                    console.log(
+                        "Level 5 struggle blocked:",
+                        error
+                    );
 
                 }
             );
@@ -324,9 +514,9 @@ function playLevel5StruggleSound() {
     ) {
 
         console.log(
-            "Level 5 struggle audio unavailable."
+            "Level 5 struggle unavailable.",
+            error
         );
-
     }
 }
 
@@ -339,35 +529,18 @@ function playLevel5StruggleSound() {
 
 function playLevel5PowerupSound() {
 
+    prepareLevel5Audio();
+
+
     try {
 
-        if (
-            level5PowerupAudio
-        ) {
-
-            level5PowerupAudio.pause();
-
-            level5PowerupAudio.currentTime =
-                0;
-        }
-
-
-        level5PowerupAudio =
-            new Audio(
-                "machine-powerup.mp3"
-            );
-
-
-        level5PowerupAudio.preload =
-            "auto";
-
-
-        level5PowerupAudio.volume =
-            0.75;
-
+        level5PowerupAudio.pause();
 
         level5PowerupAudio.currentTime =
             0;
+
+        level5PowerupAudio.volume =
+            0.75;
 
 
         const attempt =
@@ -381,9 +554,12 @@ function playLevel5PowerupSound() {
         ) {
 
             attempt.catch(
-                function () {
+                function (error) {
 
-                    // Continue silently.
+                    console.log(
+                        "Level 5 power-up blocked:",
+                        error
+                    );
 
                 }
             );
@@ -394,9 +570,9 @@ function playLevel5PowerupSound() {
     ) {
 
         console.log(
-            "Level 5 power-up audio unavailable."
+            "Level 5 power-up unavailable.",
+            error
         );
-
     }
 }
 
@@ -409,33 +585,21 @@ function playLevel5PowerupSound() {
 
 function startLevel5Hum() {
 
+    prepareLevel5Audio();
+
+
     try {
 
-        if (
-            !level5HumAudio
-        ) {
-
-            level5HumAudio =
-                new Audio(
-                    "blade-hum.mp3"
-                );
-
-
-            level5HumAudio.preload =
-                "auto";
-
-
-            level5HumAudio.loop =
-                true;
-
-
-            level5HumAudio.volume =
-                0.28;
-        }
-
+        level5HumAudio.pause();
 
         level5HumAudio.currentTime =
             0;
+
+        level5HumAudio.volume =
+            0.28;
+
+        level5HumAudio.loop =
+            true;
 
 
         const attempt =
@@ -449,9 +613,12 @@ function startLevel5Hum() {
         ) {
 
             attempt.catch(
-                function () {
+                function (error) {
 
-                    // Continue silently.
+                    console.log(
+                        "Level 5 hum blocked:",
+                        error
+                    );
 
                 }
             );
@@ -462,9 +629,9 @@ function startLevel5Hum() {
     ) {
 
         console.log(
-            "Level 5 hum unavailable."
+            "Level 5 hum unavailable.",
+            error
         );
-
     }
 }
 
@@ -492,6 +659,65 @@ function stopLevel5Hum() {
 
         // Ignore.
 
+    }
+}
+
+
+/*
+    ========================================
+    LEVEL 5 DEATH SCREAM
+    ========================================
+*/
+
+function playLevel5DeathScream() {
+
+    prepareLevel5Audio();
+
+
+    try {
+
+        level5DeathScreamAudio.pause();
+
+        level5DeathScreamAudio.currentTime =
+            0;
+
+        level5DeathScreamAudio.volume =
+            1;
+
+        level5DeathScreamAudio.playbackRate =
+            1.25;
+
+
+        const attempt =
+            level5DeathScreamAudio.play();
+
+
+        if (
+            attempt &&
+            typeof attempt.catch ===
+            "function"
+        ) {
+
+            attempt.catch(
+                function (error) {
+
+                    console.log(
+                        "Level 5 scream blocked:",
+                        error
+                    );
+
+                }
+            );
+        }
+
+    } catch (
+        error
+    ) {
+
+        console.log(
+            "Level 5 scream unavailable.",
+            error
+        );
     }
 }
 
