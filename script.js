@@ -5318,15 +5318,29 @@ async function bladeFailure() {
     bladeFailureRunning =
         true;
 
+
     bladeRunning =
         false;
-if (
-    typeof stopLevel5Hum ===
-    "function"
-) {
 
-    stopLevel5Hum();
-}
+
+    /*
+        ========================================
+        KILL THE NORMAL MACHINERY HUM
+        ========================================
+    */
+
+    if (
+        typeof stopLevel5Hum ===
+        "function"
+    ) {
+
+        stopLevel5Hum();
+    }
+
+
+    /*
+        Stop timer.
+    */
 
     if (
         bladeTimer
@@ -5340,6 +5354,10 @@ if (
             null;
     }
 
+
+    /*
+        Player has lost control.
+    */
 
     bladeControlButtons.forEach(
         function (button) {
@@ -5375,13 +5393,42 @@ if (
     );
 
 
+    /*
+        Give the player just enough time
+        to realise what has happened.
+    */
+
     await wait(
-        500
+        650
     );
 
 
     /*
-        Hide normal puzzle view.
+        ========================================
+        FINAL RESTRAINT STRUGGLE
+        ========================================
+    */
+
+    if (
+        typeof playLevel5StruggleSound ===
+        "function"
+    ) {
+
+        playLevel5StruggleSound();
+    }
+
+
+    bladeStatus.textContent =
+        "FAILSAFE DISENGAGED";
+
+
+    await wait(
+        650
+    );
+
+
+    /*
+        Hide interactive puzzle.
     */
 
     bladeOverlay.classList.remove(
@@ -5439,9 +5486,12 @@ if (
         document.body.appendChild(
             cinematic
         );
-
     }
 
+
+    /*
+        Reset cinematic so Retry works.
+    */
 
     cinematic.classList.remove(
         "drop",
@@ -5449,18 +5499,47 @@ if (
     );
 
 
+    void cinematic.offsetWidth;
+
+
     cinematic.classList.add(
         "active"
     );
 
 
+    /*
+        Silence before release.
+    */
+
     await wait(
-        300
+        500
     );
 
 
     /*
-        Blade releases.
+        ========================================
+        MECHANISM RELEASE
+        ========================================
+    */
+
+    if (
+        typeof playLevel5PowerupSound ===
+        "function"
+    ) {
+
+        playLevel5PowerupSound();
+    }
+
+
+    await wait(
+        350
+    );
+
+
+    /*
+        ========================================
+        BLADE DROPS
+        ========================================
     */
 
     cinematic.classList.add(
@@ -5469,17 +5548,19 @@ if (
 
 
     /*
-        Cut away BEFORE impact.
+        Allow the player to see it falling,
+        but cut away before impact.
     */
 
     await wait(
-        850
+        720
     );
 
 
     /*
-        High-pitched version of the
-        existing scream.
+        ========================================
+        SCREAM
+        ========================================
     */
 
     try {
@@ -5498,8 +5579,13 @@ if (
             1;
 
 
+        /*
+            Slightly higher pitch than the
+            earlier scream.
+        */
+
         captiveScream.playbackRate =
-            1.22;
+            1.25;
 
 
         captiveScream.currentTime =
@@ -5519,36 +5605,58 @@ if (
             screamAttempt.catch(
                 function () {
 
-                    // Continue without audio.
+                    // Continue silently.
 
                 }
             );
-
         }
 
     } catch (
         error
     ) {
 
-        // Continue without audio.
+        // Continue cinematic.
 
     }
 
 
     /*
-        Instant blackout before
-        anything graphic is shown.
+        ========================================
+        HARD CUT TO BLACK
+        ========================================
+
+        Blackout happens almost immediately
+        after the scream begins.
+
+        Nothing graphic is shown.
     */
+
+    await wait(
+        120
+    );
+
 
     cinematic.classList.add(
         "blackout"
     );
 
 
+    /*
+        Hold on darkness.
+
+        The scream has room to finish before
+        Elias speaks.
+    */
+
     await wait(
-        1300
+        1750
     );
 
+
+    /*
+        Remove cinematic while screen
+        remains visually dark.
+    */
 
     cinematic.classList.remove(
         "active",
@@ -5557,7 +5665,9 @@ if (
 
 
     /*
-        Death screen.
+        ========================================
+        DEATH SCREEN
+        ========================================
     */
 
     deathMessage.textContent =
@@ -5574,14 +5684,22 @@ if (
 
 
     /*
-        Elias waits until after the
-        scream and blackout.
+        Silence before Elias.
+
+        This makes his voice feel deliberately
+        detached from what just happened.
     */
 
     await wait(
-        500
+        700
     );
 
+
+    /*
+        ========================================
+        ELIAS
+        ========================================
+    */
 
     if (
         level.death
@@ -5590,7 +5708,6 @@ if (
         await speakAsCurator(
             level.death
         );
-
     }
 }
 
