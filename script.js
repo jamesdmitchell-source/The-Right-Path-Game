@@ -1029,6 +1029,341 @@ bladeInvestigationButtons =
     ========================================
 */
     /*
+    ========================================
+    LEVEL 5 — CINEMATIC OPENING UI
+    ========================================
+*/
+
+const level5Cinematic =
+    document.createElement(
+        "div"
+    );
+
+
+level5Cinematic.id =
+    "level5Cinematic";
+
+
+level5Cinematic.className =
+    "level5-cinematic";
+
+
+level5Cinematic.innerHTML = `
+
+    <img
+        class="level5-cinematic-image"
+        src="level5-captive.png"
+        alt=""
+    >
+
+    <div
+        class="level5-cinematic-redlight"
+    ></div>
+
+    <div
+        class="level5-cinematic-vignette"
+    ></div>
+
+    <div
+        id="level5CinematicCaption"
+        class="level5-cinematic-caption"
+    ></div>
+
+    <div
+        class="level5-cinematic-blackout"
+    ></div>
+
+`;
+
+
+document.body.appendChild(
+    level5Cinematic
+);
+
+
+const level5CinematicCaption =
+    document.getElementById(
+        "level5CinematicCaption"
+    );
+
+
+/*
+    ========================================
+    PLAY LEVEL 5 CINEMATIC
+    ========================================
+*/
+
+async function playLevel5Cinematic() {
+
+    /*
+        Completely reset the cinematic.
+    */
+
+    level5Cinematic.classList.remove(
+        "active",
+        "warning",
+        "struggle",
+        "blackout",
+        "fade-out"
+    );
+
+
+    level5CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    level5CinematicCaption.textContent =
+        "";
+
+
+    /*
+        Force the animation to restart
+        if Level 5 is retried.
+    */
+
+    void level5Cinematic.offsetWidth;
+
+
+    /*
+        Fade the chamber into view.
+    */
+
+    level5Cinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        1500
+    );
+
+
+    /*
+        Woman struggles against
+        the restraints.
+    */
+
+    level5Cinematic.classList.add(
+        "struggle"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    level5Cinematic.classList.remove(
+        "struggle"
+    );
+
+
+    /*
+        Elias speaks while the player
+        is looking at the captive.
+    */
+
+    const lineOne =
+        "Look at her, Subject 28.";
+
+
+    level5CinematicCaption.textContent =
+        lineOne;
+
+
+    level5CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        lineOne
+    );
+
+
+    await wait(
+        350
+    );
+
+
+    /*
+        Warning lights activate.
+    */
+
+    level5Cinematic.classList.add(
+        "warning"
+    );
+
+
+    const lineTwo =
+        "Until now, your mistakes have only endangered you.";
+
+
+    level5CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        300
+    );
+
+
+    level5CinematicCaption.textContent =
+        lineTwo;
+
+
+    level5CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        lineTwo
+    );
+
+
+    /*
+        Second struggle as the mechanism
+        above her becomes active.
+    */
+
+    level5Cinematic.classList.add(
+        "struggle"
+    );
+
+
+    await wait(
+        700
+    );
+
+
+    level5Cinematic.classList.remove(
+        "struggle"
+    );
+
+
+    const lineThree =
+        "I thought it was time we changed that.";
+
+
+    level5CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        300
+    );
+
+
+    level5CinematicCaption.textContent =
+        lineThree;
+
+
+    level5CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        lineThree
+    );
+
+
+    await wait(
+        450
+    );
+
+
+    /*
+        Final warning before control
+        is handed to the player.
+    */
+
+    const lineFour =
+        "Her life now depends on what you do next.";
+
+
+    level5CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        300
+    );
+
+
+    level5CinematicCaption.textContent =
+        lineFour;
+
+
+    level5CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        lineFour
+    );
+
+
+    await wait(
+        500
+    );
+
+
+    /*
+        Fade to black.
+    */
+
+    level5CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    level5Cinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    /*
+        Remove cinematic.
+    */
+
+    level5Cinematic.classList.add(
+        "fade-out"
+    );
+
+
+    await wait(
+        800
+    );
+
+
+    level5Cinematic.classList.remove(
+        "active",
+        "warning",
+        "struggle",
+        "blackout",
+        "fade-out"
+    );
+}
+
+
+/*
+    ========================================
+    END LEVEL 5 CINEMATIC
+    ========================================
+*/
+    /*
         KEYPAD OVERLAY
     */
 
