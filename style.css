@@ -3843,3 +3843,205 @@ blockquote {
         z-index: 40 !important;
     }
 }
+/* ========================================
+   LEVEL 5 — REALISTIC DEATH CINEMATIC
+   ======================================== */
+
+
+/*
+    Replace the old abstract death view
+    with the real Level 5 chamber.
+*/
+
+.blade-death-view {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.12),
+            rgba(0,0,0,0.32)
+        ),
+        url("level5-captive.png")
+        center center / cover
+        no-repeat !important;
+}
+
+
+/*
+    Slow push toward the captive when
+    the failure cinematic appears.
+*/
+
+.blade-death-cinematic.active
+.blade-death-view {
+
+    animation:
+        bladeDeathCameraPush
+        2.2s
+        ease-in
+        forwards;
+}
+
+
+@keyframes bladeDeathCameraPush {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    55% {
+        transform:
+            scale(1.045);
+    }
+
+    100% {
+        transform:
+            scale(1.10);
+    }
+}
+
+
+/*
+    Warning-light atmosphere.
+*/
+
+.blade-death-view::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    background:
+        rgba(120,0,0,0);
+
+    animation:
+        bladeDeathEmergencyPulse
+        0.55s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes bladeDeathEmergencyPulse {
+
+    0%,
+    100% {
+        background:
+            rgba(90,0,0,0.03);
+    }
+
+    50% {
+        background:
+            rgba(170,0,0,0.18);
+    }
+}
+
+
+/*
+    Dark vignette keeps the player's
+    attention on the centre of the room.
+*/
+
+.blade-death-view::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 6;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 30%,
+            rgba(0,0,0,0.18) 55%,
+            rgba(0,0,0,0.78) 100%
+        );
+}
+
+
+/*
+    Keep the dropping blade above the
+    photographic chamber.
+*/
+
+.blade-death-weapon {
+    z-index: 15 !important;
+}
+
+
+/*
+    Slight shake as the release mechanism
+    fires.
+*/
+
+.blade-death-cinematic.drop
+.blade-death-view {
+
+    animation:
+        bladeDeathFinalShake
+        0.11s
+        infinite alternate;
+}
+
+
+@keyframes bladeDeathFinalShake {
+
+    from {
+        transform:
+            scale(1.08)
+            translate(-2px, 1px);
+    }
+
+    to {
+        transform:
+            scale(1.085)
+            translate(2px, -1px);
+    }
+}
+
+
+/*
+    Blackout MUST remain above absolutely
+    everything.
+
+    The player never sees impact.
+*/
+
+.blade-death-blackout {
+    z-index: 100 !important;
+
+    background:
+        #000 !important;
+}
+
+
+/*
+    ========================================
+    MOBILE / IPAD
+    ========================================
+*/
+
+@media (max-width: 760px) {
+
+    .blade-death-view {
+        background:
+            linear-gradient(
+                rgba(0,0,0,0.10),
+                rgba(0,0,0,0.28)
+            ),
+            url("level5-captive.png")
+            center top / cover
+            no-repeat !important;
+    }
+}
