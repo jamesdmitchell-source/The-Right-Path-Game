@@ -5768,12 +5768,18 @@ async function startBladeLevel(
     }
 
 
+    /*
+        ========================================
+        RESET LEVEL 5
+        ========================================
+    */
+
     resetBladeState();
 
 
     /*
-        Exit is locked until the
-        suspension system is secured.
+        Lock the exit until the puzzle
+        has been completed.
     */
 
     choicesContainer
@@ -5796,7 +5802,36 @@ async function startBladeLevel(
 
 
     /*
-        Reveal the captive scene.
+        Make absolutely sure the puzzle
+        scene is hidden before the
+        cinematic begins.
+    */
+
+    bladeOverlay.classList.remove(
+        "active",
+        "running",
+        "warning-stage",
+        "stage-one",
+        "stage-two",
+        "stage-three",
+        "secured"
+    );
+
+
+    /*
+        ========================================
+        LEVEL 5 OPENING CINEMATIC
+        ========================================
+    */
+
+    await playLevel5Cinematic();
+
+
+    /*
+        ========================================
+        CINEMATIC FINISHED
+        REVEAL THE PUZZLE
+        ========================================
     */
 
     bladeOverlay.classList.add(
@@ -5813,8 +5848,7 @@ async function startBladeLevel(
 
 
     /*
-        Give the player a moment
-        to understand what they see.
+        Brief pause before the countdown.
     */
 
     await wait(
@@ -5827,12 +5861,14 @@ async function startBladeLevel(
 
 
     await wait(
-        700
+        650
     );
 
 
     /*
-        Timer starts now.
+        ========================================
+        START TIMER
+        ========================================
     */
 
     bladeRunning =
