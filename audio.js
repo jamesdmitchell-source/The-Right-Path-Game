@@ -391,12 +391,15 @@ function unlockLevel5Audio() {
 
             try {
 
-                const originalVolume =
-                    sound.volume;
+                /*
+                    Use the actual muted property
+                    rather than volume = 0.
 
+                    This is much safer on iPad.
+                */
 
-                sound.volume =
-                    0;
+                sound.muted =
+                    true;
 
 
                 sound.currentTime =
@@ -417,13 +420,25 @@ function unlockLevel5Audio() {
                         .then(
                             function () {
 
-                                sound.pause();
+                                /*
+                                    Let Safari register
+                                    the playback first.
+                                */
 
-                                sound.currentTime =
-                                    0;
+                                setTimeout(
+                                    function () {
 
-                                sound.volume =
-                                    originalVolume;
+                                        sound.pause();
+
+                                        sound.currentTime =
+                                            0;
+
+                                        sound.muted =
+                                            false;
+
+                                    },
+                                    250
+                                );
 
                             }
                         )
@@ -435,21 +450,12 @@ function unlockLevel5Audio() {
                                 sound.currentTime =
                                     0;
 
-                                sound.volume =
-                                    originalVolume;
+                                sound.muted =
+                                    false;
 
                             }
                         );
 
-                } else {
-
-                    sound.pause();
-
-                    sound.currentTime =
-                        0;
-
-                    sound.volume =
-                        originalVolume;
                 }
 
             } catch (
@@ -463,8 +469,6 @@ function unlockLevel5Audio() {
         }
     );
 }
-
-
 /*
     ========================================
     RESTRAINT STRUGGLE
