@@ -4649,3 +4649,197 @@ blockquote {
             center center;
     }
 }
+/* ========================================
+   ELIAS — SURVEILLANCE ROOM CINEMATIC
+   ======================================== */
+
+.elias-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9000;
+
+    background: #000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+
+.elias-cinematic.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.elias-cinematic-camera {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+}
+
+
+.elias-cinematic-image {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center center;
+
+    transform:
+        scale(1.03);
+
+    filter:
+        brightness(0.72)
+        contrast(1.12);
+
+    transition:
+        transform 8s ease-out,
+        filter 3s ease;
+}
+
+
+/*
+    Slow camera push towards Elias.
+*/
+
+.elias-cinematic.camera-move
+.elias-cinematic-image {
+
+    transform:
+        scale(1.12);
+
+    filter:
+        brightness(0.8)
+        contrast(1.16);
+}
+
+
+/*
+    Very subtle monitor illumination.
+*/
+
+.elias-monitor-flicker {
+    position: absolute;
+    inset: 0;
+
+    background:
+        rgba(
+            180,
+            220,
+            225,
+            0.025
+        );
+
+    mix-blend-mode:
+        screen;
+
+    opacity: 0.25;
+
+    animation:
+        eliasMonitorFlicker
+        4.8s
+        infinite;
+}
+
+
+@keyframes eliasMonitorFlicker {
+
+    0%,
+    18%,
+    21%,
+    63%,
+    66%,
+    100% {
+        opacity: 0.18;
+    }
+
+    19% {
+        opacity: 0.42;
+    }
+
+    20% {
+        opacity: 0.08;
+    }
+
+    64% {
+        opacity: 0.34;
+    }
+
+    65% {
+        opacity: 0.12;
+    }
+}
+
+
+/*
+    Cinematic dark edges.
+*/
+
+.elias-cinematic-vignette {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(0, 0, 0, 0.35) 68%,
+            rgba(0, 0, 0, 0.92) 100%
+        );
+}
+
+
+/*
+    Final blackout.
+*/
+
+.elias-cinematic-blackout {
+    position: absolute;
+    inset: 0;
+
+    background: #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.1s ease;
+}
+
+
+.elias-cinematic.blackout
+.elias-cinematic-blackout {
+
+    opacity: 1;
+}
+
+
+/*
+    IPAD
+*/
+
+@media (max-width: 760px) {
+
+    .elias-cinematic-image {
+
+        /*
+            Keep Elias centred when the
+            widescreen artwork is cropped.
+        */
+
+        object-position:
+            center center;
+    }
+}
