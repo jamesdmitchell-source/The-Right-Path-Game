@@ -7487,7 +7487,30 @@ retryButton.addEventListener(
 continueButton.addEventListener(
     "click",
     async function () {
+    /*
+            ========================================
+            PREPARE LEVEL 5 AUDIO ON IPAD
+            ========================================
 
+            If the NEXT room is Level 5, unlock
+            its sounds from this genuine player tap.
+        */
+
+        const upcomingLevel =
+            levels[
+                currentLevelIndex + 1
+            ];
+
+
+        if (
+            upcomingLevel &&
+            upcomingLevel.bladePuzzle &&
+            typeof unlockLevel5Audio ===
+                "function"
+        ) {
+
+            unlockLevel5Audio();
+        }
         continueButton.disabled =
             true;
 
