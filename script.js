@@ -1092,7 +1092,135 @@ const level5CinematicCaption =
     PLAY LEVEL 5 CINEMATIC
     ========================================
 */
+/*
+    ========================================
+    ELIAS REVEAL CINEMATIC
+    AFTER LEVEL 5
+    ========================================
+*/
 
+const eliasCinematic =
+    document.createElement(
+        "div"
+    );
+
+
+eliasCinematic.id =
+    "eliasCinematic";
+
+
+eliasCinematic.className =
+    "elias-cinematic";
+
+
+eliasCinematic.innerHTML = `
+
+    <div class="elias-cinematic-camera">
+
+        <img
+            class="elias-cinematic-image"
+            src="elias-surveillance-room.png"
+            alt=""
+        >
+
+        <div
+            class="elias-monitor-flicker"
+        ></div>
+
+        <div
+            class="elias-cinematic-vignette"
+        ></div>
+
+    </div>
+
+    <div
+        class="elias-cinematic-blackout"
+    ></div>
+
+`;
+
+
+document.body.appendChild(
+    eliasCinematic
+);
+
+
+/*
+    ========================================
+    PLAY ELIAS REVEAL CINEMATIC
+    ========================================
+*/
+
+async function playEliasRevealCinematic() {
+
+    eliasCinematic.classList.remove(
+        "active",
+        "camera-move",
+        "blackout"
+    );
+
+
+    /*
+        Restart animation cleanly.
+    */
+
+    void eliasCinematic.offsetWidth;
+
+
+    eliasCinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        700
+    );
+
+
+    /*
+        Slow movement towards Elias.
+    */
+
+    eliasCinematic.classList.add(
+        "camera-move"
+    );
+
+
+    /*
+        For Stage 1 we simply hold
+        on Elias for several seconds.
+
+        Dialogue comes next.
+    */
+
+    await wait(
+        6500
+    );
+
+
+    eliasCinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        1200
+    );
+
+
+    eliasCinematic.classList.remove(
+        "active",
+        "camera-move",
+        "blackout"
+    );
+}
+
+
+/*
+    ========================================
+    END ELIAS REVEAL CINEMATIC
+    ========================================
+*/
 async function playLevel5Cinematic() {
 
     /*
