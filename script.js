@@ -7282,14 +7282,12 @@ await wait(4500);
         BEGIN TRIAL
     */
 
-    startButton.addEventListener(
-        "click",
-        function () {
-  /*
-          
-            startButton.disabled =
-                true;
+  startButton.addEventListener(
+    "click",
+    function () {
 
+        startButton.disabled =
+            true;
 
             try {
 
