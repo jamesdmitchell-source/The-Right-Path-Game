@@ -1161,11 +1161,55 @@ async function playEliasRevealCinematic() {
 
 
     /*
-        Restart animation cleanly.
+        Create subtitle box if it
+        does not already exist.
     */
+
+    let subtitle =
+        document.getElementById(
+            "eliasCinematicSubtitle"
+        );
+
+
+    if (
+        !subtitle
+    ) {
+
+        subtitle =
+            document.createElement(
+                "div"
+            );
+
+
+        subtitle.id =
+            "eliasCinematicSubtitle";
+
+
+        subtitle.className =
+            "elias-cinematic-subtitle";
+
+
+        eliasCinematic.appendChild(
+            subtitle
+        );
+    }
+
+
+    subtitle.textContent =
+        "";
+
+
+    subtitle.classList.remove(
+        "visible"
+    );
+
 
     void eliasCinematic.offsetWidth;
 
+
+    /*
+        Fade into surveillance room.
+    */
 
     eliasCinematic.classList.add(
         "active"
@@ -1173,13 +1217,9 @@ async function playEliasRevealCinematic() {
 
 
     await wait(
-        700
+        900
     );
 
-
-    /*
-        Slow movement towards Elias.
-    */
 
     eliasCinematic.classList.add(
         "camera-move"
@@ -1187,16 +1227,114 @@ async function playEliasRevealCinematic() {
 
 
     /*
-        For Stage 1 we simply hold
-        on Elias for several seconds.
-
-        Dialogue comes next.
+        ========================================
+        ELIAS DIALOGUE
+        ========================================
     */
 
-    await wait(
-        6500
+    const lines = [
+
+        "You must be wondering why I brought you here.",
+
+        "I've been watching you for quite some time.",
+
+        "Leaving home. Going to work. Following the same routines.",
+
+        "You never noticed me.",
+
+        "After Anna died... I thought about taking my own life.",
+
+        "I asked God why He had left me here when He had taken her.",
+
+        "And eventually... I understood.",
+
+        "He had given me purpose.",
+
+        "A reason to live.",
+
+        "To test people.",
+
+        "People who make choices without thought for who suffers because of them.",
+
+        "People like you...",
+
+        "Twenty-eight.",
+
+        "God gave you free will. I merely provide the consequences."
+
+    ];
+
+
+    for (
+        const line
+        of lines
+    ) {
+
+        subtitle.classList.remove(
+            "visible"
+        );
+
+
+        await wait(
+            250
+        );
+
+
+        subtitle.textContent =
+            line;
+
+
+        subtitle.classList.add(
+            "visible"
+        );
+
+
+        await speakAsCurator(
+            line
+        );
+
+
+        /*
+            Slightly longer pauses after
+            the most important revelations.
+        */
+
+        if (
+            line.includes(
+                "Anna died"
+            ) ||
+            line ===
+                "He had given me purpose." ||
+            line ===
+                "Twenty-eight."
+        ) {
+
+            await wait(
+                800
+            );
+
+        } else {
+
+            await wait(
+                300
+            );
+        }
+    }
+
+
+    subtitle.classList.remove(
+        "visible"
     );
 
+
+    await wait(
+        500
+    );
+
+
+    /*
+        Cut to black.
+    */
 
     eliasCinematic.classList.add(
         "blackout"
@@ -1204,7 +1342,7 @@ async function playEliasRevealCinematic() {
 
 
     await wait(
-        1200
+        1400
     );
 
 
@@ -1214,7 +1352,6 @@ async function playEliasRevealCinematic() {
         "blackout"
     );
 }
-
 
 /*
     ========================================
