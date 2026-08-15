@@ -7672,22 +7672,41 @@ continueButton.addEventListener(
             Subject 28 moves onward.
         */
 
-        successScreen.classList.remove(
-            "active"
-        );
+       successScreen.classList.remove(
+    "active"
+);
 
 
-        await playCorridorSequence();
+/*
+    ========================================
+    ELIAS CINEMATIC AFTER LEVEL 5
+    ========================================
+*/
+
+if (
+    levels[
+        currentLevelIndex
+    ] &&
+    levels[
+        currentLevelIndex
+    ].number === 5
+) {
+
+    await playEliasRevealCinematic();
+}
 
 
-        /*
-            ========================================
-            MOVE TO NEXT LEVEL
-            ========================================
-        */
+await playCorridorSequence();
 
-        currentLevelIndex +=
-            1;
+
+/*
+    ========================================
+    MOVE TO NEXT LEVEL
+    ========================================
+*/
+
+currentLevelIndex +=
+    1;
 
 
         /*
