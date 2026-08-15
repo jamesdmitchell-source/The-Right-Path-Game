@@ -4249,3 +4249,264 @@ blockquote {
     transition:
         opacity 1.2s ease;
 }
+/* ========================================
+   LEVEL 5 — ORGANIC BLOOD SPLASH OVERRIDE
+   ======================================== */
+
+.blade-blood-splatter {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    transform: scale(1.08);
+
+    transition:
+        opacity 0.08s linear;
+}
+
+
+/*
+    Large irregular splash mass
+*/
+
+.blade-blood-splatter::before {
+    content: "";
+
+    position: absolute;
+
+    width: 78vw;
+    height: 78vw;
+
+    max-width: 920px;
+    max-height: 920px;
+
+    left: 50%;
+    top: 46%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-8deg);
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 48%,
+            rgba(130, 0, 0, 0.98) 0 16%,
+            rgba(115, 0, 0, 0.94) 17% 23%,
+            transparent 24%
+        ),
+
+        radial-gradient(
+            ellipse at 35% 43%,
+            rgba(150, 0, 0, 0.96) 0 8%,
+            transparent 9%
+        ),
+
+        radial-gradient(
+            ellipse at 65% 40%,
+            rgba(105, 0, 0, 0.96) 0 7%,
+            transparent 8%
+        ),
+
+        radial-gradient(
+            ellipse at 44% 65%,
+            rgba(145, 0, 0, 0.92) 0 10%,
+            transparent 11%
+        ),
+
+        radial-gradient(
+            ellipse at 71% 62%,
+            rgba(120, 0, 0, 0.9) 0 6%,
+            transparent 7%
+        ),
+
+        radial-gradient(
+            ellipse at 25% 67%,
+            rgba(110, 0, 0, 0.9) 0 5%,
+            transparent 6%
+        );
+
+    filter:
+        blur(0.6px);
+}
+
+
+/*
+    Fine spray and droplets
+*/
+
+.blade-blood-splatter::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(130,0,0,0.9) 0 0.7%,
+            transparent 0.9%
+        ),
+
+        radial-gradient(
+            circle at 21% 34%,
+            rgba(145,0,0,0.85) 0 0.5%,
+            transparent 0.7%
+        ),
+
+        radial-gradient(
+            circle at 31% 19%,
+            rgba(110,0,0,0.9) 0 0.8%,
+            transparent 1%
+        ),
+
+        radial-gradient(
+            circle at 42% 27%,
+            rgba(150,0,0,0.85) 0 0.4%,
+            transparent 0.6%
+        ),
+
+        radial-gradient(
+            circle at 61% 16%,
+            rgba(115,0,0,0.9) 0 0.7%,
+            transparent 0.9%
+        ),
+
+        radial-gradient(
+            circle at 74% 30%,
+            rgba(145,0,0,0.9) 0 0.6%,
+            transparent 0.8%
+        ),
+
+        radial-gradient(
+            circle at 86% 24%,
+            rgba(105,0,0,0.88) 0 0.7%,
+            transparent 0.9%
+        ),
+
+        radial-gradient(
+            circle at 15% 58%,
+            rgba(150,0,0,0.82) 0 0.5%,
+            transparent 0.7%
+        ),
+
+        radial-gradient(
+            circle at 82% 61%,
+            rgba(125,0,0,0.88) 0 0.6%,
+            transparent 0.8%
+        ),
+
+        radial-gradient(
+            circle at 68% 76%,
+            rgba(145,0,0,0.84) 0 0.5%,
+            transparent 0.7%
+        ),
+
+        radial-gradient(
+            circle at 37% 82%,
+            rgba(110,0,0,0.88) 0 0.7%,
+            transparent 0.9%
+        ),
+
+        linear-gradient(
+            88deg,
+            transparent 0 18%,
+            rgba(115,0,0,0.72) 18.4% 19%,
+            transparent 19.4% 38%,
+            rgba(145,0,0,0.68) 38.5% 39.1%,
+            transparent 39.5% 61%,
+            rgba(120,0,0,0.72) 61.4% 62%,
+            transparent 62.4% 80%,
+            rgba(150,0,0,0.66) 80.5% 81.1%,
+            transparent 81.5% 100%
+        );
+
+    filter:
+        blur(0.3px);
+}
+
+
+/*
+    Splash impact
+*/
+
+.blade-death-cinematic.splatter
+.blade-blood-splatter {
+
+    opacity: 1;
+
+    animation:
+        bladeOrganicSplash
+        0.24s
+        cubic-bezier(
+            0.15,
+            0.85,
+            0.25,
+            1
+        )
+        forwards;
+}
+
+
+@keyframes bladeOrganicSplash {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(1.6)
+            rotate(-2deg);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            scale(0.98)
+            rotate(0.4deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+}
+
+
+/*
+    Fade back into darkness
+*/
+
+.blade-death-cinematic.fade-blood
+.blade-blood-splatter {
+
+    opacity: 0;
+
+    transition:
+        opacity 1.2s ease;
+}
+
+
+/*
+    IPAD / MOBILE
+*/
+
+@media (max-width: 760px) {
+
+    .blade-blood-splatter::before {
+
+        width: 120vw;
+        height: 120vw;
+
+        top: 48%;
+    }
+}
