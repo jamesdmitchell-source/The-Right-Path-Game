@@ -4843,3 +4843,114 @@ blockquote {
             center center;
     }
 }
+/* ========================================
+   ELIAS CINEMATIC — SUBTITLES
+   ======================================== */
+
+.elias-cinematic-subtitle {
+    position: absolute;
+
+    left: 50%;
+    bottom: 8vh;
+
+    transform:
+        translateX(-50%)
+        translateY(12px);
+
+    z-index: 20;
+
+    width:
+        min(900px, 86vw);
+
+    padding:
+        14px 18px;
+
+    box-sizing:
+        border-box;
+
+    text-align:
+        center;
+
+    font-size:
+        clamp(
+            18px,
+            2vw,
+            28px
+        );
+
+    line-height:
+        1.45;
+
+    letter-spacing:
+        0.02em;
+
+    color:
+        rgba(
+            245,
+            245,
+            245,
+            0.96
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.55
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    box-shadow:
+        0 8px 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.65
+        );
+
+    backdrop-filter:
+        blur(4px);
+
+    opacity: 0;
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease;
+}
+
+
+.elias-cinematic-subtitle.visible {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+@media (max-width: 760px) {
+
+    .elias-cinematic-subtitle {
+        bottom:
+            6vh;
+
+        width:
+            90vw;
+
+        padding:
+            12px 14px;
+
+        font-size:
+            18px;
+    }
+}
