@@ -7417,7 +7417,15 @@ async function playCorridorSequence() {
 
         curatorMessage.textContent =
             "";
+ /*
+            Show special Level 6 room
+            only when this level uses
+            the Judgement puzzle.
+        */
 
+        updateJudgementChamber(
+            level
+        );
 
         choicesContainer.innerHTML =
             "";
