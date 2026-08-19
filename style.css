@@ -5855,3 +5855,109 @@ blockquote {
 .level6-cinematic-blackout {
     z-index: 50;
 }
+/* ========================================
+   LEVEL 6 CINEMATIC — BLACK SCREEN FIX
+   ======================================== */
+
+
+/*
+    Make absolutely certain the camera
+    and image fill the screen.
+*/
+
+.level6-cinematic-camera {
+    position: absolute !important;
+    inset: 0 !important;
+
+    z-index: 1 !important;
+
+    display: block !important;
+
+    background: #000;
+}
+
+
+.level6-cinematic-image {
+    position: absolute !important;
+
+    top: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    z-index: 1 !important;
+
+    display: block !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+
+/*
+    Atmosphere remains above photograph.
+*/
+
+.level6-cinematic-flicker {
+    z-index: 2 !important;
+}
+
+
+.level6-cinematic-vignette {
+    z-index: 3 !important;
+
+    pointer-events: none;
+}
+
+
+/*
+    IMPORTANT:
+
+    The blackout physically does not
+    exist on screen until JavaScript
+    deliberately adds the "blackout"
+    class at the END of the cinematic.
+*/
+
+.level6-cinematic-blackout {
+    display: none !important;
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 50;
+
+    background: #000;
+
+    opacity: 0 !important;
+
+    pointer-events: none;
+}
+
+
+/*
+    Only show blackout at the final
+    cinematic cut.
+*/
+
+.level6-cinematic.blackout
+.level6-cinematic-blackout {
+
+    display: block !important;
+
+    opacity: 1 !important;
+}
+
+
+/*
+    Keep subtitles above the photograph
+    but below the final blackout.
+*/
+
+.level6-cinematic-caption {
+    z-index: 30 !important;
+}
