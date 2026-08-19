@@ -2101,27 +2101,33 @@ async function playLevel6Cinematic() {
     );
 
 
-    /*
-        Blackout.
-    */
+   /*
+    ========================================
+    FINAL FADE TO BLACK
+    ========================================
 
-    level6Cinematic.classList.add(
-        "blackout"
-    );
+    Fade the entire cinematic itself
+    rather than placing a black layer
+    over the photograph.
+*/
+
+level6Cinematic.classList.add(
+    "cinematic-fade-out"
+);
 
 
-    await wait(
-        1100
-    );
+await wait(
+    1000
+);
 
 
-    level6Cinematic.classList.remove(
-        "active",
-        "camera-move",
-        "warning",
-        "blackout"
-    );
-}
+level6Cinematic.classList.remove(
+    "active",
+    "camera-move",
+    "warning",
+    "blackout",
+    "cinematic-fade-out"
+);
 
 
 /*
