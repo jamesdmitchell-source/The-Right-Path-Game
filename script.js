@@ -1649,11 +1649,6 @@ level6Cinematic.innerHTML = `
         class="level6-cinematic-caption"
     ></div>
 
-
-    <div
-        class="level6-cinematic-blackout"
-    ></div>
-
 `;
 
 
