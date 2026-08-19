@@ -4954,3 +4954,573 @@ blockquote {
             18px;
     }
 }
+/* ========================================
+   LEVEL 6 — JUDGEMENT
+   ======================================== */
+
+.judgement-chamber {
+    display: none;
+
+    width: min(980px, 94vw);
+
+    margin:
+        25px auto 35px;
+
+    box-sizing:
+        border-box;
+}
+
+
+.judgement-chamber.active {
+    display: block;
+}
+
+
+.judgement-room {
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #090909,
+            #030303
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 0 55px
+        rgba(0,0,0,0.9);
+}
+
+
+.judgement-heading {
+    margin-bottom:
+        16px;
+
+    text-align:
+        center;
+
+    letter-spacing:
+        0.22em;
+
+    font-size:
+        14px;
+
+    color:
+        rgba(225,225,225,0.72);
+}
+
+
+/* ========================================
+   OBSERVATION WINDOW
+   ======================================== */
+
+.judgement-window {
+    position: relative;
+
+    height:
+        min(48vh, 430px);
+
+    min-height:
+        300px;
+
+    overflow: hidden;
+
+    background:
+        #050505;
+
+    border:
+        8px solid
+        #181818;
+
+    box-shadow:
+        inset 0 0 60px
+        rgba(0,0,0,1);
+}
+
+
+.judgement-prisoner-room {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 25%,
+            rgba(215,215,200,0.18),
+            rgba(30,30,30,0.12) 32%,
+            #060606 72%
+        );
+}
+
+
+/*
+    Overhead interrogation light
+*/
+
+.judgement-light {
+    position: absolute;
+
+    top: -20%;
+
+    left: 50%;
+
+    width:
+        36%;
+
+    height:
+        95%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(245,245,220,0.25),
+            rgba(245,245,220,0.08),
+            transparent
+        );
+
+    clip-path:
+        polygon(
+            42% 0,
+            58% 0,
+            100% 100%,
+            0 100%
+        );
+
+    filter:
+        blur(5px);
+}
+
+
+/* ========================================
+   DANIEL / CHAIR SILHOUETTE
+   ======================================== */
+
+.judgement-chair {
+    position: absolute;
+
+    left: 50%;
+    bottom: 11%;
+
+    width:
+        140px;
+
+    height:
+        210px;
+
+    transform:
+        translateX(-50%);
+}
+
+
+.judgement-chair::before {
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+    bottom: 0;
+
+    height:
+        145px;
+
+    border:
+        8px solid
+        #282828;
+
+    border-radius:
+        8px;
+
+    background:
+        #101010;
+
+    box-shadow:
+        0 15px 30px
+        rgba(0,0,0,0.9);
+}
+
+
+.judgement-prisoner-head {
+    position: absolute;
+
+    z-index: 4;
+
+    top: 8px;
+    left: 50%;
+
+    width:
+        47px;
+
+    height:
+        56px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        46% 46% 42% 42%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #393939,
+            #181818
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(0,0,0,0.8);
+}
+
+
+.judgement-prisoner-body {
+    position: absolute;
+
+    z-index: 3;
+
+    top: 58px;
+    left: 50%;
+
+    width:
+        82px;
+
+    height:
+        115px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        26px 26px 10px 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #181818,
+            #323232,
+            #151515
+        );
+}
+
+
+.judgement-restraint {
+    position: absolute;
+
+    z-index: 7;
+
+    top:
+        100px;
+
+    width:
+        54px;
+
+    height:
+        8px;
+
+    background:
+        #6d6d6d;
+
+    box-shadow:
+        0 0 6px
+        rgba(0,0,0,0.8);
+}
+
+
+.judgement-restraint.left {
+    left:
+        4px;
+
+    transform:
+        rotate(-7deg);
+}
+
+
+.judgement-restraint.right {
+    right:
+        4px;
+
+    transform:
+        rotate(7deg);
+}
+
+
+/* ========================================
+   REINFORCED GLASS
+   ======================================== */
+
+.judgement-glass {
+    position: absolute;
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            115deg,
+            rgba(255,255,255,0.06),
+            transparent 28%,
+            transparent 68%,
+            rgba(255,255,255,0.035)
+        );
+
+    box-shadow:
+        inset 0 0 50px
+        rgba(0,0,0,0.5);
+}
+
+
+/*
+    Daniel identification
+*/
+
+.judgement-prisoner-label {
+    position: absolute;
+
+    z-index: 25;
+
+    left:
+        18px;
+
+    bottom:
+        15px;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        0.16em;
+
+    color:
+        rgba(225,225,225,0.62);
+}
+
+
+.judgement-prisoner-label span {
+    display: block;
+
+    margin-top:
+        5px;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    font-size:
+        15px;
+}
+
+
+/* ========================================
+   VERDICT TERMINAL
+   ======================================== */
+
+.judgement-terminal {
+    margin-top:
+        18px;
+
+    padding:
+        18px;
+
+    background:
+        rgba(3,3,3,0.96);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+}
+
+
+.judgement-terminal-title {
+    text-align:
+        center;
+
+    letter-spacing:
+        0.26em;
+
+    font-size:
+        13px;
+
+    color:
+        rgba(220,220,220,0.72);
+}
+
+
+.judgement-timer {
+    margin:
+        15px 0 8px;
+
+    text-align:
+        center;
+
+    font-family:
+        monospace;
+
+    font-size:
+        clamp(
+            36px,
+            7vw,
+            62px
+        );
+
+    letter-spacing:
+        0.08em;
+
+    color:
+        #bcbcbc;
+
+    text-shadow:
+        0 0 18px
+        rgba(255,255,255,0.08);
+}
+
+
+.judgement-status {
+    margin-bottom:
+        15px;
+
+    text-align:
+        center;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        0.18em;
+
+    color:
+        rgba(210,210,210,0.55);
+}
+
+
+/* ========================================
+   VERDICT BUTTONS
+   ======================================== */
+
+.judgement-controls {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        12px;
+}
+
+
+.judgement-button {
+    min-height:
+        62px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    background:
+        #0b0b0b;
+
+    color:
+        rgba(240,240,240,0.86);
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.15em;
+}
+
+
+.judgement-button:disabled {
+    opacity:
+        0.58;
+}
+
+
+.judgement-button.mercy {
+    border-color:
+        rgba(210,210,210,0.28);
+}
+
+
+.judgement-button.judgement {
+    border-color:
+        rgba(150,25,25,0.55);
+
+    color:
+        rgba(230,150,150,0.9);
+}
+
+
+/*
+    Hidden third path.
+*/
+
+.judgement-button.no-verdict {
+    display:
+        none;
+
+    grid-column:
+        1 / -1;
+
+    border-color:
+        rgba(190,190,190,0.5);
+
+    color:
+        #e4e4e4;
+}
+
+
+.judgement-button.no-verdict.revealed {
+    display:
+        block;
+}
+
+
+/* ========================================
+   MOBILE / IPAD
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .judgement-window {
+        height:
+            360px;
+
+        min-height:
+            0;
+    }
+
+
+    .judgement-room {
+        padding:
+            10px;
+    }
+
+
+    .judgement-controls {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .judgement-button.no-verdict {
+        grid-column:
+            auto;
+    }
+}
