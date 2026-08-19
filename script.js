@@ -2134,6 +2134,412 @@ async function playLevel6Cinematic() {
     END LEVEL 6 OPENING CINEMATIC
     ========================================
 */    
+    /*
+    ========================================
+    DEVELOPER MODE
+    ========================================
+*/
+
+const developerButton =
+    document.createElement(
+        "button"
+    );
+
+
+developerButton.type =
+    "button";
+
+
+developerButton.textContent =
+    "DEV";
+
+
+developerButton.id =
+    "developerButton";
+
+
+document.body.appendChild(
+    developerButton
+);
+
+
+
+const developerPanel =
+    document.createElement(
+        "div"
+    );
+
+
+developerPanel.id =
+    "developerPanel";
+
+
+developerPanel.innerHTML = `
+
+    <div class="developer-window">
+
+        <div class="developer-header">
+
+            <strong>
+                THE RIGHT PATH — DEVELOPER MODE
+            </strong>
+
+            <button
+                type="button"
+                id="developerClose"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <p class="developer-note">
+            Jump directly to a level for testing.
+        </p>
+
+
+        <div
+            id="developerLevels"
+            class="developer-levels"
+        ></div>
+
+
+        <div class="developer-tools">
+
+            <button
+                type="button"
+                id="developerRestart"
+            >
+                RESTART CURRENT LEVEL
+            </button>
+
+        </div>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    developerPanel
+);
+
+
+
+const developerLevels =
+    document.getElementById(
+        "developerLevels"
+    );
+
+
+const developerClose =
+    document.getElementById(
+        "developerClose"
+    );
+
+
+const developerRestart =
+    document.getElementById(
+        "developerRestart"
+    );
+
+
+
+/*
+    ========================================
+    BUILD LEVEL BUTTONS
+    ========================================
+*/
+
+levels.forEach(
+    function (
+        level,
+        index
+    ) {
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.textContent =
+            "LEVEL " +
+            level.number;
+
+
+        button.addEventListener(
+            "click",
+            async function () {
+
+                developerPanel.classList.remove(
+                    "active"
+                );
+
+
+                await developerJumpToLevel(
+                    index
+                );
+
+            }
+        );
+
+
+        developerLevels.appendChild(
+            button
+        );
+
+    }
+);
+
+
+
+/*
+    ========================================
+    OPEN / CLOSE
+    ========================================
+*/
+
+developerButton.addEventListener(
+    "click",
+    function () {
+
+        developerPanel.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+developerClose.addEventListener(
+    "click",
+    function () {
+
+        developerPanel.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+
+/*
+    ========================================
+    JUMP DIRECTLY TO LEVEL
+    ========================================
+*/
+
+async function developerJumpToLevel(
+    index
+) {
+
+    /*
+        Stop any speech already playing.
+    */
+
+    if (
+        "speechSynthesis"
+        in window
+    ) {
+
+        window
+            .speechSynthesis
+            .cancel();
+    }
+
+
+    /*
+        Stop Level 4 if running.
+    */
+
+    if (
+        typeof resetPressureState ===
+        "function"
+    ) {
+
+        resetPressureState();
+    }
+
+
+    /*
+        Stop Level 5 if running.
+    */
+
+    if (
+        typeof resetBladeState ===
+        "function"
+    ) {
+
+        resetBladeState();
+    }
+
+
+    /*
+        Hide cinematic overlays.
+    */
+
+    level5Cinematic.classList.remove(
+        "active",
+        "warning",
+        "struggle",
+        "blackout",
+        "fade-out"
+    );
+
+
+    eliasCinematic.classList.remove(
+        "active",
+        "camera-move",
+        "blackout"
+    );
+
+
+    level6Cinematic.classList.remove(
+        "active",
+        "camera-move",
+        "warning",
+        "blackout"
+    );
+
+
+    /*
+        Change current level.
+    */
+
+    currentLevelIndex =
+        index;
+
+
+    /*
+        Build the selected room.
+    */
+
+    loadLevel();
+
+
+    showScreen(
+        levelScreen
+    );
+
+
+    const level =
+        levels[
+            currentLevelIndex
+        ];
+
+
+    /*
+        LEVEL 6
+        Play its cinematic exactly as the
+        normal game would.
+    */
+
+    if (
+        level &&
+        level.judgementPuzzle
+    ) {
+
+        await playLevel6Cinematic();
+
+        return;
+    }
+
+
+    /*
+        Normal Elias introduction.
+    */
+
+    if (
+        level &&
+        level.intro
+    ) {
+
+        await playLevelIntroduction(
+            level
+        );
+    }
+
+
+    /*
+        LEVEL 4
+    */
+
+    if (
+        level &&
+        level.pressurePuzzle
+    ) {
+
+        await wait(
+            500
+        );
+
+
+        await startPressureLevel(
+            level
+        );
+
+
+        return;
+    }
+
+
+    /*
+        LEVEL 5
+    */
+
+    if (
+        level &&
+        level.bladePuzzle
+    ) {
+
+        await wait(
+            500
+        );
+
+
+        await startBladeLevel(
+            level
+        );
+    }
+}
+
+
+
+/*
+    ========================================
+    RESTART CURRENT LEVEL
+    ========================================
+*/
+
+developerRestart.addEventListener(
+    "click",
+    async function () {
+
+        developerPanel.classList.remove(
+            "active"
+        );
+
+
+        await developerJumpToLevel(
+            currentLevelIndex
+        );
+
+    }
+);
+
+
+/*
+    ========================================
+    END DEVELOPER MODE
+    ========================================
+*/
 async function playLevel5Cinematic() {
 
     /*
