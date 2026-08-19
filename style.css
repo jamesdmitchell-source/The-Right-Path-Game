@@ -5961,3 +5961,206 @@ blockquote {
 .level6-cinematic-caption {
     z-index: 30 !important;
 }
+/* ========================================
+   DEVELOPER MODE
+   ======================================== */
+
+#developerButton {
+    position: fixed;
+
+    right: 12px;
+    bottom: 12px;
+
+    z-index: 20000;
+
+    padding: 7px 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        rgba(0,0,0,0.72);
+
+    color:
+        rgba(255,255,255,0.55);
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        2px;
+
+    cursor: pointer;
+}
+
+
+#developerPanel {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 21000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(0,0,0,0.94);
+
+    overflow-y: auto;
+}
+
+
+#developerPanel.active {
+    display: flex;
+}
+
+
+.developer-window {
+    width:
+        min(700px, 94vw);
+
+    max-height:
+        88vh;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    box-sizing: border-box;
+
+    background:
+        #090909;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.2);
+}
+
+
+.developer-header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 15px;
+
+    margin-bottom:
+        15px;
+
+    letter-spacing:
+        2px;
+}
+
+
+#developerClose {
+    min-width: 42px;
+    min-height: 42px;
+
+    background:
+        #111;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+}
+
+
+.developer-note {
+    opacity:
+        0.65;
+
+    margin-bottom:
+        18px;
+}
+
+
+.developer-levels {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(110px, 1fr)
+        );
+
+    gap:
+        10px;
+}
+
+
+.developer-levels button,
+.developer-tools button {
+
+    min-height:
+        48px;
+
+    padding:
+        10px;
+
+    background:
+        #111;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.22);
+
+    color:
+        white;
+
+    font-family:
+        inherit;
+
+    letter-spacing:
+        1px;
+
+    cursor:
+        pointer;
+}
+
+
+.developer-levels button:hover,
+.developer-tools button:hover {
+
+    background:
+        #202020;
+}
+
+
+.developer-tools {
+    margin-top:
+        20px;
+
+    padding-top:
+        20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.12);
+}
+
+
+.developer-tools button {
+    width:
+        100%;
+}
