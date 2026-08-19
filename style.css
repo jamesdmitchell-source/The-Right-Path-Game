@@ -6164,3 +6164,13 @@ blockquote {
     width:
         100%;
 }
+/* ========================================
+   LEVEL 6 — SIMPLE CINEMATIC FADE
+   ======================================== */
+
+.level6-cinematic.cinematic-fade-out {
+    opacity: 0 !important;
+
+    transition:
+        opacity 1s ease !important;
+}
