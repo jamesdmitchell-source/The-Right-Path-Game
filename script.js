@@ -1603,6 +1603,492 @@ function updateJudgementChamber(
     END LEVEL 6 JUDGEMENT UI
     ========================================
 */ 
+/*
+    ========================================
+    LEVEL 6 — OPENING CINEMATIC
+    ========================================
+*/
+
+const level6Cinematic =
+    document.createElement(
+        "div"
+    );
+
+
+level6Cinematic.id =
+    "level6Cinematic";
+
+
+level6Cinematic.className =
+    "level6-cinematic";
+
+
+level6Cinematic.innerHTML = `
+
+    <div class="level6-cinematic-camera">
+
+        <img
+            class="level6-cinematic-image"
+            src="level6-judgement-cinematic.png"
+            alt=""
+        >
+
+        <div
+            class="level6-cinematic-flicker"
+        ></div>
+
+        <div
+            class="level6-cinematic-vignette"
+        ></div>
+
+    </div>
+
+
+    <div
+        id="level6CinematicCaption"
+        class="level6-cinematic-caption"
+    ></div>
+
+
+    <div
+        class="level6-cinematic-blackout"
+    ></div>
+
+`;
+
+
+document.body.appendChild(
+    level6Cinematic
+);
+
+
+const level6CinematicCaption =
+    document.getElementById(
+        "level6CinematicCaption"
+    );
+
+
+/*
+    ========================================
+    DANIEL VOICE
+    ========================================
+*/
+
+function speakAsDaniel(
+    line
+) {
+
+    return new Promise(
+        function (resolve) {
+
+            if (
+                !(
+                    "speechSynthesis"
+                    in window
+                )
+            ) {
+
+                setTimeout(
+                    resolve,
+                    1200
+                );
+
+                return;
+            }
+
+
+            try {
+
+                const voices =
+                    getEnglishVoices();
+
+
+                /*
+                    Deliberately avoid Elias's
+                    voice if possible.
+                */
+
+                const danielVoice =
+                    voices.find(
+                        function (voice) {
+
+                            return (
+                                !curatorVoice ||
+                                voice.name !==
+                                    curatorVoice.name
+                            );
+
+                        }
+                    )
+
+                    ||
+
+                    voices[0]
+
+                    ||
+
+                    null;
+
+
+                const speech =
+                    new SpeechSynthesisUtterance(
+                        line
+                    );
+
+
+                if (
+                    danielVoice
+                ) {
+
+                    speech.voice =
+                        danielVoice;
+                }
+
+
+                /*
+                    Daniel is frightened,
+                    quicker and less controlled
+                    than Elias.
+                */
+
+                speech.rate =
+                    0.96;
+
+                speech.pitch =
+                    1.03;
+
+                speech.volume =
+                    1;
+
+
+                let finished =
+                    false;
+
+
+                function finish() {
+
+                    if (
+                        finished
+                    ) {
+
+                        return;
+                    }
+
+
+                    finished =
+                        true;
+
+                    resolve();
+                }
+
+
+                speech.onend =
+                    function () {
+
+                        setTimeout(
+                            finish,
+                            200
+                        );
+                    };
+
+
+                speech.onerror =
+                    finish;
+
+
+                setTimeout(
+                    finish,
+                    8000
+                );
+
+
+                window
+                    .speechSynthesis
+                    .speak(
+                        speech
+                    );
+
+            } catch (
+                error
+            ) {
+
+                resolve();
+            }
+
+        }
+    );
+}
+
+
+/*
+    ========================================
+    PLAY LEVEL 6 CINEMATIC
+    ========================================
+*/
+
+async function playLevel6Cinematic() {
+
+    level6Cinematic.classList.remove(
+        "active",
+        "camera-move",
+        "warning",
+        "blackout"
+    );
+
+
+    level6CinematicCaption.classList.remove(
+        "visible",
+        "daniel"
+    );
+
+
+    level6CinematicCaption.textContent =
+        "";
+
+
+    void level6Cinematic.offsetWidth;
+
+
+    /*
+        Fade in.
+    */
+
+    level6Cinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    level6Cinematic.classList.add(
+        "camera-move"
+    );
+
+
+    /*
+        ========================================
+        ELIAS
+        ========================================
+    */
+
+    const eliasLines = [
+
+        "Welcome to Judgement, Twenty-eight.",
+
+        "The man before you is Daniel Mercer.",
+
+        "Three years ago, he made a choice.",
+
+        "Someone else paid for it.",
+
+        "Tonight... you decide whether he pays too."
+
+    ];
+
+
+    for (
+        const line
+        of eliasLines
+    ) {
+
+        level6CinematicCaption.classList.remove(
+            "visible",
+            "daniel"
+        );
+
+
+        await wait(
+            250
+        );
+
+
+        level6CinematicCaption.textContent =
+            line;
+
+
+        level6CinematicCaption.classList.add(
+            "visible"
+        );
+
+
+        await speakAsCurator(
+            line
+        );
+
+
+        await wait(
+            300
+        );
+    }
+
+
+    /*
+        ========================================
+        DANIEL INTERRUPTS
+        ========================================
+    */
+
+    const danielLines = [
+
+        "No! Don't listen to him!",
+
+        "Whatever he told you, it wasn't like that!",
+
+        "You don't know what happened!"
+
+    ];
+
+
+    for (
+        const line
+        of danielLines
+    ) {
+
+        level6CinematicCaption.classList.remove(
+            "visible"
+        );
+
+
+        await wait(
+            180
+        );
+
+
+        level6CinematicCaption.textContent =
+            line;
+
+
+        level6CinematicCaption.classList.add(
+            "visible",
+            "daniel"
+        );
+
+
+        await speakAsDaniel(
+            line
+        );
+
+
+        await wait(
+            200
+        );
+    }
+
+
+    /*
+        ========================================
+        ELIAS FINAL COMMAND
+        ========================================
+    */
+
+    level6CinematicCaption.classList.remove(
+        "visible",
+        "daniel"
+    );
+
+
+    await wait(
+        500
+    );
+
+
+    const finalLineOne =
+        "Sixty seconds.";
+
+
+    level6CinematicCaption.textContent =
+        finalLineOne;
+
+
+    level6CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        finalLineOne
+    );
+
+
+    await wait(
+        450
+    );
+
+
+    level6Cinematic.classList.add(
+        "warning"
+    );
+
+
+    const finalLineTwo =
+        "Choose.";
+
+
+    level6CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        250
+    );
+
+
+    level6CinematicCaption.textContent =
+        finalLineTwo;
+
+
+    level6CinematicCaption.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        finalLineTwo
+    );
+
+
+    await wait(
+        650
+    );
+
+
+    level6CinematicCaption.classList.remove(
+        "visible"
+    );
+
+
+    /*
+        Blackout.
+    */
+
+    level6Cinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        1100
+    );
+
+
+    level6Cinematic.classList.remove(
+        "active",
+        "camera-move",
+        "warning",
+        "blackout"
+    );
+}
+
+
+/*
+    ========================================
+    END LEVEL 6 OPENING CINEMATIC
+    ========================================
+*/    
 async function playLevel5Cinematic() {
 
     /*
