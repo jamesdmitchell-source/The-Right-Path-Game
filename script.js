@@ -1708,26 +1708,71 @@ function speakAsDaniel(
                     voice if possible.
                 */
 
-                const danielVoice =
-                    voices.find(
-                        function (voice) {
+              const maleDanielNames = [
 
-                            return (
-                                !curatorVoice ||
-                                voice.name !==
-                                    curatorVoice.name
-                            );
+    "daniel",
+    "arthur",
+    "george",
+    "oliver",
+    "ryan",
+    "aaron",
+    "alex",
+    "fred",
+    "ralph",
+    "reed",
+    "eddy"
 
-                        }
-                    )
+];
 
-                    ||
 
-                    voices[0]
+const danielVoice =
+    voices.find(
+        function (voice) {
 
-                    ||
+            const name =
+                voice.name
+                    .toLowerCase();
 
-                    null;
+
+            const isDifferentFromElias =
+                !curatorVoice ||
+                voice.name !==
+                    curatorVoice.name;
+
+
+            const soundsMale =
+                maleDanielNames.some(
+                    function (
+                        preferred
+                    ) {
+
+                        return name.includes(
+                            preferred
+                        );
+
+                    }
+                );
+
+
+            return (
+                isDifferentFromElias &&
+                soundsMale
+            );
+
+        }
+    )
+
+    ||
+
+    curatorVoice
+
+    ||
+
+    voices[0]
+
+    ||
+
+    null;
 
 
                 const speech =
