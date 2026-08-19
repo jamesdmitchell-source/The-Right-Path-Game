@@ -1358,6 +1358,251 @@ async function playEliasRevealCinematic() {
     END ELIAS REVEAL CINEMATIC
     ========================================
 */
+   /*
+    ========================================
+    LEVEL 6 — JUDGEMENT CHAMBER UI
+    ========================================
+*/
+
+const judgementChamber =
+    document.createElement(
+        "section"
+    );
+
+
+judgementChamber.id =
+    "judgementChamber";
+
+
+judgementChamber.className =
+    "judgement-chamber";
+
+
+judgementChamber.innerHTML = `
+
+    <div class="judgement-room">
+
+        <div class="judgement-heading">
+            LEVEL 6 — JUDGEMENT
+        </div>
+
+
+        <div class="judgement-window">
+
+            <div class="judgement-glass"></div>
+
+
+            <div class="judgement-prisoner-room">
+
+                <div class="judgement-light"></div>
+
+
+                <div class="judgement-chair">
+
+                    <div
+                        class="judgement-prisoner-head"
+                    ></div>
+
+                    <div
+                        class="judgement-prisoner-body"
+                    ></div>
+
+                    <div
+                        class="judgement-restraint left"
+                    ></div>
+
+                    <div
+                        class="judgement-restraint right"
+                    ></div>
+
+                </div>
+
+
+                <div class="judgement-prisoner-label">
+
+                    SUBJECT 31
+
+                    <span>
+                        DANIEL MERCER
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="judgement-terminal">
+
+            <div class="judgement-terminal-title">
+                FINAL VERDICT
+            </div>
+
+
+            <div
+                id="judgementTimer"
+                class="judgement-timer"
+            >
+                01:00
+            </div>
+
+
+            <div
+                id="judgementStatus"
+                class="judgement-status"
+            >
+                SYSTEM IDLE
+            </div>
+
+
+            <div class="judgement-controls">
+
+                <button
+                    type="button"
+                    id="mercyButton"
+                    class="judgement-button mercy"
+                    disabled
+                >
+                    MERCY
+                </button>
+
+
+                <button
+                    type="button"
+                    id="judgementButton"
+                    class="judgement-button judgement"
+                    disabled
+                >
+                    JUDGEMENT
+                </button>
+
+
+                <button
+                    type="button"
+                    id="noVerdictButton"
+                    class="judgement-button no-verdict"
+                    disabled
+                >
+                    NO VERDICT
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+`;
+
+
+/*
+    Put Judgement above the normal
+    investigation panel so the evidence
+    buttons remain available underneath.
+*/
+
+investigationPanel.parentNode.insertBefore(
+    judgementChamber,
+    investigationPanel
+);
+
+
+/*
+    ========================================
+    LEVEL 6 REFERENCES
+    ========================================
+*/
+
+const judgementTimerDisplay =
+    document.getElementById(
+        "judgementTimer"
+    );
+
+
+const judgementStatus =
+    document.getElementById(
+        "judgementStatus"
+    );
+
+
+const mercyButton =
+    document.getElementById(
+        "mercyButton"
+    );
+
+
+const judgementButton =
+    document.getElementById(
+        "judgementButton"
+    );
+
+
+const noVerdictButton =
+    document.getElementById(
+        "noVerdictButton"
+    );
+
+
+/*
+    ========================================
+    SHOW / HIDE LEVEL 6 CHAMBER
+    ========================================
+*/
+
+function updateJudgementChamber(
+    level
+) {
+
+    if (
+        !level ||
+        !level.judgementPuzzle
+    ) {
+
+        judgementChamber.classList.remove(
+            "active"
+        );
+
+        return;
+    }
+
+
+    judgementChamber.classList.add(
+        "active"
+    );
+
+
+    judgementTimerDisplay.textContent =
+        "01:00";
+
+
+    judgementStatus.textContent =
+        "AWAITING VERDICT";
+
+
+    mercyButton.disabled =
+        true;
+
+
+    judgementButton.disabled =
+        true;
+
+
+    noVerdictButton.disabled =
+        true;
+
+
+    noVerdictButton.classList.remove(
+        "revealed"
+    );
+}
+
+
+/*
+    ========================================
+    END LEVEL 6 JUDGEMENT UI
+    ========================================
+*/ 
 async function playLevel5Cinematic() {
 
     /*
