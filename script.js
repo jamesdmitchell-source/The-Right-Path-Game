@@ -1797,10 +1797,10 @@ const danielVoice =
                 */
 
                 speech.rate =
-                    0.96;
+                    0.92;
 
                 speech.pitch =
-                    1.03;
+                    0.88;
 
                 speech.volume =
                     1;
