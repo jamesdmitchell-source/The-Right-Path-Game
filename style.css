@@ -5524,3 +5524,295 @@ blockquote {
             auto;
     }
 }
+/* ========================================
+   LEVEL 6 — OPENING CINEMATIC
+   ======================================== */
+
+.level6-cinematic {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9500;
+
+    overflow: hidden;
+
+    background: #000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+
+.level6-cinematic.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.level6-cinematic-camera {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+}
+
+
+.level6-cinematic-image {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center center;
+
+    transform:
+        scale(1.02);
+
+    filter:
+        brightness(0.72)
+        contrast(1.12);
+
+    transition:
+        transform 20s ease-out,
+        filter 2s ease;
+}
+
+
+.level6-cinematic.camera-move
+.level6-cinematic-image {
+
+    transform:
+        scale(1.10);
+
+    filter:
+        brightness(0.8)
+        contrast(1.16);
+}
+
+
+/*
+    Fluorescent / monitor flicker.
+*/
+
+.level6-cinematic-flicker {
+    position: absolute;
+    inset: 0;
+
+    background:
+        rgba(210,225,230,0.06);
+
+    mix-blend-mode:
+        screen;
+
+    opacity: 0.08;
+
+    animation:
+        level6Flicker
+        3.8s
+        infinite;
+}
+
+
+@keyframes level6Flicker {
+
+    0%,
+    18%,
+    21%,
+    60%,
+    63%,
+    100% {
+        opacity: 0.06;
+    }
+
+    19% {
+        opacity: 0.24;
+    }
+
+    20% {
+        opacity: 0.02;
+    }
+
+    61% {
+        opacity: 0.18;
+    }
+
+    62% {
+        opacity: 0.04;
+    }
+}
+
+
+/*
+    Slight red warning change
+    when Elias says "Choose."
+*/
+
+.level6-cinematic.warning
+.level6-cinematic-flicker {
+
+    background:
+        rgba(120,0,0,0.18);
+
+    opacity:
+        0.32;
+}
+
+
+/*
+    Dark cinematic edges.
+*/
+
+.level6-cinematic-vignette {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(0,0,0,0.18) 58%,
+            rgba(0,0,0,0.88) 100%
+        );
+}
+
+
+/* ========================================
+   SUBTITLES
+   ======================================== */
+
+.level6-cinematic-caption {
+    position: absolute;
+
+    z-index: 30;
+
+    left: 50%;
+    bottom: 6vh;
+
+    width:
+        min(850px, 88vw);
+
+    padding:
+        13px 18px;
+
+    box-sizing:
+        border-box;
+
+    transform:
+        translateX(-50%)
+        translateY(10px);
+
+    background:
+        rgba(0,0,0,0.62);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    color:
+        rgba(245,245,245,0.96);
+
+    text-align:
+        center;
+
+    font-size:
+        clamp(
+            18px,
+            2vw,
+            27px
+        );
+
+    line-height:
+        1.4;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.level6-cinematic-caption.visible {
+
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/*
+    Daniel subtitle gets a slight visual
+    distinction from Elias.
+*/
+
+.level6-cinematic-caption.daniel {
+
+    font-style:
+        italic;
+
+    border-color:
+        rgba(255,255,255,0.2);
+}
+
+
+/*
+    Blackout.
+*/
+
+.level6-cinematic-blackout {
+    position: absolute;
+    inset: 0;
+
+    z-index: 50;
+
+    background:
+        #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+}
+
+
+.level6-cinematic.blackout
+.level6-cinematic-blackout {
+
+    opacity: 1;
+}
+
+
+@media (max-width: 760px) {
+
+    .level6-cinematic-image {
+
+        object-position:
+            center center;
+    }
+
+
+    .level6-cinematic-caption {
+
+        bottom:
+            5vh;
+
+        width:
+            92vw;
+
+        padding:
+            11px 13px;
+
+        font-size:
+            18px;
+    }
+}
