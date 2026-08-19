@@ -1868,7 +1868,7 @@ const danielVoice =
 
 async function playLevel6Cinematic() {
 
-   level6Cinematic.classList.remove(
+  level6Cinematic.classList.remove(
     "active",
     "camera-move",
     "warning",
@@ -1876,6 +1876,14 @@ async function playLevel6Cinematic() {
     "cinematic-fade-out"
 );
 
+}
+
+
+/*
+    ========================================
+    END LEVEL 6 OPENING CINEMATIC
+    ========================================
+*/
 
     level6CinematicCaption.classList.remove(
         "visible",
