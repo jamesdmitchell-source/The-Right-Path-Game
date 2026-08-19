@@ -5816,3 +5816,43 @@ blockquote {
             18px;
     }
 }
+* ========================================
+   LEVEL 6 CINEMATIC — IMAGE VISIBILITY FIX
+   ======================================== */
+
+.level6-cinematic-camera {
+    z-index: 1;
+}
+
+
+.level6-cinematic-image {
+    z-index: 1;
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    display: block !important;
+}
+
+
+.level6-cinematic-flicker {
+    z-index: 2;
+}
+
+
+.level6-cinematic-vignette {
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+
+.level6-cinematic-caption {
+    z-index: 30;
+}
+
+
+.level6-cinematic-blackout {
+    z-index: 50;
+}
