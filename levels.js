@@ -909,6 +909,260 @@ const levels = [
 
     death:
         "You hesitated."
-}
+},
+/*
+    ==============================
+    LEVEL 6
+    JUDGEMENT
+    ==============================
+*/
 
+{
+    number:
+        6,
+
+    title:
+        "Judgement",
+
+    intro:
+        "You understand me a little better now, Twenty-eight. So perhaps you're ready to understand the purpose of judgement.",
+
+    observation:
+        "A vast observation window fills the far wall. Behind the reinforced glass, an adult man is restrained in a steel chair beneath a harsh white light. He is conscious. Two illuminated controls face you: MERCY and JUDGEMENT.",
+
+    clue:
+        "A verdict without truth is not justice.",
+
+    question:
+        "Decide the fate of the man behind the glass.",
+
+
+    /*
+        ==============================
+        PRISONER
+        ==============================
+    */
+
+    prisoner: {
+
+        name:
+            "Daniel Mercer",
+
+        status:
+            "SUBJECT 31",
+
+        openingLines: [
+
+            "Whatever he told you about me... he's lying.",
+
+            "Please. You don't know what happened.",
+
+            "Don't let him make you choose."
+
+        ]
+    },
+
+
+    /*
+        ==============================
+        LEVEL 6 INVESTIGATIONS
+        ==============================
+    */
+
+    investigations: [
+
+        {
+            id:
+                "incidentReport",
+
+            name:
+                "Incident Report",
+
+            icon:
+                "📄",
+
+            description:
+                "An official incident report names Daniel Mercer. Several lines describing the event have been deliberately blacked out.",
+
+            curator:
+                "The facts that matter are still there."
+        },
+
+        {
+            id:
+                "newspaper",
+
+            name:
+                "Newspaper Clipping",
+
+            icon:
+                "📰",
+
+            description:
+                "A newspaper clipping describes an incident three years earlier. One person was seriously injured. Daniel's name has been circled in dark ink."
+        },
+
+        {
+            id:
+                "photograph",
+
+            name:
+                "Photograph",
+
+            icon:
+                "📷",
+
+            description:
+                "Daniel is standing beside another man outside a small workshop. On the back someone has written: THERE WERE TWO OF THEM."
+        },
+
+        {
+            id:
+                "intercom",
+
+            name:
+                "Intercom",
+
+            icon:
+                "🎙️",
+
+            description:
+                "The intercom connects directly to the chamber behind the glass.",
+
+            prisonerLine:
+                "I made a mistake. But what he's telling you isn't the whole story."
+        },
+
+        {
+            id:
+                "controlPanel",
+
+            name:
+                "Control Panel",
+
+            icon:
+                "⚙️",
+
+            description:
+                "The panel offers only two authorised commands: MERCY and JUDGEMENT. A maintenance indicator beneath them flashes faintly."
+        },
+
+        {
+            id:
+                "maintenancePort",
+
+            name:
+                "Maintenance Port",
+
+            icon:
+                "🔧",
+
+            description:
+                "Behind the maintenance cover is a third command circuit. Someone tried to conceal its label beneath black tape.",
+
+            journalSecret:
+                "The system was designed with a third possible response. Elias deliberately hid it."
+        }
+
+    ],
+
+    requiredInvestigations:
+        6,
+
+
+    /*
+        ==============================
+        LEVEL 6 JUDGEMENT PUZZLE
+        ==============================
+    */
+
+    judgementPuzzle: {
+
+        type:
+            "judgement",
+
+        title:
+            "FINAL VERDICT",
+
+        instruction:
+            "Choose a verdict.",
+
+        timeLimit:
+            60,
+
+        options: [
+
+            {
+                id:
+                    "MERCY",
+
+                text:
+                    "MERCY",
+
+                correct:
+                    false
+            },
+
+            {
+                id:
+                    "JUDGEMENT",
+
+                text:
+                    "JUDGEMENT",
+
+                correct:
+                    false
+            },
+
+            {
+                id:
+                    "NO_VERDICT",
+
+                text:
+                    "NO VERDICT",
+
+                correct:
+                    true,
+
+                hidden:
+                    true
+            }
+
+        ],
+
+        wrong:
+            "VERDICT ACCEPTED",
+
+        correct:
+            "VERDICT REFUSED",
+
+        curatorHalfway:
+            "Surely you don't need this long to decide whether a man deserves mercy.",
+
+        curatorWarning:
+            "Ten seconds, Twenty-eight. Judge him.",
+
+        curatorSuccess:
+            "Interesting. I offered you two paths... and you made your own."
+    },
+
+
+    choices: [
+
+        {
+            text:
+                "Leave Judgement Chamber",
+
+            correct:
+                true
+        }
+
+    ],
+
+    success:
+        "The judgement system shuts down. The restraints behind the glass release.",
+
+    death:
+        "You judged a man without knowing the truth."
+}
 ];
