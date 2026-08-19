@@ -1868,12 +1868,13 @@ const danielVoice =
 
 async function playLevel6Cinematic() {
 
-    level6Cinematic.classList.remove(
-        "active",
-        "camera-move",
-        "warning",
-        "blackout"
-    );
+   level6Cinematic.classList.remove(
+    "active",
+    "camera-move",
+    "warning",
+    "blackout",
+    "cinematic-fade-out"
+);
 
 
     level6CinematicCaption.classList.remove(
