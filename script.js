@@ -8632,25 +8632,35 @@ currentLevelIndex +=
         );
 
 
-        const newLevel =
-            levels[
-                currentLevelIndex
-            ];
+      const newLevel =
+    levels[
+        currentLevelIndex
+    ];
 
 
-        /*
-            ========================================
-            ELIAS INTRODUCTION
-            ========================================
+/*
+    ========================================
+    LEVEL 6 — OPENING CINEMATIC
+    ========================================
+*/
 
-            Special traps do not begin until
-            Elias has finished speaking.
-        */
+if (
+    newLevel &&
+    newLevel.judgementPuzzle
+) {
 
-        await playLevelIntroduction(
-            newLevel
-        );
+    await playLevel6Cinematic();
 
+} else {
+
+    /*
+        Normal Elias room introduction.
+    */
+
+    await playLevelIntroduction(
+        newLevel
+    );
+}
 
         /*
             ========================================
