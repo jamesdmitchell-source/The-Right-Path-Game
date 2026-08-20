@@ -5590,32 +5590,7 @@ blockquote {
    CINEMATIC IMAGE
    ======================================== */
 
-.level6-cinematic-image {
-    position: absolute;
 
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-    object-position: center center;
-
-    opacity: 1;
-    visibility: visible;
-
-    transform:
-        scale(1.02);
-
-    filter:
-        brightness(0.78)
-        contrast(1.12);
-
-    transition:
-        transform 18s ease-out,
-        filter 2s ease;
-}
 
 
 .level6-cinematic.camera-move
