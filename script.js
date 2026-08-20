@@ -1581,7 +1581,18 @@ const noVerdictButton =
     document.getElementById(
         "noVerdictButton"
     );
+const judgementEvidenceDisplay =
+    document.getElementById(
+        "judgementEvidenceDisplay"
+    );
 
+
+const judgementEvidenceButtons =
+    Array.from(
+        judgementChamber.querySelectorAll(
+            ".judgement-evidence-button"
+        )
+    );
 
 /*
     ========================================
