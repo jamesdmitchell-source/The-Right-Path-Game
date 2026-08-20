@@ -1806,7 +1806,7 @@ function speakAsDaniel(line) {
                     1.14;
 
                 speech.volume =
-                    0;92;
+                    0.92;
 
 
                 let finished =
