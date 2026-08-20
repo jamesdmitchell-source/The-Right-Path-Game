@@ -1986,7 +1986,7 @@ async function playLevel6Cinematic() {
 
     "Please... whatever he told you... it wasn't like that!",
 
-    "You don't understand... you don't know what happened!"
+    "You don't understand... you don't know what happened!",
 
     "Please... don't do this."
 
