@@ -1876,9 +1876,6 @@ async function playLevel6Cinematic() {
     "cinematic-fade-out"
 );
 
-}
-
-
 /*
     ========================================
     END LEVEL 6 OPENING CINEMATIC
