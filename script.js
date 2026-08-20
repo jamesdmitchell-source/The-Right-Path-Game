@@ -2138,6 +2138,8 @@ level6Cinematic.classList.remove(
     "cinematic-fade-out"
 );
 
+}
+
 
 /*
     ========================================
