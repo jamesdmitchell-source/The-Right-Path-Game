@@ -1980,16 +1980,15 @@ async function playLevel6Cinematic() {
         ========================================
     */
 
-    const danielLines = [
+   const danielLines = [
 
-        "No! Don't listen to him!",
+    "No... no! Don't listen to him!",
 
-        "Whatever he told you, it wasn't like that!",
+    "Please... whatever he told you... it wasn't like that!",
 
-        "You don't know what happened!"
+    "You don't understand... you don't know what happened!"
 
-    ];
-
+];
 
     for (
         const line
