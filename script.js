@@ -1964,7 +1964,7 @@ async function playLevel6Cinematic() {
         ========================================
     */
 
-   const danielLines = [
+ const danielLines = [
 
     "No... no! Don't listen to him!",
 
@@ -1972,47 +1972,30 @@ async function playLevel6Cinematic() {
 
     "You don't understand... you don't know what happened!",
 
-    "Please... don't do this."
-
+    "Please... don't... don't do this."
 
 ];
 
-    for (
-        const line
-        of danielLines
-    ) {
 
-        level6CinematicCaption.classList.remove(
-            "visible"
-        );
+level6CinematicCaption.classList.remove(
+    "visible"
+);
 
 
-        await wait(
-            180
-        );
+level6CinematicCaption.classList.add(
+    "daniel"
+);
 
 
-        level6CinematicCaption.textContent =
-            line;
+await playDanielLevel6Audio(
+    danielLines
+);
 
 
-        level6CinematicCaption.classList.add(
-            "visible",
-            "daniel"
-        );
-
-
-        await speakAsDaniel(
-            line
-        );
-
-
-        await wait(
-            200
-        );
-    }
-
-
+level6CinematicCaption.classList.remove(
+    "visible",
+    "daniel"
+);
     /*
         ========================================
         ELIAS FINAL COMMAND
