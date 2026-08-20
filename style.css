@@ -5574,7 +5574,7 @@ blockquote {
             rgba(0,0,0,0.12)
         ),
         url("level6-judgement-cinematic.png")
-        center center / cover
+        center center / contain
         no-repeat;
 
     transform:
