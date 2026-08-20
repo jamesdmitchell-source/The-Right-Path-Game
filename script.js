@@ -1560,7 +1560,7 @@ function updateJudgementChamber(
 
 
     judgementTimerDisplay.textContent =
-        "01:00";
+        "01:30";
 
 
     judgementStatus.textContent =
