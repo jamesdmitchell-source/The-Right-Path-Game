@@ -1627,12 +1627,6 @@ level6Cinematic.innerHTML = `
 
     <div class="level6-cinematic-camera">
 
-        <img
-            class="level6-cinematic-image"
-            src="level6-judgement-cinematic.png"
-            alt=""
-        >
-
         <div
             class="level6-cinematic-flicker"
         ></div>
