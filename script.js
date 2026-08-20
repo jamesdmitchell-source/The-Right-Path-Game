@@ -1988,6 +1988,9 @@ async function playLevel6Cinematic() {
 
     "You don't understand... you don't know what happened!"
 
+    "Please... don't do this."
+
+
 ];
 
     for (
