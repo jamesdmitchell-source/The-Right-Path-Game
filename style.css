@@ -5568,7 +5568,21 @@ blockquote {
 
     overflow: hidden;
 
-    background: #000;
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.05),
+            rgba(0,0,0,0.12)
+        ),
+        url("level6-judgement-cinematic.png")
+        center center / cover
+        no-repeat;
+
+    transform:
+        scale(1.02);
+
+    transition:
+        transform 18s ease-out,
+        filter 2s ease;
 }
 
 
