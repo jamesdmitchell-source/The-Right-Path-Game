@@ -1428,20 +1428,72 @@ judgementChamber.innerHTML = `
             </div>
 
 
-            <div
-                class="judgement-evidence-placeholder"
-            >
+         <div
+    class="judgement-evidence-placeholder"
+>
 
-                <div class="judgement-evidence-title">
-                    EVIDENCE ARCHIVE
-                </div>
+    <div class="judgement-evidence-title">
+        EVIDENCE ARCHIVE
+    </div>
 
-                <p>
-                    Review the evidence before
-                    making your judgement.
-                </p>
 
-            </div>
+    <div class="judgement-evidence-grid">
+
+        <button
+            type="button"
+            class="judgement-evidence-button"
+            data-evidence="incident"
+        >
+            INCIDENT REPORT
+        </button>
+
+
+        <button
+            type="button"
+            class="judgement-evidence-button"
+            data-evidence="phone"
+        >
+            PHONE RECORD
+        </button>
+
+
+        <button
+            type="button"
+            class="judgement-evidence-button"
+            data-evidence="camera"
+        >
+            CAMERA LOG
+        </button>
+
+
+        <button
+            type="button"
+            class="judgement-evidence-button"
+            data-evidence="witness"
+        >
+            WITNESS STATEMENT
+        </button>
+
+
+        <button
+            type="button"
+            class="judgement-evidence-button system-log"
+            data-evidence="system"
+        >
+            SYSTEM LOG
+        </button>
+
+    </div>
+
+
+    <div
+        id="judgementEvidenceDisplay"
+        class="judgement-evidence-display"
+    >
+        Select a record to examine.
+    </div>
+
+</div>
 
 
             <div class="judgement-controls">
