@@ -2134,7 +2134,6 @@ level6Cinematic.classList.remove(
     "blackout",
     "cinematic-fade-out"
 );
-
 }
 
 
