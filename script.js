@@ -1659,19 +1659,14 @@ const level6CinematicCaption =
 
 /*
     ========================================
-    DANIEL VOICE
-    ========================================
-
-    Daniel must NEVER use Elias's voice.
-    His delivery is younger, quicker
-    and more frightened.
+    DANIEL VOICE — TERRIFIED
     ========================================
 */
 
 function speakAsDaniel(line) {
 
     return new Promise(
-        function (resolve) {
+        async function (resolve) {
 
             if (
                 !(
@@ -1696,8 +1691,8 @@ function speakAsDaniel(line) {
 
 
                 /*
-                    Remove Elias's voice completely
-                    from Daniel's available voices.
+                    Daniel can NEVER use
+                    Elias's voice.
                 */
 
                 const availableVoices =
@@ -1715,14 +1710,6 @@ function speakAsDaniel(line) {
                         }
                     );
 
-
-                /*
-                    Preferred male voices.
-
-                    Different devices have
-                    different voice names, so
-                    we try several possibilities.
-                */
 
                 const preferredNames = [
 
@@ -1763,15 +1750,6 @@ function speakAsDaniel(line) {
                     );
 
 
-                /*
-                    If none of our preferred
-                    voices exist, use ANY
-                    English voice except Elias.
-
-                    Importantly, we NEVER fall
-                    back to curatorVoice.
-                */
-
                 if (!danielVoice) {
 
                     danielVoice =
@@ -1780,77 +1758,248 @@ function speakAsDaniel(line) {
                 }
 
 
-                const speech =
-                    new SpeechSynthesisUtterance(
-                        line
+                /*
+                    Speak one frightened fragment.
+
+                    Short fragments + changing
+                    speed/pitch make Daniel sound
+                    much less like calm narration.
+                */
+
+                function speakFragment(
+                    text,
+                    rate,
+                    pitch,
+                    volume
+                ) {
+
+                    return new Promise(
+                        function (fragmentDone) {
+
+                            const speech =
+                                new SpeechSynthesisUtterance(
+                                    text
+                                );
+
+
+                            if (danielVoice) {
+
+                                speech.voice =
+                                    danielVoice;
+                            }
+
+
+                            speech.rate =
+                                rate;
+
+                            speech.pitch =
+                                pitch;
+
+                            speech.volume =
+                                volume;
+
+
+                            let finished =
+                                false;
+
+
+                            function finish() {
+
+                                if (finished) {
+                                    return;
+                                }
+
+                                finished =
+                                    true;
+
+                                fragmentDone();
+                            }
+
+
+                            speech.onend =
+                                finish;
+
+                            speech.onerror =
+                                finish;
+
+
+                            setTimeout(
+                                finish,
+                                5000
+                            );
+
+
+                            window
+                                .speechSynthesis
+                                .speak(
+                                    speech
+                                );
+
+                        }
                     );
-
-
-                if (danielVoice) {
-
-                    speech.voice =
-                        danielVoice;
                 }
 
 
                 /*
-                    Daniel:
-                    nervous, quicker and
-                    less controlled than Elias.
+                    TERRIFIED DELIVERY
+
+                    Each of Daniel's lines gets
+                    its own performance.
                 */
 
-                speech.rate =
-                    1.18;
 
-                speech.pitch =
-                    1.14;
+                if (
+                    line.includes(
+                        "Don't listen to him"
+                    )
+                ) {
 
-                speech.volume =
-                    0.92;
+                    await speakFragment(
+                        "No!",
+                        1.32,
+                        1.20,
+                        1
+                    );
 
+                    await wait(
+                        90
+                    );
 
-                let finished =
-                    false;
+                    await speakFragment(
+                        "No, no!",
+                        1.38,
+                        1.23,
+                        1
+                    );
 
+                    await wait(
+                        70
+                    );
 
-                function finish() {
+                    await speakFragment(
+                        "Don't listen to him!",
+                        1.28,
+                        1.18,
+                        1
+                    );
 
-                    if (finished) {
-                        return;
-                    }
+                } else if (
+                    line.includes(
+                        "whatever he told you"
+                    )
+                ) {
 
-                    finished =
-                        true;
+                    await speakFragment(
+                        "Please...",
+                        1.10,
+                        1.17,
+                        0.92
+                    );
 
-                    resolve();
+                    await wait(
+                        120
+                    );
+
+                    await speakFragment(
+                        "whatever he told you...",
+                        1.22,
+                        1.15,
+                        0.96
+                    );
+
+                    await wait(
+                        80
+                    );
+
+                    await speakFragment(
+                        "it wasn't like that!",
+                        1.34,
+                        1.22,
+                        1
+                    );
+
+                } else if (
+                    line.includes(
+                        "don't know what happened"
+                    )
+                ) {
+
+                    await speakFragment(
+                        "You don't understand!",
+                        1.30,
+                        1.20,
+                        1
+                    );
+
+                    await wait(
+                        80
+                    );
+
+                    await speakFragment(
+                        "You don't know...",
+                        1.18,
+                        1.15,
+                        0.94
+                    );
+
+                    await wait(
+                        100
+                    );
+
+                    await speakFragment(
+                        "you don't know what happened!",
+                        1.36,
+                        1.23,
+                        1
+                    );
+
+                } else if (
+                    line.includes(
+                        "don't do this"
+                    )
+                ) {
+
+                    await speakFragment(
+                        "Please...",
+                        0.96,
+                        1.12,
+                        0.82
+                    );
+
+                    await wait(
+                        180
+                    );
+
+                    await speakFragment(
+                        "don't...",
+                        1.02,
+                        1.16,
+                        0.88
+                    );
+
+                    await wait(
+                        100
+                    );
+
+                    await speakFragment(
+                        "don't do this!",
+                        1.28,
+                        1.22,
+                        1
+                    );
+
+                } else {
+
+                    await speakFragment(
+                        line,
+                        1.24,
+                        1.18,
+                        1
+                    );
                 }
 
 
-                speech.onend =
-                    function () {
-
-                        setTimeout(
-                            finish,
-                            180
-                        );
-                    };
-
-
-                speech.onerror =
-                    finish;
-
-
-                setTimeout(
-                    finish,
-                    8000
-                );
-
-
-                window
-                    .speechSynthesis
-                    .speak(
-                        speech
-                    );
+                resolve();
 
 
             } catch (error) {
@@ -1861,8 +2010,6 @@ function speakAsDaniel(line) {
         }
     );
 }
-
-
 /*
     ========================================
     PLAY LEVEL 6 CINEMATIC
