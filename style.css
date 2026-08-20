@@ -5619,16 +5619,15 @@ blockquote {
 
 
 .level6-cinematic.camera-move
-.level6-cinematic-image {
+.level6-cinematic-camera {
 
     transform:
         scale(1.10);
 
     filter:
-        brightness(0.84)
-        contrast(1.15);
+        brightness(1.05)
+        contrast(1.08);
 }
-
 
 /* ========================================
    FLUORESCENT FLICKER
