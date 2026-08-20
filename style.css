@@ -5526,6 +5526,7 @@ blockquote {
 }
 /* ========================================
    LEVEL 6 — OPENING CINEMATIC
+   CLEAN VERSION
    ======================================== */
 
 .level6-cinematic {
@@ -5555,33 +5556,50 @@ blockquote {
 }
 
 
+/* ========================================
+   CAMERA
+   ======================================== */
+
 .level6-cinematic-camera {
     position: absolute;
     inset: 0;
 
+    z-index: 1;
+
     overflow: hidden;
+
+    background: #000;
 }
 
 
+/* ========================================
+   CINEMATIC IMAGE
+   ======================================== */
+
 .level6-cinematic-image {
     position: absolute;
+
+    top: 0;
+    left: 0;
 
     width: 100%;
     height: 100%;
 
     object-fit: cover;
-
     object-position: center center;
+
+    opacity: 1;
+    visibility: visible;
 
     transform:
         scale(1.02);
 
     filter:
-        brightness(0.72)
+        brightness(0.78)
         contrast(1.12);
 
     transition:
-        transform 20s ease-out,
+        transform 18s ease-out,
         filter 2s ease;
 }
 
@@ -5593,26 +5611,28 @@ blockquote {
         scale(1.10);
 
     filter:
-        brightness(0.8)
-        contrast(1.16);
+        brightness(0.84)
+        contrast(1.15);
 }
 
 
-/*
-    Fluorescent / monitor flicker.
-*/
+/* ========================================
+   FLUORESCENT FLICKER
+   ======================================== */
 
 .level6-cinematic-flicker {
     position: absolute;
     inset: 0;
 
+    z-index: 2;
+
+    pointer-events: none;
+
     background:
-        rgba(210,225,230,0.06);
+        rgba(215,225,230,0.05);
 
     mix-blend-mode:
         screen;
-
-    opacity: 0.08;
 
     animation:
         level6Flicker
@@ -5629,57 +5649,61 @@ blockquote {
     60%,
     63%,
     100% {
-        opacity: 0.06;
+        opacity: 0.04;
     }
 
     19% {
-        opacity: 0.24;
-    }
-
-    20% {
-        opacity: 0.02;
-    }
-
-    61% {
         opacity: 0.18;
     }
 
+    20% {
+        opacity: 0.01;
+    }
+
+    61% {
+        opacity: 0.13;
+    }
+
     62% {
-        opacity: 0.04;
+        opacity: 0.03;
     }
 }
 
 
 /*
-    Slight red warning change
-    when Elias says "Choose."
+    Red warning atmosphere when
+    Elias says "Choose."
 */
 
 .level6-cinematic.warning
 .level6-cinematic-flicker {
 
     background:
-        rgba(120,0,0,0.18);
+        rgba(120,0,0,0.12);
 
     opacity:
-        0.32;
+        0.26;
 }
 
 
-/*
-    Dark cinematic edges.
-*/
+/* ========================================
+   VIGNETTE
+   ======================================== */
 
 .level6-cinematic-vignette {
     position: absolute;
     inset: 0;
 
+    z-index: 3;
+
+    pointer-events: none;
+
     background:
         radial-gradient(
             ellipse at center,
-            transparent 35%,
-            rgba(0,0,0,0.18) 58%,
-            rgba(0,0,0,0.88) 100%
+            transparent 38%,
+            rgba(0,0,0,0.16) 62%,
+            rgba(0,0,0,0.72) 100%
         );
 }
 
@@ -5710,11 +5734,11 @@ blockquote {
         translateY(10px);
 
     background:
-        rgba(0,0,0,0.62);
+        rgba(0,0,0,0.58);
 
     border:
         1px solid
-        rgba(255,255,255,0.1);
+        rgba(255,255,255,0.12);
 
     color:
         rgba(245,245,245,0.96);
@@ -5741,7 +5765,6 @@ blockquote {
 
 
 .level6-cinematic-caption.visible {
-
     opacity: 1;
 
     transform:
@@ -5751,33 +5774,22 @@ blockquote {
 
 
 /*
-    Daniel subtitle gets a slight visual
-    distinction from Elias.
+    Daniel's subtitles.
 */
 
 .level6-cinematic-caption.daniel {
-
-    font-style:
-        italic;
+    font-style: italic;
 
     border-color:
-        rgba(255,255,255,0.2);
+        rgba(255,255,255,0.22);
 }
 
 
-/*
-    Blackout.
-*/
+/* ========================================
+   FINAL CINEMATIC FADE
+   ======================================== */
 
-.level6-cinematic-blackout {
-    position: absolute;
-    inset: 0;
-
-    z-index: 50;
-
-    background:
-        #000;
-
+.level6-cinematic.cinematic-fade-out {
     opacity: 0;
 
     transition:
@@ -5785,24 +5797,19 @@ blockquote {
 }
 
 
-.level6-cinematic.blackout
-.level6-cinematic-blackout {
-
-    opacity: 1;
-}
-
+/* ========================================
+   IPAD / MOBILE
+   ======================================== */
 
 @media (max-width: 760px) {
 
     .level6-cinematic-image {
-
         object-position:
             center center;
     }
 
 
     .level6-cinematic-caption {
-
         bottom:
             5vh;
 
@@ -5815,151 +5822,6 @@ blockquote {
         font-size:
             18px;
     }
-}
-/* ========================================
-   LEVEL 6 CINEMATIC — IMAGE VISIBILITY FIX
-   ======================================== */
-.level6-cinematic-camera {
-    z-index: 1;
-}
-
-
-.level6-cinematic-image {
-    z-index: 1;
-
-    opacity: 1 !important;
-
-    visibility: visible !important;
-
-    display: block !important;
-}
-
-
-.level6-cinematic-flicker {
-    z-index: 2;
-}
-
-
-.level6-cinematic-vignette {
-    z-index: 3;
-
-    pointer-events: none;
-}
-
-
-.level6-cinematic-caption {
-    z-index: 30;
-}
-
-
-.level6-cinematic-blackout {
-    z-index: 50;
-}
-/* ========================================
-   LEVEL 6 CINEMATIC — BLACK SCREEN FIX
-   ======================================== */
-
-
-/*
-    Make absolutely certain the camera
-    and image fill the screen.
-*/
-
-.level6-cinematic-camera {
-    position: absolute !important;
-    inset: 0 !important;
-
-    z-index: 1 !important;
-
-    display: block !important;
-
-    background: #000;
-}
-
-
-.level6-cinematic-image {
-    position: absolute !important;
-
-    top: 0 !important;
-    left: 0 !important;
-
-    width: 100% !important;
-    height: 100% !important;
-
-    z-index: 1 !important;
-
-    display: block !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-
-    object-fit: cover !important;
-    object-position: center center !important;
-}
-
-
-/*
-    Atmosphere remains above photograph.
-*/
-
-.level6-cinematic-flicker {
-    z-index: 2 !important;
-}
-
-
-.level6-cinematic-vignette {
-    z-index: 3 !important;
-
-    pointer-events: none;
-}
-
-
-/*
-    IMPORTANT:
-
-    The blackout physically does not
-    exist on screen until JavaScript
-    deliberately adds the "blackout"
-    class at the END of the cinematic.
-*/
-
-.level6-cinematic-blackout {
-    display: none !important;
-
-    position: absolute;
-    inset: 0;
-
-    z-index: 50;
-
-    background: #000;
-
-    opacity: 0 !important;
-
-    pointer-events: none;
-}
-
-
-/*
-    Only show blackout at the final
-    cinematic cut.
-*/
-
-.level6-cinematic.blackout
-.level6-cinematic-blackout {
-
-    display: block !important;
-
-    opacity: 1 !important;
-}
-
-
-/*
-    Keep subtitles above the photograph
-    but below the final blackout.
-*/
-
-.level6-cinematic-caption {
-    z-index: 30 !important;
 }
 /* ========================================
    DEVELOPER MODE
