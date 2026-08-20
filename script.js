@@ -1800,13 +1800,13 @@ function speakAsDaniel(line) {
                 */
 
                 speech.rate =
-                    1.08;
+                    1.18;
 
                 speech.pitch =
-                    1.08;
+                    1.14;
 
                 speech.volume =
-                    1;
+                    0;92;
 
 
                 let finished =
