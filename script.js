@@ -2001,7 +2001,7 @@ level6CinematicCaption.classList.remove(
 
 
     const finalLineOne =
-        "Sixty seconds.";
+        "Ninety seconds.";
 
 
     level6CinematicCaption.textContent =
