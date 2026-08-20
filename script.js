@@ -1661,11 +1661,14 @@ const level6CinematicCaption =
     ========================================
     DANIEL VOICE
     ========================================
+
+    Daniel must NEVER use Elias's voice.
+    His delivery is younger, quicker
+    and more frightened.
+    ========================================
 */
 
-function speakAsDaniel(
-    line
-) {
+function speakAsDaniel(line) {
 
     return new Promise(
         function (resolve) {
@@ -1693,75 +1696,88 @@ function speakAsDaniel(
 
 
                 /*
-                    Deliberately avoid Elias's
-                    voice if possible.
+                    Remove Elias's voice completely
+                    from Daniel's available voices.
                 */
 
-              const maleDanielNames = [
+                const availableVoices =
+                    voices.filter(
+                        function (voice) {
 
-    "daniel",
-    "arthur",
-    "george",
-    "oliver",
-    "ryan",
-    "aaron",
-    "alex",
-    "fred",
-    "ralph",
-    "reed",
-    "eddy"
+                            if (!curatorVoice) {
+                                return true;
+                            }
 
-];
-
-
-const danielVoice =
-    voices.find(
-        function (voice) {
-
-            const name =
-                voice.name
-                    .toLowerCase();
+                            return (
+                                voice.name !==
+                                curatorVoice.name
+                            );
+                        }
+                    );
 
 
-            const isDifferentFromElias =
-                !curatorVoice ||
-                voice.name !==
-                    curatorVoice.name;
+                /*
+                    Preferred male voices.
+
+                    Different devices have
+                    different voice names, so
+                    we try several possibilities.
+                */
+
+                const preferredNames = [
+
+                    "daniel",
+                    "arthur",
+                    "george",
+                    "oliver",
+                    "ryan",
+                    "aaron",
+                    "alex",
+                    "fred",
+                    "ralph",
+                    "reed",
+                    "eddy",
+                    "guy",
+                    "davis"
+
+                ];
 
 
-            const soundsMale =
-                maleDanielNames.some(
-                    function (
-                        preferred
-                    ) {
+                let danielVoice =
+                    availableVoices.find(
+                        function (voice) {
 
-                        return name.includes(
-                            preferred
-                        );
+                            const name =
+                                voice.name
+                                    .toLowerCase();
 
-                    }
-                );
+                            return preferredNames.some(
+                                function (preferred) {
+
+                                    return name.includes(
+                                        preferred
+                                    );
+                                }
+                            );
+                        }
+                    );
 
 
-            return (
-                isDifferentFromElias &&
-                soundsMale
-            );
+                /*
+                    If none of our preferred
+                    voices exist, use ANY
+                    English voice except Elias.
 
-        }
-    )
+                    Importantly, we NEVER fall
+                    back to curatorVoice.
+                */
 
-    ||
+                if (!danielVoice) {
 
-    curatorVoice
-
-    ||
-
-    voices[0]
-
-    ||
-
-    null;
+                    danielVoice =
+                        availableVoices[0]
+                        || null;
+                }
 
 
                 const speech =
@@ -1770,9 +1786,7 @@ const danielVoice =
                     );
 
 
-                if (
-                    danielVoice
-                ) {
+                if (danielVoice) {
 
                     speech.voice =
                         danielVoice;
@@ -1780,16 +1794,16 @@ const danielVoice =
 
 
                 /*
-                    Daniel is frightened,
-                    quicker and less controlled
-                    than Elias.
+                    Daniel:
+                    nervous, quicker and
+                    less controlled than Elias.
                 */
 
                 speech.rate =
-                    0.92;
+                    1.08;
 
                 speech.pitch =
-                    0.88;
+                    1.08;
 
                 speech.volume =
                     1;
@@ -1801,13 +1815,9 @@ const danielVoice =
 
                 function finish() {
 
-                    if (
-                        finished
-                    ) {
-
+                    if (finished) {
                         return;
                     }
-
 
                     finished =
                         true;
@@ -1821,7 +1831,7 @@ const danielVoice =
 
                         setTimeout(
                             finish,
-                            200
+                            180
                         );
                     };
 
@@ -1842,9 +1852,8 @@ const danielVoice =
                         speech
                     );
 
-            } catch (
-                error
-            ) {
+
+            } catch (error) {
 
                 resolve();
             }
