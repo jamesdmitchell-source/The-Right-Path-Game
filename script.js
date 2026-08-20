@@ -1380,62 +1380,34 @@ judgementChamber.className =
 
 judgementChamber.innerHTML = `
 
-    <div class="judgement-room">
+    <div class="judgement-playable-scene">
 
-        <div class="judgement-heading">
+        <img
+            class="judgement-playable-image"
+            src="level6-judgement-cinematic.png"
+            alt=""
+        >
+
+
+        <div
+            class="judgement-playable-vignette"
+        ></div>
+
+
+        <div class="judgement-level-title">
+
             LEVEL 6 — JUDGEMENT
-        </div>
-
-
-        <div class="judgement-window">
-
-            <div class="judgement-glass"></div>
-
-
-            <div class="judgement-prisoner-room">
-
-                <div class="judgement-light"></div>
-
-
-                <div class="judgement-chair">
-
-                    <div
-                        class="judgement-prisoner-head"
-                    ></div>
-
-                    <div
-                        class="judgement-prisoner-body"
-                    ></div>
-
-                    <div
-                        class="judgement-restraint left"
-                    ></div>
-
-                    <div
-                        class="judgement-restraint right"
-                    ></div>
-
-                </div>
-
-
-                <div class="judgement-prisoner-label">
-
-                    SUBJECT 31
-
-                    <span>
-                        DANIEL MERCER
-                    </span>
-
-                </div>
-
-            </div>
 
         </div>
 
 
-        <div class="judgement-terminal">
+        <section
+            class="judgement-playable-panel"
+        >
 
-            <div class="judgement-terminal-title">
+            <div
+                class="judgement-terminal-title"
+            >
                 FINAL VERDICT
             </div>
 
@@ -1444,7 +1416,7 @@ judgementChamber.innerHTML = `
                 id="judgementTimer"
                 class="judgement-timer"
             >
-                01:00
+                01:30
             </div>
 
 
@@ -1452,7 +1424,23 @@ judgementChamber.innerHTML = `
                 id="judgementStatus"
                 class="judgement-status"
             >
-                SYSTEM IDLE
+                EVIDENCE SYSTEM INITIALISING
+            </div>
+
+
+            <div
+                class="judgement-evidence-placeholder"
+            >
+
+                <div class="judgement-evidence-title">
+                    EVIDENCE ARCHIVE
+                </div>
+
+                <p>
+                    Review the evidence before
+                    making your judgement.
+                </p>
+
             </div>
 
 
@@ -1489,12 +1477,11 @@ judgementChamber.innerHTML = `
 
             </div>
 
-        </div>
+        </section>
 
     </div>
 
 `;
-
 
 /*
     Put Judgement above the normal
