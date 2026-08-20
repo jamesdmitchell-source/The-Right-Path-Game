@@ -1593,7 +1593,150 @@ const judgementEvidenceButtons =
             ".judgement-evidence-button"
         )
     );
+/*
+    ========================================
+    LEVEL 6 — EVIDENCE ARCHIVE
+    ========================================
+*/
 
+const judgementEvidence = {
+
+    incident: {
+        title:
+            "INCIDENT REPORT",
+
+        text:
+            "Fatal collision recorded at 22:14. " +
+            "Daniel Mercer was identified as the driver. " +
+            "One pedestrian died at the scene."
+    },
+
+
+    phone: {
+        title:
+            "PHONE RECORD",
+
+        text:
+            "Outgoing call attributed to Daniel Mercer " +
+            "began at 22:11 and lasted 4 minutes 37 seconds. " +
+            "Device location placed the phone approximately " +
+            "three streets from the collision site."
+    },
+
+
+    camera: {
+        title:
+            "CAMERA LOG",
+
+        text:
+            "Vehicle matching Daniel Mercer's car entered " +
+            "the junction at 22:13. " +
+            "Maintenance note: CAMERA 04 INTERNAL CLOCK " +
+            "RUNNING FOUR MINUTES FAST."
+    },
+
+
+    witness: {
+        title:
+            "WITNESS STATEMENT",
+
+        text:
+            "Witness states that Daniel Mercer was driving. " +
+            "The same statement describes the driver as " +
+            "wearing a bright red jacket. " +
+            "Daniel's custody photograph from that night " +
+            "shows a grey coat."
+    },
+
+
+    system: {
+        title:
+            "SYSTEM LOG",
+
+        text:
+            "EVIDENCE PACKAGE 31. " +
+            "SOURCE RECORDS RECOMPILED. " +
+            "TIMESTAMPS NORMALISED. " +
+            "MANUAL EDIT AUTHORIZATION: E. VALE."
+    }
+
+};
+
+
+/*
+    Track which records the player
+    has actually examined.
+*/
+
+let judgementEvidenceSeen =
+    new Set();
+
+
+judgementEvidenceButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                const evidenceId =
+                    button.dataset.evidence;
+
+
+                const evidence =
+                    judgementEvidence[
+                        evidenceId
+                    ];
+
+
+                if (!evidence) {
+                    return;
+                }
+
+
+                judgementEvidenceSeen.add(
+                    evidenceId
+                );
+
+
+                button.classList.add(
+                    "reviewed"
+                );
+
+
+                judgementEvidenceDisplay.innerHTML =
+                    "<strong>" +
+                    evidence.title +
+                    "</strong><br><br>" +
+                    evidence.text;
+
+
+                /*
+                    Once the player has read all
+                    five records, something changes.
+                */
+
+                if (
+                    judgementEvidenceSeen.size >= 5
+                ) {
+
+                    judgementStatus.textContent =
+                        "EVIDENCE INTEGRITY QUESTIONED";
+
+
+                    mercyButton.disabled =
+                        false;
+
+
+                    judgementButton.disabled =
+                        false;
+                }
+
+            }
+        );
+
+    }
+);
 /*
     ========================================
     SHOW / HIDE LEVEL 6 CHAMBER
