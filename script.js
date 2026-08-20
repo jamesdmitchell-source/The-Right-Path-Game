@@ -1659,350 +1659,187 @@ const level6CinematicCaption =
 
 /*
     ========================================
-    DANIEL VOICE — TERRIFIED
+    DANIEL — RECORDED LEVEL 6 AUDIO
     ========================================
 */
 
-function speakAsDaniel(line) {
+let danielLevel6Audio =
+    null;
+
+
+async function playDanielLevel6Audio(
+    lines
+) {
 
     return new Promise(
-        async function (resolve) {
-
-            if (
-                !(
-                    "speechSynthesis"
-                    in window
-                )
-            ) {
-
-                setTimeout(
-                    resolve,
-                    1200
-                );
-
-                return;
-            }
-
+        function (resolve) {
 
             try {
 
-                const voices =
-                    getEnglishVoices();
-
-
                 /*
-                    Daniel can NEVER use
-                    Elias's voice.
+                    Stop an old copy if
+                    Level 6 is restarted.
                 */
 
-                const availableVoices =
-                    voices.filter(
-                        function (voice) {
-
-                            if (!curatorVoice) {
-                                return true;
-                            }
-
-                            return (
-                                voice.name !==
-                                curatorVoice.name
-                            );
-                        }
-                    );
-
-
-                const preferredNames = [
-
-                    "daniel",
-                    "arthur",
-                    "george",
-                    "oliver",
-                    "ryan",
-                    "aaron",
-                    "alex",
-                    "fred",
-                    "ralph",
-                    "reed",
-                    "eddy",
-                    "guy",
-                    "davis"
-
-                ];
-
-
-                let danielVoice =
-                    availableVoices.find(
-                        function (voice) {
-
-                            const name =
-                                voice.name
-                                    .toLowerCase();
-
-                            return preferredNames.some(
-                                function (preferred) {
-
-                                    return name.includes(
-                                        preferred
-                                    );
-                                }
-                            );
-                        }
-                    );
-
-
-                if (!danielVoice) {
-
-                    danielVoice =
-                        availableVoices[0]
-                        || null;
-                }
-
-
-                /*
-                    Speak one frightened fragment.
-
-                    Short fragments + changing
-                    speed/pitch make Daniel sound
-                    much less like calm narration.
-                */
-
-                function speakFragment(
-                    text,
-                    rate,
-                    pitch,
-                    volume
+                if (
+                    danielLevel6Audio
                 ) {
 
-                    return new Promise(
-                        function (fragmentDone) {
+                    danielLevel6Audio.pause();
 
-                            const speech =
-                                new SpeechSynthesisUtterance(
-                                    text
-                                );
+                    danielLevel6Audio.currentTime =
+                        0;
+                }
 
 
-                            if (danielVoice) {
-
-                                speech.voice =
-                                    danielVoice;
-                            }
-
-
-                            speech.rate =
-                                rate;
-
-                            speech.pitch =
-                                pitch;
-
-                            speech.volume =
-                                volume;
+                danielLevel6Audio =
+                    new Audio(
+                        "daniel-level6.mp3"
+                    );
 
 
-                            let finished =
-                                false;
+                danielLevel6Audio.preload =
+                    "auto";
 
 
-                            function finish() {
-
-                                if (finished) {
-                                    return;
-                                }
-
-                                finished =
-                                    true;
-
-                                fragmentDone();
-                            }
+                danielLevel6Audio.volume =
+                    1;
 
 
-                            speech.onend =
-                                finish;
-
-                            speech.onerror =
-                                finish;
+                let currentSubtitle =
+                    -1;
 
 
-                            setTimeout(
-                                finish,
-                                5000
-                            );
+                /*
+                    Change subtitles according
+                    to progress through the
+                    recorded performance.
+                */
+
+                function updateDanielSubtitle() {
+
+                    if (
+                        !danielLevel6Audio.duration ||
+                        !isFinite(
+                            danielLevel6Audio.duration
+                        )
+                    ) {
+
+                        return;
+                    }
 
 
-                            window
-                                .speechSynthesis
-                                .speak(
-                                    speech
-                                );
+                    const progress =
+                        danielLevel6Audio.currentTime /
+                        danielLevel6Audio.duration;
 
-                        }
+
+                    let index =
+                        0;
+
+
+                    if (
+                        progress >= 0.76
+                    ) {
+
+                        index =
+                            3;
+
+                    } else if (
+                        progress >= 0.50
+                    ) {
+
+                        index =
+                            2;
+
+                    } else if (
+                        progress >= 0.25
+                    ) {
+
+                        index =
+                            1;
+                    }
+
+
+                    if (
+                        index ===
+                        currentSubtitle
+                    ) {
+
+                        return;
+                    }
+
+
+                    currentSubtitle =
+                        index;
+
+
+                    level6CinematicCaption.classList.remove(
+                        "visible"
+                    );
+
+
+                    level6CinematicCaption.textContent =
+                        lines[
+                            index
+                        ];
+
+
+                    level6CinematicCaption.classList.add(
+                        "visible",
+                        "daniel"
                     );
                 }
 
 
-                /*
-                    TERRIFIED DELIVERY
+                danielLevel6Audio.addEventListener(
+                    "timeupdate",
+                    updateDanielSubtitle
+                );
 
-                    Each of Daniel's lines gets
-                    its own performance.
-                */
+
+                danielLevel6Audio.onended =
+                    function () {
+
+                        level6CinematicCaption.classList.remove(
+                            "visible",
+                            "daniel"
+                        );
+
+
+                        resolve();
+                    };
+
+
+                danielLevel6Audio.onerror =
+                    function () {
+
+                        resolve();
+                    };
+
+
+                const attempt =
+                    danielLevel6Audio.play();
 
 
                 if (
-                    line.includes(
-                        "Don't listen to him"
-                    )
+                    attempt &&
+                    typeof attempt.catch ===
+                    "function"
                 ) {
 
-                    await speakFragment(
-                        "No!",
-                        1.32,
-                        1.20,
-                        1
-                    );
+                    attempt.catch(
+                        function () {
 
-                    await wait(
-                        90
-                    );
-
-                    await speakFragment(
-                        "No, no!",
-                        1.38,
-                        1.23,
-                        1
-                    );
-
-                    await wait(
-                        70
-                    );
-
-                    await speakFragment(
-                        "Don't listen to him!",
-                        1.28,
-                        1.18,
-                        1
-                    );
-
-                } else if (
-                    line.includes(
-                        "whatever he told you"
-                    )
-                ) {
-
-                    await speakFragment(
-                        "Please...",
-                        1.10,
-                        1.17,
-                        0.92
-                    );
-
-                    await wait(
-                        120
-                    );
-
-                    await speakFragment(
-                        "whatever he told you...",
-                        1.22,
-                        1.15,
-                        0.96
-                    );
-
-                    await wait(
-                        80
-                    );
-
-                    await speakFragment(
-                        "it wasn't like that!",
-                        1.34,
-                        1.22,
-                        1
-                    );
-
-                } else if (
-                    line.includes(
-                        "don't know what happened"
-                    )
-                ) {
-
-                    await speakFragment(
-                        "You don't understand!",
-                        1.30,
-                        1.20,
-                        1
-                    );
-
-                    await wait(
-                        80
-                    );
-
-                    await speakFragment(
-                        "You don't know...",
-                        1.18,
-                        1.15,
-                        0.94
-                    );
-
-                    await wait(
-                        100
-                    );
-
-                    await speakFragment(
-                        "you don't know what happened!",
-                        1.36,
-                        1.23,
-                        1
-                    );
-
-                } else if (
-                    line.includes(
-                        "don't do this"
-                    )
-                ) {
-
-                    await speakFragment(
-                        "Please...",
-                        0.96,
-                        1.12,
-                        0.82
-                    );
-
-                    await wait(
-                        180
-                    );
-
-                    await speakFragment(
-                        "don't...",
-                        1.02,
-                        1.16,
-                        0.88
-                    );
-
-                    await wait(
-                        100
-                    );
-
-                    await speakFragment(
-                        "don't do this!",
-                        1.28,
-                        1.22,
-                        1
-                    );
-
-                } else {
-
-                    await speakFragment(
-                        line,
-                        1.24,
-                        1.18,
-                        1
+                            resolve();
+                        }
                     );
                 }
 
 
-                resolve();
-
-
-            } catch (error) {
+            } catch (
+                error
+            ) {
 
                 resolve();
             }
