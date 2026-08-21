@@ -1901,6 +1901,399 @@ judgementEvidenceButtons.forEach(
 );
 /*
     ========================================
+    LEVEL 6 — JUDGEMENT ENGINE
+    ========================================
+*/
+
+function stopJudgementTimer() {
+
+    if (
+        judgementTimer
+    ) {
+
+        clearInterval(
+            judgementTimer
+        );
+
+        judgementTimer =
+            null;
+    }
+
+
+    judgementRunning =
+        false;
+}
+
+
+function resetJudgementState() {
+
+    stopJudgementTimer();
+
+
+    judgementResolutionRunning =
+        false;
+
+
+    judgementEvidenceSeen.clear();
+
+
+    judgementEvidenceButtons.forEach(
+        function (button) {
+
+            button.classList.remove(
+                "reviewed"
+            );
+        }
+    );
+
+
+    judgementEvidenceDisplay.textContent =
+        "Select a record to examine.";
+
+
+    const oldDeductionPanel =
+        document.getElementById(
+            "judgementDeductionPanel"
+        );
+
+
+    if (
+        oldDeductionPanel
+    ) {
+
+        oldDeductionPanel.remove();
+    }
+
+
+    mercyButton.disabled =
+        true;
+
+
+    judgementButton.disabled =
+        true;
+
+
+    noVerdictButton.disabled =
+        true;
+
+
+    noVerdictButton.classList.remove(
+        "revealed"
+    );
+
+
+    judgementTimerDisplay.textContent =
+        "01:30";
+
+
+    judgementStatus.textContent =
+        "AWAITING VERDICT";
+}
+
+
+function updateJudgementTimer() {
+
+    if (
+        !judgementRunning
+    ) {
+
+        return;
+    }
+
+
+    const remaining =
+        Math.max(
+            0,
+            judgementDeadline -
+            Date.now()
+        );
+
+
+    const totalSeconds =
+        Math.ceil(
+            remaining / 1000
+        );
+
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    judgementTimerDisplay.textContent =
+        String(minutes)
+            .padStart(
+                2,
+                "0"
+            ) +
+        ":" +
+        String(seconds)
+            .padStart(
+                2,
+                "0"
+            );
+
+
+    if (
+        remaining <= 0
+    ) {
+
+        stopJudgementTimer();
+
+
+        failJudgementLevel(
+            "You were given a choice. Indecision is still a choice."
+        );
+    }
+}
+
+
+function startJudgementLevel() {
+
+    stopJudgementTimer();
+
+
+    judgementResolutionRunning =
+        false;
+
+
+    judgementRunning =
+        true;
+
+
+    judgementDeadline =
+        Date.now() +
+        90000;
+
+
+    judgementTimerDisplay.textContent =
+        "01:30";
+
+
+    judgementStatus.textContent =
+        "REVIEW THE EVIDENCE";
+
+
+    updateJudgementTimer();
+
+
+    judgementTimer =
+        setInterval(
+            updateJudgementTimer,
+            250
+        );
+}
+
+
+/*
+    ========================================
+    WRONG VERDICT
+    ========================================
+*/
+
+async function failJudgementLevel(
+    eliasLine
+) {
+
+    if (
+        judgementResolutionRunning
+    ) {
+
+        return;
+    }
+
+
+    judgementResolutionRunning =
+        true;
+
+
+    stopJudgementTimer();
+
+
+    mercyButton.disabled =
+        true;
+
+    judgementButton.disabled =
+        true;
+
+    noVerdictButton.disabled =
+        true;
+
+
+    judgementStatus.textContent =
+        "VERDICT ACCEPTED";
+
+
+    await speakAsCurator(
+        eliasLine
+    );
+
+
+    judgementStatus.textContent =
+        "OBSERVATION ROOM SEALED";
+
+
+    await wait(
+        900
+    );
+
+
+    judgementStatus.textContent =
+        "ATMOSPHERIC PURGE INITIATED";
+
+
+    await wait(
+        1200
+    );
+
+
+    judgementChamber.classList.remove(
+        "active"
+    );
+
+
+    deathMessage.textContent =
+        "The observation room seals. " +
+        "The ventilation system changes direction. " +
+        "The air becomes impossible to breathe.";
+
+
+    curatorMessage.textContent =
+        "You judged without understanding.";
+
+
+    showScreen(
+        deathScreen
+    );
+}
+
+
+/*
+    ========================================
+    CORRECT VERDICT
+    ========================================
+*/
+
+async function completeJudgementLevel() {
+
+    if (
+        judgementResolutionRunning
+    ) {
+
+        return;
+    }
+
+
+    judgementResolutionRunning =
+        true;
+
+
+    stopJudgementTimer();
+
+
+    mercyButton.disabled =
+        true;
+
+    judgementButton.disabled =
+        true;
+
+    noVerdictButton.disabled =
+        true;
+
+
+    judgementStatus.textContent =
+        "NO VERDICT REGISTERED";
+
+
+    const line =
+        "That was not one of the choices I gave you.";
+
+
+    await speakAsCurator(
+        line
+    );
+
+
+    await wait(
+        500
+    );
+
+
+    judgementChamber.classList.remove(
+        "active"
+    );
+
+
+    successLabel.textContent =
+        "LEVEL 6 COMPLETE";
+
+
+    successTitle.textContent =
+        "You refused the judgement.";
+
+
+    successMessage.textContent =
+        "The evidence was compromised. " +
+        "You chose not to condemn a man on Elias's terms.";
+
+
+    curatorMessage.textContent =
+        line;
+
+
+    showScreen(
+        successScreen
+    );
+
+
+    continueButton.disabled =
+        false;
+}
+
+
+/*
+    ========================================
+    VERDICT BUTTONS
+    ========================================
+*/
+
+mercyButton.addEventListener(
+    "click",
+    function () {
+
+        failJudgementLevel(
+            "Mercy without understanding is merely another judgement."
+        );
+    }
+);
+
+
+judgementButton.addEventListener(
+    "click",
+    function () {
+
+        failJudgementLevel(
+            "You judged without understanding."
+        );
+    }
+);
+
+
+noVerdictButton.addEventListener(
+    "click",
+    function () {
+
+        completeJudgementLevel();
+    }
+);
+    
+/*
+    ========================================
     SHOW / HIDE LEVEL 6 CHAMBER
     ========================================
 */
