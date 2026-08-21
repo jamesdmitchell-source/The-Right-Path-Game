@@ -2310,7 +2310,7 @@ function updateJudgementChamber(
         judgementChamber.classList.remove(
             "active"
         );
-
+     resetJudgementState();
         return;
     }
 
