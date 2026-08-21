@@ -2291,7 +2291,94 @@ noVerdictButton.addEventListener(
         completeJudgementLevel();
     }
 );
-    
+ /*
+    ========================================
+    LEVEL 6 — GAS DEATH CINEMATIC
+    ========================================
+*/
+
+const judgementGasCinematic =
+    document.createElement(
+        "div"
+    );
+
+
+judgementGasCinematic.className =
+    "judgement-gas-cinematic";
+
+
+judgementGasCinematic.innerHTML = `
+
+    <div class="judgement-gas-view">
+
+        <div class="judgement-gas-warning">
+            ATMOSPHERIC PURGE INITIATED
+        </div>
+
+        <div class="judgement-gas-haze"></div>
+
+        <div class="judgement-gas-vignette"></div>
+
+        <div class="judgement-gas-blackout"></div>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    judgementGasCinematic
+);
+
+
+async function playJudgementGasDeath() {
+
+    judgementGasCinematic.classList.remove(
+        "active",
+        "gas-building",
+        "blackout"
+    );
+
+
+    void judgementGasCinematic.offsetWidth;
+
+
+    judgementGasCinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        700
+    );
+
+
+    judgementGasCinematic.classList.add(
+        "gas-building"
+    );
+
+
+    await wait(
+        4200
+    );
+
+
+    judgementGasCinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        1200
+    );
+
+
+    judgementGasCinematic.classList.remove(
+        "active",
+        "gas-building",
+        "blackout"
+    );
+}   
 /*
     ========================================
     SHOW / HIDE LEVEL 6 CHAMBER
