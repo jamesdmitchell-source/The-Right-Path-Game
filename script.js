@@ -1716,21 +1716,167 @@ judgementEvidenceButtons.forEach(
                     five records, something changes.
                 */
 
+              if (
+    judgementEvidenceSeen.size >= 5
+) {
+
+    judgementStatus.textContent =
+        "INTEGRITY CHECK AVAILABLE";
+
+
+    mercyButton.disabled =
+        false;
+
+
+    judgementButton.disabled =
+        false;
+
+
+    if (
+        !document.getElementById(
+            "judgementDeductionPanel"
+        )
+    ) {
+
+        const deductionPanel =
+            document.createElement(
+                "div"
+            );
+
+
+        deductionPanel.id =
+            "judgementDeductionPanel";
+
+
+        deductionPanel.className =
+            "judgement-deduction-panel";
+
+
+        deductionPanel.innerHTML = `
+
+            <div class="judgement-evidence-title">
+                EVIDENCE INTEGRITY CHECK
+            </div>
+
+
+            <p class="judgement-deduction-instruction">
+
+                Correct the camera timestamp.
+
+                If Camera 04 reads 22:13
+                but is four minutes fast,
+                what was the real time?
+
+            </p>
+
+
+            <div class="judgement-code-row">
+
+                <input
+                    id="judgementCodeInput"
+                    class="judgement-code-input"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="4"
+                    placeholder="HHMM"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    id="judgementCodeSubmit"
+                    class="judgement-code-submit"
+                    type="button"
+                >
+                    VERIFY
+                </button>
+
+            </div>
+
+
+            <div
+                id="judgementCodeStatus"
+                class="judgement-code-status"
+            ></div>
+
+        `;
+
+
+        judgementEvidenceDisplay
+            .parentNode
+            .appendChild(
+                deductionPanel
+            );
+
+
+        const judgementCodeInput =
+            document.getElementById(
+                "judgementCodeInput"
+            );
+
+
+        const judgementCodeSubmit =
+            document.getElementById(
+                "judgementCodeSubmit"
+            );
+
+
+        const judgementCodeStatus =
+            document.getElementById(
+                "judgementCodeStatus"
+            );
+
+
+        judgementCodeSubmit.addEventListener(
+            "click",
+            function () {
+
+                const answer =
+                    judgementCodeInput
+                        .value
+                        .trim();
+
+
                 if (
-                    judgementEvidenceSeen.size >= 5
+                    answer === "2209"
                 ) {
 
+                    judgementCodeStatus.textContent =
+                        "TIMESTAMP DISCREPANCY CONFIRMED";
+
+
                     judgementStatus.textContent =
-                        "EVIDENCE INTEGRITY QUESTIONED";
+                        "BINARY VERDICT PROTOCOL COMPROMISED";
 
 
-                    mercyButton.disabled =
+                    noVerdictButton.classList.add(
+                        "revealed"
+                    );
+
+
+                    noVerdictButton.disabled =
                         false;
 
 
-                    judgementButton.disabled =
-                        false;
+                    judgementCodeInput.disabled =
+                        true;
+
+
+                    judgementCodeSubmit.disabled =
+                        true;
+
+                } else {
+
+                    judgementCodeStatus.textContent =
+                        "INTEGRITY CHECK FAILED";
+
                 }
+
+            }
+        );
+
+    }
+}
 
             }
         );
