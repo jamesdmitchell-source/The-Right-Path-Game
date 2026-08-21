@@ -2398,6 +2398,9 @@ judgementGasCinematic.classList.remove(
     "gas-building",
     "blackout"
 );
+
+}    
+
 /*
     ========================================
     SHOW / HIDE LEVEL 6 CHAMBER
