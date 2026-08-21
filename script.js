@@ -3169,15 +3169,17 @@ async function developerJumpToLevel(
         normal game would.
     */
 
-    if (
-        level &&
-        level.judgementPuzzle
-    ) {
+ if (
+    level &&
+    level.judgementPuzzle
+) {
 
-        await playLevel6Cinematic();
+    await playLevel6Cinematic();
 
-        return;
-    }
+    startJudgementLevel();
+
+    return;
+}
 
 
     /*
