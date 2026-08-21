@@ -9832,8 +9832,9 @@ if (
 
     await playLevel6Cinematic();
 
-} else {
+    startJudgementLevel();
 
+} else {
     /*
         Normal Elias room introduction.
     */
