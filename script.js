@@ -1670,7 +1670,23 @@ const judgementEvidence = {
 
 let judgementEvidenceSeen =
     new Set();
+/*
+    ========================================
+    LEVEL 6 — JUDGEMENT STATE
+    ========================================
+*/
 
+let judgementTimer =
+    null;
+
+let judgementDeadline =
+    0;
+
+let judgementRunning =
+    false;
+
+let judgementResolutionRunning =
+    false;
 
 judgementEvidenceButtons.forEach(
     function (button) {
