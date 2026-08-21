@@ -2143,18 +2143,21 @@ async function failJudgementLevel(
     );
 
 
-    judgementStatus.textContent =
-        "ATMOSPHERIC PURGE INITIATED";
+  judgementStatus.textContent =
+    "ATMOSPHERIC PURGE INITIATED";
 
 
-    await wait(
-        1200
-    );
+await wait(
+    800
+);
 
 
-    judgementChamber.classList.remove(
-        "active"
-    );
+await playJudgementGasDeath();
+
+
+judgementChamber.classList.remove(
+    "active"
+);
 
 
     deathMessage.textContent =
