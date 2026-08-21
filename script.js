@@ -2361,27 +2361,43 @@ async function playJudgementGasDeath() {
     );
 
 
-    await wait(
-        4200
-    );
+   await wait(
+    3200
+);
 
 
-    judgementGasCinematic.classList.add(
-        "blackout"
-    );
+judgementGasCinematic.classList.add(
+    "blackout"
+);
 
 
-    await wait(
-        1200
-    );
+await wait(
+    1100
+);
 
 
-    judgementGasCinematic.classList.remove(
-        "active",
-        "gas-building",
-        "blackout"
-    );
-}   
+const gasLine =
+    "The gas Daniel is breathing is slowly attacking his body. " +
+    "His muscles weaken. His breathing slows. " +
+    "And eventually... his body goes limp in the chair " +
+    "as he takes his final breath.";
+
+
+await speakAsCurator(
+    gasLine
+);
+
+
+await wait(
+    900
+);
+
+
+judgementGasCinematic.classList.remove(
+    "active",
+    "gas-building",
+    "blackout"
+);
 /*
     ========================================
     SHOW / HIDE LEVEL 6 CHAMBER
