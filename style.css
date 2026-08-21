@@ -6335,3 +6335,327 @@ blockquote {
             1fr 1fr;
     }
 }
+/* ========================================
+   LEVEL 6 — EVIDENCE PUZZLE
+   ======================================== */
+
+.judgement-evidence-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        8px;
+
+    margin:
+        12px 0;
+}
+
+
+.judgement-evidence-button {
+    min-height:
+        44px;
+
+    padding:
+        9px 8px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    background:
+        rgba(10,10,10,0.92);
+
+    color:
+        #c8c8c8;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        1.4px;
+
+    cursor:
+        pointer;
+}
+
+
+.judgement-evidence-button:hover {
+    background:
+        rgba(35,35,35,0.95);
+
+    border-color:
+        rgba(255,255,255,0.35);
+}
+
+
+.judgement-evidence-button.reviewed {
+    border-color:
+        rgba(145,170,145,0.55);
+
+    color:
+        #b9cbb9;
+}
+
+
+.judgement-evidence-button.system-log {
+    grid-column:
+        1 / -1;
+}
+
+
+/* ========================================
+   EVIDENCE DISPLAY
+   ======================================== */
+
+.judgement-evidence-display {
+    min-height:
+        70px;
+
+    max-height:
+        125px;
+
+    overflow-y:
+        auto;
+
+    margin:
+        10px 0 12px;
+
+    padding:
+        12px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    background:
+        rgba(0,0,0,0.75);
+
+    color:
+        #bcbcbc;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.55;
+
+    text-align:
+        left;
+}
+
+
+.judgement-evidence-display strong {
+    color:
+        #e0e0e0;
+
+    letter-spacing:
+        2px;
+}
+
+
+/* ========================================
+   INTEGRITY CHECK
+   ======================================== */
+
+.judgement-deduction-panel {
+    margin:
+        14px 0;
+
+    padding:
+        13px;
+
+    border:
+        1px solid
+        rgba(190,190,190,0.22);
+
+    background:
+        rgba(0,0,0,0.82);
+}
+
+
+.judgement-deduction-instruction {
+    margin:
+        8px auto 12px;
+
+    max-width:
+        500px;
+
+    color:
+        #b5b5b5;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.55;
+}
+
+
+.judgement-code-row {
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+}
+
+
+.judgement-code-input {
+    width:
+        110px;
+
+    padding:
+        10px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        #050505;
+
+    color:
+        #e1e1e1;
+
+    font-family:
+        monospace;
+
+    font-size:
+        18px;
+
+    letter-spacing:
+        4px;
+
+    text-align:
+        center;
+}
+
+
+.judgement-code-submit {
+    padding:
+        10px 16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        #111;
+
+    color:
+        #ddd;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
+    cursor:
+        pointer;
+}
+
+
+.judgement-code-submit:hover {
+    background:
+        #222;
+}
+
+
+.judgement-code-status {
+    min-height:
+        18px;
+
+    margin-top:
+        9px;
+
+    color:
+        #b7b7b7;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        1.5px;
+}
+
+
+/* ========================================
+   SMALL SCREEN / IPAD
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .judgement-evidence-grid {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:
+            6px;
+    }
+
+
+    .judgement-evidence-button {
+        min-height:
+            40px;
+
+        padding:
+            7px 5px;
+
+        font-size:
+            9px;
+
+        letter-spacing:
+            0.8px;
+    }
+
+
+    .judgement-evidence-display {
+        min-height:
+            60px;
+
+        max-height:
+            100px;
+
+        padding:
+            9px;
+
+        font-size:
+            10px;
+    }
+
+
+    .judgement-deduction-panel {
+        padding:
+            10px;
+    }
+
+
+    .judgement-code-row {
+        flex-wrap:
+            wrap;
+    }
+
+
+    .judgement-code-input {
+        width:
+            105px;
+    }
+}
