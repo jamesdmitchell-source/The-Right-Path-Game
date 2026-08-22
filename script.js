@@ -2410,22 +2410,24 @@ function updateJudgementChamber(
     level
 ) {
 
-    if (
-        !level ||
-        !level.judgementPuzzle
-    ) {
+  if (
+    !level ||
+    !level.judgementPuzzle
+) {
 
-        judgementChamber.classList.remove(
-            "active"
-        );
-     resetJudgementState();
-        return;
-    }
-
-
-    judgementChamber.classList.add(
+    judgementChamber.classList.remove(
         "active"
     );
+
+    return;
+}
+
+
+judgementChamber.classList.add(
+    "active"
+);
+
+resetJudgementState();
 
 
     judgementTimerDisplay.textContent =
