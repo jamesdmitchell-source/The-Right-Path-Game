@@ -2240,10 +2240,9 @@ async function completeJudgementLevel() {
         "You refused the judgement.";
 
 
-    successMessage.textContent =
-        "The evidence was compromised. " +
-        "You chose not to condemn a man on Elias's terms.";
-
+  successMessage.textContent =
+    "The restraints loosen. " +
+    "Daniel stands and exits the chamber.";
 
     curatorMessage.textContent =
         line;
