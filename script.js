@@ -3041,7 +3041,75 @@ const annaNewspapers =
     PLAY POST LEVEL 6 — ANNA CINEMATIC
     ========================================
 */
+/*
+    ========================================
+    ANNA — RECORDED AUDIO
+    ========================================
+*/
 
+async function playAnnaLevel6Audio() {
+
+    return new Promise(
+        function (resolve) {
+
+            try {
+
+                const annaAudio =
+                    new Audio(
+                        "anna-level6.mp3"
+                    );
+
+
+                annaAudio.preload =
+                    "auto";
+
+
+                annaAudio.volume =
+                    1;
+
+
+                annaAudio.onended =
+                    function () {
+
+                        resolve();
+                    };
+
+
+                annaAudio.onerror =
+                    function () {
+
+                        resolve();
+                    };
+
+
+                const attempt =
+                    annaAudio.play();
+
+
+                if (
+                    attempt &&
+                    typeof attempt.catch ===
+                    "function"
+                ) {
+
+                    attempt.catch(
+                        function () {
+
+                            resolve();
+                        }
+                    );
+                }
+
+            } catch (
+                error
+            ) {
+
+                resolve();
+            }
+
+        }
+    );
+}
 async function playAnnaCinematic() {
 
     annaCinematic.classList.remove(
