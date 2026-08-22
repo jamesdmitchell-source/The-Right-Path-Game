@@ -10178,7 +10178,23 @@ if (
 
     await playEliasRevealCinematic();
 }
+/*
+    ========================================
+    ANNA CINEMATIC AFTER LEVEL 6
+    ========================================
+*/
 
+if (
+    levels[
+        currentLevelIndex
+    ] &&
+    levels[
+        currentLevelIndex
+    ].number === 6
+) {
+
+    await playAnnaCinematic();
+}
 
 await playCorridorSequence();
 
