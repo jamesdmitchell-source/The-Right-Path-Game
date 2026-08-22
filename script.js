@@ -10169,7 +10169,7 @@ retryButton.addEventListener(
             );
         }
 
-    }
+    
     /*
     ========================================
     LEVEL 6 — JUDGEMENT
@@ -10188,7 +10188,9 @@ if (
     startJudgementLevel();
 
     return;
+    
 }
+     }
 );
 
 
