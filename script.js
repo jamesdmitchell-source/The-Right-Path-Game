@@ -3200,48 +3200,57 @@ async function playAnnaCinematic() {
     );
 
 
-    const annaLineOne =
-        "Where is he?";
+   /*
+    ========================================
+    ANNA — RECORDED DIALOGUE
+    ========================================
+*/
+
+annaCinematicText.textContent =
+    "Where is he?";
+
+annaCinematicText.classList.add(
+    "visible",
+    "anna"
+);
 
 
-    annaCinematicText.textContent =
-        annaLineOne;
+const annaAudioPromise =
+    playAnnaLevel6Audio();
 
 
-    annaCinematicText.classList.add(
-        "visible",
-        "anna"
-    );
+await wait(
+    1800
+);
 
 
-    await wait(
-        1700
-    );
+annaCinematicText.classList.remove(
+    "visible"
+);
 
 
-    annaCinematicText.classList.remove(
-        "visible"
-    );
+await wait(
+    300
+);
 
 
-    await wait(
-        500
-    );
+annaCinematicText.textContent =
+    "I'm going to have to walk home.";
 
 
-    const annaLineTwo =
-        "I'm going to have to walk home.";
+annaCinematicText.classList.add(
+    "visible",
+    "anna"
+);
 
 
-    annaCinematicText.textContent =
-        annaLineTwo;
+await annaAudioPromise;
 
 
-    annaCinematicText.classList.add(
-        "visible",
-        "anna"
-    );
-
+annaCinematicText.classList.remove(
+    "visible",
+    "anna"
+);
 
     await wait(
         2200
