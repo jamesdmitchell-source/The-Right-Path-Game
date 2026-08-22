@@ -3682,6 +3682,7 @@ async function developerJumpToLevel(
     level &&
     level.judgementPuzzle
 ) {
+     resetJudgementState();
 
     await playLevel6Cinematic();
 
