@@ -6897,13 +6897,14 @@ blockquote {
 
     opacity: 0;
 
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(85,75,60,0.28),
-            rgba(15,15,15,0.92) 65%,
-            #000 100%
-        );
+   background:
+    linear-gradient(
+        rgba(0,0,0,0.12),
+        rgba(0,0,0,0.38)
+    ),
+    url("anna-waiting-cinematic.png")
+    center center / cover
+    no-repeat;
 
     transition:
         opacity 1.4s ease;
