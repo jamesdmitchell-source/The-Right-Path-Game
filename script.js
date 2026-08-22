@@ -3034,6 +3034,261 @@ const annaNewspapers =
     document.getElementById(
         "annaNewspapers"
     );
+/*
+    ========================================
+    PLAY POST LEVEL 6 — ANNA CINEMATIC
+    ========================================
+*/
+
+async function playAnnaCinematic() {
+
+    annaCinematic.classList.remove(
+        "active",
+        "impact",
+        "blackout"
+    );
+
+
+    annaCinematicText.classList.remove(
+        "visible"
+    );
+
+
+    annaNewspapers.classList.remove(
+        "visible"
+    );
+
+
+    annaCinematicText.textContent =
+        "";
+
+
+    annaNewspapers.innerHTML =
+        "";
+
+
+    void annaCinematic.offsetWidth;
+
+
+    /*
+        BLACK SCREEN
+    */
+
+    annaCinematic.classList.add(
+        "active"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    /*
+        ELIAS
+    */
+
+    const eliasLine =
+        "Every time we make a choice, it has consequences, Twenty-eight.";
+
+
+    annaCinematicText.textContent =
+        eliasLine;
+
+
+    annaCinematicText.classList.add(
+        "visible"
+    );
+
+
+    await speakAsCurator(
+        eliasLine
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    annaCinematicText.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        700
+    );
+
+
+    /*
+        ANNA
+    */
+
+    annaCinematic.classList.add(
+        "anna-scene"
+    );
+
+
+    const annaLineOne =
+        "Where is he?";
+
+
+    annaCinematicText.textContent =
+        annaLineOne;
+
+
+    annaCinematicText.classList.add(
+        "visible",
+        "anna"
+    );
+
+
+    await wait(
+        1700
+    );
+
+
+    annaCinematicText.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        500
+    );
+
+
+    const annaLineTwo =
+        "I'm going to have to walk home.";
+
+
+    annaCinematicText.textContent =
+        annaLineTwo;
+
+
+    annaCinematicText.classList.add(
+        "visible",
+        "anna"
+    );
+
+
+    await wait(
+        2200
+    );
+
+
+    annaCinematicText.classList.remove(
+        "visible",
+        "anna"
+    );
+
+
+    /*
+        WALKING / APPROACHING CAR
+    */
+
+    await wait(
+        1400
+    );
+
+
+    /*
+        CRASH
+    */
+
+    annaCinematic.classList.add(
+        "impact"
+    );
+
+
+    await wait(
+        250
+    );
+
+
+    annaCinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        1600
+    );
+
+
+    /*
+        NEWSPAPER CLIPPINGS
+    */
+
+    annaCinematic.classList.remove(
+        "blackout"
+    );
+
+
+    annaCinematic.classList.remove(
+        "anna-scene"
+    );
+
+
+    annaNewspapers.innerHTML = `
+
+        <div class="anna-newspaper clipping-one">
+            LOCAL TEACHER KILLED
+            IN LATE-NIGHT COLLISION
+        </div>
+
+        <div class="anna-newspaper clipping-two">
+            ANNA VALE DIES
+            FOLLOWING PEDESTRIAN ACCIDENT
+        </div>
+
+        <div class="anna-newspaper clipping-three">
+            POLICE APPEAL
+            FOR WITNESSES
+        </div>
+
+    `;
+
+
+    annaNewspapers.classList.add(
+        "visible"
+    );
+
+
+    await wait(
+        4200
+    );
+
+
+    annaNewspapers.classList.remove(
+        "visible"
+    );
+
+
+    await wait(
+        600
+    );
+
+
+    annaCinematic.classList.add(
+        "blackout"
+    );
+
+
+    await wait(
+        900
+    );
+
+
+    annaCinematic.classList.remove(
+        "active",
+        "impact",
+        "blackout",
+        "anna-scene"
+    );
+}
+    
     /*
     ========================================
     DEVELOPER MODE
