@@ -3220,7 +3220,7 @@ const annaAudioPromise =
 
 
 await wait(
-    1800
+    1300
 );
 
 
