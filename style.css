@@ -6857,3 +6857,319 @@ blockquote {
 
     opacity: 1;
 }
+/* ========================================
+   POST LEVEL 6 — ANNA CINEMATIC
+   ======================================== */
+
+.anna-cinematic {
+    position: fixed;
+    inset: 0;
+    z-index: 9900;
+
+    display: none;
+
+    overflow: hidden;
+    background: #000;
+}
+
+
+.anna-cinematic.active {
+    display: block;
+}
+
+
+.anna-cinematic-scene {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+    background: #000;
+}
+
+
+/* ========================================
+   ANNA SCENE
+   ======================================== */
+
+.anna-cinematic-visual {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(85,75,60,0.28),
+            rgba(15,15,15,0.92) 65%,
+            #000 100%
+        );
+
+    transition:
+        opacity 1.4s ease;
+}
+
+
+.anna-cinematic.anna-scene
+.anna-cinematic-visual {
+    opacity: 1;
+}
+
+
+/* ========================================
+   DIALOGUE
+   ======================================== */
+
+.anna-cinematic-text {
+    position: absolute;
+
+    left: 50%;
+    bottom: 10vh;
+
+    z-index: 10;
+
+    width:
+        min(760px, 88vw);
+
+    transform:
+        translateX(-50%);
+
+    color:
+        #d0d0d0;
+
+    font-size:
+        17px;
+
+    line-height:
+        1.6;
+
+    letter-spacing:
+        1px;
+
+    text-align:
+        center;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.5s ease;
+
+    text-shadow:
+        0 2px 10px #000;
+}
+
+
+.anna-cinematic-text.visible {
+    opacity: 1;
+}
+
+
+.anna-cinematic-text.anna {
+    color:
+        #ded8cd;
+
+    font-style:
+        italic;
+}
+
+
+/* ========================================
+   CRASH / IMPACT
+   ======================================== */
+
+.anna-cinematic.impact
+.anna-cinematic-scene {
+
+    animation:
+        annaImpact
+        0.28s
+        linear;
+}
+
+
+@keyframes annaImpact {
+
+    0% {
+        transform:
+            translate(0, 0);
+    }
+
+    20% {
+        transform:
+            translate(-10px, 4px);
+    }
+
+    40% {
+        transform:
+            translate(12px, -6px);
+    }
+
+    60% {
+        transform:
+            translate(-8px, 5px);
+    }
+
+    80% {
+        transform:
+            translate(6px, -3px);
+    }
+
+    100% {
+        transform:
+            translate(0, 0);
+    }
+}
+
+
+/* ========================================
+   NEWSPAPER CLIPPINGS
+   ======================================== */
+
+.anna-newspapers {
+    position: absolute;
+    inset: 0;
+
+    z-index: 12;
+
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    opacity: 0;
+
+    background:
+        #080808;
+
+    transition:
+        opacity 0.7s ease;
+}
+
+
+.anna-newspapers.visible {
+    opacity: 1;
+}
+
+
+.anna-newspaper {
+    position: absolute;
+
+    width:
+        min(520px, 76vw);
+
+    padding:
+        28px 24px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(40,40,40,0.8);
+
+    background:
+        #d3d0c6;
+
+    color:
+        #171717;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        24px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.25;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 18px 50px
+        rgba(0,0,0,0.8);
+}
+
+
+.clipping-one {
+    transform:
+        translate(-15%, -15%)
+        rotate(-4deg);
+}
+
+
+.clipping-two {
+    transform:
+        translate(12%, 5%)
+        rotate(3deg);
+}
+
+
+.clipping-three {
+    transform:
+        translate(-5%, 20%)
+        rotate(-1deg);
+}
+
+
+/* ========================================
+   BLACKOUT
+   ======================================== */
+
+.anna-cinematic-blackout {
+    position: absolute;
+    inset: 0;
+
+    z-index: 50;
+
+    pointer-events: none;
+
+    background: #000;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease;
+}
+
+
+.anna-cinematic.blackout
+.anna-cinematic-blackout {
+    opacity: 1;
+}
+
+
+/* ========================================
+   IPAD / SMALL SCREEN
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .anna-cinematic-text {
+        bottom:
+            8vh;
+
+        font-size:
+            14px;
+    }
+
+
+    .anna-newspaper {
+        width:
+            72vw;
+
+        padding:
+            20px 16px;
+
+        font-size:
+            17px;
+    }
+}
