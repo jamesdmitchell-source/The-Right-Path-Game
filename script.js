@@ -3738,16 +3738,11 @@ async function developerJumpToLevel(
         level.bladePuzzle
     ) {
 
-        await wait(
-            500
-        );
-
-
-        await startBladeLevel(
-            level
-        );
-    }
+        await wait(500);
+        
+        await startBladeLevel(level);
 }
+    
 /*
     ========================================
     LEVEL 6 — JUDGEMENT
@@ -3765,7 +3760,7 @@ if (
 
     return;
 }
-
+}
 
 /*
     ========================================
