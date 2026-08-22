@@ -10170,6 +10170,25 @@ retryButton.addEventListener(
         }
 
     }
+    /*
+    ========================================
+    LEVEL 6 — JUDGEMENT
+    ========================================
+*/
+
+if (
+    level &&
+    level.judgementPuzzle
+) {
+
+    resetJudgementState();
+
+    await playLevel6Cinematic();
+
+    startJudgementLevel();
+
+    return;
+}
 );
 
 
