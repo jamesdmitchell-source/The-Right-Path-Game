@@ -2969,7 +2969,71 @@ level6Cinematic.classList.remove(
     ========================================
     END LEVEL 6 OPENING CINEMATIC
     ========================================
-*/    
+*/   
+
+    /*
+    ========================================
+    POST LEVEL 6 — ANNA CINEMATIC
+    ========================================
+*/
+
+const annaCinematic =
+    document.createElement(
+        "div"
+    );
+
+
+annaCinematic.id =
+    "annaCinematic";
+
+
+annaCinematic.className =
+    "anna-cinematic";
+
+
+annaCinematic.innerHTML = `
+
+    <div class="anna-cinematic-scene">
+
+        <div
+            id="annaCinematicVisual"
+            class="anna-cinematic-visual"
+        ></div>
+
+        <div
+            id="annaCinematicText"
+            class="anna-cinematic-text"
+        ></div>
+
+        <div
+            id="annaNewspapers"
+            class="anna-newspapers"
+        ></div>
+
+        <div
+            class="anna-cinematic-blackout"
+        ></div>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    annaCinematic
+);
+
+
+const annaCinematicText =
+    document.getElementById(
+        "annaCinematicText"
+    );
+
+
+const annaNewspapers =
+    document.getElementById(
+        "annaNewspapers"
+    );
     /*
     ========================================
     DEVELOPER MODE
