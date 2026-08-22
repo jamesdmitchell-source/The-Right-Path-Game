@@ -3184,22 +3184,102 @@ async function playAnnaCinematic() {
     );
 
 
-    /*
-        WALKING / APPROACHING CAR
-    */
+  /*
+    WALKING / APPROACHING CAR
+*/
 
-    await wait(
-        1400
+await wait(
+    900
+);
+
+
+try {
+
+    const approachingCar =
+        new Audio(
+            "anna-car-approach.mp3"
+        );
+
+    approachingCar.volume =
+        0.85;
+
+    approachingCar.play();
+
+} catch (
+    error
+) {
+
+    console.log(
+        "Car approach audio unavailable."
     );
+}
 
 
-    /*
-        CRASH
-    */
+await wait(
+    1700
+);
 
-    annaCinematic.classList.add(
-        "impact"
+
+/*
+    TYRE SCREECH
+*/
+
+try {
+
+    const tyreScreech =
+        new Audio(
+            "anna-tyre-screech.mp3"
+        );
+
+    tyreScreech.volume =
+        1;
+
+    tyreScreech.play();
+
+} catch (
+    error
+) {
+
+    console.log(
+        "Tyre screech audio unavailable."
     );
+}
+
+
+await wait(
+    650
+);
+
+
+/*
+    IMPACT
+*/
+
+try {
+
+    const crashImpact =
+        new Audio(
+            "anna-crash-impact.mp3"
+        );
+
+    crashImpact.volume =
+        1;
+
+    crashImpact.play();
+
+} catch (
+    error
+) {
+
+    console.log(
+        "Crash impact audio unavailable."
+    );
+}
+
+
+annaCinematic.classList.add(
+    "impact"
+);
 
 
     await wait(
