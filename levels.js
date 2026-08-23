@@ -1173,10 +1173,21 @@ const levels = [
     title:
         "CONTRADICTION",
 
+    observation:
+        "Three doors stand at the far end of the chamber.",
+
+    clue:
+        "TRUTH. LIE. UNKNOWN.",
+
+    question:
+        "What can you actually prove?",
+
     intro:
         "Truth protects us, Twenty-eight. Lies have consequences. Unfortunately... determining the difference is rarely simple.",
 
     contradictionPuzzle:
-        true
+        true,
+
+    choices: []
 }
 ];
