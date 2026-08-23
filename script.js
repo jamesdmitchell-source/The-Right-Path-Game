@@ -2454,7 +2454,33 @@ resetJudgementState();
         "revealed"
     );
 }
+/*
+    ========================================
+    SHOW / HIDE LEVEL 7 ROOM
+    ========================================
+*/
 
+function updateContradictionRoom(
+    level
+) {
+
+    if (
+        !level ||
+        !level.contradictionPuzzle
+    ) {
+
+        contradictionRoom.classList.remove(
+            "active"
+        );
+
+        return;
+    }
+
+
+    contradictionRoom.classList.add(
+        "active"
+    );
+}
 
 /*
     ========================================
