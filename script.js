@@ -3509,6 +3509,20 @@ contradictionRoom.innerHTML = `
 
     <div class="contradiction-scene">
 
+    <div class="contradiction-blade-wall left">
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+</div>
+
+<div class="contradiction-blade-wall right">
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+    <div class="blade-slot"></div>
+</div>
+
         <div class="contradiction-title">
             LEVEL 7 — CONTRADICTION
         </div>
