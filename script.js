@@ -3447,7 +3447,58 @@ annaCinematic.classList.add(
         "anna-scene"
     );
 }
-    
+    /*
+    ========================================
+    LEVEL 7 — CONTRADICTION ROOM
+    ========================================
+*/
+
+const contradictionRoom =
+    document.createElement(
+        "section"
+    );
+
+
+contradictionRoom.id =
+    "contradictionRoom";
+
+
+contradictionRoom.className =
+    "contradiction-room";
+
+
+contradictionRoom.innerHTML = `
+
+    <div class="contradiction-scene">
+
+        <div class="contradiction-title">
+            LEVEL 7 — CONTRADICTION
+        </div>
+
+        <div class="contradiction-doors">
+
+            <div class="contradiction-door">
+                TRUTH
+            </div>
+
+            <div class="contradiction-door">
+                LIE
+            </div>
+
+            <div class="contradiction-door">
+                UNKNOWN
+            </div>
+
+        </div>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    contradictionRoom
+);
     /*
     ========================================
     DEVELOPER MODE
