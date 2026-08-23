@@ -9768,7 +9768,9 @@ async function playCorridorSequence() {
         updateJudgementChamber(
             level
         );
-
+        updateContradictionRoom(
+            level
+);
         choicesContainer.innerHTML =
             "";
 
