@@ -1162,7 +1162,21 @@ const levels = [
     success:
         "The judgement system shuts down. The restraints behind the glass release.",
 
-    death:
+     death:
         "You judged a man without knowing the truth."
+},
+
+{
+    number:
+        7,
+
+    title:
+        "CONTRADICTION",
+
+    intro:
+        "Truth protects us, Twenty-eight. Lies have consequences. Unfortunately... determining the difference is rarely simple.",
+
+    contradictionPuzzle:
+        true
 }
 ];
