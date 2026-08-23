@@ -2472,7 +2472,19 @@ function updateContradictionRoom(
         contradictionRoom.classList.remove(
             "active"
         );
+const contradictionDoors =
+    contradictionRoom.querySelectorAll(
+        ".contradiction-door"
+    );
 
+contradictionDoors.forEach(
+    function (door) {
+
+        door.classList.remove(
+            "danger"
+        );
+    }
+);
         return;
     }
 
