@@ -7411,3 +7411,58 @@ blockquote {
     transition:
         left 0.12s ease-out;
 }
+/* ========================================
+   LEVEL 7 — CONTRADICTION CINEMATIC
+   ======================================== */
+
+.level7-cinematic {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #080808;
+
+    z-index: 9500;
+
+    overflow: hidden;
+}
+
+.level7-cinematic.active {
+    display: block;
+}
+
+.level7-cinematic-scene {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.level7-cinematic-title {
+    color: #d8d8d8;
+
+    font-size: 30px;
+    letter-spacing: 4px;
+
+    text-align: center;
+}
+
+.level7-cinematic-blackout {
+    position: absolute;
+    inset: 0;
+
+    background: #000;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
