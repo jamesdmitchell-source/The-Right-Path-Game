@@ -2591,6 +2591,14 @@ async function showLevel7Cinematic() {
     await speakAsCurator(
         openingLine
     );
+    await wait(
+    500
+);
+
+
+level7Cinematic.classList.add(
+    "doors-visible"
+);
 }
 
 function hideLevel7Cinematic() {
