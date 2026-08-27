@@ -2454,6 +2454,7 @@ resetJudgementState();
         "revealed"
     );
 }
+  SHOW / HIDE LEVEL 7 ROOM   
 /*
     ========================================
     SHOW / HIDE LEVEL 7 ROOM
