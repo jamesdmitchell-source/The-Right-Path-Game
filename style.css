@@ -7195,10 +7195,7 @@ blockquote {
 }
 
 .contradiction-room.active {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
+    display: none;
 }
 
 .contradiction-scene {
