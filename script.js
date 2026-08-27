@@ -2492,6 +2492,26 @@ contradictionDoors.forEach(
     contradictionRoom.classList.add(
         "active"
     );
+    const testBlade =
+    contradictionRoom.querySelector(
+        ".contradiction-blade-wall.left .blade-slot:first-child .contradiction-blade"
+    );
+
+if (
+    testBlade
+) {
+
+    setTimeout(
+        function () {
+
+            testBlade.classList.add(
+                "fire"
+            );
+
+        },
+        1200
+    );
+}
 }
 
 /*
