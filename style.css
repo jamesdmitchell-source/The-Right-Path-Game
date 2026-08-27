@@ -7179,11 +7179,26 @@ blockquote {
    ======================================== */
 
 .contradiction-room {
+    position: fixed;
+    inset: 0;
+
     display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #090909;
+
+    z-index: 9000;
+
+    overflow: hidden;
 }
 
 .contradiction-room.active {
-    display: block;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 }
 
 .contradiction-scene {
