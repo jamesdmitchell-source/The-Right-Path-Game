@@ -7202,7 +7202,10 @@ blockquote {
 }
 
 .contradiction-scene {
-    min-height: 70vh;
+    position: relative;
+
+    width: 100%;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -7210,9 +7213,13 @@ blockquote {
     align-items: center;
     justify-content: center;
 
-    gap: 40px;
+    gap: 30px;
 
-    padding: 40px 20px;
+    padding: 30px 90px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
 
     background:
         linear-gradient(
