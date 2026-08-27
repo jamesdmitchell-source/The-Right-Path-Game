@@ -2547,7 +2547,21 @@ level7Cinematic.innerHTML = `
         <div class="level7-cinematic-title">
             LEVEL 7 — CONTRADICTION
         </div>
+<div class="level7-door-chamber">
 
+    <div class="level7-door">
+        TRUTH
+    </div>
+
+    <div class="level7-door">
+        LIE
+    </div>
+
+    <div class="level7-door">
+        UNKNOWN
+    </div>
+
+</div>
         <div class="level7-cinematic-blackout"></div>
 
     </div>
