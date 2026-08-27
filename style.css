@@ -7326,3 +7326,51 @@ blockquote {
     box-shadow:
         inset 0 0 7px #000;
 }
+/* ========================================
+   LEVEL 7 — HIDDEN BLADES
+   ======================================== */
+
+.blade-slot {
+    position: relative;
+    overflow: hidden;
+}
+
+.contradiction-blade {
+    position: absolute;
+
+    top: 50%;
+
+    width: 95px;
+    height: 8px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #c7c7c7,
+            #777,
+            #d8d8d8
+        );
+
+    border:
+        1px solid #aaa;
+
+    transform:
+        translateY(-50%);
+
+    box-shadow:
+        0 0 8px rgba(255,255,255,0.18);
+}
+
+/* Left wall blades hide to the left */
+
+.contradiction-blade-wall.left
+.contradiction-blade {
+    left: -100px;
+}
+
+/* Right wall blades hide to the right */
+
+.contradiction-blade-wall.right
+.contradiction-blade {
+    right: -100px;
+}
