@@ -2558,6 +2558,20 @@ level7Cinematic.innerHTML = `
 document.body.appendChild(
     level7Cinematic
 );    
+ function showLevel7Cinematic() {
+
+    level7Cinematic.classList.add(
+        "active"
+    );
+}
+
+
+function hideLevel7Cinematic() {
+
+    level7Cinematic.classList.remove(
+        "active"
+    );
+}   
 /*
     ========================================
     LEVEL 6 — OPENING CINEMATIC
