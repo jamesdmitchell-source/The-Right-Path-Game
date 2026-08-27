@@ -2522,6 +2522,44 @@ if (
 */ 
 /*
     ========================================
+    LEVEL 7 — CONTRADICTION CINEMATIC
+    ========================================
+*/
+
+const level7Cinematic =
+    document.createElement(
+        "div"
+    );
+
+
+level7Cinematic.id =
+    "level7Cinematic";
+
+
+level7Cinematic.className =
+    "level7-cinematic";
+
+
+level7Cinematic.innerHTML = `
+
+    <div class="level7-cinematic-scene">
+
+        <div class="level7-cinematic-title">
+            LEVEL 7 — CONTRADICTION
+        </div>
+
+        <div class="level7-cinematic-blackout"></div>
+
+    </div>
+
+`;
+
+
+document.body.appendChild(
+    level7Cinematic
+);    
+/*
+    ========================================
     LEVEL 6 — OPENING CINEMATIC
     ========================================
 */
