@@ -7374,3 +7374,16 @@ blockquote {
 .contradiction-blade {
     right: -100px;
 }
+/* ========================================
+   LEVEL 7 — TEST BLADE FIRE
+   ======================================== */
+
+.contradiction-blade-wall.left
+.blade-slot:first-child
+.contradiction-blade.fire {
+
+    left: 0;
+
+    transition:
+        left 0.12s ease-out;
+}
