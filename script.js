@@ -3510,17 +3510,31 @@ contradictionRoom.innerHTML = `
     <div class="contradiction-scene">
 
     <div class="contradiction-blade-wall left">
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
+  <div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
 </div>
 
 <div class="contradiction-blade-wall right">
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
-    <div class="blade-slot"></div>
+ <div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
+</div>
+<div class="blade-slot">
+    <div class="contradiction-blade"></div>
 </div>
 
         <div class="contradiction-title">
