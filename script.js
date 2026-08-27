@@ -3945,21 +3945,6 @@ async function developerJumpToLevel(
         normal game would.
     */
 
-
-if (
-    level &&
-    level.contradictionPuzzle
-) {
-
-    await playLevelIntroduction(
-        level
-    );
-
-    await playLevel7Reveal();
-
-    return;
-}
-
     /*
         Normal Elias introduction.
     */
