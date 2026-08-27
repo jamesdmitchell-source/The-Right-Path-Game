@@ -3893,18 +3893,7 @@ async function developerJumpToLevel(
         normal game would.
     */
 
- if (
-    level &&
-    level.judgementPuzzle
-) {
-     resetJudgementState();
 
-    await playLevel6Cinematic();
-
-    startJudgementLevel();
-
-    return;
-}
 if (
     level &&
     level.contradictionPuzzle
