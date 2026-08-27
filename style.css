@@ -7217,18 +7217,23 @@ blockquote {
 }
 
 .contradiction-doors {
-    width: min(900px, 94vw);
+    width: min(720px, 70vw);
 
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-    gap: 22px;
+    gap: 16px;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    z-index: 5;
 }
-
 .contradiction-door {
-    min-height: 260px;
+    min-height: 220px;
 
     display: flex;
 
