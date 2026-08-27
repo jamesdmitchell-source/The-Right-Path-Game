@@ -3937,7 +3937,15 @@ async function developerJumpToLevel(
         levels[
             currentLevelIndex
         ];
+    if (
+    level &&
+    level.contradictionPuzzle
+) {
 
+    showLevel7Cinematic();
+
+    return;
+}
 
     /*
         LEVEL 6
