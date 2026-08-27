@@ -2558,13 +2558,26 @@ level7Cinematic.innerHTML = `
 document.body.appendChild(
     level7Cinematic
 );    
- function showLevel7Cinematic() {
+async function showLevel7Cinematic() {
 
     level7Cinematic.classList.add(
         "active"
     );
-}
 
+
+    await wait(
+        1000
+    );
+
+
+    const openingLine =
+        "Three doors, Twenty-eight. But appearances can be deceptive.";
+
+
+    await speakAsCurator(
+        openingLine
+    );
+}
 
 function hideLevel7Cinematic() {
 
