@@ -2489,7 +2489,7 @@ contradictionDoors.forEach(
     }
 
 
-    contradictionRoom.classList.add(
+    contradictionRoom.classList.remove(
         "active"
     );
     const testBlade =
