@@ -7471,6 +7471,12 @@ blockquote {
    ======================================== */
 
 .level7-door-chamber {
+     opacity: 0;
+    transform: translateY(18px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
     width: min(760px, 86vw);
 
     display: grid;
@@ -7513,4 +7519,9 @@ blockquote {
     font-size: 22px;
 
     letter-spacing: 3px;
+}
+.level7-cinematic.doors-visible
+.level7-door-chamber {
+    opacity: 1;
+    transform: translateY(0);
 }
