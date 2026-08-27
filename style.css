@@ -7275,20 +7275,16 @@ blockquote {
 }
 
 .contradiction-blade-wall {
-    position: absolute;
-    top: 20px;
-    bottom: 20px;
-    width: 70px;
+    position: fixed;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    top: 80px;
 
-    background: #2a2a2a;
-    border: 1px solid #666;
+    width: 100px;
+    height: 400px;
 
-    z-index: 10;
+    background: red;
+
+    z-index: 99999;
 }
 
 .contradiction-blade-wall.left {
