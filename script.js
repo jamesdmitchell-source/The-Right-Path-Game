@@ -2671,6 +2671,16 @@ const warningLine =
 
 await speakAsCurator(
     warningLine
+);  
+await wait(
+    1200
+);
+
+const instructionLine =
+    "I will give you three statements. Your task is not to find the truth. Your task is to find the contradiction.";
+
+await speakAsCurator(
+    instructionLine
 );    
 }
 
