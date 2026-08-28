@@ -7554,7 +7554,7 @@ blockquote {
     transform: translateY(-50%);
 
     opacity: 0;
-
+    scale: 0.75 1;
     pointer-events: none;
 
     z-index: 4;
@@ -7586,6 +7586,9 @@ blockquote {
 .level7-wall-slots {
     opacity: 1;
 
+    scale: 1 1;
+
     transition:
-        opacity 0.6s ease;
+        opacity 0.25s ease,
+        scale 0.35s ease;
 }
