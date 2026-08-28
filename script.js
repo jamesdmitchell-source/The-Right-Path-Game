@@ -2564,19 +2564,35 @@ level7Cinematic.innerHTML = `
 </div>
 <div class="level7-wall-slots level7-wall-slots-left">
 
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
+   <div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
 
 </div>
 
 <div class="level7-wall-slots level7-wall-slots-right">
 
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
-    <div class="level7-wall-slot"></div>
+   <div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
+<div class="level7-wall-slot">
+    <div class="level7-slot-cover"></div>
+</div>
 
 </div>
         <div class="level7-cinematic-blackout"></div>
