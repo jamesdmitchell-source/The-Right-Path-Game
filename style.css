@@ -7686,3 +7686,10 @@ blockquote {
 
     text-align: center;
 }
+.level7-cinematic.statements-visible
+.level7-statement-panel {
+    opacity: 1;
+
+    transition:
+        opacity 0.6s ease;
+}
