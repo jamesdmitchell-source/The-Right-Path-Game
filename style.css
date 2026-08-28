@@ -7460,6 +7460,12 @@ blockquote {
     letter-spacing: 4px;
 
     text-align: center;
+
+    width: 100%;
+
+    position: relative;
+
+    z-index: 3;
 }
 
 .level7-cinematic-blackout {
