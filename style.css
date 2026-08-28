@@ -7637,3 +7637,52 @@ blockquote {
 .level7-slot-cover {
     transform: translateX(110%);
 }
+/* ========================================
+   LEVEL 7 — STATEMENT PANEL
+   ======================================== */
+
+.level7-statement-panel {
+    width: min(760px, 86vw);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    position: relative;
+
+    z-index: 5;
+}
+
+.level7-statement {
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: rgba(10, 10, 10, 0.9);
+
+    border: 1px solid #555;
+
+    color: #d8d8d8;
+
+    font-size: 16px;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+    text-align: center;
+}
