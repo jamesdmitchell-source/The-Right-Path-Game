@@ -2697,6 +2697,13 @@ const instructionLine =
 await speakAsCurator(
     instructionLine
 );    
+await wait(
+    800
+);
+
+level7Cinematic.classList.add(
+    "statements-visible"
+);    
 }
 
 function hideLevel7Cinematic() {
