@@ -2662,6 +2662,16 @@ slotOpenSound.play().catch(
 level7Cinematic.classList.add(
     "slots-visible"
 );
+await wait(
+    1000
+);
+
+const warningLine =
+    "Choose carefully, Twenty-eight. The room has little patience for mistakes.";
+
+await speakAsCurator(
+    warningLine
+);    
 }
 
 function hideLevel7Cinematic() {
