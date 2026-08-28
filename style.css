@@ -7592,3 +7592,30 @@ blockquote {
         opacity 0.25s ease,
         scale 0.35s ease;
 }
+/* ========================================
+   LEVEL 7 — SLOT COVERS
+   ======================================== */
+
+.level7-wall-slot {
+    position: relative;
+    overflow: hidden;
+}
+
+.level7-slot-cover {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #777,
+            #3b3b3b,
+            #181818
+        );
+
+    border: 1px solid #888;
+
+    box-sizing: border-box;
+
+    z-index: 2;
+}
