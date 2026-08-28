@@ -7442,11 +7442,17 @@ blockquote {
     height: 100%;
 
     display: flex;
+    flex-direction: column;
 
     align-items: center;
     justify-content: center;
-}
 
+    gap: 26px;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+}
 .level7-cinematic-title {
     color: #d8d8d8;
 
