@@ -7619,3 +7619,21 @@ blockquote {
 
     z-index: 2;
 }
+.level7-slot-cover {
+    transform: translateX(0);
+
+    transition:
+        transform 0.45s ease;
+}
+
+.level7-cinematic.slots-visible
+.level7-wall-slots-left
+.level7-slot-cover {
+    transform: translateX(-110%);
+}
+
+.level7-cinematic.slots-visible
+.level7-wall-slots-right
+.level7-slot-cover {
+    transform: translateX(110%);
+}
