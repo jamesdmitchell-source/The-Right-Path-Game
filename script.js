@@ -2599,6 +2599,18 @@ async function showLevel7Cinematic() {
 level7Cinematic.classList.add(
     "doors-visible"
 );
+ await wait(
+    1200
+);
+
+
+const secondLine =
+    "One tells the truth. One lies. And one... cannot be trusted at all.";
+
+
+await speakAsCurator(
+    secondLine
+);   
 }
 
 function hideLevel7Cinematic() {
