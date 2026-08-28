@@ -2628,6 +2628,13 @@ const secondLine =
 await speakAsCurator(
     secondLine
 );   
+await wait(
+    800
+);
+
+level7Cinematic.classList.add(
+    "slots-visible"
+);    
 }
 
 function hideLevel7Cinematic() {
