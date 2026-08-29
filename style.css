@@ -7749,4 +7749,50 @@ blockquote {
 .level7-cinematic.blades-visible
 .level7-blade {
     opacity: 1;
+
+    animation:
+        level7BladeStrike 0.35s
+        cubic-bezier(0.8, 0, 1, 1)
+        forwards;
+}
+@keyframes level7BladeStrike {
+
+    from {
+        transform:
+            translateY(-50%)
+            translateX(0);
+    }
+
+    to {
+        transform:
+            translateY(-50%)
+            translateX(38vw);
+    }
+}
+
+.level7-wall-slots-right
+.level7-blade {
+    --blade-direction: -1;
+}
+
+.level7-cinematic.blades-visible
+.level7-wall-slots-right
+.level7-blade {
+    animation-name:
+        level7BladeStrikeRight;
+}
+
+@keyframes level7BladeStrikeRight {
+
+    from {
+        transform:
+            translateY(-50%)
+            translateX(0);
+    }
+
+    to {
+        transform:
+            translateY(-50%)
+            translateX(-38vw);
+    }
 }
