@@ -2550,15 +2550,15 @@ level7Cinematic.innerHTML = `
        <div class="level7-statement-panel">
 
     <div class="level7-statement">
-        The LIE door is the correct door.
+         The contradiction is not above the TRUTH door.
     </div>
 
     <div class="level7-statement">
-        The statement above the TRUTH door is false.
+        The contradiction is above the UNKNOWN door.
     </div>
 
     <div class="level7-statement">
-        Exactly one of the other two statements is true.
+        The contradiction is above the LIE door.
     </div>
 
 </div>
