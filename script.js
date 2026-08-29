@@ -2564,15 +2564,24 @@ level7Cinematic.innerHTML = `
 </div>
 <div class="level7-door-chamber">
 
-    <div class="level7-door">
+    <div
+        class="level7-door"
+        data-level7-answer="truth"
+    >
         TRUTH
     </div>
 
-    <div class="level7-door">
+    <div
+        class="level7-door"
+        data-level7-answer="lie"
+    >
         LIE
     </div>
 
-    <div class="level7-door">
+    <div
+        class="level7-door"
+        data-level7-answer="unknown"
+    >
         UNKNOWN
     </div>
 
