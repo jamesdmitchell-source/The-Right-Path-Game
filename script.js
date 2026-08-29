@@ -2547,18 +2547,18 @@ level7Cinematic.innerHTML = `
         <div class="level7-cinematic-title">
             LEVEL 7 — CONTRADICTION
         </div>
-        <div class="level7-statement-panel">
+       <div class="level7-statement-panel">
 
     <div class="level7-statement">
-        Statement One
+        The LIE door is the correct door.
     </div>
 
     <div class="level7-statement">
-        Statement Two
+        The statement above the TRUTH door is false.
     </div>
 
     <div class="level7-statement">
-        Statement Three
+        Exactly one of the other two statements is true.
     </div>
 
 </div>
