@@ -7708,3 +7708,41 @@ blockquote {
         inset 0 0 28px rgba(0,0,0,0.9),
         0 0 18px rgba(120,0,0,0.35);
 }
+/* ========================================
+   LEVEL 7 — HIDDEN BLADES
+   ======================================== */
+
+.level7-blade {
+    position: absolute;
+
+    top: 50%;
+
+    width: 64px;
+    height: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #d0d0d0,
+            #6f6f6f,
+            #222
+        );
+
+    transform: translateY(-50%);
+
+    opacity: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.level7-wall-slots-left
+.level7-blade {
+    left: 100%;
+}
+
+.level7-wall-slots-right
+.level7-blade {
+    right: 100%;
+}
