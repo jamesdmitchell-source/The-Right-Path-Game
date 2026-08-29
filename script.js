@@ -2755,6 +2755,10 @@ level7Doors.forEach(
     door.classList.add(
         "wrong"
     );
+
+    level7Cinematic.classList.add(
+        "blades-visible"
+    );
 }
             }
         );
