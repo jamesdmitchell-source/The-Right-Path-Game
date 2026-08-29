@@ -2729,10 +2729,25 @@ level7Doors.forEach(
                 const answer =
                     door.dataset.level7Answer;
 
-                console.log(
-                    "Level 7 answer:",
-                    answer
-                );
+               if (
+    answer === "unknown"
+) {
+    console.log(
+        "Level 7 correct"
+    );
+
+    door.classList.add(
+        "correct"
+    );
+} else {
+    console.log(
+        "Level 7 wrong"
+    );
+
+    door.classList.add(
+        "wrong"
+    );
+}
             }
         );
     }
