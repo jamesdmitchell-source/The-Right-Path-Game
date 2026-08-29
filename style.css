@@ -7746,3 +7746,7 @@ blockquote {
 .level7-blade {
     right: 100%;
 }
+.level7-cinematic.blades-visible
+.level7-blade {
+    opacity: 1;
+}
