@@ -2714,7 +2714,29 @@ level7Cinematic.classList.add(
     "statements-visible"
 );    
 }
+const level7Doors =
+    level7Cinematic.querySelectorAll(
+        ".level7-door"
+    );
 
+level7Doors.forEach(
+    (door) => {
+
+        door.addEventListener(
+            "click",
+            () => {
+
+                const answer =
+                    door.dataset.level7Answer;
+
+                console.log(
+                    "Level 7 answer:",
+                    answer
+                );
+            }
+        );
+    }
+);
 function hideLevel7Cinematic() {
 
     level7Cinematic.classList.remove(
