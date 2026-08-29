@@ -7598,7 +7598,7 @@ blockquote {
 
 .level7-wall-slot {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .level7-slot-cover {
