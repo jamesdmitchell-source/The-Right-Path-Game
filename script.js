@@ -2692,7 +2692,7 @@ await wait(
 );
 
 const instructionLine =
-    "I will give you three statements. Your task is not to find the truth. Your task is to find the contradiction.";
+     "Each statement corresponds to the door beneath it. Two statements can coexist. One cannot. Find the contradiction... and choose its door.";
 
 await speakAsCurator(
     instructionLine
