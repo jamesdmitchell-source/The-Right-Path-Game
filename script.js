@@ -2732,7 +2732,7 @@ level7Doors.forEach(
 
         door.addEventListener(
             "click",
-            () => {
+         async () => {
 
                 const answer =
                     door.dataset.level7Answer;
