@@ -2768,14 +2768,22 @@ level7Doors.forEach(
         350
     );
 
-    showLevel7DeathScreen();
- await wait(
+  showLevel7DeathScreen();
+
+if (
+    typeof playLevel5DeathScream ===
+    "function"
+) {
+    playLevel5DeathScream();
+}
+
+await wait(
     120
 );
 
 level7DeathScreen.classList.add(
     "splatter"
-);                  
+);
 }
             }
         );
