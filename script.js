@@ -2627,10 +2627,11 @@ level7Cinematic.innerHTML = `
 </div>
 
 </div>
-        <div class="level7-cinematic-blackout"></div>
+       <div class="level7-cinematic-blackout"></div>
 
-    </div>
+<div class="blade-blood-splatter"></div>
 
+</div>
 `;
 
 
