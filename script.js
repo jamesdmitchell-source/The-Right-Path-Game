@@ -2759,6 +2759,12 @@ level7Doors.forEach(
     level7Cinematic.classList.add(
         "blades-visible"
     );
+
+    await wait(
+        350
+    );
+
+    await playLevel7DeathSequence();
 }
             }
         );
