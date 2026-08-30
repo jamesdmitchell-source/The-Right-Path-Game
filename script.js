@@ -2721,7 +2721,10 @@ await wait(
 
 level7Cinematic.classList.add(
     "statements-visible"
-);    
+); 
+level7Cinematic.classList.add(
+    "puzzle-ready"
+);
 }
 const level7Doors =
     level7Cinematic.querySelectorAll(
