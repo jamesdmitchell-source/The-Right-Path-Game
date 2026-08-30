@@ -2769,6 +2769,13 @@ level7Doors.forEach(
     );
 
     showLevel7DeathScreen();
+ await wait(
+    120
+);
+
+level7DeathScreen.classList.add(
+    "splatter"
+);                  
 }
             }
         );
