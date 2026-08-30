@@ -8059,3 +8059,58 @@ blockquote {
         opacity: 0;
     }
 }
+/* ========================================
+   LEVEL 7 — DEATH MESSAGE
+   ======================================== */
+
+.level7-death-message {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: min(720px, 86vw);
+
+    text-align: center;
+
+    color: #d8d8d8;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 3;
+}
+
+.level7-death-message p {
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    letter-spacing: 1px;
+
+    margin: 0 0 28px;
+}
+
+.level7-try-again {
+    padding: 12px 28px;
+
+    font-size: 16px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+}
+
+.level7-death-screen.message-visible
+.level7-death-message {
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transition:
+        opacity 0.6s ease;
+}
