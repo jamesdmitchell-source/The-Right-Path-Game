@@ -2764,6 +2764,35 @@ level7Doors.forEach(
         );
     }
 );
+ async function playLevel7DeathSequence() {
+
+    if (
+        typeof playLevel5DeathScream ===
+        "function"
+    ) {
+        playLevel5DeathScream();
+    }
+
+    await wait(
+        120
+    );
+
+    level7Cinematic.classList.add(
+        "splatter"
+    );
+
+    await wait(
+        1200
+    );
+
+    level7Cinematic.classList.add(
+        "fade-blood"
+    );
+
+    await wait(
+        1300
+    );
+}   
 function hideLevel7Cinematic() {
 
     level7Cinematic.classList.remove(
