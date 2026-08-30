@@ -2883,7 +2883,25 @@ function hideLevel7DeathScreen() {
     level7DeathScreen.classList.remove(
         "active"
     );
-}    
+}   
+ const level7TryAgainButton =
+    level7DeathScreen.querySelector(
+        ".level7-try-again"
+    );
+
+level7TryAgainButton.addEventListener(
+    "click",
+    async () => {
+
+        hideLevel7Cinematic();
+
+        await wait(
+            300
+        );
+
+        await showLevel7Cinematic();
+    }
+);   
 function hideLevel7Cinematic() {
 
     level7Cinematic.classList.remove(
