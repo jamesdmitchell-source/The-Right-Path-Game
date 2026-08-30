@@ -7760,6 +7760,17 @@ blockquote {
 .level7-blade {
     right: 100%;
 }
+.level7-wall-slots-right
+.level7-blade {
+    clip-path:
+        polygon(
+            100% 18%,
+            24% 18%,
+            0 50%,
+            24% 82%,
+            100% 82%
+        );
+}
 .level7-cinematic.blades-visible
 .level7-blade {
     opacity: 1;
