@@ -7893,3 +7893,16 @@ blockquote {
     transition:
         opacity 1.2s ease;
 }
+/* ========================================
+   LEVEL 7 — LOCK DOORS DURING DIALOGUE
+   ======================================== */
+
+.level7-door {
+    pointer-events: none;
+}
+
+.level7-cinematic.puzzle-ready
+.level7-door {
+    pointer-events: auto;
+    cursor: pointer;
+}
