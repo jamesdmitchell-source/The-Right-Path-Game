@@ -7717,18 +7717,32 @@ blockquote {
 
     top: 50%;
 
-    width: 64px;
-    height: 8px;
+    width: 110px;
+    height: 22px;
 
     background:
         linear-gradient(
-            90deg,
-            #d0d0d0,
-            #6f6f6f,
-            #222
+            180deg,
+            #f0f0f0 0%,
+            #9a9a9a 35%,
+            #444 70%,
+            #181818 100%
         );
 
-    transform: translateY(-50%);
+    clip-path:
+        polygon(
+            0 18%,
+            76% 18%,
+            100% 50%,
+            76% 82%,
+            0 82%
+        );
+
+    box-shadow:
+        0 0 6px rgba(255,255,255,0.25);
+
+    transform:
+        translateY(-50%);
 
     opacity: 0;
 
