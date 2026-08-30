@@ -2842,6 +2842,22 @@ level7DeathScreen.innerHTML = `
 
     <div class="level7-death-blood"></div>
 
+    <div class="level7-death-message">
+
+        <p>
+            The blades fly from the walls of the room, piercing flesh.
+            Blood flows from the wounds until Agent 28 breathes their last breath....
+        </p>
+
+        <button
+            class="level7-try-again"
+            type="button"
+        >
+            TRY AGAIN
+        </button>
+
+    </div>
+
 `;
 
 document.body.appendChild(
