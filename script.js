@@ -2803,6 +2803,40 @@ level7Doors.forEach(
         1300
     );
 }   
+const level7DeathScreen =
+    document.createElement(
+        "div"
+    );
+
+level7DeathScreen.id =
+    "level7DeathScreen";
+
+level7DeathScreen.className =
+    "level7-death-screen";
+
+level7DeathScreen.innerHTML = `
+
+    <div class="level7-death-black"></div>
+
+`;
+
+document.body.appendChild(
+    level7DeathScreen
+);
+
+function showLevel7DeathScreen() {
+
+    level7DeathScreen.classList.add(
+        "active"
+    );
+}
+
+function hideLevel7DeathScreen() {
+
+    level7DeathScreen.classList.remove(
+        "active"
+    );
+}    
 function hideLevel7Cinematic() {
 
     level7Cinematic.classList.remove(
