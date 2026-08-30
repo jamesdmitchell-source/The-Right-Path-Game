@@ -7931,3 +7931,31 @@ blockquote {
     pointer-events: auto;
     cursor: pointer;
 }
+/* ========================================
+   LEVEL 7 — DEATH SCREEN
+   ======================================== */
+
+.level7-death-screen {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #000;
+
+    z-index: 12000;
+}
+
+.level7-death-screen.active {
+    display: block;
+}
+
+.level7-death-black {
+    position: absolute;
+    inset: 0;
+
+    background: #000;
+}
