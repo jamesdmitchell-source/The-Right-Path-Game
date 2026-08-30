@@ -7796,3 +7796,100 @@ blockquote {
             translateX(-38vw);
     }
 }
+/* ========================================
+   LEVEL 7 — BLOOD SPLATTER
+   ======================================== */
+
+.level7-blood-splatter {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background-image:
+        url("level5-red-splash.png");
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        cover;
+
+    transform:
+        scale(1.35);
+
+    filter:
+        brightness(0.82)
+        contrast(1.18);
+
+    z-index: 100;
+
+    transition:
+        opacity 1.2s ease;
+}
+
+
+/* BLOOD HITS THE SCREEN */
+
+.level7-cinematic.splatter
+.level7-blood-splatter {
+    opacity: 1;
+
+    animation:
+        level7BloodImpact
+        0.28s
+        cubic-bezier(
+            0.12,
+            0.8,
+            0.2,
+            1
+        )
+        forwards;
+}
+
+
+@keyframes level7BloodImpact {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(1.65)
+            rotate(-2deg);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            scale(0.97)
+            rotate(0.5deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+}
+
+
+/* BLOOD FADES AWAY */
+
+.level7-cinematic.fade-blood
+.level7-blood-splatter {
+    opacity: 0;
+
+    transition:
+        opacity 1.2s ease;
+}
