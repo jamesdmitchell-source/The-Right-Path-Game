@@ -7959,3 +7959,82 @@ blockquote {
 
     background: #000;
 }
+/* ========================================
+   LEVEL 7 — DEATH BLOOD
+   ======================================== */
+
+.level7-death-blood {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background-image:
+        url("level5-red-splash.png");
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        cover;
+
+    transform:
+        scale(1.35);
+
+    filter:
+        brightness(0.82)
+        contrast(1.18);
+
+    z-index: 2;
+}
+
+.level7-death-screen.splatter
+.level7-death-blood {
+    opacity: 1;
+
+    animation:
+        level7DeathBloodImpact
+        0.28s
+        cubic-bezier(
+            0.12,
+            0.8,
+            0.2,
+            1
+        )
+        forwards;
+}
+
+@keyframes level7DeathBloodImpact {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(1.65)
+            rotate(-2deg);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            scale(0.97)
+            rotate(0.5deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+}
