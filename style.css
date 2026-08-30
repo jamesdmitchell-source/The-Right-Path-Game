@@ -8038,3 +8038,12 @@ blockquote {
             rotate(0deg);
     }
 }
+/* LEVEL 7 — BLOOD FADE */
+
+.level7-death-screen.fade-blood
+.level7-death-blood {
+    opacity: 0;
+
+    transition:
+        opacity 1.2s ease;
+}
