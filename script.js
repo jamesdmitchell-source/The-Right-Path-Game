@@ -2818,6 +2818,8 @@ level7DeathScreen.innerHTML = `
 
     <div class="level7-death-black"></div>
 
+    <div class="level7-death-blood"></div>
+
 `;
 
 document.body.appendChild(
