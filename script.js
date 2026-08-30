@@ -2784,6 +2784,13 @@ await wait(
 level7DeathScreen.classList.add(
     "splatter"
 );
+await wait(
+    1200
+);
+
+level7DeathScreen.classList.add(
+    "fade-blood"
+);                   
 }
             }
         );
