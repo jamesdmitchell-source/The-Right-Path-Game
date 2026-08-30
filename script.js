@@ -2790,6 +2790,13 @@ await wait(
 
 level7DeathScreen.classList.add(
     "fade-blood"
+);   
+await wait(
+    1300
+);
+
+level7DeathScreen.classList.add(
+    "message-visible"
 );                   
 }
             }
