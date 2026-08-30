@@ -2887,9 +2887,38 @@ function hideLevel7DeathScreen() {
 function hideLevel7Cinematic() {
 
     level7Cinematic.classList.remove(
-        "active"
+        "active",
+        "doors-visible",
+        "slots-visible",
+        "statements-visible",
+        "puzzle-ready",
+        "blades-visible",
+        "splatter",
+        "fade-blood"
     );
-}   
+
+    const level7Doors =
+        level7Cinematic.querySelectorAll(
+            ".level7-door"
+        );
+
+    level7Doors.forEach(
+        (door) => {
+
+            door.classList.remove(
+                "correct",
+                "wrong"
+            );
+        }
+    );
+
+    level7DeathScreen.classList.remove(
+        "active",
+        "splatter",
+        "fade-blood",
+        "message-visible"
+    );
+}
 /*
     ========================================
     LEVEL 6 — OPENING CINEMATIC
