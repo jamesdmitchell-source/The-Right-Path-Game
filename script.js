@@ -2740,7 +2740,9 @@ level7Doors.forEach(
 
                 const answer =
                     door.dataset.level7Answer;
-
+level7Cinematic.classList.remove(
+    "puzzle-ready"
+);
                if (
     answer === "unknown"
 ) {
