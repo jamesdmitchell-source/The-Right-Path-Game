@@ -2768,7 +2768,7 @@ level7Doors.forEach(
         350
     );
 
-    await playLevel7DeathSequence();
+    showLevel7DeathScreen();
 }
             }
         );
