@@ -2801,6 +2801,16 @@ level7Statements[1].textContent =
 
 level7Statements[2].textContent =
     "The contradiction is above the only door between TRUTH and UNKNOWN.";
+     await wait(
+    600
+);
+
+const harderPuzzleLine =
+    "Let's make things a little harder, Twenty-eight.";
+
+await speakAsCurator(
+    harderPuzzleLine
+); 
 await wait(
     700
 );
