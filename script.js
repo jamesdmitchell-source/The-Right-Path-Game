@@ -2745,9 +2745,10 @@ level7Doors.forEach(
 level7Cinematic.classList.remove(
     "puzzle-ready"
 );
-               if (
+  if (
+    level7Round === 1 &&
     answer === "unknown"
-) {
+) {            
     console.log(
         "Level 7 correct"
     );
