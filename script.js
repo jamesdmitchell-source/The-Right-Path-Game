@@ -2783,7 +2783,24 @@ const easyLine =
 
 await speakAsCurator(
     easyLine
-);                   
+);  
+ await wait(
+    1000
+);
+
+const level7Statements =
+    level7Cinematic.querySelectorAll(
+        ".level7-statement"
+    );
+
+level7Statements[0].textContent =
+    "The contradiction is above neither the TRUTH nor the UNKNOWN door.";
+
+level7Statements[1].textContent =
+    "The contradiction is above the UNKNOWN door.";
+
+level7Statements[2].textContent =
+    "The contradiction is above the only door between TRUTH and UNKNOWN.";     
 } else {
     console.log(
         "Level 7 wrong"
