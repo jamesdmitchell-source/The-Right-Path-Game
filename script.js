@@ -2759,7 +2759,28 @@ level7Cinematic.classList.remove(
 
 door.classList.add(
     "opening"
-);                  
+);   
+await wait(
+    1000
+);
+
+const correctLine =
+    "Correct. You recognised the contradiction.";
+
+await speakAsCurator(
+    correctLine
+);
+
+await wait(
+    700
+);
+
+const easyLine =
+    "That was the easy one.";
+
+await speakAsCurator(
+    easyLine
+);                   
 } else {
     console.log(
         "Level 7 wrong"
