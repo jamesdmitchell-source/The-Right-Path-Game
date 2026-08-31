@@ -7643,6 +7643,7 @@ blockquote {
    ======================================== */
 
 .level7-statement-panel {
+    transform: translateY(-25px);
     width: min(760px, 86vw);
 
     display: grid;
