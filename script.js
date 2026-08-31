@@ -2800,7 +2800,18 @@ level7Statements[1].textContent =
     "The contradiction is above the UNKNOWN door.";
 
 level7Statements[2].textContent =
-    "The contradiction is above the only door between TRUTH and UNKNOWN.";     
+    "The contradiction is above the only door between TRUTH and UNKNOWN.";
+await wait(
+    700
+);
+
+door.classList.remove(
+    "opening"
+);
+
+door.classList.remove(
+    "correct"
+);      
 } else {
     console.log(
         "Level 7 wrong"
