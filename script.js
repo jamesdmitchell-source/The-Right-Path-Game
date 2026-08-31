@@ -2821,6 +2821,11 @@ door.classList.remove(
 
 door.classList.remove(
     "correct"
+); 
+level7Round = 2;
+
+level7Cinematic.classList.add(
+    "puzzle-ready"
 );      
 } else {
     console.log(
