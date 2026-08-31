@@ -8126,3 +8126,18 @@ blockquote {
         border-color 0.35s ease,
         box-shadow 0.35s ease;
 }
+/* ========================================
+   LEVEL 7 — CORRECT DOOR OPEN
+   ======================================== */
+
+.level7-door.correct.opening {
+    transform:
+        perspective(700px)
+        rotateY(-72deg);
+
+    transform-origin:
+        left center;
+
+    transition:
+        transform 0.8s ease;
+}
