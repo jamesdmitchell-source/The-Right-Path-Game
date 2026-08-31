@@ -2753,6 +2753,13 @@ level7Cinematic.classList.remove(
     door.classList.add(
         "correct"
     );
+ await wait(
+    500
+);
+
+door.classList.add(
+    "opening"
+);                  
 } else {
     console.log(
         "Level 7 wrong"
