@@ -2726,6 +2726,8 @@ level7Cinematic.classList.add(
     "puzzle-ready"
 );
 }
+let level7Round = 1;
+    
 const level7Doors =
     level7Cinematic.querySelectorAll(
         ".level7-door"
