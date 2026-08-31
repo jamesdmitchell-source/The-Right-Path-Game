@@ -7454,6 +7454,7 @@ blockquote {
     box-sizing: border-box;
 }
 .level7-cinematic-title {
+    transform: translateY(-35px);
     color: #d8d8d8;
 
     font-size: 30px;
