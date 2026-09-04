@@ -2901,6 +2901,10 @@ if (
         "message-visible"
     );
 }
+      }
+        );
+    }
+);             
  async function playLevel7DeathSequence() {
 
     if (
