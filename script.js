@@ -2775,7 +2775,17 @@ if (
     await wait(
         1000
     );
+if (
+    level7Round === 2
+) {
 
+    const puzzle2CorrectLine =
+        "Good. You're learning to look beyond the obvious.";
+
+    await speakAsCurator(
+        puzzle2CorrectLine
+    );
+}
     /*
         PUZZLE 1 CORRECT
     */
