@@ -2725,6 +2725,7 @@ level7Cinematic.classList.add(
 level7Cinematic.classList.add(
     "puzzle-ready"
 );
+}    
 }
 let level7Round = 1;
     
