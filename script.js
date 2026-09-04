@@ -2755,6 +2755,7 @@ if (
         answer === "lie"
     )
 ) {
+
     console.log(
         "Level 7 correct"
     );
@@ -2762,80 +2763,95 @@ if (
     door.classList.add(
         "correct"
     );
- await wait(
-    500
-);
 
-door.classList.add(
-    "opening"
-);   
-await wait(
-    1000
-);
-if (
-    level7Round === 1
-) {
-const correctLine =
-    "Correct. You recognised the contradiction.";
-
-await speakAsCurator(
-    correctLine
-);
-
-await wait(
-    700
-);
-
-const easyLine =
-    "That was the easy one.";
-
-await speakAsCurator(
-    easyLine
-);  
- await wait(
-    1000
-);
-
-const level7Statements =
-    level7Cinematic.querySelectorAll(
-        ".level7-statement"
+    await wait(
+        500
     );
 
-level7Statements[0].textContent =
-    "The contradiction is above neither the TRUTH nor the UNKNOWN door.";
+    door.classList.add(
+        "opening"
+    );
 
-level7Statements[1].textContent =
-    "The contradiction is above the UNKNOWN door.";
+    await wait(
+        1000
+    );
 
-level7Statements[2].textContent =
-    "The contradiction is above the only door between TRUTH and UNKNOWN.";
-     await wait(
-    600
-);
+    /*
+        PUZZLE 1 CORRECT
+    */
 
-const harderPuzzleLine =
-    "Let's make things a little harder, Twenty-eight.";
+    if (
+        level7Round === 1
+    ) {
 
-await speakAsCurator(
-    harderPuzzleLine
-); 
-await wait(
-    700
-);
+        const correctLine =
+            "Correct. You recognised the contradiction.";
 
-door.classList.remove(
-    "opening"
-);
+        await speakAsCurator(
+            correctLine
+        );
 
-door.classList.remove(
-    "correct"
-); 
-level7Round = 2;
+        await wait(
+            700
+        );
 
-level7Cinematic.classList.add(
-    "puzzle-ready"
-);      
+        const easyLine =
+            "That was the easy one.";
+
+        await speakAsCurator(
+            easyLine
+        );
+
+        await wait(
+            1000
+        );
+
+        const level7Statements =
+            level7Cinematic.querySelectorAll(
+                ".level7-statement"
+            );
+
+        level7Statements[0].textContent =
+            "The contradiction is above neither the TRUTH nor the UNKNOWN door.";
+
+        level7Statements[1].textContent =
+            "The contradiction is above the UNKNOWN door.";
+
+        level7Statements[2].textContent =
+            "The contradiction is above the only door between TRUTH and UNKNOWN.";
+
+        await wait(
+            600
+        );
+
+        const harderPuzzleLine =
+            "Let's make things a little harder, Twenty-eight.";
+
+        await speakAsCurator(
+            harderPuzzleLine
+        );
+
+        await wait(
+            700
+        );
+
+        door.classList.remove(
+            "opening"
+        );
+
+        door.classList.remove(
+            "correct"
+        );
+
+        level7Round = 2;
+
+        level7Cinematic.classList.add(
+            "puzzle-ready"
+        );
+    }
+
 } else {
+
     console.log(
         "Level 7 wrong"
     );
@@ -2852,41 +2868,39 @@ level7Cinematic.classList.add(
         350
     );
 
-  showLevel7DeathScreen();
+    showLevel7DeathScreen();
 
-if (
-    typeof playLevel5DeathScream ===
-    "function"
-) {
-    playLevel5DeathScream();
-}
-
-await wait(
-    120
-);
-
-level7DeathScreen.classList.add(
-    "splatter"
-);
-await wait(
-    1200
-);
-
-level7DeathScreen.classList.add(
-    "fade-blood"
-);   
-await wait(
-    1300
-);
-
-level7DeathScreen.classList.add(
-    "message-visible"
-);                   
-}
-            }
-        );
+    if (
+        typeof playLevel5DeathScream ===
+        "function"
+    ) {
+        playLevel5DeathScream();
     }
-);
+
+    await wait(
+        120
+    );
+
+    level7DeathScreen.classList.add(
+        "splatter"
+    );
+
+    await wait(
+        1200
+    );
+
+    level7DeathScreen.classList.add(
+        "fade-blood"
+    );
+
+    await wait(
+        1300
+    );
+
+    level7DeathScreen.classList.add(
+        "message-visible"
+    );
+}
  async function playLevel7DeathSequence() {
 
     if (
