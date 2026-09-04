@@ -2772,7 +2772,9 @@ door.classList.add(
 await wait(
     1000
 );
-
+if (
+    level7Round === 1
+) {
 const correctLine =
     "Correct. You recognised the contradiction.";
 
