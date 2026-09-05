@@ -2803,6 +2803,23 @@ if (
 
     level7Statements[2].textContent =
         "The contradiction is above either the TRUTH or LIE door, but not LIE.";
+    await wait(
+    700
+);
+
+door.classList.remove(
+    "opening"
+);
+
+door.classList.remove(
+    "correct"
+);
+
+level7Round = 3;
+
+level7Cinematic.classList.add(
+    "puzzle-ready"
+);
 }
     /*
         PUZZLE 1 CORRECT
