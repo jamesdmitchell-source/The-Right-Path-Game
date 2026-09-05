@@ -2785,6 +2785,24 @@ if (
     await speakAsCurator(
         puzzle2CorrectLine
     );
+
+    await wait(
+        900
+    );
+
+    const level7Statements =
+        level7Cinematic.querySelectorAll(
+            ".level7-statement"
+        );
+
+    level7Statements[0].textContent =
+        "The contradiction is above the LIE door.";
+
+    level7Statements[1].textContent =
+        "The contradiction is not above the UNKNOWN door.";
+
+    level7Statements[2].textContent =
+        "The contradiction is above either the TRUTH or LIE door, but not LIE.";
 }
     /*
         PUZZLE 1 CORRECT
