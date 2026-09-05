@@ -2753,6 +2753,10 @@ if (
     (
         level7Round === 2 &&
         answer === "lie"
+    ) ||
+    (
+        level7Round === 3 &&
+        answer === "truth"
     )
 ) {
 
