@@ -3050,6 +3050,21 @@ level7TryAgainButton.addEventListener(
     }
 );   
 function hideLevel7Cinematic() {
+ level7Round = 1;
+
+const level7Statements =
+    level7Cinematic.querySelectorAll(
+        ".level7-statement"
+    );
+
+level7Statements[0].textContent =
+    "The contradiction is not above the TRUTH door.";
+
+level7Statements[1].textContent =
+    "The contradiction is above the UNKNOWN door.";
+
+level7Statements[2].textContent =
+    "The contradiction is above the LIE door.";   
 
     level7Cinematic.classList.remove(
         "active",
