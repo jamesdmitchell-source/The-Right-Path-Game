@@ -2825,6 +2825,17 @@ level7Cinematic.classList.add(
     "puzzle-ready"
 );
 }
+if (
+    level7Round === 3
+) {
+
+    const puzzle3CorrectLine =
+        "Well done, Twenty-eight.";
+
+    await speakAsCurator(
+        puzzle3CorrectLine
+    );
+}    
     /*
         PUZZLE 1 CORRECT
     */
