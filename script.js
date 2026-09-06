@@ -2825,7 +2825,7 @@ level7Cinematic.classList.add(
     "puzzle-ready"
 );
 }
- if (
+if (
     level7Round === 3 &&
     answer === "truth"
 ) {
@@ -2836,7 +2836,32 @@ level7Cinematic.classList.add(
     await speakAsCurator(
         puzzle3CorrectLine
     );
-}   
+
+    await wait(
+        800
+    );
+
+    hideLevel7Cinematic();
+
+    successLabel.textContent =
+        "LEVEL 7 COMPLETE";
+
+    successTitle.textContent =
+        "You found the contradiction.";
+
+    successMessage.textContent =
+        "The chamber unlocks. A corridor waits beyond.";
+
+    curatorMessage.textContent =
+        puzzle3CorrectLine;
+
+    showScreen(
+        successScreen
+    );
+
+    continueButton.disabled =
+        false;
+}
     /*
         PUZZLE 1 CORRECT
     */
