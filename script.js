@@ -2853,7 +2853,7 @@ if (
         "The chamber unlocks. A corridor waits beyond.";
 
     curatorMessage.textContent =
-        puzzle3CorrectLine;
+        "";
 
     showScreen(
         successScreen
