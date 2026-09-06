@@ -2833,21 +2833,17 @@ if (
     answer === "truth"
 ) {
 
-    const puzzle3CorrectLine =
-        "Well done, Twenty-eight.";
-
-    await speakAsCurator(
-        puzzle3CorrectLine
-    );
-
     await wait(
         800
     );
 
-   hideLevel7Cinematic();
+    hideLevel7Cinematic();
 
-successLabel.textContent =
-    "LEVEL 7 COMPLETE";
+    curatorMessage.textContent =
+        "";
+
+    successLabel.textContent =
+        "LEVEL 7 COMPLETE";
 
     successTitle.textContent =
         "You found the contradiction.";
@@ -2855,15 +2851,17 @@ successLabel.textContent =
     successMessage.textContent =
         "The chamber unlocks. A corridor waits beyond.";
 
-    curatorMessage.textContent =
-        "";
-
     showScreen(
         successScreen
     );
 
+    curatorMessage.textContent =
+        "";
+
     continueButton.disabled =
         false;
+
+    return;
 }
     /*
         PUZZLE 1 CORRECT
