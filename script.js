@@ -2255,6 +2255,9 @@ async function completeJudgementLevel() {
 
     continueButton.disabled =
         false;
+
+    
+ return;   
 }
 
 
