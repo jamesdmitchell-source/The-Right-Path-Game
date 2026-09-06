@@ -3091,6 +3091,36 @@ level7TryAgainButton.addEventListener(
         await showLevel7Cinematic();
     }
 );   
+/*
+    ========================================
+    LEVEL 7 — ELIAS GRIEF FLASHBACK
+    ========================================
+*/
+
+const eliasGriefFlashback =
+    document.createElement("div");
+
+eliasGriefFlashback.id =
+    "eliasGriefFlashback";
+
+eliasGriefFlashback.className =
+    "elias-grief-flashback";
+
+eliasGriefFlashback.innerHTML = `
+
+    <img
+        class="elias-grief-image"
+        src="elias-grief-flashback.png"
+        alt=""
+    >
+
+    <div class="elias-grief-darkness"></div>
+
+`;
+
+document.body.appendChild(
+    eliasGriefFlashback
+);    
 function hideLevel7Cinematic() {
  level7Round = 1;
 
