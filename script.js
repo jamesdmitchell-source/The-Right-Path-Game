@@ -2841,10 +2841,10 @@ if (
         800
     );
 
-    hideLevel7Cinematic();
+   hideLevel7Cinematic();
 
-    successLabel.textContent =
-        "LEVEL 7 COMPLETE";
+successLabel.textContent =
+    "LEVEL 7 COMPLETE";
 
     successTitle.textContent =
         "You found the contradiction.";
