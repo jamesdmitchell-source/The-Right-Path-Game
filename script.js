@@ -11074,7 +11074,25 @@ if (
 continueButton.addEventListener(
     "click",
     async function () {
+/*
+========================================
+UNLOCK IPAD SPEECH SYNTHESIS
+========================================
+*/
 
+if (
+    "speechSynthesis" in window
+) {
+
+    const unlockSpeech =
+        new SpeechSynthesisUtterance(" ");
+
+    unlockSpeech.volume = 0;
+
+    window
+        .speechSynthesis
+        .speak(unlockSpeech);
+}
     /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
