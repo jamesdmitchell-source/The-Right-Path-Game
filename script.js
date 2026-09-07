@@ -11175,7 +11175,40 @@ if (
 }
 
 await playCorridorSequence();
+   /*
+            LEVEL 7 — ELIAS GRIEF FLASHBACK
+        */
 
+        if (
+            levels[currentLevelIndex] &&
+            levels[currentLevelIndex].contradictionPuzzle
+        ) {
+
+            continueButton.disabled =
+                true;
+
+            eliasGriefFlashback.classList.add(
+                "active"
+            );
+
+            await wait(100);
+
+            eliasGriefFlashback.classList.add(
+                "visible"
+            );
+
+            await wait(5000);
+
+            eliasGriefFlashback.classList.remove(
+                "visible"
+            );
+
+            await wait(1200);
+
+            eliasGriefFlashback.classList.remove(
+                "active"
+            );
+        }       
 
 /*
     ========================================
