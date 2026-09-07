@@ -11342,3 +11342,22 @@ if (
     }
 );
 });
+
+/*
+========================================
+TEST — ELIAS GRIEF FLASHBACK
+========================================
+*/
+
+async function testEliasGriefFlashback() {
+
+    eliasGriefFlashback.classList.add(
+        "active"
+    );
+
+    await wait(100);
+
+    eliasGriefFlashback.classList.add(
+        "visible"
+    );
+}
