@@ -2715,16 +2715,34 @@ await wait(
 const instructionLine =
      "Each statement corresponds to the door beneath it. Two statements can coexist. One cannot. Find the contradiction... and choose its door.";
 
-await speakAsCurator(
-    instructionLine
-);    
+/*
+========================================
+FINAL LEVEL 7 INSTRUCTION
+========================================
+*/
+
+const instructionSpeech =
+    speakAsCurator(
+        instructionLine
+    );
+
+/*
+    Do not allow iPad speech synthesis
+    to hold the puzzle permanently.
+*/
+
+await Promise.race([
+    instructionSpeech,
+    wait(9000)
+]);
+
 await wait(
-    800
+    500
 );
 
 level7Cinematic.classList.add(
     "statements-visible"
-); 
+);
 level7Cinematic.classList.add(
     "puzzle-ready"
 );    
