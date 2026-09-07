@@ -11187,17 +11187,29 @@ await playCorridorSequence();
             continueButton.disabled =
                 true;
 
-            eliasGriefFlashback.classList.add(
-                "active"
-            );
+       eliasGriefFlashback.classList.add(
+    "active"
+);
 
-            await wait(100);
+await wait(100);
 
-            eliasGriefFlashback.classList.add(
-                "visible"
-            );
+const eliasGriefAudio =
+    new Audio(
+        "elias-grief.mp3"
+    );
 
-            await wait(5000);
+eliasGriefAudio.volume =
+    1.0;
+
+eliasGriefFlashback.classList.add(
+    "visible"
+);
+
+eliasGriefAudio.play().catch(
+    () => {}
+);
+
+await wait(11000);
 
             eliasGriefFlashback.classList.remove(
                 "visible"
