@@ -11195,7 +11195,7 @@ await wait(100);
 
 const eliasGriefAudio =
     new Audio(
-        "elias-grief.mp3"
+        "elias-grief.mp3?v=2"
     );
 
 eliasGriefAudio.volume =
