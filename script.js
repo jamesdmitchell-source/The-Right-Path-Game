@@ -11109,25 +11109,7 @@ continueButton.addEventListener(
             ========================================
         */
 
-        try {
-
-            if (
-                typeof playCorridorAmbience ===
-                "function"
-            ) {
-
-                playCorridorAmbience();
-            }
-
-        } catch (
-            error
-        ) {
-
-            console.log(
-                "Corridor ambience unavailable."
-            );
-        }
-
+      
 
         /*
             Hide success screen while
@@ -11173,6 +11155,24 @@ if (
 
     await playAnnaCinematic();
 }
+  try {
+
+            if (
+                typeof playCorridorAmbience ===
+                "function"
+            ) {
+
+                playCorridorAmbience();
+            }
+
+        } catch (
+            error
+        ) {
+
+            console.log(
+                "Corridor ambience unavailable."
+            );
+        }
 
 await playCorridorSequence();
    /*
