@@ -176,7 +176,19 @@ function playDistantScream() {
 /*
     CORRIDOR AMBIENCE
 */
+let corridorAmbience =
+    new Audio(
+        "corridor-ambience.wav"
+    );
 
+corridorAmbience.preload =
+    "auto";
+
+corridorAmbience.volume =
+    0.55;
+
+corridorAmbience.loop =
+    true;
 function playCorridorAmbience() {
 
     if (!corridorAmbience) {
