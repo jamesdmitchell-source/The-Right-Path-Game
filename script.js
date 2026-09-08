@@ -3312,18 +3312,13 @@ async function playDanielLevel6Audio(
                 }
 
 
-                danielLevel6Audio =
-                    new Audio(
-                        "daniel-level6.mp3"
-                    );
+                   danielLevel6Audio.pause();
 
+                   danielLevel6Audio.currentTime =
+                   0;
 
-                danielLevel6Audio.preload =
-                    "auto";
-
-
-                danielLevel6Audio.volume =
-                    1;
+                   danielLevel6Audio.volume =
+                     1;
 
 
                 let currentSubtitle =
