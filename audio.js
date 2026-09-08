@@ -208,7 +208,91 @@ function playCorridorAmbience() {
     }
 }
 
+/*
+    ========================================
+    UNLOCK CORRIDOR AUDIO ON IPAD
+    ========================================
+*/
 
+function unlockCorridorAmbience() {
+
+    if (!corridorAmbience) {
+
+        corridorAmbience =
+            new Audio(
+                "corridor-ambience.wav"
+            );
+
+        corridorAmbience.preload =
+            "auto";
+
+        corridorAmbience.volume =
+            0.55;
+
+        corridorAmbience.loop =
+            true;
+    }
+
+
+    try {
+
+        corridorAmbience.muted =
+            true;
+
+        corridorAmbience.currentTime =
+            0;
+
+
+        const attempt =
+            corridorAmbience.play();
+
+
+        if (
+            attempt &&
+            typeof attempt.then ===
+                "function"
+        ) {
+
+            attempt.then(
+                function () {
+
+                    setTimeout(
+                        function () {
+
+                            corridorAmbience.pause();
+
+                            corridorAmbience.currentTime =
+                                0;
+
+                            corridorAmbience.muted =
+                                false;
+
+                        },
+                        250
+                    );
+
+                }
+            ).catch(
+                function () {
+
+                    corridorAmbience.pause();
+
+                    corridorAmbience.currentTime =
+                        0;
+
+                    corridorAmbience.muted =
+                        false;
+                }
+            );
+        }
+
+    } catch (
+        error
+    ) {
+
+        // Continue normally.
+    }
+}
 /*
     STOP CORRIDOR AMBIENCE
 */
