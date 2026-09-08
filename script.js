@@ -11159,7 +11159,22 @@ if (
 ) {
 
     unlockCorridorAmbience();
-}      
+}  
+/*
+========================================
+UNLOCK ANNA LEVEL 6 AUDIO ON IPAD
+========================================
+*/
+
+if (
+    levels[currentLevelIndex] &&
+    levels[currentLevelIndex].number === 6 &&
+    typeof unlockAnnaLevel6Audio ===
+        "function"
+) {
+
+    unlockAnnaLevel6Audio();
+}        
     /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
