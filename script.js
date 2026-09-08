@@ -3803,7 +3803,107 @@ const annaNewspapers =
     ANNA — RECORDED AUDIO
     ========================================
 */
+/*
+========================================
+LEVEL 6 — ANNA AUDIO FOR IPAD
+========================================
+*/
 
+let annaLevel6Audio =
+    new Audio(
+        "anna-level6.mp3"
+    );
+
+let annaCarApproachAudio =
+    new Audio(
+        "anna-car-approach.mp3"
+    );
+
+let annaTyreScreechAudio =
+    new Audio(
+        "anna-tyre-screech.mp3"
+    );
+
+let annaCrashImpactAudio =
+    new Audio(
+        "anna-crash-impact.mp3"
+    );
+
+
+function unlockAnnaLevel6Audio() {
+
+    const sounds = [
+        annaLevel6Audio,
+        annaCarApproachAudio,
+        annaTyreScreechAudio,
+        annaCrashImpactAudio
+    ];
+
+
+    sounds.forEach(
+        function (sound) {
+
+            try {
+
+                sound.muted =
+                    true;
+
+                sound.currentTime =
+                    0;
+
+
+                const attempt =
+                    sound.play();
+
+
+                if (
+                    attempt &&
+                    typeof attempt.then ===
+                        "function"
+                ) {
+
+                    attempt.then(
+                        function () {
+
+                            setTimeout(
+                                function () {
+
+                                    sound.pause();
+
+                                    sound.currentTime =
+                                        0;
+
+                                    sound.muted =
+                                        false;
+
+                                },
+                                250
+                            );
+
+                        }
+                    ).catch(
+                        function () {
+
+                            sound.pause();
+
+                            sound.currentTime =
+                                0;
+
+                            sound.muted =
+                                false;
+                        }
+                    );
+                }
+
+            } catch (
+                error
+            ) {
+
+                // Continue normally.
+            }
+        }
+    );
+}
 async function playAnnaLevel6Audio() {
 
     return new Promise(
