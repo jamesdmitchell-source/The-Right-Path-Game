@@ -11152,7 +11152,20 @@ if (
 ) {
 
     unlockDanielLevel6Audio();
-}    
+}   
+  /*
+========================================
+UNLOCK CORRIDOR AUDIO ON IPAD
+========================================
+*/
+
+if (
+    typeof unlockCorridorAmbience ===
+        "function"
+) {
+
+    unlockCorridorAmbience();
+}      
     /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
