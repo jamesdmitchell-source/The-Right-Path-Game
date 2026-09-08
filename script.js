@@ -4025,15 +4025,17 @@ await wait(
 
 try {
 
-    const approachingCar =
-        new Audio(
-            "anna-car-approach.mp3"
-        );
+    annaCarApproachAudio.pause();
 
-    approachingCar.volume =
+    annaCarApproachAudio.currentTime =
+        0;
+
+    annaCarApproachAudio.volume =
         0.85;
 
-    approachingCar.play();
+    annaCarApproachAudio.play().catch(
+        function () {}
+    );
 
 } catch (
     error
@@ -4056,15 +4058,17 @@ await wait(
 
 try {
 
-    const tyreScreech =
-        new Audio(
-            "anna-tyre-screech.mp3"
-        );
+    annaTyreScreechAudio.pause();
 
-    tyreScreech.volume =
+    annaTyreScreechAudio.currentTime =
+        0;
+
+    annaTyreScreechAudio.volume =
         1;
 
-    tyreScreech.play();
+    annaTyreScreechAudio.play().catch(
+        function () {}
+    );
 
 } catch (
     error
@@ -4087,15 +4091,17 @@ await wait(
 
 try {
 
-    const crashImpact =
-        new Audio(
-            "anna-crash-impact.mp3"
-        );
+    annaCrashImpactAudio.pause();
 
-    crashImpact.volume =
+    annaCrashImpactAudio.currentTime =
+        0;
+
+    annaCrashImpactAudio.volume =
         1;
 
-    crashImpact.play();
+    annaCrashImpactAudio.play().catch(
+        function () {}
+    );
 
 } catch (
     error
@@ -4105,7 +4111,6 @@ try {
         "Crash impact audio unavailable."
     );
 }
-
 
 annaCinematic.classList.add(
     "impact"
