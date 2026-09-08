@@ -11141,6 +11141,19 @@ if (
         .speak(unlockSpeech);
 }
     /*
+========================================
+UNLOCK DANIEL LEVEL 6 AUDIO ON IPAD
+========================================
+*/
+
+if (
+    typeof unlockDanielLevel6Audio ===
+        "function"
+) {
+
+    unlockDanielLevel6Audio();
+}    
+    /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
             ========================================
