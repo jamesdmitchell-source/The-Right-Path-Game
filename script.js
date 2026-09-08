@@ -3811,28 +3811,22 @@ async function playAnnaLevel6Audio() {
 
             try {
 
-                const annaAudio =
-                    new Audio(
-                        "anna-level6.mp3"
-                    );
+             annaLevel6Audio.pause();
 
+annaLevel6Audio.currentTime =
+    0;
 
-                annaAudio.preload =
-                    "auto";
+annaLevel6Audio.volume =
+    1;
 
-
-                annaAudio.volume =
-                    1;
-
-
-                annaAudio.onended =
+                annaLevel6Audio.onended =
                     function () {
 
                         resolve();
                     };
 
 
-                annaAudio.onerror =
+               annaLevel6Audio.onerror  =
                     function () {
 
                         resolve();
@@ -3840,7 +3834,7 @@ async function playAnnaLevel6Audio() {
 
 
                 const attempt =
-                    annaAudio.play();
+                    annaLevel6Audio.play();
 
 
                 if (
