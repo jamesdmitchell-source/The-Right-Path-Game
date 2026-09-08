@@ -3250,7 +3250,41 @@ const level6CinematicCaption =
 */
 
 let danielLevel6Audio =
-    null;
+    new Audio(
+        "daniel-level6.mp3"
+    );
+
+
+function unlockDanielLevel6Audio() {
+
+    danielLevel6Audio.volume =
+        0;
+
+    const attempt =
+        danielLevel6Audio.play();
+
+    if (
+        attempt &&
+        typeof attempt.then ===
+            "function"
+    ) {
+
+        attempt.then(
+            function () {
+
+                danielLevel6Audio.pause();
+
+                danielLevel6Audio.currentTime =
+                    0;
+
+                danielLevel6Audio.volume =
+                    1;
+            }
+        ).catch(
+            function () {}
+        );
+    }
+}
 
 
 async function playDanielLevel6Audio(
