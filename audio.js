@@ -28,25 +28,6 @@ function startAmbientSound() {
             0.9;
     }
 
-
-    if (!corridorAmbience) {
-
-        corridorAmbience =
-            new Audio(
-                "corridor-ambience.wav"
-            );
-
-        corridorAmbience.preload =
-            "auto";
-
-        corridorAmbience.volume =
-            0.55;
-
-        corridorAmbience.loop =
-            true;
-    }
-
-
     if (!distantScream) {
 
         distantScream =
