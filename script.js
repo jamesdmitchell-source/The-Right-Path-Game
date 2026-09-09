@@ -3257,32 +3257,70 @@ let danielLevel6Audio =
 
 function unlockDanielLevel6Audio() {
 
-    danielLevel6Audio.volume =
-        0;
+    try {
 
-    const attempt =
-        danielLevel6Audio.play();
+        danielLevel6Audio.muted =
+            true;
 
-    if (
-        attempt &&
-        typeof attempt.then ===
-            "function"
+        danielLevel6Audio.currentTime =
+            0;
+
+        const attempt =
+            danielLevel6Audio.play();
+
+        if (
+            attempt &&
+            typeof attempt.then ===
+                "function"
+        ) {
+
+            attempt.then(
+                function () {
+
+                    setTimeout(
+                        function () {
+
+                            danielLevel6Audio.pause();
+
+                            danielLevel6Audio.currentTime =
+                                0;
+
+                            danielLevel6Audio.muted =
+                                false;
+
+                            danielLevel6Audio.volume =
+                                1;
+
+                        },
+                        250
+                    );
+                }
+            ).catch(
+                function () {
+
+                    danielLevel6Audio.pause();
+
+                    danielLevel6Audio.currentTime =
+                        0;
+
+                    danielLevel6Audio.muted =
+                        false;
+
+                    danielLevel6Audio.volume =
+                        1;
+                }
+            );
+        }
+
+    } catch (
+        error
     ) {
 
-        attempt.then(
-            function () {
+        danielLevel6Audio.muted =
+            false;
 
-                danielLevel6Audio.pause();
-
-                danielLevel6Audio.currentTime =
-                    0;
-
-                danielLevel6Audio.volume =
-                    1;
-            }
-        ).catch(
-            function () {}
-        );
+        danielLevel6Audio.volume =
+            1;
     }
 }
 
