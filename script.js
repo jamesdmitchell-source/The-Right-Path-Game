@@ -11495,7 +11495,21 @@ currentLevelIndex +=
     LEVEL 6 — OPENING CINEMATIC
     ========================================
 */
+/*
+    ========================================
+    LEVEL 7 — CONTRADICTION CINEMATIC
+    ========================================
+*/
 
+if (
+    newLevel &&
+    newLevel.contradictionPuzzle
+) {
+
+    await showLevel7Cinematic();
+
+    return;
+}
 if (
     newLevel &&
     newLevel.judgementPuzzle
