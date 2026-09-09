@@ -3304,29 +3304,23 @@ async function playDanielLevel6Audio(
 
             try {
 
-                /*
-                    Stop an old copy if
-                    Level 6 is restarted.
-                */
+              /*
+    ========================================
+    DANIEL AUDIO — IPAD SAFE START
+    ========================================
+*/
 
-                if (
-                    danielLevel6Audio
-                ) {
+danielLevel6Audio.loop =
+    false;
 
-                    danielLevel6Audio.pause();
+danielLevel6Audio.currentTime =
+    0;
 
-                    danielLevel6Audio.currentTime =
-                        0;
-                }
+danielLevel6Audio.muted =
+    false;
 
-
-                   danielLevel6Audio.pause();
-
-                   danielLevel6Audio.currentTime =
-                   0;
-
-                   danielLevel6Audio.volume =
-                     1;
+danielLevel6Audio.volume =
+    1;
 
 
                 let currentSubtitle =
