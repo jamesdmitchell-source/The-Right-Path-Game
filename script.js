@@ -3259,68 +3259,38 @@ function unlockDanielLevel6Audio() {
 
     try {
 
-        danielLevel6Audio.muted =
-            true;
+        danielLevel6Audio.pause();
 
         danielLevel6Audio.currentTime =
             0;
+
+        danielLevel6Audio.muted =
+            true;
+
+        danielLevel6Audio.loop =
+            true;
+
+        danielLevel6Audio.volume =
+            1;
 
         const attempt =
             danielLevel6Audio.play();
 
         if (
             attempt &&
-            typeof attempt.then ===
+            typeof attempt.catch ===
                 "function"
         ) {
 
-            attempt.then(
-                function () {
-
-                    setTimeout(
-                        function () {
-
-                            danielLevel6Audio.pause();
-
-                            danielLevel6Audio.currentTime =
-                                0;
-
-                            danielLevel6Audio.muted =
-                                false;
-
-                            danielLevel6Audio.volume =
-                                1;
-
-                        },
-                        250
-                    );
-                }
-            ).catch(
-                function () {
-
-                    danielLevel6Audio.pause();
-
-                    danielLevel6Audio.currentTime =
-                        0;
-
-                    danielLevel6Audio.muted =
-                        false;
-
-                    danielLevel6Audio.volume =
-                        1;
-                }
+            attempt.catch(
+                function () {}
             );
         }
 
     } catch (
         error
     ) {
-
-        danielLevel6Audio.muted =
-            false;
-
-        danielLevel6Audio.volume =
-            1;
+        // Continue normally.
     }
 }
 
