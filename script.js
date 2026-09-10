@@ -3346,13 +3346,15 @@ async function playDanielLevel6Audio(
     ========================================
 */
 
-danielLevel6Audio.loop =
-    false;
+danielLevel6Audio.pause();
 
 danielLevel6Audio.currentTime =
     0;
 
 danielLevel6Audio.muted =
+    false;
+
+danielLevel6Audio.loop =
     false;
 
 danielLevel6Audio.volume =
