@@ -2677,9 +2677,18 @@ function unlockLevel7Audio() {
                 sound.muted =
                     false;
 
-                sound.volume =
-                    0.01;
+                if (
+    sound === level7SlotOpenAudio
+) {
 
+    sound.volume =
+        0.001;
+
+} else {
+
+    sound.volume =
+        0.01;
+}
                 const attempt =
                     sound.play();
 
