@@ -2774,14 +2774,18 @@ await wait(
     800
 );
 
-const slotOpenSound =
-    new Audio(
-        "level7-slots-open.wav"
-    );
+level7SlotOpenAudio.pause();
 
-slotOpenSound.volume = 0.7;
+level7SlotOpenAudio.currentTime =
+    0;
 
-slotOpenSound.play().catch(
+level7SlotOpenAudio.muted =
+    false;
+
+level7SlotOpenAudio.volume =
+    0.7;
+
+level7SlotOpenAudio.play().catch(
     () => {}
 );
 
