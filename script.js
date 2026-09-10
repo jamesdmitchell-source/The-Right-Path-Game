@@ -4704,6 +4704,26 @@ async function developerJumpToLevel(
 
     currentLevelIndex =
         index;
+    /*
+    ========================================
+    DEV MODE — UNLOCK LEVEL 6 AUDIO ON IPAD
+    ========================================
+*/
+
+const devLevel =
+    levels[
+        currentLevelIndex
+    ];
+
+if (
+    devLevel &&
+    devLevel.judgementPuzzle &&
+    typeof unlockDanielLevel6Audio ===
+        "function"
+) {
+
+    unlockDanielLevel6Audio();
+}
 
 
     /*
