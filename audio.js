@@ -256,21 +256,24 @@ function unlockCorridorAmbience() {
             attempt.then(
                 function () {
 
-                    setTimeout(
-                        function () {
+                  corridorUnlockTimer =
+    setTimeout(
+        function () {
 
-                            corridorAmbience.pause();
+            corridorAmbience.pause();
 
-                            corridorAmbience.currentTime =
-                                0;
+            corridorAmbience.currentTime =
+                0;
 
-                            corridorAmbience.muted =
-                                false;
+            corridorAmbience.muted =
+                false;
 
-                        },
-                        250
-                    );
+            corridorUnlockTimer =
+                null;
 
+        },
+        250
+    );
                 }
             ).catch(
                 function () {
