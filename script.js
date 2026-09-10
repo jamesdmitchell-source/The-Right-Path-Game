@@ -11247,13 +11247,20 @@ UNLOCK DANIEL LEVEL 6 AUDIO ON IPAD
 ========================================
 */
 
+const nextLevel =
+    levels[
+        currentLevelIndex + 1
+    ];
+
 if (
+    nextLevel &&
+    nextLevel.number === 6 &&
     typeof unlockDanielLevel6Audio ===
         "function"
 ) {
 
     unlockDanielLevel6Audio();
-}   
+}
   /*
 ========================================
 UNLOCK CORRIDOR AUDIO ON IPAD
