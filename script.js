@@ -4799,6 +4799,26 @@ async function developerJumpToLevel(
     currentLevelIndex =
         index;
     /*
+========================================
+DEV MODE — UNLOCK LEVEL 7 AUDIO ON IPAD
+========================================
+*/
+
+const devSelectedLevel =
+    levels[
+        currentLevelIndex
+    ];
+
+if (
+    devSelectedLevel &&
+    devSelectedLevel.contradictionPuzzle &&
+    typeof unlockLevel7Audio ===
+        "function"
+) {
+
+    unlockLevel7Audio();
+}
+    /*
     ========================================
     DEV MODE — UNLOCK LEVEL 6 AUDIO ON IPAD
     ========================================
