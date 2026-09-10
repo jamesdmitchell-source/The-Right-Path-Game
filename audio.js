@@ -5,8 +5,8 @@
 
 let doorCreak = null;
 let corridorAmbience = null;
+let corridorUnlockTimer = null;
 let distantScream = null;
-
 
 /*
     PREPARE AUDIO
