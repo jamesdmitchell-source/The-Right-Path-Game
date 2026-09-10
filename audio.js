@@ -177,7 +177,25 @@ function playCorridorAmbience() {
             true;
     }
 
+    /*
+    Cancel the iPad unlock timer if
+    the real corridor has started.
+*/
 
+if (
+    corridorUnlockTimer
+) {
+
+    clearTimeout(
+        corridorUnlockTimer
+    );
+
+    corridorUnlockTimer =
+        null;
+}
+
+corridorAmbience.muted =
+    false;
     corridorAmbience.pause();
 
     corridorAmbience.currentTime =
