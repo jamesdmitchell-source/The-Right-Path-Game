@@ -4742,12 +4742,21 @@ if (
         levels[
             currentLevelIndex
         ];
-    if (
+  if (
     level &&
     level.contradictionPuzzle
 ) {
 
-    showLevel7Cinematic();
+    if (
+        level.intro
+    ) {
+
+        await playLevelIntroduction(
+            level
+        );
+    }
+
+    await showLevel7Cinematic();
 
     return;
 }
