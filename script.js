@@ -2641,6 +2641,96 @@ level7Cinematic.innerHTML = `
 document.body.appendChild(
     level7Cinematic
 );    
+/*
+========================================
+LEVEL 7 — IPAD AUDIO
+========================================
+*/
+
+let level7SlotOpenAudio =
+    new Audio(
+        "level7-slots-open.wav"
+    );
+
+let level7GriefAudio =
+    new Audio(
+        "elias-grief.mp3?v=2"
+    );
+
+function unlockLevel7Audio() {
+
+    const sounds = [
+        level7SlotOpenAudio,
+        level7GriefAudio
+    ];
+
+    sounds.forEach(
+        function (sound) {
+
+            try {
+
+                sound.pause();
+
+                sound.currentTime =
+                    0;
+
+                sound.muted =
+                    false;
+
+                sound.volume =
+                    0.01;
+
+                const attempt =
+                    sound.play();
+
+                if (
+                    attempt &&
+                    typeof attempt.then ===
+                        "function"
+                ) {
+
+                    attempt.then(
+                        function () {
+
+                            setTimeout(
+                                function () {
+
+                                    sound.pause();
+
+                                    sound.currentTime =
+                                        0;
+
+                                    sound.volume =
+                                        1;
+
+                                },
+                                300
+                            );
+                        }
+                    ).catch(
+                        function () {
+
+                            sound.pause();
+
+                            sound.currentTime =
+                                0;
+
+                            sound.volume =
+                                1;
+                        }
+                    );
+                }
+
+            } catch (
+                error
+            ) {
+
+                sound.volume =
+                    1;
+            }
+        }
+    );
+}    
 async function showLevel7Cinematic() {
 
     level7Cinematic.classList.add(
