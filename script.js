@@ -3264,36 +3264,72 @@ function unlockDanielLevel6Audio() {
         danielLevel6Audio.currentTime =
             0;
 
+        /*
+            Use a tiny audible volume rather
+            than muted/zero volume.
+
+            This makes Safari treat this as
+            genuine user-started audio.
+        */
+
         danielLevel6Audio.muted =
-            true;
+            false;
 
         danielLevel6Audio.loop =
-            true;
+            false;
 
         danielLevel6Audio.volume =
-            1;
+            0.01;
 
         const attempt =
             danielLevel6Audio.play();
 
         if (
             attempt &&
-            typeof attempt.catch ===
+            typeof attempt.then ===
                 "function"
         ) {
 
-            attempt.catch(
-                function () {}
+            attempt.then(
+                function () {
+
+                    setTimeout(
+                        function () {
+
+                            danielLevel6Audio.pause();
+
+                            danielLevel6Audio.currentTime =
+                                0;
+
+                            danielLevel6Audio.volume =
+                                1;
+
+                        },
+                        300
+                    );
+                }
+            ).catch(
+                function () {
+
+                    danielLevel6Audio.pause();
+
+                    danielLevel6Audio.currentTime =
+                        0;
+
+                    danielLevel6Audio.volume =
+                        1;
+                }
             );
         }
 
     } catch (
         error
     ) {
-        // Continue normally.
+
+        danielLevel6Audio.volume =
+            1;
     }
 }
-
 
 async function playDanielLevel6Audio(
     lines
