@@ -2659,10 +2659,9 @@ let level7GriefAudio =
 
 function unlockLevel7Audio() {
 
-    const sounds = [
-        level7SlotOpenAudio,
-        level7GriefAudio
-    ];
+const sounds = [
+    level7GriefAudio
+];
 
     sounds.forEach(
         function (sound) {
