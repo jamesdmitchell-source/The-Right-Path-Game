@@ -2659,86 +2659,139 @@ let level7GriefAudio =
 
 function unlockLevel7Audio() {
 
-const sounds = [
-    level7GriefAudio
-];
+    /*
+    ========================================
+    SLOT SOUND — SILENT IPAD UNLOCK
+    ========================================
+    */
 
-    sounds.forEach(
-        function (sound) {
+    try {
 
-            try {
+        level7SlotOpenAudio.pause();
 
-                sound.pause();
+        level7SlotOpenAudio.currentTime =
+            0;
 
-                sound.currentTime =
-                    0;
+        level7SlotOpenAudio.muted =
+            true;
 
-                sound.muted =
-                    false;
+        level7SlotOpenAudio.volume =
+            0.7;
 
-                if (
-    sound === level7SlotOpenAudio
-) {
+        const slotAttempt =
+            level7SlotOpenAudio.play();
 
-    sound.volume =
-       0.000001
+        if (
+            slotAttempt &&
+            typeof slotAttempt.then ===
+                "function"
+        ) {
 
-} else {
+            slotAttempt.then(
+                function () {
 
-    sound.volume =
-        0.01;
-}
-                const attempt =
-                    sound.play();
-
-                if (
-                    attempt &&
-                    typeof attempt.then ===
-                        "function"
-                ) {
-
-                    attempt.then(
+                    setTimeout(
                         function () {
 
-                            setTimeout(
-                                function () {
+                            level7SlotOpenAudio.pause();
 
-                                    sound.pause();
-
-                                    sound.currentTime =
-                                        0;
-
-                                    sound.volume =
-                                        1;
-
-                                },
-                                300
-                            );
-                        }
-                    ).catch(
-                        function () {
-
-                            sound.pause();
-
-                            sound.currentTime =
+                            level7SlotOpenAudio.currentTime =
                                 0;
 
-                            sound.volume =
-                                1;
-                        }
+                            level7SlotOpenAudio.muted =
+                                false;
+
+                        },
+                        300
                     );
                 }
+            ).catch(
+                function () {
 
-            } catch (
-                error
-            ) {
+                    level7SlotOpenAudio.pause();
 
-                sound.volume =
-                    1;
-            }
+                    level7SlotOpenAudio.currentTime =
+                        0;
+
+                    level7SlotOpenAudio.muted =
+                        false;
+                }
+            );
         }
-    );
-}    
+
+    } catch (error) {
+
+        level7SlotOpenAudio.muted =
+            false;
+    }
+
+
+    /*
+    ========================================
+    ELIAS GRIEF AUDIO — IPAD UNLOCK
+    ========================================
+    */
+
+    try {
+
+        level7GriefAudio.pause();
+
+        level7GriefAudio.currentTime =
+            0;
+
+        level7GriefAudio.muted =
+            false;
+
+        level7GriefAudio.volume =
+            0.01;
+
+        const griefAttempt =
+            level7GriefAudio.play();
+
+        if (
+            griefAttempt &&
+            typeof griefAttempt.then ===
+                "function"
+        ) {
+
+            griefAttempt.then(
+                function () {
+
+                    setTimeout(
+                        function () {
+
+                            level7GriefAudio.pause();
+
+                            level7GriefAudio.currentTime =
+                                0;
+
+                            level7GriefAudio.volume =
+                                1;
+
+                        },
+                        300
+                    );
+                }
+            ).catch(
+                function () {
+
+                    level7GriefAudio.pause();
+
+                    level7GriefAudio.currentTime =
+                        0;
+
+                    level7GriefAudio.volume =
+                        1;
+                }
+            );
+        }
+
+    } catch (error) {
+
+        level7GriefAudio.volume =
+            1;
+    }
+}
 async function showLevel7Cinematic() {
 
     level7Cinematic.classList.add(
