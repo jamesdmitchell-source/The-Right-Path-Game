@@ -2682,7 +2682,7 @@ function unlockLevel7Audio() {
 ) {
 
     sound.volume =
-        0.001;
+       0.000001
 
 } else {
 
