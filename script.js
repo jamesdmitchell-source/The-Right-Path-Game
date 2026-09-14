@@ -11549,21 +11549,36 @@ if (
 
     unlockAnnaLevel6Audio();
 } 
-  /*
+/*
 ========================================
 UNLOCK LEVEL 7 AUDIO ON IPAD
 ========================================
 */
 
+const currentLevel =
+    levels[
+        currentLevelIndex
+    ];
+
 if (
-    levels[currentLevelIndex] &&
-    levels[currentLevelIndex].number === 7 &&
-    typeof unlockLevel7Audio ===
-        "function"
+    (
+        currentLevel &&
+        currentLevel.contradictionPuzzle
+    ) ||
+    (
+        nextLevel &&
+        nextLevel.contradictionPuzzle
+    )
 ) {
 
-    unlockLevel7Audio();
-}      
+    if (
+        typeof unlockLevel7Audio ===
+            "function"
+    ) {
+
+        unlockLevel7Audio();
+    }
+}
     /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
