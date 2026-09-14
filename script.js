@@ -2850,7 +2850,7 @@ level7SlotOpenAudio.play().catch(
     () => {}
 );
 
-await wait(150);
+await wait(300);
 
 level7Cinematic.classList.add(
     "slots-visible"
