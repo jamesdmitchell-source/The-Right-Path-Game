@@ -11682,22 +11682,24 @@ await playCorridorSequence();
 
 await wait(100);
 
-const eliasGriefAudio =
-    new Audio(
-        "elias-grief.mp3?v=2"
-    );
+level7GriefAudio.pause();
 
-eliasGriefAudio.volume =
+level7GriefAudio.currentTime =
+    0;
+
+level7GriefAudio.muted =
+    false;
+
+level7GriefAudio.volume =
     1.0;
 
 eliasGriefFlashback.classList.add(
     "visible"
 );
 
-eliasGriefAudio.play().catch(
+level7GriefAudio.play().catch(
     () => {}
 );
-
 await wait(11000);
 
             eliasGriefFlashback.classList.remove(
