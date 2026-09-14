@@ -11505,19 +11505,35 @@ if (
 
     unlockDanielLevel6Audio();
 }
-  /*
+/*
 ========================================
-UNLOCK CORRIDOR AUDIO ON IPAD
+CORRIDOR AUDIO ON IPAD
 ========================================
 */
 
 if (
-    typeof unlockCorridorAmbience ===
-        "function"
+    levels[currentLevelIndex] &&
+    levels[currentLevelIndex].contradictionPuzzle
 ) {
 
-    unlockCorridorAmbience();
-}  
+    if (
+        typeof playCorridorAmbience ===
+            "function"
+    ) {
+
+        playCorridorAmbience();
+    }
+
+} else {
+
+    if (
+        typeof unlockCorridorAmbience ===
+            "function"
+    ) {
+
+        unlockCorridorAmbience();
+    }
+}
 /*
 ========================================
 UNLOCK ANNA LEVEL 6 AUDIO ON IPAD
