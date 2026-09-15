@@ -11858,6 +11858,23 @@ if (
 
     return;
 }
+/*
+    ========================================
+    LEVEL 8 — REFLEX CINEMATIC
+    ========================================
+*/
+
+if (
+    newLevel &&
+    newLevel.reflexPuzzle
+) {
+
+    level8Cinematic.classList.add(
+        "active"
+    );
+
+    return;
+}        
 if (
     newLevel &&
     newLevel.judgementPuzzle
