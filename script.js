@@ -2640,6 +2640,53 @@ level7Cinematic.innerHTML = `
 
 document.body.appendChild(
     level7Cinematic
+);  
+/*
+========================================
+LEVEL 8 — REFLEX CINEMATIC
+========================================
+*/
+
+const level8Cinematic =
+    document.createElement(
+        "div"
+    );
+
+level8Cinematic.id =
+    "level8Cinematic";
+
+level8Cinematic.className =
+    "level8-cinematic";
+
+level8Cinematic.innerHTML = `
+
+    <div class="level8-cinematic-scene">
+
+        <div class="level8-cinematic-title">
+            LEVEL 8 — REFLEX
+        </div>
+
+        <div class="level8-room">
+
+            <div class="level8-bulb-wire"></div>
+
+            <div class="level8-bulb">
+
+                <div class="level8-bulb-glow"></div>
+
+                <div class="level8-bulb-glass"></div>
+
+            </div>
+
+            <div class="level8-room-darkness"></div>
+
+        </div>
+
+    </div>
+`;
+
+document.body.appendChild(
+    level8Cinematic
 );    
 /*
 ========================================
