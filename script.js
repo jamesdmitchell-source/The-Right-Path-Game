@@ -11651,6 +11651,36 @@ if (
         unlockLevel7Audio();
     }
 }
+/*
+========================================
+UNLOCK LEVEL 8 AUDIO ON IPAD
+========================================
+*/
+
+const level8CurrentLevel =
+    levels[
+        currentLevelIndex
+    ];
+
+if (
+    (
+        level8CurrentLevel &&
+        level8CurrentLevel.reflexPuzzle
+    ) ||
+    (
+        nextLevel &&
+        nextLevel.reflexPuzzle
+    )
+) {
+
+    if (
+        typeof unlockLevel8Audio ===
+            "function"
+    ) {
+
+        unlockLevel8Audio();
+    }
+}        
     /*
             ========================================
             PREPARE LEVEL 5 AUDIO ON IPAD
