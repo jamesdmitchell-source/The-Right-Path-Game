@@ -4984,7 +4984,23 @@ if (
 
     return;
 }
+/*
+========================================
+DEV MODE — LEVEL 8 REFLEX
+========================================
+*/
 
+if (
+    level &&
+    level.reflexPuzzle
+) {
+
+    level8Cinematic.classList.add(
+        "active"
+    );
+
+    return;
+}
     /*
         LEVEL 6
         Play its cinematic exactly as the
