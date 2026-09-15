@@ -837,3 +837,49 @@ function playLevel5DeathScream() {
     END LEVEL 5 AUDIO
     ========================================
 */
+/*
+========================================
+LEVEL 8 — IPAD AUDIO UNLOCK
+========================================
+*/
+
+function unlockLevel8Audio() {
+
+    if (!level8BulbBuzz) {
+
+        startAmbientSound();
+    }
+
+    if (!level8BulbBuzz) {
+        return;
+    }
+
+    level8BulbBuzz.pause();
+    level8BulbBuzz.currentTime = 0;
+
+    level8BulbBuzz.muted = true;
+
+    const unlockPromise =
+        level8BulbBuzz.play();
+
+    if (
+        unlockPromise &&
+        typeof unlockPromise.then ===
+            "function"
+    ) {
+
+        unlockPromise
+            .then(() => {
+
+                level8BulbBuzz.pause();
+                level8BulbBuzz.currentTime = 0;
+                level8BulbBuzz.muted = false;
+
+            })
+            .catch(() => {
+
+                level8BulbBuzz.muted = false;
+
+            });
+    }
+}
