@@ -49,7 +49,26 @@ function startAmbientSound() {
             0.28;
     }
 }
+/*
+    LEVEL 8 — BULB BUZZ
+*/
 
+if (!level8BulbBuzz) {
+
+    level8BulbBuzz =
+        new Audio(
+            "level8-bulb-buzz.mp3"
+        );
+
+    level8BulbBuzz.preload =
+        "auto";
+
+    level8BulbBuzz.loop =
+        true;
+
+    level8BulbBuzz.volume =
+        0.45;
+}
 
 /*
     DOOR CREAK
