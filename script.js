@@ -5007,7 +5007,13 @@ if (
     level8Cinematic.classList.add(
         "active"
     );
+if (
+    typeof playLevel8BulbBuzz ===
+        "function"
+) {
 
+    playLevel8BulbBuzz();
+}
     return;
 }
     /*
