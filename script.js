@@ -4995,6 +4995,15 @@ if (
     level.reflexPuzzle
 ) {
 
+    if (
+        level.intro
+    ) {
+
+        await playLevelIntroduction(
+            level
+        );
+    }
+
     level8Cinematic.classList.add(
         "active"
     );
