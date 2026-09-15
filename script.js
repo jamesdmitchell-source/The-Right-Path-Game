@@ -4995,6 +4995,23 @@ if (
     );
 
     return;
+}      
+/*
+========================================
+DEV MODE — LEVEL 8 REFLEX
+========================================
+*/
+
+if (
+    level &&
+    level.reflexPuzzle
+) {
+
+    level8Cinematic.classList.add(
+        "active"
+    );
+
+    return;
 }
     await showLevel7Cinematic();
 
