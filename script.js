@@ -4928,6 +4928,21 @@ if (
 
     unlockLevel7Audio();
 }
+/*
+========================================
+DEV MODE — UNLOCK LEVEL 8 AUDIO
+========================================
+*/
+
+if (
+    devSelectedLevel &&
+    devSelectedLevel.reflexPuzzle &&
+    typeof unlockLevel8Audio ===
+        "function"
+) {
+
+    unlockLevel8Audio();
+}    
     /*
     ========================================
     DEV MODE — UNLOCK LEVEL 6 AUDIO ON IPAD
