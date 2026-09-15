@@ -1189,5 +1189,30 @@ const levels = [
         true,
 
     choices: []
+},
+
+{
+    number:
+        8,
+
+    title:
+        "REFLEX",
+
+    observation:
+        "A single bare light bulb hangs from the ceiling.",
+
+    clue:
+        "The bulb flickers unpredictably in the darkness.",
+
+    question:
+        "How quickly can you react?",
+
+    intro:
+        "Thinking takes time, Twenty-eight. Sometimes... time is the one thing you don't have.",
+
+    reflexPuzzle:
+        true,
+
+    choices: []
 }
 ];
