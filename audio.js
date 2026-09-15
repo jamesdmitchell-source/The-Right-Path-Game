@@ -883,3 +883,29 @@ function unlockLevel8Audio() {
             });
     }
 }
+/*
+========================================
+LEVEL 8 — PLAY BULB BUZZ
+========================================
+*/
+
+function playLevel8BulbBuzz() {
+
+    if (!level8BulbBuzz) {
+
+        startAmbientSound();
+    }
+
+    if (!level8BulbBuzz) {
+        return;
+    }
+
+    level8BulbBuzz.pause();
+    level8BulbBuzz.currentTime = 0;
+    level8BulbBuzz.muted = false;
+    level8BulbBuzz.volume = 0.45;
+
+    level8BulbBuzz
+        .play()
+        .catch(() => {});
+}
