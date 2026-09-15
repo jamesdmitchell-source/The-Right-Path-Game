@@ -8374,3 +8374,43 @@ ROOM DARKNESS
     pointer-events: none;
     z-index: 10;
 }
+/*
+========================================
+LEVEL 8 — BULB FLICKER
+========================================
+*/
+
+.level8-bulb {
+    animation:
+        level8BulbFlicker
+        4.8s
+        infinite;
+}
+
+@keyframes level8BulbFlicker {
+
+    0%,
+    18%,
+    22%,
+    41%,
+    44%,
+    72%,
+    76%,
+    100% {
+        opacity: 1;
+    }
+
+    19%,
+    21%,
+    42%,
+    43%,
+    73%,
+    75% {
+        opacity: 0.12;
+    }
+
+    20%,
+    74% {
+        opacity: 0.45;
+    }
+}
