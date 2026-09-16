@@ -12074,3 +12074,39 @@ async function testEliasGriefFlashback() {
         "visible"
     );
 }
+/*
+========================================
+LEVEL 8 — RANDOM TARGET POSITION
+========================================
+*/
+
+function moveLevel8Target() {
+
+    const target =
+        level8Cinematic.querySelector(
+            ".level8-reflex-target"
+        );
+
+    if (!target) {
+        return;
+    }
+
+    /*
+        Keep the target away from the
+        extreme edges of the screen.
+    */
+
+    const x =
+        15 +
+        Math.random() * 70;
+
+    const y =
+        22 +
+        Math.random() * 63;
+
+    target.style.left =
+        x + "%";
+
+    target.style.top =
+        y + "%";
+}
