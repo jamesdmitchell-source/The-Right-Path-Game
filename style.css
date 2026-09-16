@@ -8421,6 +8421,8 @@ LEVEL 8 — REFLEX TARGET
 */
 
 .level8-reflex-target {
+    opacity: 0;
+pointer-events: none;
     position: absolute;
 
     left: 50%;
@@ -8459,4 +8461,13 @@ LEVEL 8 — REFLEX TARGET
     -webkit-user-drag: none;
 
     pointer-events: none;
+}
+/*
+========================================
+LEVEL 8 — TARGET VISIBLE STATE
+========================================
+*/
+
+.level8-reflex-target.visible {
+    opacity: 1;
 }
