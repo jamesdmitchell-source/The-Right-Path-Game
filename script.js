@@ -5055,6 +5055,7 @@ if (
 
     playLevel8BulbBuzz();
 }
+showLevel8TargetTest();    
     return;
 }
     /*
