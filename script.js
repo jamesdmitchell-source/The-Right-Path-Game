@@ -12129,3 +12129,54 @@ function moveLevel8Target() {
     target.style.top =
         y + "%";
 }
+/*
+========================================
+LEVEL 8 — SHOW REFLEX TARGET
+========================================
+*/
+
+async function showLevel8TargetTest() {
+
+    const target =
+        level8Cinematic.querySelector(
+            ".level8-reflex-target"
+        );
+
+    if (!target) {
+        return;
+    }
+
+    /*
+        Wait before the target appears.
+    */
+
+    await wait(3000);
+
+    /*
+        Choose a new position.
+    */
+
+    moveLevel8Target();
+
+    /*
+        Reveal target.
+    */
+
+    target.classList.add(
+        "visible"
+    );
+
+    /*
+        Keep it visible for one second.
+    */
+
+    await wait(1000);
+
+    /*
+        Hide it again.
+    */
+
+    target.classList.remove(
+        "visible"
+    );
+}
