@@ -8414,3 +8414,49 @@ LEVEL 8 — BULB FLICKER
         opacity: 0.45;
     }
 }
+/*
+========================================
+LEVEL 8 — REFLEX TARGET
+========================================
+*/
+
+.level8-reflex-target {
+    position: absolute;
+
+    left: 50%;
+    top: 62%;
+
+    width: clamp(
+        85px,
+        10vw,
+        135px
+    );
+
+    aspect-ratio: 1 / 1;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 15;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255, 225, 150, 0.55)
+        );
+}
+
+.level8-reflex-target img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    pointer-events: none;
+}
