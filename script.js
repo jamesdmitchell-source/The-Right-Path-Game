@@ -4907,7 +4907,23 @@ async function developerJumpToLevel(
         "warning",
         "blackout"
     );
+ /*
+    Hide Level 8 cinematic.
+*/
 
+level8Cinematic.classList.remove(
+    "active"
+);
+
+if (
+    typeof level8BulbBuzz !==
+        "undefined" &&
+    level8BulbBuzz
+) {
+
+    level8BulbBuzz.pause();
+    level8BulbBuzz.currentTime = 0;
+}
 
     /*
         Change current level.
