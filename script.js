@@ -5029,6 +5029,9 @@ if (
     level8Cinematic.classList.add(
         "active"
     );
+
+    moveLevel8Target();
+    
 if (
     typeof playLevel8BulbBuzz ===
         "function"
