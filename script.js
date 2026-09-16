@@ -12166,7 +12166,9 @@ async function showLevel8TargetTest() {
     target.classList.add(
         "visible"
     );
-   
+   alert(
+    "LEVEL 8 TARGET CODE REACHED"
+);
     /*
         Keep it visible for one second.
     */
