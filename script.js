@@ -12110,7 +12110,9 @@ function moveLevel8Target() {
     if (!target) {
         return;
     }
-
+alert(
+    "LEVEL 8 TARGET FUNCTION STARTED"
+);
     /*
         Keep the target away from the
         extreme edges of the screen.
