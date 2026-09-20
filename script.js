@@ -12110,9 +12110,7 @@ function moveLevel8Target() {
     if (!target) {
         return;
     }
-alert(
-    "LEVEL 8 TARGET FUNCTION STARTED"
-);
+
     /*
         Keep the target away from the
         extreme edges of the screen.
@@ -12174,14 +12172,18 @@ async function showLevel8TargetTest() {
     target.classList.add(
         "visible"
     );
-   alert(
-    "LEVEL 8 TARGET CODE REACHED"
-);
+   
     /*
         Keep it visible for one second.
     */
 
-    await wait(1000);
+    await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            1000
+        )
+);
 
     /*
         Hide it again.
