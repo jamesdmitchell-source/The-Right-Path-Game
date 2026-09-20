@@ -12208,17 +12208,18 @@ LEVEL 8 — TARGET HIT
 ========================================
 */
 
-level8Cinematic.addEventListener(
-    "click",
-    function (event) {
+const level8TargetImage =
+    level8Cinematic.querySelector(
+        ".level8-reflex-target img"
+    );
+
+level8TargetImage.onclick =
+    function () {
 
         const target =
-            level8Cinematic.querySelector(
-                ".level8-reflex-target"
-            );
+            level8TargetImage.parentElement;
 
         if (
-            !target ||
             !target.classList.contains(
                 "visible"
             )
@@ -12226,20 +12227,11 @@ level8Cinematic.addEventListener(
             return;
         }
 
-        if (
-            event.target === target ||
-            target.contains(
-                event.target
-            )
-        ) {
+        target.classList.remove(
+            "visible"
+        );
 
-            target.classList.remove(
-                "visible"
-            );
-
-            alert(
-                "TARGET HIT"
-            );
-        }
-    }
-);
+        alert(
+            "TARGET HIT"
+        );
+    };
