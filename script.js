@@ -12201,9 +12201,8 @@ LEVEL 8 — TARGET HIT
 
 const level8ReflexTarget =
     level8Cinematic.querySelector(
-        ".level8-reflex-target"
+        ".level8-reflex-target img"
     );
-
 level8ReflexTarget.addEventListener(
     "pointerdown",
     function (event) {
@@ -12213,13 +12212,13 @@ level8ReflexTarget.addEventListener(
             is invisible.
         */
 
-        if (
-            !level8ReflexTarget.classList.contains(
-                "visible"
-            )
-        ) {
-            return;
-        }
+     if (
+    !level8ReflexTarget.parentElement.classList.contains(
+        "visible"
+    )
+) {
+    return;
+}
 
         event.preventDefault();
 
@@ -12227,9 +12226,9 @@ level8ReflexTarget.addEventListener(
             Successful reaction.
         */
 
-        level8ReflexTarget.classList.remove(
-            "visible"
-        );
+      level8ReflexTarget.parentElement.classList.remove(
+    "visible"
+);
 
         alert(
             "TARGET HIT"
