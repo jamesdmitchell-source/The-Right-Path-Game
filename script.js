@@ -12193,3 +12193,46 @@ async function showLevel8TargetTest() {
         "visible"
     );
 }
+/*
+========================================
+LEVEL 8 — TARGET HIT
+========================================
+*/
+
+const level8ReflexTarget =
+    level8Cinematic.querySelector(
+        ".level8-reflex-target"
+    );
+
+level8ReflexTarget.addEventListener(
+    "pointerdown",
+    function (event) {
+
+        /*
+            Ignore taps while the target
+            is invisible.
+        */
+
+        if (
+            !level8ReflexTarget.classList.contains(
+                "visible"
+            )
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        /*
+            Successful reaction.
+        */
+
+        level8ReflexTarget.classList.remove(
+            "visible"
+        );
+
+        alert(
+            "TARGET HIT"
+        );
+    }
+);
