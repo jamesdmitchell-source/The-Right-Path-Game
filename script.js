@@ -12205,39 +12205,38 @@ LEVEL 8 — TARGET HIT
 ========================================
 */
 
-const level8ReflexTarget =
-    level8Cinematic.querySelector(
-        ".level8-reflex-target img"
-    );
-level8ReflexTarget.addEventListener(
-    "pointerdown",
+level8Cinematic.addEventListener(
+    "click",
     function (event) {
 
-        /*
-            Ignore taps while the target
-            is invisible.
-        */
+        const target =
+            level8Cinematic.querySelector(
+                ".level8-reflex-target"
+            );
 
-     if (
-    !level8ReflexTarget.parentElement.classList.contains(
-        "visible"
-    )
-) {
-    return;
-}
+        if (
+            !target ||
+            !target.classList.contains(
+                "visible"
+            )
+        ) {
+            return;
+        }
 
-        event.preventDefault();
+        if (
+            event.target === target ||
+            target.contains(
+                event.target
+            )
+        ) {
 
-        /*
-            Successful reaction.
-        */
+            target.classList.remove(
+                "visible"
+            );
 
-      level8ReflexTarget.parentElement.classList.remove(
-    "visible"
-);
-
-        alert(
-            "TARGET HIT"
-        );
+            alert(
+                "TARGET HIT"
+            );
+        }
     }
 );
