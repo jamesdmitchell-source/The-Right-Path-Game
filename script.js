@@ -5045,16 +5045,7 @@ if (
     level8Cinematic.classList.add(
         "active"
     );
-level8Cinematic.onclick =
-    function (event) {
 
-        alert(
-            "CLICKED: " +
-            event.target.tagName +
-            " / " +
-            event.target.className
-        );
-    };
     moveLevel8Target();
     
 if (
