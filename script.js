@@ -5046,10 +5046,13 @@ if (
         "active"
     );
 level8Cinematic.onclick =
-    function () {
+    function (event) {
 
         alert(
-            "LEVEL 8 SCREEN CLICK DETECTED"
+            "CLICKED: " +
+            event.target.tagName +
+            " / " +
+            event.target.className
         );
     };
     moveLevel8Target();
