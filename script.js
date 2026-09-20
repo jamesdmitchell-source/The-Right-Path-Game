@@ -12153,7 +12153,13 @@ async function showLevel8TargetTest() {
         Wait before the target appears.
     */
 
-    await wait(3000);
+    await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            3000
+        )
+);
 
     /*
         Choose a new position.
