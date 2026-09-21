@@ -12207,21 +12207,6 @@ const level8TargetImage =
 level8TargetImage.onclick =
     function () {
 
-        const target =
-            level8TargetImage.parentElement;
-
-        if (
-            !target.classList.contains(
-                "visible"
-            )
-        ) {
-            return;
-        }
-
-        target.classList.remove(
-            "visible"
-        );
-
         alert(
             "TARGET HIT"
         );
