@@ -12199,21 +12199,16 @@ LEVEL 8 — TARGET HIT
 ========================================
 */
 
-const level8TargetImage =
-    level8Cinematic.querySelector(
-        ".level8-reflex-target img"
-    );
-
-level8TargetImage.addEventListener(
-    "pointerdown",
+level8Cinematic.onclick =
     function (event) {
 
-        event.preventDefault();
-        event.stopPropagation();
+        if (
+            event.target.tagName ===
+            "IMG"
+        ) {
 
-        alert(
-            "TARGET HIT"
-        );
-    },
-    true
-);
+            alert(
+                "TARGET HIT"
+            );
+        }
+    };
