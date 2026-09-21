@@ -12204,10 +12204,16 @@ const level8TargetImage =
         ".level8-reflex-target img"
     );
 
-level8TargetImage.onclick =
-    function () {
+level8TargetImage.addEventListener(
+    "pointerdown",
+    function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
 
         alert(
             "TARGET HIT"
         );
-    };
+    },
+    true
+);
