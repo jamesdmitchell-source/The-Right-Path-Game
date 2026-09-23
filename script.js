@@ -12199,38 +12199,50 @@ LEVEL 8 — TARGET HIT
 ========================================
 */
 
-level8Cinematic.onclick =
-    function (event) {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-        const target =
-            level8Cinematic.querySelector(
-                ".level8-reflex-target"
+        const level8Screen =
+            document.getElementById(
+                "level8Cinematic"
             );
 
-        if (
-            !target ||
-            !target.classList.contains(
-                "visible"
-            )
-        ) {
+        if (!level8Screen) {
             return;
         }
 
-        const targetBox =
-            target.getBoundingClientRect();
+        level8Screen.onclick =
+            function (event) {
 
-        const clickedInsideTarget =
-            event.clientX >= targetBox.left &&
-            event.clientX <= targetBox.right &&
-            event.clientY >= targetBox.top &&
-            event.clientY <= targetBox.bottom;
+                const target =
+                    level8Screen.querySelector(
+                        ".level8-reflex-target"
+                    );
 
-        if (
-            clickedInsideTarget
-        ) {
+                if (
+                    !target ||
+                    !target.classList.contains(
+                        "visible"
+                    )
+                ) {
+                    return;
+                }
 
-            alert(
-                "TARGET HIT"
-            );
-        }
-    };
+                const targetBox =
+                    target.getBoundingClientRect();
+
+                if (
+                    event.clientX >= targetBox.left &&
+                    event.clientX <= targetBox.right &&
+                    event.clientY >= targetBox.top &&
+                    event.clientY <= targetBox.bottom
+                ) {
+
+                    alert(
+                        "TARGET HIT"
+                    );
+                }
+            };
+    }
+);
