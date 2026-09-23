@@ -12203,16 +12203,15 @@ LEVEL 8 — TARGET HIT
 ========================================
 */
 
-level8Cinematic.onclick =
-    function (event) {
+const level8TargetButton =
+    level8Cinematic.querySelector(
+        ".level8-reflex-target"
+    );
 
-        if (
-            event.target.tagName ===
-            "IMG"
-        ) {
+level8TargetButton.onclick =
+    function () {
 
-            alert(
-                "TARGET HIT"
-            );
-        }
+        alert(
+            "TARGET HIT"
+        );
     };
