@@ -8425,6 +8425,11 @@ LEVEL 8 — REFLEX TARGET
 pointer-events: none;
     position: absolute;
 
+     padding: 0;
+    border: 0;
+    background: transparent;
+    appearance: none;
+
     left: 50%;
     top: 62%;
 
