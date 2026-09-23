@@ -12183,7 +12183,7 @@ async function showLevel8TargetTest() {
     resolve =>
         setTimeout(
             resolve,
-            5000
+            1000
         )
 );
 
