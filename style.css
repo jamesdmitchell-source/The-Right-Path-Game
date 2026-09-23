@@ -8444,12 +8444,25 @@ LEVEL 8 — TARGET HIT MESSAGE
 
     letter-spacing: 8px;
 
-    color: #d40000;
+  color: #b40000;
 
-    text-shadow:
-        0 0 8px rgba(255, 0, 0, 0.9),
-        0 0 25px rgba(180, 0, 0, 0.7);
+font-family:
+    Impact,
+    "Arial Black",
+    sans-serif;
 
+-webkit-text-stroke:
+    2px #650000;
+
+text-shadow:
+    -5px 3px 0 #520000,
+    4px -2px 0 #7a0000,
+    -2px -4px 0 #3d0000,
+    6px 5px 0 rgba(90, 0, 0, 0.8),
+    0 0 18px rgba(255, 0, 0, 0.65);
+
+filter:
+    contrast(1.35);
     opacity: 0;
 
     pointer-events: none;
