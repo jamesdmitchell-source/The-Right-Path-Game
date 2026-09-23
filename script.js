@@ -12241,9 +12241,28 @@ document.addEventListener(
                     event.clientY <= targetBox.bottom
                 ) {
 
-                    alert(
-                        "TARGET HIT"
-                    );
+                   const hitMessage =
+    level8Screen.querySelector(
+        ".level8-hit-message"
+    );
+
+if (hitMessage) {
+
+    hitMessage.classList.add(
+        "visible"
+    );
+
+    setTimeout(
+        function () {
+
+            hitMessage.classList.remove(
+                "visible"
+            );
+
+        },
+        650
+    );
+}
                 }
             };
     }
