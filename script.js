@@ -2667,7 +2667,9 @@ level8Cinematic.innerHTML = `
         </div>
 
         <div class="level8-room">
-
+<div class="level8-hit-message">
+    TARGET HIT
+</div>
             <div class="level8-bulb-wire"></div>
 
             <div class="level8-bulb">
