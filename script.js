@@ -2677,18 +2677,14 @@ level8Cinematic.innerHTML = `
                 <div class="level8-bulb-glass"></div>
 
             </div>
-<button
-    class="level8-reflex-target"
-    type="button"
-    aria-label="Reflex target"
->
+<div class="level8-reflex-target">
 
     <img
         src="level8-reflex-target.png"
         alt=""
     >
 
-</button>
+</div>
             <div class="level8-room-darkness"></div>
 
         </div>
