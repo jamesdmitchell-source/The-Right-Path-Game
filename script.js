@@ -12166,7 +12166,7 @@ async function showLevel8TargetTest() {
 
 for (
     let targetNumber = 1;
-    targetNumber <= 5;
+    targetNumber <= 15;
     targetNumber++
 ) {
 
