@@ -12159,17 +12159,33 @@ async function showLevel8TargetTest() {
         return;
     }
 
+  /*
+    Show five targets with
+    unpredictable pauses.
+*/
+
+for (
+    let targetNumber = 1;
+    targetNumber <= 5;
+    targetNumber++
+) {
+
     /*
-        Wait before the target appears.
+        Random pause between
+        2 and 5 seconds.
     */
 
+    const delay =
+        2000 +
+        Math.random() * 3000;
+
     await new Promise(
-    resolve =>
-        setTimeout(
-            resolve,
-            3000
-        )
-);
+        resolve =>
+            setTimeout(
+                resolve,
+                delay
+            )
+    );
 
     /*
         Choose a new position.
@@ -12184,6 +12200,28 @@ async function showLevel8TargetTest() {
     target.classList.add(
         "visible"
     );
+
+    /*
+        Player has one second
+        to react.
+    */
+
+    await new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                1000
+            )
+    );
+
+    /*
+        Hide target.
+    */
+
+    target.classList.remove(
+        "visible"
+    );
+}
    
     /*
         Keep it visible for one second.
