@@ -12289,7 +12289,9 @@ document.addEventListener(
                     event.clientY >= targetBox.top &&
                     event.clientY <= targetBox.bottom
                 ) {
+level8CurrentTargetHit = true;
 
+level8TargetsHit++;
                    const hitMessage =
     level8Screen.querySelector(
         ".level8-hit-message"
