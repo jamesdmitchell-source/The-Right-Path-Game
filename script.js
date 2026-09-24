@@ -12227,6 +12227,20 @@ level8CurrentTargetHit = false;
     target.classList.remove(
         "visible"
     );
+    /*
+    If the player did not hit
+    the target in time,
+    stop the challenge.
+*/
+
+if (!level8CurrentTargetHit) {
+
+    alert(
+        "TARGET MISSED"
+    );
+
+    return;
+}
 }
    
     /*
