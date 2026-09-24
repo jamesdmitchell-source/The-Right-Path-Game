@@ -12246,9 +12246,17 @@ level8CurrentTargetHit = false;
 
 if (!level8CurrentTargetHit) {
 
-    alert(
-        "TARGET MISSED"
-    );
+    const failureMessage =
+        level8Cinematic.querySelector(
+            ".level8-failure-message"
+        );
+
+    if (failureMessage) {
+
+        failureMessage.classList.add(
+            "visible"
+        );
+    }
 
     return;
 }
