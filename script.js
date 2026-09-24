@@ -2670,6 +2670,17 @@ level8Cinematic.innerHTML = `
 <div class="level8-hit-message">
     TARGET HIT
 </div>
+<div class="level8-failure-message">
+
+    <div class="level8-failure-title">
+        REACTION FAILED
+    </div>
+
+    <div class="level8-failure-subtitle">
+        TOO SLOW, TWENTY-EIGHT.
+    </div>
+
+</div>
             <div class="level8-bulb-wire"></div>
 
             <div class="level8-bulb">
