@@ -12142,6 +12142,7 @@ let level8TargetsHit = 0;
 let level8TargetsRequired = 20;
 let level8Errors = 0;
 let level8MaxErrors = 3;
+let level8CurrentTargetHit = false;
 /*
 ========================================
 LEVEL 8 — SHOW REFLEX TARGET
