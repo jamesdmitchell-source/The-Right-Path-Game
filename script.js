@@ -12191,7 +12191,12 @@ for (
     /*
         Choose a new position.
     */
+/*
+    This new target has
+    not been hit yet.
+*/
 
+level8CurrentTargetHit = false;
     moveLevel8Target();
 
     /*
