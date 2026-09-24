@@ -12134,6 +12134,16 @@ function moveLevel8Target() {
 }
 /*
 ========================================
+LEVEL 8 — REFLEX GAME STATE
+========================================
+*/
+
+let level8TargetsHit = 0;
+let level8TargetsRequired = 5;
+let level8Errors = 0;
+let level8MaxErrors = 3;
+/*
+========================================
 LEVEL 8 — SHOW REFLEX TARGET
 ========================================
 */
