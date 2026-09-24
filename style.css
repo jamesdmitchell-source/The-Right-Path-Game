@@ -8764,6 +8764,7 @@ LEVEL 8 — FAILURE SPLATTER
     pointer-events: none;
 
     z-index: 50;
+    isolation: isolate;
 
     transition:
         opacity 0.25s ease;
