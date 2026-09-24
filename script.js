@@ -12139,7 +12139,7 @@ LEVEL 8 — REFLEX GAME STATE
 */
 
 let level8TargetsHit = 0;
-let level8TargetsRequired = 15;
+let level8TargetsRequired = 20;
 let level8Errors = 0;
 let level8MaxErrors = 3;
 /*
@@ -12166,7 +12166,7 @@ async function showLevel8TargetTest() {
 
 for (
     let targetNumber = 1;
-    targetNumber <= 15;
+    targetNumber <= 20;
     targetNumber++
 ) {
 
