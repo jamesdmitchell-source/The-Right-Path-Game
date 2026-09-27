@@ -929,3 +929,29 @@ function playLevel8BulbBuzz() {
         .play()
         .catch(() => {});
 }
+/*
+========================================
+LEVEL 8 — PLAY FAILURE STING
+========================================
+*/
+
+function playLevel8FailureSting() {
+
+    if (!level8FailureSting) {
+
+        startAmbientSound();
+    }
+
+    if (!level8FailureSting) {
+        return;
+    }
+
+    level8FailureSting.pause();
+    level8FailureSting.currentTime = 0;
+    level8FailureSting.muted = false;
+    level8FailureSting.volume = 0.85;
+
+    level8FailureSting
+        .play()
+        .catch(() => {});
+}
