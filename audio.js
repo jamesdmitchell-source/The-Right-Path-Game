@@ -955,3 +955,49 @@ function playLevel8FailureSting() {
         .play()
         .catch(() => {});
 }
+/*
+========================================
+LEVEL 8 — UNLOCK FAILURE STING
+========================================
+*/
+
+function unlockLevel8FailureSting() {
+
+    if (!level8FailureSting) {
+
+        startAmbientSound();
+    }
+
+    if (!level8FailureSting) {
+        return;
+    }
+
+    level8FailureSting.pause();
+    level8FailureSting.currentTime = 0;
+
+    level8FailureSting.muted = true;
+
+    const unlockPromise =
+        level8FailureSting.play();
+
+    if (
+        unlockPromise &&
+        typeof unlockPromise.then ===
+            "function"
+    ) {
+
+        unlockPromise
+            .then(() => {
+
+                level8FailureSting.pause();
+                level8FailureSting.currentTime = 0;
+                level8FailureSting.muted = false;
+
+            })
+            .catch(() => {
+
+                level8FailureSting.muted = false;
+
+            });
+    }
+}
