@@ -12281,7 +12281,13 @@ if (!level8CurrentTargetHit) {
             "visible"
         );
     }
+if (
+    typeof playLevel8FailureSting ===
+        "function"
+) {
 
+    playLevel8FailureSting();
+}
     return;
 }
 }
