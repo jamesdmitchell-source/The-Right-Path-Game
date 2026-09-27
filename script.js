@@ -4987,6 +4987,21 @@ if (
 ) {
 
     unlockLevel8Audio();
+} 
+/*
+========================================
+DEV MODE — UNLOCK LEVEL 8 FAILURE STING
+========================================
+*/
+
+if (
+    devSelectedLevel &&
+    devSelectedLevel.reflexPuzzle &&
+    typeof unlockLevel8FailureSting ===
+        "function"
+) {
+
+    unlockLevel8FailureSting();
 }    
     /*
     ========================================
