@@ -70,7 +70,26 @@ if (!level8BulbBuzz) {
     level8BulbBuzz.volume =
         0.45;
 }
+/*
+    LEVEL 8 — FAILURE STING
+*/
 
+if (!level8FailureSting) {
+
+    level8FailureSting =
+        new Audio(
+            "level8-failure-sting.mp3"
+        );
+
+    level8FailureSting.preload =
+        "auto";
+
+    level8FailureSting.loop =
+        false;
+
+    level8FailureSting.volume =
+        0.85;
+}
 /*
     DOOR CREAK
 */
