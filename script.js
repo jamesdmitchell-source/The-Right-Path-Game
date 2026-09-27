@@ -12259,7 +12259,19 @@ if (!level8CurrentTargetHit) {
     return;
 }
 }
-   
+/*
+    All 20 targets survived.
+*/
+
+if (
+    level8TargetsHit >=
+    level8TargetsRequired
+) {
+
+    console.log(
+        "LEVEL 8 COMPLETE"
+    );
+}   
     /*
         Keep it visible for one second.
     */
