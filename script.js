@@ -2679,6 +2679,17 @@ level8Cinematic.innerHTML = `
     >
 
 </div>
+<div class="level8-success-message">
+
+    <div class="level8-success-title">
+        REACTION TEST COMPLETE
+    </div>
+
+    <div class="level8-success-subtitle">
+        20 / 20
+    </div>
+
+</div>
             <div class="level8-bulb-wire"></div>
 
             <div class="level8-bulb">
