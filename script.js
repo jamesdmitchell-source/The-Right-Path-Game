@@ -12300,9 +12300,17 @@ if (
     level8TargetsRequired
 ) {
 
-    console.log(
-        "LEVEL 8 COMPLETE"
+  const successMessage =
+    level8Cinematic.querySelector(
+        ".level8-success-message"
     );
+
+if (successMessage) {
+
+    successMessage.classList.add(
+        "visible"
+    );
+} 
 }   
     /*
         Keep it visible for one second.
