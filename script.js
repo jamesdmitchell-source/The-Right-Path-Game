@@ -12019,12 +12019,43 @@ if (
     newLevel.reflexPuzzle
 ) {
 
+    if (
+        newLevel.intro
+    ) {
+
+        await Promise.all([
+            playLevelIntroduction(
+                newLevel
+            ),
+
+            new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        5000
+                    )
+            )
+        ]);
+    }
+
     level8Cinematic.classList.add(
         "active"
     );
 
+    moveLevel8Target();
+
+    if (
+        typeof playLevel8BulbBuzz ===
+            "function"
+    ) {
+
+        playLevel8BulbBuzz();
+    }
+
+    showLevel8TargetTest();
+
     return;
-}        
+}
 if (
     newLevel &&
     newLevel.judgementPuzzle
