@@ -12397,6 +12397,9 @@ document.addEventListener(
                     event.clientY >= targetBox.top &&
                     event.clientY <= targetBox.bottom
                 ) {
+if (level8CurrentTargetHit) {
+    return;
+}                    
 level8CurrentTargetHit = true;
 
 level8TargetsHit++;
