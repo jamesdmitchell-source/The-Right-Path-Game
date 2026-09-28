@@ -9011,3 +9011,38 @@ LEVEL 8 — SUCCESS BULB
         translateX(-50%)
         scale(1.35);
 }
+/* ========================================
+   LEVEL 8 — REPLAY BUTTON
+   ======================================== */
+
+.level8-replay-button {
+    position: absolute;
+
+    left: 50%;
+    bottom: 10%;
+
+    transform: translateX(-50%);
+
+    z-index: 50;
+
+    padding: 14px 28px;
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+
+    background: rgba(0, 0, 0, 0.82);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.level8-replay-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
