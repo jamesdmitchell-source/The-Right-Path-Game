@@ -8963,3 +8963,51 @@ LEVEL 8 — REACTION TEST COMPLETE
         opacity: 1;
     }
 }
+/*
+========================================
+LEVEL 8 — SUCCESS BULB
+========================================
+*/
+
+.level8-bulb.success {
+    animation: none;
+
+    opacity: 1;
+}
+
+.level8-bulb.success
+.level8-bulb-glass {
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #ffffff 0%,
+            #fffbd2 30%,
+            #e9dda0 65%,
+            #81784d 100%
+        );
+
+    box-shadow:
+        0 0 18px
+            rgba(
+                255,
+                245,
+                190,
+                0.95
+            ),
+        0 0 45px
+            rgba(
+                255,
+                235,
+                160,
+                0.65
+            );
+}
+
+.level8-bulb.success
+.level8-bulb-glow {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        scale(1.35);
+}
