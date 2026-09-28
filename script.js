@@ -5070,14 +5070,24 @@ if (
     level.reflexPuzzle
 ) {
 
-    if (
-        level.intro
-    ) {
+  if (
+    level.intro
+) {
 
-        await playLevelIntroduction(
+    await Promise.all([
+        playLevelIntroduction(
             level
-        );
-    }
+        ),
+
+        new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    5000
+                )
+        )
+    ]);
+}
 
     level8Cinematic.classList.add(
         "active"
