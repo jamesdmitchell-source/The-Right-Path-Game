@@ -9046,3 +9046,6 @@ LEVEL 8 — SUCCESS BULB
 .level8-replay-button:hover {
     background: rgba(255, 255, 255, 0.12);
 }
+.level8-replay-button:active {
+    transform: translateX(-50%);
+}
