@@ -2678,6 +2678,14 @@ level8Cinematic.innerHTML = `
         alt="Reaction Failed"
     >
 
+    <button
+        id="level8ReplayButton"
+        class="level8-replay-button"
+        type="button"
+    >
+        REPLAY LEVEL
+    </button>
+
 </div>
 <div class="level8-success-message">
 
