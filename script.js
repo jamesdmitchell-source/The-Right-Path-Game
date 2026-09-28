@@ -12299,7 +12299,17 @@ if (
     level8TargetsHit >=
     level8TargetsRequired
 ) {
+const successBulb =
+    level8Cinematic.querySelector(
+        ".level8-bulb"
+    );
 
+if (successBulb) {
+
+    successBulb.classList.add(
+        "success"
+    );
+}
   const successMessage =
     level8Cinematic.querySelector(
         ".level8-success-message"
