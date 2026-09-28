@@ -12468,3 +12468,110 @@ if (hitMessage) {
             };
     }
 );
+/*
+========================================
+LEVEL 8 — REPLAY AFTER FAILURE
+========================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const replayButton =
+            document.getElementById(
+                "level8ReplayButton"
+            );
+
+        if (!replayButton) {
+            return;
+        }
+
+        replayButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+                /*
+                    Reset Level 8 state.
+                */
+
+                level8TargetsHit = 0;
+                level8Errors = 0;
+                level8CurrentTargetHit = false;
+
+                const target =
+                    level8Cinematic.querySelector(
+                        ".level8-reflex-target"
+                    );
+
+                const failureMessage =
+                    level8Cinematic.querySelector(
+                        ".level8-failure-message"
+                    );
+
+                const successMessage =
+                    level8Cinematic.querySelector(
+                        ".level8-success-message"
+                    );
+
+                const hitMessage =
+                    level8Cinematic.querySelector(
+                        ".level8-hit-message"
+                    );
+
+                const bulb =
+                    level8Cinematic.querySelector(
+                        ".level8-bulb"
+                    );
+
+                /*
+                    Clear the previous attempt.
+                */
+
+                if (target) {
+                    target.classList.remove(
+                        "visible"
+                    );
+                }
+
+                if (failureMessage) {
+                    failureMessage.classList.remove(
+                        "visible"
+                    );
+                }
+
+                if (successMessage) {
+                    successMessage.classList.remove(
+                        "visible"
+                    );
+                }
+
+                if (hitMessage) {
+                    hitMessage.classList.remove(
+                        "visible"
+                    );
+                }
+
+                if (bulb) {
+                    bulb.classList.remove(
+                        "success"
+                    );
+                }
+
+                /*
+                    Prepare the new attempt.
+                */
+
+                moveLevel8Target();
+
+                /*
+                    Start a fresh 20-target test.
+                */
+
+                showLevel8TargetTest();
+            }
+        );
+    }
+);
