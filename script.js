@@ -12369,7 +12369,9 @@ if (successMessage) {
     successMessage.classList.add(
         "visible"
     );
-} 
+}
+
+await playLevel8SuccessDialogue();
    
 }   
     /*
