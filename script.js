@@ -12575,3 +12575,24 @@ document.addEventListener(
         );
     }
 );
+/*
+========================================
+LEVEL 8 — SUCCESS ENDING DIALOGUE
+========================================
+*/
+
+async function playLevel8SuccessDialogue() {
+
+    /*
+        Give the player a moment
+        to register 20 / 20.
+    */
+
+    await wait(1800);
+
+    const lineOne =
+        "You have done well, 28. But I intend to test every part of your mind... and your soul.";
+
+    await speakAsCurator(
+        lineOne
+    );
