@@ -12597,3 +12597,12 @@ async function playLevel8SuccessDialogue() {
     await speakAsCurator(
         lineOne
     );
+await wait(500);
+
+const lineTwo =
+    "You will not come out of this unchanged.";
+
+await speakAsCurator(
+    lineTwo
+);
+}
