@@ -12370,12 +12370,7 @@ if (successMessage) {
         "visible"
     );
 } 
-/*
-    Play Elias's Level 8
-    completion dialogue.
-*/
-
-await playLevel8SuccessDialogue();    
+   
 }   
     /*
         Keep it visible for one second.
