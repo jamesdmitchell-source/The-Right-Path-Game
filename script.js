@@ -12371,8 +12371,6 @@ if (successMessage) {
     );
 }
 
-alert("LEVEL 8 DIALOGUE TRIGGERED");
-
 await playLevel8SuccessDialogue();
    
 }   
