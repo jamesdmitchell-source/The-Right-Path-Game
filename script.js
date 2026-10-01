@@ -12591,7 +12591,7 @@ async function playLevel8SuccessDialogue() {
         to register 20 / 20.
     */
 
-    await wait(1800);
+    await wait(100);
 
     const lineOne =
         "You have done well, 28. But I intend to test every part of your mind... and your soul.";
