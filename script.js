@@ -12371,7 +12371,13 @@ if (successMessage) {
     );
 }
 
-await wait(1800);
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            1800
+        )
+);
 
 alert("ABOUT TO SPEAK");
 
