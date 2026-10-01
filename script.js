@@ -6223,7 +6223,7 @@ const corridorLevelText =
             }
         );
     }
-
+window.speakAsCurator = speakAsCurator;
 
     /*
         LEVEL 2 SPEAKER VOICE
