@@ -12371,7 +12371,17 @@ if (successMessage) {
     );
 }
 
-await playLevel8SuccessDialogue();
+await wait(1800);
+
+await speakAsCurator(
+    "You have done well, 28. But I intend to test every part of your mind... and your soul."
+);
+
+await wait(500);
+
+await speakAsCurator(
+    "You will not come out of this unchanged."
+);
    
 }   
     /*
@@ -12578,33 +12588,4 @@ document.addEventListener(
         );
     }
 );
-/*
-========================================
-LEVEL 8 — SUCCESS ENDING DIALOGUE
-========================================
-*/
 
-async function playLevel8SuccessDialogue() {
-
-    /*
-        Give the player a moment
-        to register 20 / 20.
-    */
-
-    await wait(100);
-
-    const lineOne =
-        "You have done well, 28. But I intend to test every part of your mind... and your soul.";
-
-    await speakAsCurator(
-        lineOne
-    );
-await wait(500);
-
-const lineTwo =
-    "You will not come out of this unchanged.";
-
-await speakAsCurator(
-    lineTwo
-);
-}
