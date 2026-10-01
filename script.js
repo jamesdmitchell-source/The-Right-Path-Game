@@ -12379,14 +12379,17 @@ await new Promise(
         )
 );
 
-alert("ABOUT TO SPEAK");
-
 await speakAsCurator(
     "You have done well, 28. But I intend to test every part of your mind... and your soul."
 );
 
-alert("FINISHED SPEAKING");
-await wait(500);
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            500
+        )
+);
 
 await speakAsCurator(
     "You will not come out of this unchanged."
