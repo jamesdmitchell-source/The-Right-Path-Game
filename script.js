@@ -12373,10 +12373,13 @@ if (successMessage) {
 
 await wait(1800);
 
+alert("ABOUT TO SPEAK");
+
 await speakAsCurator(
     "You have done well, 28. But I intend to test every part of your mind... and your soul."
 );
 
+alert("FINISHED SPEAKING");
 await wait(500);
 
 await speakAsCurator(
