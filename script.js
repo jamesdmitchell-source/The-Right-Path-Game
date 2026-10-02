@@ -12394,7 +12394,62 @@ await new Promise(
 await speakAsCurator(
     "You will not come out of this unchanged."
 );
-   
+
+/*
+    LEVEL 8 — ENDING BLACKOUT
+*/
+
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            700
+        )
+);
+
+/*
+    Kill the bulb.
+*/
+
+if (successBulb) {
+
+    successBulb.classList.remove(
+        "success"
+    );
+
+    successBulb.style.transition =
+        "opacity 0.25s ease";
+
+    successBulb.style.opacity =
+        "0";
+}
+
+/*
+    Let the room fall into darkness.
+*/
+
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            250
+        )
+);
+
+const level8Darkness =
+    level8Cinematic.querySelector(
+        ".level8-room-darkness"
+    );
+
+if (level8Darkness) {
+
+    level8Darkness.style.transition =
+        "opacity 1.5s ease";
+
+    level8Darkness.style.opacity =
+        "1";
+}
+
 }   
     /*
         Keep it visible for one second.
