@@ -12384,13 +12384,14 @@ await new Promise(
 */
 
 if (
-    typeof stopLevel8BulbBuzz ===
-        "function"
+    typeof level8BulbBuzz !==
+        "undefined" &&
+    level8BulbBuzz
 ) {
 
-    stopLevel8BulbBuzz();
+    level8BulbBuzz.pause();
+    level8BulbBuzz.currentTime = 0;
 }
-
 await speakAsCurator(
     "You have done well, 28. But I intend to test every part of your mind... and your soul."
 );
