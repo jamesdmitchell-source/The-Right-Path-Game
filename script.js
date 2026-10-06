@@ -12490,7 +12490,38 @@ if (level8Darkness) {
         "ending-blackout"
     );
 }
+/*
+    Hold on black briefly.
+*/
 
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            900
+        )
+);
+
+/*
+    Hide the Level 8 room so the
+    corridor can appear underneath.
+*/
+
+level8Cinematic.classList.remove(
+    "active"
+);
+
+/*
+    Start the existing corridor sequence.
+*/
+
+if (
+    typeof window.playLevel8CorridorExit ===
+        "function"
+) {
+
+    await window.playLevel8CorridorExit();
+}
 }   
     /*
         Keep it visible for one second.
