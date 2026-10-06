@@ -12522,6 +12522,21 @@ if (
 
     await window.playLevel8CorridorExit();
 }
+/*
+    LEVEL 8 COMPLETE —
+    hold on black until Level 9 exists.
+*/
+
+level8Cinematic.classList.add(
+    "active"
+);
+
+if (level8Darkness) {
+
+    level8Darkness.classList.add(
+        "ending-blackout"
+    );
+}    
 }   
     /*
         Keep it visible for one second.
