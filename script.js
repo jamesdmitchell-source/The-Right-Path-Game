@@ -10962,6 +10962,36 @@ async function playCorridorSequence() {
     );
 }
 
+/*
+    Allow Level 8 to use the
+    existing corridor sequence.
+*/
+
+window.playLevel8CorridorExit =
+    async function () {
+
+        try {
+
+            if (
+                typeof playCorridorAmbience ===
+                    "function"
+            ) {
+
+                playCorridorAmbience();
+            }
+
+        } catch (
+            error
+        ) {
+
+            console.log(
+                "Corridor ambience unavailable."
+            );
+        }
+
+        await playCorridorSequence();
+    };
+
 
     /*
         LEVEL INTRODUCTION
