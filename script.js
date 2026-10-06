@@ -12728,4 +12728,42 @@ document.addEventListener(
         );
     }
 );
+/*
+========================================
+LEVEL 8 → LEVEL 9 BLACK HOLD
+========================================
+*/
 
+const level8BlackHold =
+    document.createElement(
+        "div"
+    );
+
+level8BlackHold.id =
+    "level8BlackHold";
+
+level8BlackHold.style.position =
+    "fixed";
+
+level8BlackHold.style.inset =
+    "0";
+
+level8BlackHold.style.background =
+    "#000";
+
+level8BlackHold.style.zIndex =
+    "9999";
+
+level8BlackHold.style.display =
+    "none";
+
+document.body.appendChild(
+    level8BlackHold
+);
+
+window.showLevel8BlackHold =
+    function () {
+
+        level8BlackHold.style.display =
+            "block";
+    };
