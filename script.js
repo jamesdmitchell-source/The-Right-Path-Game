@@ -12379,6 +12379,18 @@ await new Promise(
         )
 );
 
+/*
+    Silence the bulb before Elias speaks.
+*/
+
+if (
+    typeof stopLevel8BulbBuzz ===
+        "function"
+) {
+
+    stopLevel8BulbBuzz();
+}
+
 await speakAsCurator(
     "You have done well, 28. But I intend to test every part of your mind... and your soul."
 );
