@@ -12456,11 +12456,9 @@ const level8Darkness =
 
 if (level8Darkness) {
 
-    level8Darkness.style.transition =
-        "opacity 1.5s ease";
-
-    level8Darkness.style.opacity =
-        "1";
+    level8Darkness.classList.add(
+        "ending-blackout"
+    );
 }
 
 }   
