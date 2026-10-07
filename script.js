@@ -2727,6 +2727,46 @@ document.body.appendChild(
 );    
 /*
 ========================================
+LEVEL 9 — DREAD CINEMATIC
+========================================
+*/
+
+const level9Cinematic =
+    document.createElement(
+        "div"
+    );
+
+level9Cinematic.id =
+    "level9Cinematic";
+
+level9Cinematic.className =
+    "level9-cinematic";
+
+level9Cinematic.innerHTML = `
+
+    <div class="level9-cinematic-scene">
+
+        <img
+            class="level9-room-image"
+            src="level9-dread-room.png"
+            alt=""
+        >
+
+        <div class="level9-vignette"></div>
+
+        <div class="level9-cinematic-title">
+            LEVEL 9 — DREAD
+        </div>
+
+    </div>
+
+`;
+
+document.body.appendChild(
+    level9Cinematic
+);    
+/*
+========================================
 LEVEL 7 — IPAD AUDIO
 ========================================
 */
