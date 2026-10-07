@@ -10989,7 +10989,20 @@ window.playLevel8CorridorExit =
             );
         }
 
-        await playCorridorSequence();
+await playCorridorSequence();
+
+/*
+    Cover everything immediately
+    after the Level 8 corridor.
+*/
+
+if (
+    typeof window.showLevel8BlackHold ===
+        "function"
+) {
+
+    window.showLevel8BlackHold();
+}
     };
 
 
