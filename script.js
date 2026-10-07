@@ -12522,7 +12522,18 @@ if (
 
     await window.playLevel8CorridorExit();
 }
+/*
+    Hold on black after
+    LEVEL 8 COMPLETE.
+*/
 
+if (
+    typeof window.showLevel8BlackHold ===
+        "function"
+) {
+
+    window.showLevel8BlackHold();
+}
 }   
     /*
         Keep it visible for one second.
