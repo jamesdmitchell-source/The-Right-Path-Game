@@ -5153,6 +5153,23 @@ if (
 showLevel8TargetTest();    
     return;
 }
+/*
+    ========================================
+    LEVEL 9 — DREAD
+    ========================================
+*/
+
+if (
+    level &&
+    level.dreadPuzzle
+) {
+
+    level9Cinematic.classList.add(
+        "active"
+    );
+
+    return;
+}    
     /*
         LEVEL 6
         Play its cinematic exactly as the
