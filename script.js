@@ -12520,9 +12520,8 @@ await new Promise(
     corridor can appear underneath.
 */
 
-level8Cinematic.classList.remove(
-    "active"
-);
+level8Cinematic.style.display =
+    "none";
 
 /*
     Start the existing corridor sequence.
