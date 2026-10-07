@@ -1214,5 +1214,37 @@ const levels = [
         true,
 
     choices: []
+},
+
+/*
+    ==============================
+    LEVEL 9
+    DREAD
+    ==============================
+*/
+
+{
+    number:
+        9,
+
+    title:
+        "DREAD",
+
+    observation:
+        "A reinforced glass enclosure stands at the centre of the chamber. Inside, dozens of venomous spiders move across branches, steel mesh and one another. Five mechanical locks hold the enclosure shut.",
+
+    clue:
+        "Fear encourages haste. Haste encourages mistakes.",
+
+    question:
+        "Can you think clearly when you know what failure will release?",
+
+    intro:
+        "Fear is an interesting thing, Twenty-eight. Sometimes it protects us. Sometimes... it makes the decisions for us. Let us discover what yours does.",
+
+    dreadPuzzle:
+        true,
+
+    choices: []
 }
 ];
