@@ -12522,7 +12522,14 @@ await new Promise(
 
 level8Cinematic.style.display =
     "none";
+/*
+    Hide the original Level 8
+    Reflex screen as well.
+*/
 
+levelScreen.classList.remove(
+    "active"
+);
 /*
     Start the existing corridor sequence.
 */
