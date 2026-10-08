@@ -2821,6 +2821,48 @@ document.body.appendChild(
 );
 /*
 ========================================
+LEVEL 9 — QUESTION DATA
+========================================
+*/
+
+const level9Questions = [
+
+    {
+        question:
+            "A warning light flashes. The display says " +
+            "the enclosure is secure, but one sensor " +
+            "reports an open lock. What should you do first?",
+
+        A:
+            "Investigate the conflicting sensor reading.",
+
+        B:
+            "Ignore the warning and proceed immediately.",
+
+        correct: "A"
+    },
+
+    {
+        question:
+            "The enclosure's temperature begins to rise. " +
+            "A cooling system is available, but activating " +
+            "it will briefly disable the lock-status display. " +
+            "What do you do?",
+
+        A:
+            "Activate the cooling system immediately, " +
+            "despite losing visibility of the locks.",
+
+        B:
+            "Verify the temperature reading and check " +
+            "the cooling system's status before activating it.",
+
+        correct: "B"
+    }
+
+];    
+/*
+========================================
 LEVEL 9 — FIRST QUESTION TEST
 ========================================
 */
