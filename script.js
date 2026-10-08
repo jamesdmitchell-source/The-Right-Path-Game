@@ -2772,6 +2772,46 @@ level9Cinematic.innerHTML = `
     </div>
 
 </div>
+<!-- LEVEL 9 — QUESTION TERMINAL -->
+
+<div class="level9-question-terminal">
+
+    <div class="level9-terminal-heading">
+        MERIDIAN FACILITY — TEST 09
+    </div>
+
+    <div class="level9-question-number">
+        QUESTION 01
+    </div>
+
+    <div class="level9-question-text">
+        A warning light flashes. The display
+        says the enclosure is secure, but one
+        sensor reports an open lock.
+        What should you do first?
+    </div>
+
+    <div class="level9-answer-buttons">
+
+        <button
+            type="button"
+            class="level9-answer-button"
+            data-answer="A"
+        >
+            A — Investigate the conflicting sensor reading.
+        </button>
+
+        <button
+            type="button"
+            class="level9-answer-button"
+            data-answer="B"
+        >
+            B — Ignore the warning and proceed immediately.
+        </button>
+
+    </div>
+
+</div>
     </div>
 
 `;
