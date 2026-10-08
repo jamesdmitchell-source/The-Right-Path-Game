@@ -2757,7 +2757,21 @@ level9Cinematic.innerHTML = `
         <div class="level9-cinematic-title">
             LEVEL 9 — DREAD
         </div>
+<!-- LEVEL 9 — LOCK STATUS -->
 
+<div class="level9-lock-status">
+
+    <div class="level9-exit-counter">
+        EXIT LOCKS
+        <span id="level9ExitCount">0 / 5</span>
+    </div>
+
+    <div class="level9-spider-counter">
+        CONTAINMENT LOCKS
+        <span id="level9SpiderCount">0 / 5</span>
+    </div>
+
+</div>
     </div>
 
 `;
