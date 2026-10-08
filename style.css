@@ -9325,3 +9325,120 @@ LEVEL 8 — SUCCESS BULB
         font-size: 10px;
     }
 }
+/* ========================================
+   LEVEL 9 — QUESTION TERMINAL
+   ======================================== */
+
+.level9-question-terminal {
+    position: absolute;
+
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(90%, 650px);
+    max-height: 48%;
+    overflow-y: auto;
+
+    padding: 18px 22px;
+
+    background: rgba(5, 12, 10, 0.94);
+    border: 1px solid #426b56;
+    border-radius: 6px;
+
+    color: #d9e9df;
+    font-family: monospace;
+
+    z-index: 15;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
+
+.level9-question-terminal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.level9-terminal-heading {
+    color: #74e6a0;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+
+    margin-bottom: 16px;
+}
+
+.level9-question-number {
+    color: #74e6a0;
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+}
+
+.level9-question-text {
+    font-size: 15px;
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+}
+
+.level9-answer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.level9-answer-button {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: rgba(20, 40, 30, 0.85);
+    border: 1px solid #426b56;
+    border-radius: 4px;
+
+    color: #e4f0e8;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.level9-answer-button:hover {
+    background: rgba(45, 85, 60, 0.95);
+    border-color: #74e6a0;
+}
+
+.level9-answer-button:focus-visible {
+    outline: 2px solid #74e6a0;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .level9-question-terminal {
+        bottom: 2%;
+        width: 94%;
+        max-height: 52%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .level9-question-text {
+        font-size: 13px;
+    }
+
+    .level9-answer-button {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
