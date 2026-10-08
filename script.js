@@ -5286,7 +5286,40 @@ if (
     level9Cinematic.classList.remove(
         "room-reveal"
     );
+/*
+========================================
+LEVEL 9 — RESET QUESTION TEST
+========================================
+*/
 
+level9QuestionAnswered = false;
+
+level9ExitCount.textContent =
+    "0 / 5";
+
+level9SpiderCount.textContent =
+    "0 / 5";
+
+level9AnswerButtons.forEach(
+    function (button) {
+
+        button.disabled = false;
+
+    }
+);
+
+const level9TerminalReset =
+    level9Cinematic.querySelector(
+        ".level9-question-terminal"
+    );
+
+if (level9TerminalReset) {
+
+    level9TerminalReset.classList.remove(
+        "active"
+    );
+
+}
     level9Cinematic.classList.add(
         "active"
     );
