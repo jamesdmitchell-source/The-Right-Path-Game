@@ -5386,7 +5386,19 @@ LEVEL 9 — RESET QUESTION TEST
 */
 
 level9QuestionAnswered = false;
+/*
+========================================
+LEVEL 9 — RESET QUESTION PROGRESS
+========================================
+*/
 
+level9QuestionIndex = 0;
+
+level9ExitLocks = 0;
+
+level9SpiderLocks = 0;
+
+showLevel9Question();
 level9ExitCount.textContent =
     "0 / 5";
 
