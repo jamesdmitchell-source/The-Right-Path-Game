@@ -5256,7 +5256,26 @@ if (
         level.intro
     );
 
-    return;
+/*
+    ========================================
+    LEVEL 9 — ACTIVATE QUESTION TERMINAL
+    ========================================
+*/
+
+const level9Terminal =
+    level9Cinematic.querySelector(
+        ".level9-question-terminal"
+    );
+
+if (level9Terminal) {
+
+    level9Terminal.classList.add(
+        "active"
+    );
+
+}
+
+return;
 }
     /*
         LEVEL 6
