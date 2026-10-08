@@ -2868,7 +2868,13 @@ LEVEL 9 — FIRST QUESTION TEST
 */
 
 let level9QuestionAnswered = false;
+/*
+========================================
+LEVEL 9 — CURRENT QUESTION
+========================================
+*/
 
+let level9QuestionIndex = 0;
 const level9AnswerButtons =
     level9Cinematic.querySelectorAll(
         ".level9-answer-button"
