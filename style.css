@@ -9218,3 +9218,25 @@ LEVEL 8 — SUCCESS BULB
 
     z-index: 5;
 }
+/* ========================================
+   LEVEL 9 — CINEMATIC ROOM REVEAL
+   ======================================== */
+
+.level9-cinematic .level9-room-image {
+    opacity: 0;
+    transition: opacity 6s ease-in-out;
+}
+
+.level9-cinematic.room-reveal .level9-room-image {
+    opacity: 1;
+}
+
+.level9-cinematic .level9-cinematic-title {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.level9-cinematic.room-reveal .level9-cinematic-title {
+    opacity: 1;
+    transition-delay: 3s;
+}
