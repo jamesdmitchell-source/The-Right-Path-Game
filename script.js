@@ -2818,6 +2818,67 @@ level9Cinematic.innerHTML = `
 
 document.body.appendChild(
     level9Cinematic
+);
+/*
+========================================
+LEVEL 9 — FIRST QUESTION TEST
+========================================
+*/
+
+let level9QuestionAnswered = false;
+
+const level9AnswerButtons =
+    level9Cinematic.querySelectorAll(
+        ".level9-answer-button"
+    );
+
+const level9ExitCount =
+    level9Cinematic.querySelector(
+        "#level9ExitCount"
+    );
+
+const level9SpiderCount =
+    level9Cinematic.querySelector(
+        "#level9SpiderCount"
+    );
+
+level9AnswerButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                if (level9QuestionAnswered) {
+                    return;
+                }
+
+                level9QuestionAnswered = true;
+
+                if (
+                    button.dataset.answer === "A"
+                ) {
+
+                    level9ExitCount.textContent =
+                        "1 / 5";
+
+                } else {
+
+                    level9SpiderCount.textContent =
+                        "1 / 5";
+
+                }
+
+                level9AnswerButtons.forEach(
+                    function (answerButton) {
+                        answerButton.disabled = true;
+                    }
+                );
+
+            }
+        );
+
+    }
 );    
 /*
 ========================================
