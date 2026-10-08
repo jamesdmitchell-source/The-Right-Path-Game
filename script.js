@@ -2922,6 +2922,29 @@ level9AnswerButtons.forEach(
                         answerButton.disabled = true;
                     }
                 );
+/*
+========================================
+LEVEL 9 — ADVANCE TO NEXT QUESTION
+========================================
+*/
+
+if (
+    level9QuestionIndex <
+    level9Questions.length - 1
+) {
+
+    setTimeout(
+        function () {
+
+            level9QuestionIndex++;
+
+            showLevel9Question();
+
+        },
+        1500
+    );
+
+}                
 
             }
         );
