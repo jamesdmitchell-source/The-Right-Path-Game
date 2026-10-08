@@ -5164,12 +5164,46 @@ if (
     level.dreadPuzzle
 ) {
 
+    /*
+        Reset the cinematic.
+    */
+
+    level9Cinematic.classList.remove(
+        "room-reveal"
+    );
+
     level9Cinematic.classList.add(
         "active"
     );
 
+    /*
+        Allow the black screen to render
+        before beginning the reveal.
+    */
+
+    await new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                300
+            )
+    );
+
+    /*
+        Fade the room in while
+        Elias delivers his introduction.
+    */
+
+    level9Cinematic.classList.add(
+        "room-reveal"
+    );
+
+    await speakAsCurator(
+        level.intro
+    );
+
     return;
-}    
+}
     /*
         LEVEL 6
         Play its cinematic exactly as the
