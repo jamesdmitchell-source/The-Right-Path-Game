@@ -2875,6 +2875,15 @@ LEVEL 9 — CURRENT QUESTION
 */
 
 let level9QuestionIndex = 0;
+ /*
+========================================
+LEVEL 9 — LOCK COUNTER STATE
+========================================
+*/
+
+let level9ExitLocks = 0;
+
+let level9SpiderLocks = 0;   
 const level9AnswerButtons =
     level9Cinematic.querySelectorAll(
         ".level9-answer-button"
