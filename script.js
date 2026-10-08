@@ -2912,20 +2912,33 @@ level9AnswerButtons.forEach(
 
                 level9QuestionAnswered = true;
 
-                if (
-                    button.dataset.answer === "A"
-                ) {
+              /*
+========================================
+LEVEL 9 — CHECK ANSWER AND UPDATE LOCKS
+========================================
+*/
 
-                    level9ExitCount.textContent =
-                        "1 / 5";
+const currentQuestion =
+    level9Questions[level9QuestionIndex];
 
-                } else {
+if (
+    button.dataset.answer ===
+    currentQuestion.correct
+) {
 
-                    level9SpiderCount.textContent =
-                        "1 / 5";
+    level9ExitLocks++;
 
-                }
+    level9ExitCount.textContent =
+        level9ExitLocks + " / 5";
 
+} else {
+
+    level9SpiderLocks++;
+
+    level9SpiderCount.textContent =
+        level9SpiderLocks + " / 5";
+
+}
                 level9AnswerButtons.forEach(
                     function (answerButton) {
                         answerButton.disabled = true;
