@@ -2898,7 +2898,55 @@ const level9SpiderCount =
     level9Cinematic.querySelector(
         "#level9SpiderCount"
     );
+/*
+========================================
+LEVEL 9 — DISPLAY QUESTION
+========================================
+*/
 
+function showLevel9Question() {
+
+    const question =
+        level9Questions[level9QuestionIndex];
+
+    if (!question) {
+        return;
+    }
+
+    const questionNumber =
+        level9Cinematic.querySelector(
+            ".level9-question-number"
+        );
+
+    const questionText =
+        level9Cinematic.querySelector(
+            ".level9-question-text"
+        );
+
+    questionNumber.textContent =
+        "QUESTION " +
+        String(level9QuestionIndex + 1).padStart(2, "0");
+
+    questionText.textContent =
+        question.question;
+
+    level9AnswerButtons.forEach(
+        function (button) {
+
+            const answer =
+                button.dataset.answer;
+
+            button.textContent =
+                answer + " — " + question[answer];
+
+            button.disabled = false;
+
+        }
+    );
+
+    level9QuestionAnswered = false;
+
+}
 level9AnswerButtons.forEach(
     function (button) {
 
