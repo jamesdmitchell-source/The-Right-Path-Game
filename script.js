@@ -2879,6 +2879,30 @@ const level9Questions = [
     }
 
 ];
+      correct: "B"
+    },
+
+    {
+        question:
+            "A loud scraping noise comes from behind " +
+            "the enclosure wall. The emergency release " +
+            "button begins flashing, but the security " +
+            "display still shows all doors locked. " +
+            "What should you do?",
+
+        A:
+            "Press the emergency release immediately " +
+            "to escape before investigating.",
+
+        B:
+            "Check the enclosure's security status " +
+            "and identify the source of the noise " +
+            "before operating the release.",
+
+        correct: "B"
+    }
+
+];    
 /*
 ========================================
 LEVEL 9 — FIRST QUESTION TEST
