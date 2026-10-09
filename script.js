@@ -2895,10 +2895,28 @@ const level9Questions = [
             "and identify the source of the noise " +
             "before operating the release.",
 
-        correct: "B"
+         correct: "B"
+    },
+
+    {
+        question:
+            "The final exit lock begins flashing green. " +
+            "A warning appears: CONTAINMENT PRESSURE UNSTABLE. " +
+            "The terminal offers two options. " +
+            "What do you choose?",
+
+        A:
+            "Verify containment pressure is stable " +
+            "before attempting to unlock the exit.",
+
+        B:
+            "Override the warning and open the exit " +
+            "before the spiders can escape.",
+
+        correct: "A"
     }
 
-];    
+];
 /*
 ========================================
 LEVEL 9 — FIRST QUESTION TEST
