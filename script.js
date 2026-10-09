@@ -2875,11 +2875,7 @@ const level9Questions = [
             "Treat the warning as genuine until " +
             "the conflicting readings are investigated.",
 
-        correct: "B"
-    }
-
-];
-      correct: "B"
+          correct: "B"
     },
 
     {
