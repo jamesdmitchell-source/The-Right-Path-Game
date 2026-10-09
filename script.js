@@ -2857,10 +2857,28 @@ const level9Questions = [
             "Verify the temperature reading and check " +
             "the cooling system's status before activating it.",
 
+           correct: "B"
+    },
+
+    {
+        question:
+            "A movement sensor detects something inside " +
+            "the spider enclosure. The camera shows no " +
+            "movement, but the sensor continues to trigger. " +
+            "What should you do?",
+
+        A:
+            "Disable the movement sensor because " +
+            "the camera shows nothing unusual.",
+
+        B:
+            "Treat the warning as genuine until " +
+            "the conflicting readings are investigated.",
+
         correct: "B"
     }
 
-];    
+];
 /*
 ========================================
 LEVEL 9 — FIRST QUESTION TEST
