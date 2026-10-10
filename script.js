@@ -5550,6 +5550,9 @@ if (level9TerminalReset) {
     );
 
 }
+    if (typeof level8BlackHold !== "undefined") {
+    level8BlackHold.style.display = "none";
+}
     level9Cinematic.classList.add(
         "active"
     );
