@@ -13072,10 +13072,48 @@ if (
     typeof window.showLevel8BlackHold ===
         "function"
 ) {
-
     window.showLevel8BlackHold();
 }
-}   
+
+await wait(1000);
+
+currentLevelIndex += 1;
+
+loadLevel();
+showScreen(levelScreen);
+
+level8BlackHold.style.display = "none";
+
+level9QuestionIndex = 0;
+level9QuestionAnswered = false;
+level9ExitLocks = 0;
+level9SpiderLocks = 0;
+
+level9ExitCount.textContent = "0 / 5";
+level9SpiderCount.textContent = "0 / 5";
+
+showLevel9Question();
+
+level9Cinematic.classList.remove("room-reveal");
+level9Cinematic.classList.add("active");
+
+await wait(300);
+
+level9Cinematic.classList.add("room-reveal");
+
+await speakAsCurator(
+    levels[currentLevelIndex].intro
+);
+
+const level9TerminalAfterCorridor =
+    level9Cinematic.querySelector(
+        ".level9-question-terminal"
+    );
+
+if (level9TerminalAfterCorridor) {
+    level9TerminalAfterCorridor.classList.add("active");
+}
+}
     /*
         Keep it visible for one second.
     */
