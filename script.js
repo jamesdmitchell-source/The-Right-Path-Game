@@ -12528,7 +12528,38 @@ currentLevelIndex +=
     levels[
         currentLevelIndex
     ];
+if (newLevel && newLevel.dreadPuzzle) {
 
+    level8BlackHold.style.display = "none";
+
+    level9QuestionIndex = 0;
+    level9ExitLocks = 0;
+    level9SpiderLocks = 0;
+
+    level9ExitCount.textContent = "0 / 5";
+    level9SpiderCount.textContent = "0 / 5";
+
+    showLevel9Question();
+
+    level9Cinematic.classList.remove("room-reveal");
+    level9Cinematic.classList.add("active");
+
+    await wait(300);
+
+    level9Cinematic.classList.add("room-reveal");
+
+    await speakAsCurator(newLevel.intro);
+
+    const terminal = level9Cinematic.querySelector(
+        ".level9-question-terminal"
+    );
+
+    if (terminal) {
+        terminal.classList.add("active");
+    }
+
+    return;
+}
 
 /*
     ========================================
