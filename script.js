@@ -3034,6 +3034,17 @@ if (
 
     level9ExitCount.textContent =
         level9ExitLocks + " / 5";
+ if (level9ExitLocks === 5) {
+    const terminalHeading =
+        level9Cinematic.querySelector(
+            ".level9-terminal-heading"
+        );
+
+    terminalHeading.textContent =
+        "EXIT UNLOCKED — CONTAINMENT SECURE";
+
+    terminalHeading.style.color = "#00ff88";
+}   
 if (level9ExitLocks === 5) {
     const terminalHeading =
         level9Cinematic.querySelector(
