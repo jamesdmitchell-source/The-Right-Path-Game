@@ -13074,6 +13074,7 @@ if (
         "function"
 ) {
     window.showLevel8BlackHold();
+alert("TEST: Black overlay activated");    
 }
 
 await wait(1000);
