@@ -13062,6 +13062,7 @@ if (
 ) {
 
     await window.playLevel8CorridorExit();
+    alert("TEST: Level 8 corridor has finished");
 }
 /*
     Hold on black after
