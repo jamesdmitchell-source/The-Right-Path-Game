@@ -13080,7 +13080,12 @@ alert("TEST: Black overlay activated");
 await wait(1000);
 
 currentLevelIndex += 1;
-
+alert(
+    "NEXT LEVEL: " +
+    (levels[currentLevelIndex]
+        ? levels[currentLevelIndex].number
+        : "NOT FOUND")
+);
 loadLevel();
 showScreen(levelScreen);
 
