@@ -13078,7 +13078,7 @@ alert("TEST: Black overlay activated");
 }
 
 await wait(1000);
-
+alert("TEST: About to advance to Level 9");
 currentLevelIndex += 1;
 alert(
     "NEXT LEVEL: " +
