@@ -13077,8 +13077,12 @@ if (
 alert("TEST: Black overlay activated");    
 }
 
+alert("TEST: Before pause");
+
 await wait(1000);
-alert("TEST: About to advance to Level 9");
+
+alert("TEST: After pause");
+
 currentLevelIndex += 1;
 alert(
     "NEXT LEVEL: " +
